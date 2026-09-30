@@ -1,0 +1,84 @@
+Items per level  v0.1: {'L1': 39, 'L2': 29, 'L3': 14}  v0.2: {'L1': 38, 'L2': 33, 'L3': 15}
+carried 66 | id renumbered: 44 | match score <1: 21
+
+LOST from v0.1 (16):
+  O1-02 Xu17 L1 v0.1 label=weak
+  O1-03 Xu17 L1 v0.1 label=sound
+  O1-13 Ye14 L1 v0.1 label=sound
+  O1-14 Ye14 L1 v0.1 label=sound
+  O1-15 Ye14 L1 v0.1 label=sound
+  O1-17 Ye14 L1 v0.1 label=sound
+  O1-19 Ye14 L1 v0.1 label=sound
+  O1-20 Ye14 L1 v0.1 label=sound
+  O1-21 Ye14 L1 v0.1 label=sound
+  O1-22 Ye14 L1 v0.1 label=sound
+  O1-23 Ye14 L1 v0.1 label=defective
+  O1-24 Ye14 L1 v0.1 label=sound
+  O2-13 Ye14 L2 v0.1 label=defective
+  O2-14 Ye14 L2 v0.1 label=sound
+  O2-15 Ye14 L2 v0.1 label=sound
+  O2-25 Ahm15 L2 v0.1 label=sound
+lost by v0.1 label: {'weak': 1, 'sound': 13, 'defective': 2}
+
+NEW in v0.2 (20):
+  O1-02 Xu17 L1
+  O1-03 Xu17 L1
+  O1-05 Hag21 L1
+  O1-06 Hag21 L1
+  O2-10 Hag21 L2
+  O1-15 Ye14 L1
+  O1-16 Ye14 L1
+  O1-19 Ye14 L1
+  O1-20 Ye14 L1
+  O1-21 Ye14 L1
+  O1-22 Ye14 L1
+  O2-12 Ye14 L2
+  O2-15 Ye14 L2
+  O2-16 Ye14 L2
+  O2-17 Ye14 L2
+  O2-18 Ye14 L2
+  O2-19 Ye14 L2
+  O2-20 Ye14 L2
+  O3-11 Ye14 L3
+  O1-32 Mo21 L1
+new by paper/level: {('Xu17', 'L1'): 2, ('Hag21', 'L1'): 2, ('Hag21', 'L2'): 1, ('Ye14', 'L1'): 6, ('Ye14', 'L2'): 7, ('Ye14', 'L3'): 1, ('Mo21', 'L1'): 1}
+
+Carried with id change: [('O1-07', 'O1-05'), ('O1-08', 'O1-06'), ('O1-09', 'O1-07'), ('O1-10', 'O1-08'), ('O1-12', 'O1-10'), ('O1-13', 'O1-11'), ('O1-14', 'O1-12'), ('O1-17', 'O1-16'), ('O2-13', 'O2-11'), ('O1-26', 'O1-28'), ('O1-27', 'O1-29'), ('O1-28', 'O1-30'), ('O2-22', 'O2-17'), ('O2-23', 'O2-18'), ('O1-29', 'O1-31'), ('O1-30', 'O1-32'), ('O1-31', 'O1-33'), ('O1-33', 'O1-34'), ('O1-34', 'O1-35'), ('O1-35', 'O1-36'), ('O1-36', 'O1-37'), ('O2-24', 'O2-19'), ('O2-25', 'O2-20'), ('O2-26', 'O2-21'), ('O1-37', 'O1-38'), ('O1-38', 'O1-39'), ('O2-27', 'O2-22'), ('O2-28', 'O2-23'), ('O2-29', 'O2-24'), ('O2-30', 'O2-26'), ('O2-31', 'O2-27'), ('O2-32', 'O2-28'), ('O2-33', 'O2-29'), ('O3-14', 'O3-13'), ('O2-14', 'O2-12'), ('O2-21', 'O2-16'), ('O1-24', 'O1-26'), ('O3-13', 'O3-12'), ('O2-11', 'O2-10'), ('O1-23', 'O1-25')]
+Carried with score<1: [('O3-10', ['O3-10', 0.999]), ('O3-04', ['O3-04', 0.999]), ('O3-08', ['O3-08', 0.999]), ('O3-14', ['O3-13', 0.999]), ('O2-14', ['O2-12', 0.999]), ('O1-18', ['O1-18', 0.999]), ('O2-21', ['O2-16', 0.998]), ('O1-24', ['O1-26', 0.998]), ('O3-03', ['O3-03', 0.998]), ('O3-13', ['O3-12', 0.998]), ('O2-02', ['O2-02', 0.997]), ('O2-11', ['O2-10', 0.997]), ('O3-01', ['O3-01', 0.997]), ('O3-05', ['O3-05', 0.997]), ('O1-23', ['O1-25', 0.996]), ('O1-25', ['O1-27', 0.996]), ('O3-15', ['O3-14', 0.993]), ('O1-11', ['O1-09', 0.991]), ('O2-04', ['O2-04', 0.982]), ('O3-12', ['O3-11', 0.976]), ('O3-02', ['O3-02', 0.951])]
+
+lost by paper: {'Xu17': 2, 'Ye14': 13, 'Ahm15': 1}
+import json
+m=json.load(open('v02_to_v01_match.json'))
+v1={x['id']:x for x in json.load(open('../ref/open_items_v01.json'))['items']}; v2={x['id']:x for x in json.load(open('open_items.json'))['items']}
+L1=json.load(open('../ref/open_labels_v01.json'))
+carried={v[0] for v in m.values() if v and v[0]}
+lost=[i for i in v1 if i not in carried]; new=[i for i in v2 if not (m.get(i) and m[i][0])]
+sig=lambda x:(x['paper'],x['level'],tuple(sorted(x['panels'])),x['page'],x.get('key_value'))
+print('\nMetadata pairing of lost v0.1 items to new v0.2 items (same paper, level, panels, page, key value):')
+used=set(); paired=0
+for i in lost:
+    c=[j for j in new if j not in used and sig(v2[j])==sig(v1[i])]
+    c2=[j for j in new if j not in used and sig(v2[j])[:4]==sig(v1[i])[:4]]
+    if c: used.add(c[0]); paired+=1; print(f'  {i} ({L1[i][0]}) -> {c[0]}  exact metadata match')
+    elif c2: used.add(c2[0]); print(f'  {i} ({L1[i][0]}) -> {c2[0]}  same paper/level/panels/page, key value differs')
+    else: print(f'  {i} ({L1[i][0]}) -> none')
+print('exact metadata pairs:',paired,'of',len(lost),'| new items with no v0.1 counterpart:',[j for j in new if j not in used])
+
+Metadata pairing of lost v0.1 items to new v0.2 items (same paper, level, panels, page, key value):
+  O1-02 (weak) -> no counterpart
+  O1-03 (sound) -> O1-02  same paper/level/panels/page, key value differs
+  O1-13 (sound) -> no counterpart
+  O1-14 (sound) -> no counterpart
+  O1-15 (sound) -> O1-16  same metadata and key value
+  O1-17 (sound) -> no counterpart
+  O1-19 (sound) -> O1-19  same metadata and key value
+  O1-20 (sound) -> no counterpart
+  O1-21 (sound) -> O1-20  same metadata and key value
+  O1-22 (sound) -> no counterpart
+  O1-23 (defective) -> no counterpart
+  O1-24 (sound) -> no counterpart
+  O2-13 (defective) -> O2-15  same metadata and key value
+  O2-14 (sound) -> no counterpart
+  O2-15 (sound) -> O2-19  same metadata and key value
+  O2-25 (sound) -> no counterpart
+pairs: exact 5 partial 1 of 16 lost | new items with no v0.1 counterpart: ['O1-03', 'O1-05', 'O1-06', 'O2-10', 'O1-15', 'O1-21', 'O1-22', 'O2-12', 'O2-16', 'O2-17', 'O2-18', 'O2-20', 'O3-11', 'O1-32']

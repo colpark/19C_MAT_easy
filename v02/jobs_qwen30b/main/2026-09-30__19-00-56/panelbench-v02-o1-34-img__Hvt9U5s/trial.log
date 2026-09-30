@@ -1,0 +1,46 @@
+Skipping image OS validation for hb__669ac7a742413cc3ff475fd525b1a662: docker inspect returned 1
+Running command: mkdir -p /opt/openhands-sdk-venv && chown root:root /opt/openhands-sdk-venv
+Command outputs captured
+Running command: set -euo pipefail; curl -LsSf https://astral.sh/uv/install.sh | sh && if [ -f "$HOME/.local/bin/env" ]; then source "$HOME/.local/bin/env"; fi && uv python install 3.12 && uv venv /opt/openhands-sdk-venv --python 3.12 --clear && source /opt/openhands-sdk-venv/bin/activate && uv pip install openhands-sdk openhands-tools fastapi
+Trial panelbench-v02-o1-34-img__Hvt9U5s failed: <Token var=<ContextVar name='exec_env_overlays' default=() at 0xf86d6df32d90> at 0xf86d6e944840> was created in a different Context
+Failed to chown logs directory: no running event loop
+Collecting main service artifacts
+Warning: Agent environment cleanup failed for panelbench-v02-o1-34-img__Hvt9U5s: There is no current event loop in thread 'MainThread'.
+Skipping exception record because trial already has exception_info
+Traceback (most recent call last):
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/environments/base.py", line 463, in scoped_exec_env
+    yield
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 1574, in _setup_agent
+    await asyncio.wait_for(
+GeneratorExit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 415, in run
+    await self._prepare()
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 459, in _prepare
+    await self._setup_agent()
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 1572, in _setup_agent
+    with self.agent_environment.scoped_exec_env(self.agent.extra_env):
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/environments/base.py", line 465, in scoped_exec_env
+    self._exec_env_overlays.reset(token)
+ValueError: <Token var=<ContextVar name='exec_env_overlays' default=() at 0xf86d6df32d90> at 0xf86d6e944840> was created in a different Context
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 1730, in _stop_agent_environment
+    await asyncio.shield(
+          ^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/tasks.py", line 898, in shield
+    inner = ensure_future(arg)
+            ^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/tasks.py", line 693, in ensure_future
+    loop = events.get_event_loop()
+           ^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/asyncio/events.py", line 702, in get_event_loop
+    raise RuntimeError('There is no current event loop in thread %r.'
+RuntimeError: There is no current event loop in thread 'MainThread'.

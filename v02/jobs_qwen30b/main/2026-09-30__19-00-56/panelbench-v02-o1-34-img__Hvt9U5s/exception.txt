@@ -1,0 +1,21 @@
+Traceback (most recent call last):
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/environments/base.py", line 463, in scoped_exec_env
+    yield
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 1574, in _setup_agent
+    await asyncio.wait_for(
+GeneratorExit
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 415, in run
+    await self._prepare()
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 459, in _prepare
+    await self._setup_agent()
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/trial/trial.py", line 1572, in _setup_agent
+    with self.agent_environment.scoped_exec_env(self.agent.extra_env):
+  File "/usr/lib/python3.12/contextlib.py", line 158, in __exit__
+    self.gen.throw(value)
+  File "/home/aid1/.local/share/uv/tools/harbor/lib/python3.12/site-packages/harbor/environments/base.py", line 465, in scoped_exec_env
+    self._exec_env_overlays.reset(token)
+ValueError: <Token var=<ContextVar name='exec_env_overlays' default=() at 0xf86d6df32d90> at 0xf86d6e944840> was created in a different Context

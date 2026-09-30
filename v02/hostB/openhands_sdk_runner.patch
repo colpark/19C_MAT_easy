@@ -1,0 +1,10 @@
+217a218,226
+>     # PanelBench patch (host B): capability overrides for local models LiteLLM does not know,
+>     # e.g. LLM_CAPABILITY_OVERRIDES={"supports_vision": true} for qwen3-vl served by Ollama.
+>     overrides_raw = os.environ.get("LLM_CAPABILITY_OVERRIDES")
+>     if overrides_raw:
+>         llm_kwargs["capability_overrides"] = json.loads(overrides_raw)
+>     # LLM_NATIVE_TOOL_CALLING=false: tools described in the prompt, for models whose server has no tool support.
+>     native_fc_raw = os.environ.get("LLM_NATIVE_TOOL_CALLING")
+>     if native_fc_raw:
+>         llm_kwargs["native_tool_calling"] = native_fc_raw.lower() in ("1", "true", "yes")
