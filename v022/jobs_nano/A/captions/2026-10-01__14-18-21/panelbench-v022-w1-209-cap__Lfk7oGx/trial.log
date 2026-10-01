@@ -1,0 +1,11 @@
+Skipping image OS validation for hb__c19ae0e3002882b4865a9055ce76ebd9: docker inspect returned 1
+Running command: mkdir -p /opt/openhands-sdk-venv && chown root:root /opt/openhands-sdk-venv
+Command outputs captured
+Running command: set -euo pipefail; curl -LsSf https://astral.sh/uv/install.sh | sh && if [ -f "$HOME/.local/bin/env" ]; then source "$HOME/.local/bin/env"; fi && uv python install 3.12 && uv venv /opt/openhands-sdk-venv --python 3.12 --clear && source /opt/openhands-sdk-venv/bin/activate && uv pip install openhands-sdk openhands-tools fastapi
+Command failed
+Classified failed command as NetworkConnectionError (pattern: 'curl: \\(\\d+\\)')
+Trial panelbench-v022-w1-209-cap__Lfk7oGx failed: Command failed (exit 7): set -euo pipefail; curl -LsSf https://astral.sh/uv/install.sh | sh && if [ -f "$HOME/.local/bin/env" ]; then source "$HOME/.local/bin/env"; fi && uv python install 3.12 && uv venv /opt/openhands-sdk-venv --python 3.12 --clear && source /opt/openhands-sdk-venv/bin/activate && uv pip install openhands-sdk openhands-tools fastapi
+stdout: curl: (7) Failed to connect to astral.sh port 443 after 4001 ms: Couldn't connect to server
+
+stderr: None
+Collecting main service artifacts
