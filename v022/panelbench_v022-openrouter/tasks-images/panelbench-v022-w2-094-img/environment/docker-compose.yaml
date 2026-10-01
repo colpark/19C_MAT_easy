@@ -1,0 +1,6 @@
+# Pin openrouter.ai: during the offline agent phase Harbor's egress filter also blocks upstream DNS.
+services:
+  harbor-docker-egress-control-sidecar:
+    extra_hosts:
+      - "openrouter.ai:104.18.3.115"
+      - "openrouter.ai:104.18.2.115"
