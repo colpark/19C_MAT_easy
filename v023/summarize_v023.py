@@ -73,4 +73,4 @@ com = [i for i in items if all((c, i) in old for c, _ in CONDS)]
 out += [f'## Same items, old vs new protocol ({len(com)} items in both v022c and v0.23)\n', '| Condition | v022c run (old protocol, original grading) | v0.23 run (new protocol, grader v3 / judge v2) |', '|---|---|---|']
 for c, n in CONDS:
     out.append(f"| {n} | {sum(old[(c, i)] for i in com):.0f}/{len(com)} | {cell(c, com)} |")
-open('RESULTS_nano_v023.md', 'w').write('\n'.join(out)); print('\n'.join(out))
+open('RESULTS_nano_v023_with_citation.md', 'w').write('\n'.join(out)); print('\n'.join(out))
