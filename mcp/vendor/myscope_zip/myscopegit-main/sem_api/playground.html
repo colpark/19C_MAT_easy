@@ -1,0 +1,235 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>SEM image API - playground</title>
+<style>
+  :root { color-scheme: dark; }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 13px/1.45 ui-sans-serif, system-ui, "Segoe UI", Roboto, sans-serif;
+         background: #101214; color: #dfe3e8; }
+  header { padding: 12px 18px; border-bottom: 1px solid #23282e; display: flex;
+           align-items: baseline; gap: 14px; flex-wrap: wrap; }
+  header h1 { font-size: 15px; margin: 0; font-weight: 600; letter-spacing: .02em; }
+  header span { color: #7d8792; font-size: 12px; }
+  header a { color: #6fb2ff; text-decoration: none; }
+  main { display: grid; grid-template-columns: 330px minmax(0, 1fr); gap: 18px; padding: 18px;
+         align-items: start; }
+  @media (max-width: 860px) { main { grid-template-columns: 1fr; } }
+  .panel { background: #171a1e; border: 1px solid #23282e; border-radius: 8px; padding: 14px; }
+  #controls { max-height: calc(100vh - 130px); overflow-y: auto; }
+  fieldset { border: 0; border-top: 1px solid #23282e; margin: 14px 0 0; padding: 12px 0 0; }
+  fieldset:first-of-type { border-top: 0; margin-top: 0; padding-top: 0; }
+  legend { color: #7d8792; text-transform: uppercase; letter-spacing: .09em; font-size: 10px;
+           padding: 0 6px 0 0; }
+  .row { margin-bottom: 11px; }
+  .row label { display: flex; justify-content: space-between; gap: 8px; align-items: baseline; }
+  .row .name { font-weight: 500; }
+  .row .val { font-variant-numeric: tabular-nums; color: #9ad1ff; }
+  .bounds { color: #6c757e; font-size: 10.5px; font-variant-numeric: tabular-nums;
+            display: flex; justify-content: space-between; }
+  .desc { color: #7d8792; font-size: 11px; margin-top: 3px; display: none; }
+  .row:hover .desc { display: block; }
+  input[type=range] { width: 100%; margin: 3px 0 1px; accent-color: #4d9fff; }
+  select { width: 100%; background: #0d0f11; color: #dfe3e8; border: 1px solid #2c3238;
+           border-radius: 5px; padding: 4px 6px; }
+  button { background: #24405f; color: #e8f1ff; border: 1px solid #35597f; border-radius: 5px;
+           padding: 6px 12px; cursor: pointer; font: inherit; }
+  button:hover { background: #2d4f74; }
+  .actions { display: flex; gap: 8px; margin-top: 14px; }
+  #view { display: flex; flex-direction: column; gap: 12px; }
+  #image-wrap { background: #000; border: 1px solid #23282e; border-radius: 8px; overflow: hidden;
+                position: relative; min-height: 200px; }
+  #image-wrap img { display: block; width: 100%; height: auto; }
+  #busy { position: absolute; inset: 0; display: none; align-items: center; justify-content: center;
+          background: rgba(8,10,12,.55); font-size: 12px; letter-spacing: .08em; }
+  #busy.on { display: flex; }
+  #err { display: none; background: #3a1d1f; border: 1px solid #6b3033; color: #ffc9cc;
+         padding: 9px 12px; border-radius: 6px; font-family: ui-monospace, monospace; font-size: 12px; }
+  #err.on { display: block; }
+  table { width: 100%; border-collapse: collapse; font-variant-numeric: tabular-nums; }
+  td { padding: 3px 8px 3px 0; border-bottom: 1px solid #1e2227; }
+  td:first-child { color: #7d8792; }
+  td:last-child { text-align: right; }
+  .grid2 { display: grid; grid-template-columns: 1fr 1fr; gap: 0 22px; }
+  code { background: #0d0f11; border: 1px solid #23282e; border-radius: 4px; padding: 1px 5px;
+         font-size: 11.5px; word-break: break-all; }
+</style>
+</head>
+<body>
+<header>
+  <h1>SEM image API</h1>
+  <span>every control below is served by <a href="/schema">/schema</a> with its boundary</span>
+</header>
+
+<main>
+  <div class="panel" id="controls">loading schema&hellip;</div>
+
+  <div id="view">
+    <div id="err"></div>
+    <div id="image-wrap">
+      <img id="image" alt="simulated micrograph">
+      <div id="busy">SCANNING</div>
+    </div>
+    <div class="panel">
+      <div class="grid2"><table id="meta"></table><table id="meta2"></table></div>
+      <p style="margin:12px 0 0;color:#7d8792">request: <code id="url"></code></p>
+    </div>
+  </div>
+</main>
+
+<script>
+const state = {};
+let schema = null, timer = null;
+
+function fmt(v) {
+  if (typeof v !== 'number') return String(v);
+  if (v !== 0 && (Math.abs(v) >= 1e5 || Math.abs(v) < 1e-2)) return v.toExponential(2);
+  return String(Math.round(v * 1000) / 1000);
+}
+
+function stepFor(spec) {
+  if (spec.type === 'integer') return 1;
+  const span = spec.max - spec.min;
+  return span > 500 ? 1 : span / 200;
+}
+
+function build() {
+  const host = document.getElementById('controls');
+  host.innerHTML = '';
+  for (const group of schema.groups) {
+    const params = schema.parameters.filter(p => p.group === group.id);
+    if (!params.length) continue;
+    const fs = document.createElement('fieldset');
+    fs.innerHTML = '<legend>' + group.label + '</legend>';
+    for (const spec of params) fs.appendChild(control(spec));
+    host.appendChild(fs);
+  }
+  const actions = document.createElement('div');
+  actions.className = 'actions';
+  const reset = document.createElement('button');
+  reset.textContent = 'Reset';
+  reset.onclick = () => { Object.assign(state, schema.defaults); build(); request(); };
+  const reseed = document.createElement('button');
+  reseed.textContent = 'New specimen';
+  reseed.onclick = () => { state.seed = Math.floor(Math.random() * 2147483647); build(); request(); };
+  const save = document.createElement('button');
+  save.textContent = 'Open PNG';
+  save.onclick = () => window.open(query(), '_blank');
+  actions.append(reset, reseed, save);
+  host.appendChild(actions);
+}
+
+function control(spec) {
+  const row = document.createElement('div');
+  row.className = 'row';
+  const unit = spec.unit ? ' ' + spec.unit : '';
+
+  if (spec.type === 'enum' || spec.type === 'boolean') {
+    const choices = spec.type === 'boolean' ? ['true', 'false'] : spec.choices;
+    row.innerHTML = '<label><span class="name">' + spec.name + '</span></label>';
+    const sel = document.createElement('select');
+    sel.autocomplete = 'off';  // otherwise the browser restores a stale session
+    for (const c of choices) {
+      const o = document.createElement('option');
+      o.value = c; o.textContent = c;
+      o.selected = String(state[spec.name]) === c;
+      sel.appendChild(o);
+    }
+    sel.oninput = () => {
+      state[spec.name] = spec.type === 'boolean' ? sel.value === 'true' : sel.value;
+      request();
+    };
+    row.appendChild(sel);
+    row.insertAdjacentHTML('beforeend', '<div class="bounds"><span>' +
+      choices.join(' | ') + '</span></div><div class="desc">' + spec.description + '</div>');
+    return row;
+  }
+
+  row.innerHTML =
+    '<label><span class="name">' + spec.name + '</span>' +
+    '<span class="val" id="v_' + spec.name + '">' + fmt(state[spec.name]) + unit + '</span></label>';
+  const input = document.createElement('input');
+  input.type = 'range';
+  input.autocomplete = 'off';  // start from the documented defaults, not a restored session
+  input.min = spec.min; input.max = spec.max; input.step = stepFor(spec);
+  input.value = state[spec.name];
+  input.oninput = () => {
+    const v = spec.type === 'integer' ? parseInt(input.value, 10) : parseFloat(input.value);
+    state[spec.name] = v;
+    document.getElementById('v_' + spec.name).textContent = fmt(v) + unit;
+    request();
+  };
+  row.appendChild(input);
+  row.insertAdjacentHTML('beforeend',
+    '<div class="bounds"><span>min ' + fmt(spec.min) + unit + '</span>' +
+    '<span>max ' + fmt(spec.max) + unit + '</span></div>' +
+    '<div class="desc">' + spec.description + '</div>');
+  return row;
+}
+
+function query() {
+  const parts = [];
+  for (const spec of schema.parameters) parts.push(spec.name + '=' + encodeURIComponent(state[spec.name]));
+  return '/render?' + parts.join('&');
+}
+
+function request() {
+  clearTimeout(timer);
+  timer = setTimeout(run, 180);
+}
+
+const ROWS = [
+  ['field_of_view_um', 'field of view', 'um'],
+  ['pixel_size_nm', 'pixel size', 'nm'],
+  ['probe_diameter_nm', 'probe diameter', 'nm'],
+  ['interaction_range_nm', 'interaction range', 'nm'],
+  ['effective_resolution_nm', 'effective resolution', 'nm'],
+  ['depth_of_field_um', 'depth of field', 'um'],
+  ['electrons_per_pixel', 'electrons / pixel', ''],
+  ['estimated_snr', 'estimated SNR', ''],
+  ['frame_time_s', 'frame time', 's'],
+  ['charging_severity', 'charging severity', ''],
+];
+
+async function run() {
+  const url = query();
+  document.getElementById('url').textContent = url;
+  document.getElementById('busy').classList.add('on');
+  try {
+    const res = await fetch(url + '&format=json');
+    const data = await res.json();
+    const err = document.getElementById('err');
+    if (!res.ok) {
+      err.textContent = data.error + (data.boundary ? '  [' + JSON.stringify(data.boundary) + ']' : '');
+      err.classList.add('on');
+      return;
+    }
+    err.classList.remove('on');
+    document.getElementById('image').src = 'data:image/png;base64,' + data.image_png_base64;
+    const half = Math.ceil(ROWS.length / 2);
+    const cells = ROWS.map(([k, label, unit]) =>
+      '<tr><td>' + label + '</td><td>' + fmt(data.metadata[k]) + ' ' + unit + '</td></tr>');
+    document.getElementById('meta').innerHTML = cells.slice(0, half).join('');
+    document.getElementById('meta2').innerHTML = cells.slice(half).join('') +
+      '<tr><td>features resolved</td><td>' + data.metadata.features_resolved + '</td></tr>';
+  } catch (e) {
+    const err = document.getElementById('err');
+    err.textContent = String(e);
+    err.classList.add('on');
+  } finally {
+    document.getElementById('busy').classList.remove('on');
+  }
+}
+
+fetch('/schema').then(r => r.json()).then(s => {
+  schema = s;
+  Object.assign(state, s.defaults);
+  state.width_px = 800; state.height_px = 600;
+  build();
+  run();
+});
+</script>
+</body>
+</html>

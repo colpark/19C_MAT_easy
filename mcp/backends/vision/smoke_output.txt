@@ -1,0 +1,20 @@
+truth: circles=5, grains=80 mean_area=7373 px, atoms=538 nn=12.0 px
+== segment {'mode': 'auto'} cold=6.43s warm=4.11s device=cuda
+    {"mode": "auto", "mask_count": 8, "mask_areas_px": [20062, 189888, 20083, 25463, 25340, 11318, 7863, 5052], "mask_scores": [0.9922, 0.9922, 0.9922, 0.9922, 0.9922, 0.9883, 0.9844, 0.9844]} warnings: []
+== segment {'mode': 'points', 'points': [[120, 120], [380, 140]]} cold=0.18s warm=0.13s device=cuda
+    {"mode": "points", "mask_count": 2, "mask_areas_px": [11262, 20059], "mask_scores": [0.9805, 0.9844]} warnings: []
+== segment_microstructure {} cold=15.38s warm=8.99s device=cuda
+    {"mask_count": 122, "mask_areas_px": [9107, 4915, 5738, 3394, 12688, 13423, 6513, 12293], "mask_scores": [1.0191, 1.0186, 1.0173, 1.017, 1.0168, 1.0163, 1.0149, 1.0139], "n_prompt_points": 1073, "n_centroid_prompts": 49, "boundary_regions": 71} warnings: []
+== grain_size_astm {} cold=4.24s warm=2.40s device=cuda
+    {"grain_count": 78, "grains_interior": 48, "grains_edge": 30, "mean_planimetric_grain_area_px": 9362.285714285714, "mean_mask_area_px": 7167.666666666667, "mean_intercept_length_px": 80.84210526315789, "intercept_crossings": 190, "astm_G_planimetric": null, "astm_G_intercept": null, "px_per_um": null} warnings: ['px_per_um not given: ASTM G cannot be computed (G=null); values are in px']
+== grain_size_astm {'px_per_um': 2.0} cold=2.24s warm=2.23s device=cuda
+    {"grain_count": 78, "grains_interior": 48, "grains_edge": 30, "mean_planimetric_grain_area_px": 9362.285714285714, "mean_mask_area_px": 7167.666666666667, "mean_intercept_length_px": 80.84210526315789, "intercept_crossings": 190, "astm_G_planimetric": 5.784923241763673, "astm_G_intercept": 5.969498330338377, "px_per_um": 2.0} warnings: []
+== grain_boundary_map {} cold=0.02s warm=0.02s device=cuda
+    null warnings: ['unavailable: nasa/pretrained-microscopy-models publishes MicroNet encoders only (no trained UNet++ grain-boundary decoder); a decoder must be trained before this tool can work. Use segment_microstructure (MatSAM boundary_map) or grain_size_astm instead.']
+== classify_modality_embed {} cold=0.39s warm=0.02s device=cuda
+    {"dim": 2048, "head": [0.484719, 0.189411, 0.423621, 0.07217, 0.106082]} warnings: []
+    embed deterministic: True load: {'missing': [], 'unexpected': []}
+== find_atoms {'px_per_nm': 84.50704225352113} cold=1.12s warm=0.16s device=cuda
+    {"atom_count": 504, "positions_px": [[6.53, 10.61], [18.38, 10.59], [30.41, 10.59], [42.48, 10.65], [54.4, 10.58], [66.38, 10.72], [78.37, 10.61], [90.37, 10.65]], "classes": [0, 0, 0, 0, 0, 0, 0, 0], "nn_distance_px": {"mean": 11.894394439973732, "median": 11.89496151378372, "std": 0.049529280214369746, "min": 11.734700782245271, "max": 12.135701856371487}, "nn_distance_nm": {"mean": 0.14075033420635583, "median": 0.140757044579774, "std": 0.0005860964825367086, "min": 0.1388606259232357, "max": 0.1436058053003959}, "model": "G_MD", "estimated_spacing_px": 11.661903789690601, "rescale_factor" warnings: ['G_MD was trained on simulated graphene STEM; results on other materials/scales are out of distribution']
+== find_atoms {'model': 'BFO'} cold=0.20s warm=0.10s device=cuda
+    {"atom_count": 506, "positions_px": [[221.7, 254.58], [30.09, 254.91], [6.24, 10.67], [30.27, 10.73], [90.38, 10.7], [102.45, 10.69], [150.29, 10.67], [174.31, 10.7]], "classes": [0, 0, 1, 1, 1, 1, 1, 1], "nn_distance_px": {"mean": 11.857501465589738, "median": 11.906915537940083, "std": 0.4571513545779932, "min": 7.307104359137919, "max": 12.030930065056939}, "nn_distance_nm": null, "model": "BFO", "estimated_spacing_px": 11.661903789690601, "rescale_factor": 2.743977362280141} warnings: ['BFO was trained on experimental BFO STEM; results on other materials/scales are out of distribution']
