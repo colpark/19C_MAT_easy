@@ -1,0 +1,170 @@
+REACHABLE https://openrouter.ai/api/v1/models
+BLOCKED https://doi.org/10.1002/aenm.201301564
+BLOCKED https://www.google.com
+BLOCKED https://scholar.google.com
+BLOCKED https://pypi.org/simple/pillow/
+BLOCKED https://duckduckgo.com
+BLOCKED-BY-IP https://doi.org/10.1002/aenm.201301564
+BLOCKED-BY-IP https://www.google.com
+PYTHON_OK 10.2.0 1.26.4
+=== debug
+104.18.3.115    STREAM openrouter.ai
+104.18.3.115    DGRAM  
+104.18.3.115    RAW    
+104.18.2.115    STREAM 
+* Host openrouter.ai:443 was resolved.
+* IPv6: (none)
+* IPv4: 104.18.3.115, 104.18.2.115
+*   Trying 104.18.3.115:443...
+* Connected to openrouter.ai (104.18.3.115) port 443
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [2536 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [79 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / id-ecPublicKey
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=openrouter.ai
+*  start date: Sep 27 06:06:30 2026 GMT
+*  expire date: Dec 26 07:06:16 2026 GMT
+*  subjectAltName: host "openrouter.ai" matched cert's "openrouter.ai"
+*  issuer: C=US; O=Google Trust Services; CN=WE1
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA384
+*   Certificate level 2: Public key type EC/secp384r1 (384/192 Bits/secBits), signed using ecdsa-with-SHA384
+} [5 bytes data]
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://openrouter.ai/api/v1/models
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: openrouter.ai]
+* [HTTP/2] [1] [:path: /api/v1/models]
+* [HTTP/2] [1] [user-agent: curl/8.5.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET /api/v1/models HTTP/2
+> Host: openrouter.ai
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* old SSL session ID is stale, removing
+{ [5 bytes data]
+< HTTP/2 200 
+< date: Thu, 01 Oct 2026 22:32:12 GMT
+< content-type: application/json
+< cf-cache-status: HIT
+< access-control-allow-origin: *
+< age: 64
+< cache-control: public, max-age=120, stale-while-revalidate=3600, stale-if-error=3600
+< vary: Host
+< access-control-expose-headers: X-Generation-Id,X-Provider-Name,request-id,cf-ray
+< set-cookie: __cf_bm=bsYtxTZiRA6S2D_te0YaKrMiArX9mr4tF4MXihdp0bo-1790893932.3862476-1.0.1.1-KSVDybWYqgFpa9iKbNXKcVgen_eRJxs8BgCHR62XAN7EaTGh6NmUr_nFORuMwz5vTFtN7lYaKF5YQGnptWzlw_RqlrOq1pY7zmcy468SWaFtVAMweKpR1NRc66kvcnhH; HttpOnly; SameSite=None; Secure; Path=/; Domain=openrouter.ai; Expires=Thu, 01 Oct 2026 23:02:12 GMT
+< permissions-policy: payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com" "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+< referrer-policy: no-referrer, strict-origin-when-cross-origin
+< x-content-type-options: nosniff
+< server: cloudflare
+< cf-ray: a43eec056f4929a9-BOS
+< 
+{ [9540 bytes data]
+* Connection #0 to host openrouter.ai left intact
+* Host openrouter.ai:443 was resolved.
+* IPv6: (none)
+* IPv4: 104.18.3.115, 104.18.2.115
+*   Trying 104.18.3.115:443...
+* Connected to openrouter.ai (104.18.3.115) port 443
+* ALPN: curl offers h2,http/1.1
+} [5 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Client hello (1):
+} [512 bytes data]
+*  CAfile: /etc/ssl/certs/ca-certificates.crt
+*  CApath: /etc/ssl/certs
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Server hello (2):
+{ [122 bytes data]
+* TLSv1.3 (IN), TLS handshake, Encrypted Extensions (8):
+{ [19 bytes data]
+* TLSv1.3 (IN), TLS handshake, Certificate (11):
+{ [2536 bytes data]
+* TLSv1.3 (IN), TLS handshake, CERT verify (15):
+{ [79 bytes data]
+* TLSv1.3 (IN), TLS handshake, Finished (20):
+{ [52 bytes data]
+* TLSv1.3 (OUT), TLS change cipher, Change cipher spec (1):
+} [1 bytes data]
+* TLSv1.3 (OUT), TLS handshake, Finished (20):
+} [52 bytes data]
+* SSL connection using TLSv1.3 / TLS_AES_256_GCM_SHA384 / X25519 / id-ecPublicKey
+* ALPN: server accepted h2
+* Server certificate:
+*  subject: CN=openrouter.ai
+*  start date: Sep 27 06:06:30 2026 GMT
+*  expire date: Dec 26 07:06:16 2026 GMT
+*  subjectAltName: host "openrouter.ai" matched cert's "openrouter.ai"
+*  issuer: C=US; O=Google Trust Services; CN=WE1
+*  SSL certificate verify ok.
+*   Certificate level 0: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA256
+*   Certificate level 1: Public key type EC/prime256v1 (256/128 Bits/secBits), signed using ecdsa-with-SHA384
+*   Certificate level 2: Public key type EC/secp384r1 (384/192 Bits/secBits), signed using ecdsa-with-SHA384
+} [5 bytes data]
+* using HTTP/2
+* [HTTP/2] [1] OPENED stream for https://openrouter.ai/api/v1/models
+* [HTTP/2] [1] [:method: GET]
+* [HTTP/2] [1] [:scheme: https]
+* [HTTP/2] [1] [:authority: openrouter.ai]
+* [HTTP/2] [1] [:path: /api/v1/models]
+* [HTTP/2] [1] [user-agent: curl/8.5.0]
+* [HTTP/2] [1] [accept: */*]
+} [5 bytes data]
+> GET /api/v1/models HTTP/2
+> Host: openrouter.ai
+> User-Agent: curl/8.5.0
+> Accept: */*
+> 
+{ [5 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* TLSv1.3 (IN), TLS handshake, Newsession Ticket (4):
+{ [230 bytes data]
+* old SSL session ID is stale, removing
+{ [5 bytes data]
+< HTTP/2 200 
+< date: Thu, 01 Oct 2026 22:32:12 GMT
+< content-type: application/json
+< cf-cache-status: HIT
+< access-control-allow-origin: *
+< age: 64
+< cache-control: public, max-age=120, stale-while-revalidate=3600, stale-if-error=3600
+< vary: Host
+< access-control-expose-headers: X-Generation-Id,X-Provider-Name,request-id,cf-ray
+< set-cookie: __cf_bm=TLm8TEs8u_uf8gj3oBAQy8HfdkvYoRHjECyvfpHAdMg-1790893932.4664736-1.0.1.1-NEPNdgaoALNy7daDX1n4Cwb8TH1LVV6Zk9WQXnreutb0cmOBfSJNZnld.Cp0uJYRzHcTM95BWSyUWKbKwZMwanrcy47puCl8zXxob4JBz9Xj_NUTYUpD2z7fjHj2qqZP; HttpOnly; SameSite=None; Secure; Path=/; Domain=openrouter.ai; Expires=Thu, 01 Oct 2026 23:02:12 GMT
+< permissions-policy: payment=(self "https://checkout.stripe.com" "https://connect-js.stripe.com" "https://js.stripe.com" "https://*.js.stripe.com" "https://hooks.stripe.com")
+< referrer-policy: no-referrer, strict-origin-when-cross-origin
+< x-content-type-options: nosniff
+< server: cloudflare
+< cf-ray: a43eec05ec16905c-BOS
+< 
+{ [18293 bytes data]
+* Connection #0 to host openrouter.ai left intact
