@@ -20,3 +20,4 @@
   failure, counted wrong). My background watcher hit its time limit before the oracle finished; the run itself was unaffected.
 - compare.py -> C_RESULTS.md. Strict L2+L3: original 111, repeat 123, oracle 99 (oracle vs repeat 23 up / 47 down, two-sided sign test
   p = 0.0056). Report: CEILING_L23_REPORT.md.
+- Routed rerun (routed/build_routed.py frozen a69510189a642f64; 247 trials, jobs/routed): strict L2+L3 114 (original 111, repeat 123, unrouted 99); opened images 239/247. compare_routed.py -> routed/ROUTED_RESULTS.md.
