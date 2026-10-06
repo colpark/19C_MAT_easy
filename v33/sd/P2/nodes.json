@@ -1,0 +1,187 @@
+[
+ {
+  "id": "F3a",
+  "panel": "F3a",
+  "quantity": "electrical conductivity sigma(T)",
+  "computed_from": [],
+  "instrument": "CTA-3S",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "The in-plane electrical conductivity and Seebeck coefficient were simultaneously measured in a helium atmosphere from 300 to 460 K using a TE testing system (CTA-3S"
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "electrical resistance/conductance readings",
+   "specimen geometry",
+   "temperature"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F3b",
+  "panel": "F3b",
+  "quantity": "Seebeck coefficient S(T)",
+  "computed_from": [],
+  "instrument": "CTA-3S",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "The in-plane electrical conductivity and Seebeck coefficient were simultaneously measured in a helium atmosphere from 300 to 460 K using a TE testing system (CTA-3S"
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "thermovoltage",
+   "temperature difference",
+   "temperature"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F3c",
+  "panel": "F3c",
+  "quantity": "power factor PF(T)",
+  "computed_from": [
+   "F3a",
+   "F3b"
+  ],
+  "instrument": null,
+  "formula": "PF = S^2 sigma",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "TE thick films have high performance in power factor (PF = S2σ)"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F3a",
+   "F3b"
+  ],
+  "sol_stated": false
+ },
+ {
+  "id": "F3d",
+  "panel": "F3d",
+  "quantity": "total thermal conductivity kappa(T)",
+  "computed_from": [
+   "D (laser flash, not plotted)",
+   "rho (mass and geometry, constant 7.54 g/cm3)",
+   "Cp (typical constant)"
+  ],
+  "instrument": "LFA-467 laser flash",
+  "formula": "kappa = rho D Cp",
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "the D was measured by the laser flash method (LFA-467, NETZSCH), and the typical Cp values of 159 J"
+  },
+  "note": "standard instrument equation on an unplotted reading (D) times constants: M under definition 2",
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "density",
+   "laser-flash thermal diffusivity",
+   "specific heat capacity"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F3e",
+  "panel": "F3e",
+  "quantity": "kappa - kappa_e (lattice plus bipolar)",
+  "computed_from": [
+   "F3d",
+   "F3a",
+   "F3b",
+   "L(S) relation of Supplementary Fig. 4 (not on the host)"
+  ],
+  "instrument": null,
+  "formula": "kappa - L(S) sigma T",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Based on the electrical conductivity and Seebeck coefficient, the electronic thermal conductivity was calculated as shown in Supplementary Fig. 4."
+  },
+  "note": "L(S) relation in Supplementary Fig. 4 (SI not on the host; the Source Data sheet \"Supplementary Figure 4\" lists L(T) per film). Panel excluded (sheet disagrees with figure).",
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F3d",
+   "F3a",
+   "F3b"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F3f",
+  "panel": "F3f",
+  "quantity": "figure of merit ZT(T)",
+  "computed_from": [
+   "F3a",
+   "F3b",
+   "F3d"
+  ],
+  "instrument": null,
+  "formula": "ZT = S^2 sigma T / kappa",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "figure of merit (ZT = S2σT/κ"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F3a",
+   "F3b",
+   "F3d",
+   "temperature"
+  ],
+  "sol_stated": false
+ },
+ {
+  "id": "F2c",
+  "panel": "F2c",
+  "quantity": "Te content (EDS)",
+  "computed_from": [],
+  "instrument": "EDS",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "The element content and crystal structure were analyzed by EDS (X-act SDD, Oxford Instruments)"
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "EDS X-ray spectra"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2b",
+  "panel": "F2b",
+  "quantity": "compressive stress-strain curves (bulk molded vs zone melted)",
+  "computed_from": [],
+  "instrument": "RGM-6300 universal testing machine",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "the compressive strain-stress curves of these Bi2Te3 samples were measured by an electro-mechanical universal testing machine"
+  },
+  "note": "representative curves (definition 3)",
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "load",
+   "displacement",
+   "specimen dimensions"
+  ],
+  "sol_stated": true
+ }
+]

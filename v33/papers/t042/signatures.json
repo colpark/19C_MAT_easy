@@ -1,0 +1,49 @@
+{
+ "electrostriction_ergodic": {
+  "mechanism": "ergodic relaxor: strain is mainly electrostrictive and reversible, domain switching suppressed",
+  "relation": "S = Q P^2; small Pr and negative strain in ergodic relaxors",
+  "source": "Jo et al., J. Appl. Phys. 105 (2009) 094102; Uchino, Ferroelectric Devices",
+  "prior_rank": 2,
+  "predicts": {
+   "Pr(x up)": "down",
+   "negative_strain(x up)": "down"
+  }
+ },
+ "domain_switching_nonergodic": {
+  "mechanism": "irreversible domain switching / field-induced relaxor-to-ferroelectric transition produces the strain",
+  "relation": "switching strain scales with Pr and the negative strain S_neg",
+  "source": "Jo et al., J. Appl. Phys. 105 (2009) 094102",
+  "prior_rank": 1,
+  "predicts": {
+   "Pr(x up)": "up",
+   "negative_strain(x up)": "up"
+  }
+ },
+ "zr_lattice_softening": {
+  "mechanism": "Zr4+ (larger, heavier) weakens the B-O bond",
+  "relation": "harmonic oscillator nu = (1/2 pi c) sqrt(k/mu): lower k -> lower wavenumber",
+  "source": "Nakamoto, Infrared and Raman Spectra of Inorganic Compounds",
+  "prior_rank": 1,
+  "predicts": {
+   "bo_stretch_wavenumber(x up)": "down"
+  }
+ },
+ "b_site_stiffening": {
+  "mechanism": "stronger Zr-O bonds stiffen the BO6 octahedra",
+  "relation": "harmonic oscillator: higher k -> higher wavenumber",
+  "source": "Nakamoto",
+  "prior_rank": 2,
+  "predicts": {
+   "bo_stretch_wavenumber(x up)": "up"
+  }
+ },
+ "zr_lattice_expansion": {
+  "mechanism": "larger Zr4+ (0.72 A) replaces Ti4+ (0.605 A) and expands the lattice",
+  "relation": "Vegard + Shannon radii; Bragg",
+  "source": "Shannon 1976; Vegard 1921",
+  "prior_rank": 1,
+  "predicts": {
+   "xrd_peak_2theta(x up)": "down"
+  }
+ }
+}

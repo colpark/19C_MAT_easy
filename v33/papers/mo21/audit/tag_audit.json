@@ -1,0 +1,206 @@
+{
+ "rows": [
+  {
+   "id": "n_H",
+   "panel": "F4a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "Hall coefficient R_H",
+    "elementary charge"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "rho",
+   "panel": "F5a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "electrical conductivity"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "S",
+   "panel": "F5b",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "thermovoltage and temperature-gradient readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "kappa",
+   "panel": "F5d",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "thermal diffusivity",
+    "specific heat capacity",
+    "density"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xrd",
+   "panel": "F1b",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "XRD intensity and diffraction-angle readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "sem",
+   "panel": "F3",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "SEM electron signals",
+    "EDS X-ray signals"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mu_H",
+   "panel": "F4b",
+   "builder": "A",
+   "sol": "M",
+   "sol_from": [
+    "electrical conductivity",
+    "Hall coefficient R_H"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "keep A (builder already restrictive)"
+  },
+  {
+   "id": "PF",
+   "panel": "F5c",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "S",
+    "rho"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "kappa_e",
+   "panel": "F5e",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "rho",
+    "temperature",
+    "Lorenz number or model"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "kappa_Lb",
+   "panel": "F5f",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "kappa",
+    "kappa_e"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "ZT",
+   "panel": "F6a",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "PF",
+    "kappa",
+    "temperature"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "nH_vs_mu",
+   "panel": "F4c",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "n_H",
+    "mu_H",
+    "literature data"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "pisarenko",
+   "panel": "F4d",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "S",
+    "n_H",
+    "literature data",
+    "SPB model"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "zt_compare",
+   "panel": "F6b",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "ZT",
+    "literature peak-ZT data"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "eng",
+   "panel": "F7",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "S",
+    "rho",
+    "kappa",
+    "temperature range",
+    "engineering-property and conversion-efficiency calculations"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  }
+ ],
+ "cost": 0.018377865
+}

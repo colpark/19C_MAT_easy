@@ -1,0 +1,417 @@
+{
+ "rows": [
+  {
+   "id": "pe_rt",
+   "panel": "F1a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "leak",
+   "panel": "F1b",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw current readings",
+    "electrode area"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "htd",
+   "panel": "F1c",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "electrometer and standard-capacitor readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "pe_T_x0_x20",
+   "panel": [
+    "F3a",
+    "F3b"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Pr_T",
+   "panel": "F1d",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "pe_T_x0_x20"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "diel_T",
+   "panel": "F1e",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "hydro",
+   "panel": "F1f",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "electrometer and standard-capacitor readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "ie_T",
+   "panel": "F3c",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "lit_PrTd",
+   "panel": "F1g",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "literature values"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "lit_w",
+   "panel": "F1h",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "lit_PrTd",
+    "pe_rt",
+    "diel_T",
+    "literature permittivity values"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xrd_rt",
+   "panel": "F2a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "phase_frac",
+   "panel": "F2b",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "xrd_rt"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman_rt",
+   "panel": "F2c",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "tem_saed",
+   "panel": [
+    "F2d",
+    "F2g"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "pfm_img",
+   "panel": [
+    "F2e",
+    "F2h"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "pfm_loop",
+   "panel": [
+    "F2f",
+    "F2i"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xrd_T",
+   "panel": "F3d",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman_T",
+   "panel": "F3e",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman_T_modes",
+   "panel": "F3f",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "raman_T"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "epr",
+   "panel": "F4a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xps_ti",
+   "panel": "F4b",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "raw Ti 2p XPS spectrum"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "tauc_Eg",
+   "panel": "F4c",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "raw optical-reflectance readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "haadf",
+   "panel": "F5a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "haadf_profile",
+   "panel": "F5b",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "haadf"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "haadf_map",
+   "panel": "F5c",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "haadf"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "polar_vec",
+   "panel": [
+    "F5d",
+    "F5e",
+    "F5f",
+    "F5g",
+    "F5h",
+    "F5i"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "haadf"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_sem",
+   "panel": "F6a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_pe_E",
+   "panel": "F6b",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_pe_T",
+   "panel": "F6c",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_depol",
+   "panel": "F6d",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "electrometer and standard-capacitor readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_shock_I",
+   "panel": "F6e",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_shock_Q",
+   "panel": "F6e",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "mlcc_shock_I",
+    "effective electrode area"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "mlcc_diel",
+   "panel": "F6f",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman_P",
+   "panel": [
+    "F7a",
+    "F7b",
+    "F7d",
+    "F7e",
+    "F7f"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman_P_modes",
+   "panel": "F7c",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "raman_P"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  }
+ ],
+ "cost": 0.03179979
+}

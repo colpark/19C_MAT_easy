@@ -1,0 +1,60 @@
+{
+ "fe2_valence_expansion": {
+  "mechanism": "charge compensation reduces Fe3+ to the larger Fe2+, expanding the spinel lattice",
+  "relation": "ionic radius r(Fe2+, 0.78 A) > r(Fe3+, 0.645 A) (Shannon 1976); Bragg: larger d -> lower 2theta",
+  "source": "Shannon, Acta Cryst. A32 (1976) 751; Cullity, Elements of X-ray Diffraction",
+  "prior_rank": 2,
+  "predicts": {
+   "xrd_311_2theta(x up)": "down",
+   "lattice_a(x up)": "up"
+  }
+ },
+ "ionic_radius_contraction": {
+  "mechanism": "smaller Ni2+ (0.69 A) and Al3+ (0.535 A) replace Co2+ (0.745 A) and Zn2+ (0.74 A), contracting the lattice (Vegard-type)",
+  "relation": "Vegard's law with Shannon radii; Bragg: smaller d -> higher 2theta",
+  "source": "Vegard 1921; Shannon 1976",
+  "prior_rank": 1,
+  "predicts": {
+   "xrd_311_2theta(x up)": "up",
+   "lattice_a(x up)": "down"
+  }
+ },
+ "quantum_confinement": {
+  "mechanism": "quantum confinement in smaller crystallites widens the optical gap",
+  "relation": "Brus: E_g(R) = E_g(bulk) + h^2/(8 R^2) (1/m_e + 1/m_h) - 1.8 e^2/(4 pi eps R)",
+  "source": "Brus, J. Chem. Phys. 80 (1984) 4403",
+  "prior_rank": 2,
+  "predicts": {
+   "absorption_edge_energy(x up)": "up",
+   "crystallite_size(x up)": "down"
+  }
+ },
+ "defect_band_tailing": {
+  "mechanism": "dopant-induced oxygen vacancies and disorder add band-tail states that narrow the effective gap",
+  "relation": "Urbach tail: alpha = alpha0 exp((E - E0)/E_U), larger E_U with disorder",
+  "source": "Urbach, Phys. Rev. 92 (1953) 1324",
+  "prior_rank": 1,
+  "predicts": {
+   "absorption_edge_energy(x up)": "down",
+   "crystallite_size(x up)": "none"
+  }
+ },
+ "b_site_dilution": {
+  "mechanism": "non-magnetic Al3+ and lower-moment Ni2+ dilute the octahedral B sublattice, lowering M_B - M_A",
+  "relation": "Neel two-sublattice model: M = M_B - M_A",
+  "source": "Neel, Ann. Phys. 3 (1948) 137; Smit & Wijn, Ferrites (1959)",
+  "prior_rank": 1,
+  "predicts": {
+   "Ms(x up)": "down"
+  }
+ },
+ "a_site_al_displacement": {
+  "mechanism": "Al3+ enters tetrahedral A sites and displaces Fe3+ to B sites, lowering M_A and raising the net moment",
+  "relation": "Neel model with A-site dilution: M = M_B - M_A rises",
+  "source": "Smit & Wijn, Ferrites (1959)",
+  "prior_rank": 2,
+  "predicts": {
+   "Ms(x up)": "up"
+  }
+ }
+}

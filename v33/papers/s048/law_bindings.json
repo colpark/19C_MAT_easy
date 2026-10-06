@@ -1,0 +1,141 @@
+[
+ {
+  "id": "bragg_anatase_ref",
+  "library": "bragg_reference",
+  "inputs": [
+   "x_TiO2"
+  ],
+  "target": "xrd_gpc",
+  "params": [
+   {
+    "name": "anatase lattice",
+    "kind": "external",
+    "source": "ICDD 21-1272 (a = 3.785 A, c = 9.514 A)",
+    "spread": 0.001
+   }
+  ],
+  "law_class": "excluded (Sol class disagreement)",
+  "mode": "value",
+  "reason": "disjoint M ancestors; parameters external with sources (max spread 0%)",
+  "family": "Bragg agreement with external reference lattice (anatase a=3.785, c=9.514 A; alpha-quartz)",
+  "opportunities": 36,
+  "reader": "spectrum",
+  "methods_span": "The phase characteristics of both raw material powders and hardened GPC samples were determined by X-ray diffraction (XRD) type Bruker D8 using CuKα radiation",
+  "law_class_builder": "independent"
+ },
+ {
+  "id": "xrd_intensity_fraction",
+  "law_class": "not bound",
+  "reason": "intensity ratios need a reference intensity scale not on the panels (spread 50%)"
+ },
+ {
+  "id": "tga_mass_balance",
+  "library": "mixing_residue",
+  "inputs": [
+   "tga_0",
+   "x_TiO2"
+  ],
+  "target": "tga_ti",
+  "params": [],
+  "law_class": "independent",
+  "mode": "ranking",
+  "reason": "disjoint M ancestors; parameters external with sources (max spread 0%)",
+  "family": "mass-balance mixing (TGA residue: inert TiO2 + control-paste residue), ranking only",
+  "opportunities": 5,
+  "reader": null,
+  "methods_span": "Both analyses were performed using Shimadzu instruments (TGA-50 and DSC-60, respectively) from Kyoto, Japan."
+ },
+ {
+  "id": "recompute_ucs",
+  "library": "definition",
+  "inputs": [
+   "stress_strain"
+  ],
+  "target": "ucs_bar",
+  "params": [],
+  "law_class": "excluded (Sol class disagreement)",
+  "mode": "value",
+  "reason": "target ucs_bar is A, computed_from ['stress_strain'] lies within the inputs and their ancestors",
+  "family": "definition recompute (UCS and failure strain = peak/end of stress-strain curve)",
+  "opportunities": 12,
+  "reader": "curve/bar",
+  "methods_span": "For each parameter, five samples were tested to obtain an average compressive strength value.",
+  "law_class_builder": "definition"
+ },
+ {
+  "id": "recompute_cof",
+  "library": "definition",
+  "inputs": [
+   "cof_trace"
+  ],
+  "target": "cof_bar",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target cof_bar is A, computed_from ['cof_trace'] lies within the inputs and their ancestors",
+  "family": "definition recompute (bar COF = steady-state mean of COF trace)",
+  "opportunities": 6,
+  "reader": "curve/bar",
+  "methods_span": null
+ },
+ {
+  "id": "recompute_wear",
+  "library": "definition",
+  "inputs": [
+   "wear_profile",
+   "tribo_cond"
+  ],
+  "target": "wear_rate",
+  "params": [
+   {
+    "name": "stroke/track length",
+    "kind": "external",
+    "source": "not reported -> ranking only",
+    "spread": 0.5,
+    "fit_on": []
+   }
+  ],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target wear_rate is A, computed_from ['wear_profile', 'tribo_cond'] lies within the inputs and their ancestors",
+  "family": "definition recompute (wear rate = track cross-section area x track length / (load x distance)), ranking only",
+  "opportunities": 6,
+  "reader": "curve/bar",
+  "methods_span": "Wear volume loss was quantified by analyzing the wear track profile using a profilometer."
+ },
+ {
+  "id": "archard_ucs",
+  "library": "archard_ucs",
+  "inputs": [
+   "stress_strain",
+   "tribo_cond"
+  ],
+  "target": "wear_rate",
+  "params": [
+   {
+    "name": "K",
+    "kind": "fit",
+    "by": "us",
+    "fit_on": [
+     "wear_rate"
+    ]
+   },
+   {
+    "name": "K (wear coefficient)",
+    "kind": "fit",
+    "source": "fit on 0-20% cells",
+    "spread": null,
+    "fit_on": [
+     "wear_rate"
+    ]
+   }
+  ],
+  "law_class": "fit",
+  "mode": "value",
+  "reason": "parameter K fitted (us) on ['wear_rate'], which include the target or its ancestors",
+  "family": "Archard (wear rate ~ K / hardness, UCS as hardness proxy)",
+  "opportunities": 6,
+  "reader": "curve+bar",
+  "methods_span": "Wear volume loss was quantified by analyzing the wear track profile using a profilometer."
+ }
+]

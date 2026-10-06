@@ -1,0 +1,449 @@
+{
+ "_note": "Paper profile (v3.2): everything paper-specific the digitizer needs. Logged per-panel inputs copied from the figure: printed tick labels and printed legend entries (label -> value, swatch colour class, marker shape). Legend entries are verified against pixels (digitize.verify_legend) and blind by GPT-5.6-Sol; a failed check drops the panel.",
+ "paper": "mo21",
+ "doi": "10.1016/j.jma.2020.11.023",
+ "crops_dir": "/home/aid1/Documents/harbor/v32_host/papers/mo21/crops",
+ "overlays_dir": "/home/aid1/Documents/harbor/v32_host/papers/mo21/overlays",
+ "series_variable": "x",
+ "series_values": [
+  0.0,
+  0.005,
+  0.01,
+  0.02,
+  0.04
+ ],
+ "legend_order": "top-down in series_values order",
+ "legend_token": {
+  "whitelist": "xX=0123456789.,",
+  "pass2_regex": "[xX]=(0(?:\\.\\d+)?)$",
+  "pass1_regex": "^[xX][=:]?\\s*(0(?:[.,]\\d+)?)$"
+ },
+ "colour_classes": {
+  "green": {
+   "strict": "(g > 90) & (g - r > 40) & (g - b > 40)",
+   "relaxed": "(g > 80) & (g - r > 30) & (g - b > 30)",
+   "overlay": [
+    0,
+    160,
+    0
+   ]
+  },
+  "black": {
+   "strict": "(r < 70) & (g < 70) & (b < 70)",
+   "relaxed": "(r < 90) & (g < 90) & (b < 90)",
+   "overlay": [
+    0,
+    0,
+    0
+   ]
+  },
+  "red": {
+   "strict": "(r > 170) & (g < 90) & (b < 90)",
+   "relaxed": "(r > 150) & (g < 100) & (r - b > 80)",
+   "overlay": [
+    230,
+    0,
+    0
+   ]
+  },
+  "blue": {
+   "strict": "(b > 150) & (r < 90) & (g < 130) & (b - g > 60)",
+   "relaxed": "(b > 140) & (r < 110) & (b - g > 50)",
+   "overlay": [
+    0,
+    0,
+    230
+   ]
+  },
+  "magenta": {
+   "strict": "(r > 170) & (b > 150) & (g < 110)",
+   "relaxed": "(r > 150) & (b > 120) & (g < 120)",
+   "overlay": [
+    220,
+    0,
+    220
+   ]
+  }
+ },
+ "swatch_rules": {
+  "gray_spread": 25,
+  "gray_dark_mean": 130,
+  "gray_class": "black",
+  "rules": [
+   [
+    "g == mx and g - r > 15",
+    "green"
+   ],
+   [
+    "r == mx and b - g > 60",
+    "magenta"
+   ],
+   [
+    "r == mx",
+    "red"
+   ],
+   [
+    "b == mx and r > g + 40",
+    "magenta"
+   ],
+   [
+    "b == mx",
+    "blue"
+   ]
+  ]
+ },
+ "panels": {
+  "F4a": {
+   "y_ticks": [
+    1,
+    10
+   ],
+   "y_log": true,
+   "source": "printed tick label",
+   "legend": [
+    {
+     "label": "X=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "X=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "X=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "X=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "X=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F4b": {
+   "y_log": true,
+   "source": "axis type only (labels read by OCR)",
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F5a": {
+   "y_ticks": [
+    10,
+    100
+   ],
+   "y_log": true,
+   "source": "printed tick label",
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F5b": {
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F5c": {
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F5d": {
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F5e": {
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F5f": {
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F6a": {
+   "legend": [
+    {
+     "label": "x=0",
+     "value": 0.0,
+     "colour": "green",
+     "marker": "tri_left"
+    },
+    {
+     "label": "x=0.005",
+     "value": 0.005,
+     "colour": "black",
+     "marker": "square"
+    },
+    {
+     "label": "x=0.01",
+     "value": 0.01,
+     "colour": "red",
+     "marker": "circle"
+    },
+    {
+     "label": "x=0.02",
+     "value": 0.02,
+     "colour": "blue",
+     "marker": "tri_up"
+    },
+    {
+     "label": "x=0.04",
+     "value": 0.04,
+     "colour": "magenta",
+     "marker": "tri_down"
+    }
+   ],
+   "legend_source": "printed legend entry (label, swatch colour, marker shape) copied from the figure"
+  },
+  "F4c": {
+   "x_ticks": [
+    1,
+    10
+   ],
+   "x_log": true,
+   "source": "printed tick label"
+  }
+ },
+ "matrix": {
+  "grid": [
+   300,
+   350,
+   400,
+   450,
+   500,
+   550,
+   600
+  ],
+  "grid_axis": "T (K)",
+  "marker_window": 6,
+  "interp_max_gap": 30,
+  "slope_term_above": 1
+ }
+}

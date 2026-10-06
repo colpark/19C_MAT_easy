@@ -1,0 +1,55 @@
+{
+ "rows": [
+  {
+   "binding": "bragg_xrd_hrtem",
+   "builder": "agreement",
+   "sol": "agreement",
+   "agree": true,
+   "reason": "XRD peak positions and HRTEM lattice fringes are independent measurement methods for the same interplanar spacings, so the inferred d-spacings should agree via Bragg's law."
+  },
+  {
+   "binding": "vegard_rank",
+   "builder": "independent",
+   "sol": "independent",
+   "agree": true,
+   "reason": "Vegard\u2019s law and ionic-radius arguments link the independently specified Zr composition to XRD peak shifts using external crystallographic physics, without fitting to or deriving the plotted peak positions."
+  },
+  {
+   "binding": "electrostriction_SP2",
+   "builder": "fit",
+   "sol": "fit",
+   "agree": true,
+   "reason": "The electrostriction coefficient Q33 must be fitted using strain and polarization data that include the target S\u2013E loops, so the relation is not an independent prediction."
+  },
+  {
+   "binding": "recompute_d33s",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The target d33* was calculated directly by the authors as Smax/Emax from the plotted maximum strain and applied field."
+  },
+  {
+   "binding": "recompute_dP",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The target \u0394P was computed directly as Pmax \u2212 Pr from the plotted input values, so the relation only reproduces the authors\u2019 arithmetic."
+  },
+  {
+   "binding": "recompute_dT",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The target \u0394T was explicitly computed by the authors as Tm \u2212 Ts using the temperatures read from the measured \u03b5r(T) curve."
+  },
+  {
+   "binding": "recompute_k",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The authors computed the B\u2013O bond force constants directly from the FTIR stretching frequencies using k = (2\u03c0c\u03bd)^2\u03bc, so the relation reproduces their arithmetic."
+  }
+ ],
+ "excluded": [],
+ "cost": 0.010596959999999999
+}

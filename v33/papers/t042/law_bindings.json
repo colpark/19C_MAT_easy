@@ -1,0 +1,161 @@
+[
+ {
+  "id": "bragg_xrd_hrtem",
+  "library": "bragg",
+  "inputs": [
+   "xrd_peaks"
+  ],
+  "target": "d_hrtem",
+  "params": [
+   {
+    "name": "lambda",
+    "kind": "external",
+    "source": "Cu K-alpha1 = 0.15406 nm (or the wavelength stated in Methods)",
+    "spread": 0.0
+   }
+  ],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "Bragg agreement (XRD peak positions vs HRTEM fringe d-spacing)",
+  "opportunities": 2,
+  "reader": null,
+  "methods_span": "Insets in (a) and (b) show clear lattice fringes with interplanar spacings of ${ \\sim } 0 . 1 1 3 \\mathrm { n m }$ (222) and ${ \\sim } 0 . 1 3 4 \\mathrm { n m }$ (220), respectively."
+ },
+ {
+  "id": "vegard_rank",
+  "library": "vegard",
+  "inputs": [
+   "x_Zr"
+  ],
+  "target": "xrd_peaks",
+  "params": [
+   {
+    "name": "end members",
+    "kind": "fit",
+    "by": "us",
+    "fit_on": []
+   }
+  ],
+  "law_class": "independent",
+  "mode": "ranking",
+  "reason": "disjoint M ancestors; parameters external with sources (max spread 0%)",
+  "family": "Vegard / ionic-radius lattice expansion (ranking: peaks shift to lower 2theta with x)",
+  "opportunities": 4,
+  "reader": null,
+  "methods_span": "(c) Magnified $( 0 0 2 ) _ { \\mathrm { T } } / ( 2 0 0 ) _ { \\mathrm { T } }$ peaks."
+ },
+ {
+  "id": "electrostriction_SP2",
+  "library": "electrostriction",
+  "inputs": [
+   "pe"
+  ],
+  "target": "se_bip",
+  "params": [
+   {
+    "name": "Q33",
+    "kind": "fit",
+    "by": "us",
+    "fit_on": [
+     "se_bip"
+    ]
+   },
+   {
+    "name": "Q33",
+    "kind": "fit",
+    "source": "authors' slope of linear S-P^2 region",
+    "spread": null,
+    "fit_on": [
+     "pe",
+     "se_bip"
+    ]
+   }
+  ],
+  "law_class": "fit",
+  "mode": "value",
+  "reason": "parameter Q33 fitted (us) on ['se_bip'], which include the target or its ancestors",
+  "family": "electrostriction S = Q33 P^2",
+  "opportunities": 4,
+  "reader": "curve",
+  "methods_span": "Strain–electric field (S–E) responses were evaluated at RT using an optical displacement sensor (MTI Instruments, MTI-2100) under the same measurement conditions as those used for the $P { - } E$ measurements."
+ },
+ {
+  "id": "recompute_d33s",
+  "library": "definition",
+  "inputs": [
+   "Smax",
+   "E_field"
+  ],
+  "target": "d33s",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target d33s is A, computed_from ['Smax'] lies within the inputs and their ancestors",
+  "family": "definition recompute (d33* = Smax/Emax)",
+  "opportunities": 4,
+  "reader": "curve/bar",
+  "methods_span": null
+ },
+ {
+  "id": "recompute_dP",
+  "library": "definition",
+  "inputs": [
+   "pmax_pr"
+  ],
+  "target": "dP",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target dP is A, computed_from ['pmax_pr'] lies within the inputs and their ancestors",
+  "family": "definition recompute (Delta P = Pmax - Pr)",
+  "opportunities": 4,
+  "reader": "curve/bar",
+  "methods_span": "In contrast, the polarization difference $( \\Delta P = P _ { \\mathrm { m a x } } - P _ { \\mathrm { r } } )$ increases markedly"
+ },
+ {
+  "id": "recompute_dT",
+  "library": "definition",
+  "inputs": [
+   "Ts_Tm"
+  ],
+  "target": "dT",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target dT is A, computed_from ['Ts_Tm'] lies within the inputs and their ancestors",
+  "family": "definition recompute (Delta T = Tm - Ts)",
+  "opportunities": 4,
+  "reader": "curve/bar",
+  "methods_span": "$\\Delta T$ $( \\Delta T = T _ { \\mathrm { m } } - T _ { \\mathrm { s } } )$ increases progressively with $\\mathrm { Z r }$ substitution (inset of Fig. 6(e))."
+ },
+ {
+  "id": "recompute_k",
+  "library": "definition",
+  "inputs": [
+   "ftir"
+  ],
+  "target": "k_force",
+  "params": [
+   {
+    "name": "mu(Ti-O)",
+    "kind": "external",
+    "source": "atomic masses (Ti 47.87, O 16.00)",
+    "spread": 0.0,
+    "fit_on": []
+   }
+  ],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target k_force is A, computed_from ['ftir'] lies within the inputs and their ancestors",
+  "family": "definition recompute (harmonic oscillator k = (2 pi c nu)^2 mu)",
+  "opportunities": 8,
+  "reader": "curve/bar",
+  "methods_span": "The force constant $( k )$ was estimated from the $\\mathrm { B O } _ { 6 }$ stretching frequency in the FTIR spectra using the harmonic oscillator model, with the expression given in Eq. (1) [38]:"
+ },
+ {
+  "id": "modified_curie_weiss",
+  "law_class": "not bound",
+  "reason": "needs a fitted diffuseness exponent per sample from the same curve (fit on the target): no disjoint test cells"
+ }
+]

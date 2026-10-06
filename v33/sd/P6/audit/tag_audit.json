@@ -1,0 +1,131 @@
+{
+ "model": "openai/gpt-5.6-sol",
+ "rows": [
+  {
+   "id": "F2a",
+   "builder": "M",
+   "sol": "M",
+   "stated": true,
+   "sol_from": [
+    "raw electrochemical current and potential readings",
+    "electrode area",
+    "solution resistance"
+   ],
+   "final": "M",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F2b",
+   "builder": "A",
+   "sol": "A",
+   "stated": true,
+   "sol_from": [
+    "F2a"
+   ],
+   "final": "A",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F2c",
+   "builder": "A",
+   "sol": "A",
+   "stated": true,
+   "sol_from": [
+    "F2a"
+   ],
+   "final": "A",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F2c-tafel",
+   "builder": "A",
+   "sol": "A",
+   "stated": true,
+   "sol_from": [
+    "F2b"
+   ],
+   "final": "A",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F2d",
+   "builder": "A",
+   "sol": "A",
+   "stated": true,
+   "sol_from": [
+    "F2a",
+    "catalyst mass loading"
+   ],
+   "final": "A",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F1i-Co",
+   "builder": "M",
+   "sol": "M",
+   "stated": true,
+   "sol_from": [
+    "ICP-MS Co and Ir readings"
+   ],
+   "final": "M",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F1i-Sr",
+   "builder": "M",
+   "sol": "M",
+   "stated": true,
+   "sol_from": [
+    "ICP-MS Sr and Ir readings"
+   ],
+   "final": "M",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F4a",
+   "builder": "M",
+   "sol": "A",
+   "stated": true,
+   "sol_from": [
+    "raw DEMS mass-spectrometric signals for oxygen isotopologues"
+   ],
+   "final": "A",
+   "agree": false,
+   "action": "M -> A (restrictive)"
+  },
+  {
+   "id": "F4b",
+   "builder": "M",
+   "sol": "M",
+   "stated": true,
+   "sol_from": [
+    "in situ ICP-MS elemental readings"
+   ],
+   "final": "M",
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F2f",
+   "builder": "M",
+   "sol": "M",
+   "stated": true,
+   "sol_from": [
+    "PEM-cell current and voltage readings",
+    "electrode area"
+   ],
+   "final": "M",
+   "agree": true,
+   "action": "none"
+  }
+ ],
+ "cost": 0.024535665,
+ "error": null
+}

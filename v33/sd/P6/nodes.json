@@ -1,0 +1,210 @@
+[
+ {
+  "id": "F2a",
+  "panel": "F2a",
+  "quantity": "iR-corrected OER polarization current density",
+  "computed_from": [
+   "current",
+   "iR correction with the stated resistances"
+  ],
+  "instrument": "CHI 760E; LSV at 10 mV/s",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "E - iR (V) vs.RHE"
+  },
+  "note": "settled: iR-corrected (axis label \"E - iR (V) vs.RHE\"; caption: \"The resistance values for SI1C1, SI2C1, SI4C1, SI6C1, SI8C1, SI and IrO2 were 3.9, 3.7, 3.6, 4.7, 3.2, 4.6 and 4.4 Ω\"); reference electrode: \"The reference electrode used was an Hg/HgCl2 electrode in a 0.5 M H2SO4 electrolyte\" (DEMS: saturated Ag/AgCl), converted to RHE",
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "raw electrochemical current and potential readings",
+   "electrode area",
+   "solution resistance"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2b",
+  "panel": "F2b",
+  "quantity": "Tafel plots (overpotential versus log j)",
+  "computed_from": [
+   "F2a"
+  ],
+  "instrument": null,
+  "formula": "eta = E - 1.23 V vs log j",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "OER polarization curves of SI1C1, SI2C1, SI4C1, SI6C1, SI8C1, and SI samples with a mass loading of 0.025 mg/cm2 in 0.5 M H2SO4 and (b) corresponding Tafel slopes"
+  },
+  "note": "transform of the plotted polarization curves -> A",
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F2a"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2c",
+  "panel": "F2c",
+  "quantity": "overpotential at 10 mA/cm2",
+  "computed_from": [
+   "F2a"
+  ],
+  "instrument": null,
+  "formula": "E(10 mA/cm2) - 1.23 V",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Comparison of overvoltages and Tafel slopes"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F2a"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2c-tafel",
+  "panel": "F2c-tafel",
+  "quantity": "Tafel slope",
+  "computed_from": [
+   "F2b"
+  ],
+  "instrument": null,
+  "formula": "slope of eta vs log j",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Comparison of overvoltages and Tafel slopes"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F2b"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2d",
+  "panel": "F2d",
+  "quantity": "mass activity",
+  "computed_from": [
+   "F2a",
+   "loading"
+  ],
+  "instrument": null,
+  "formula": "j / loading",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Comparison of OER mass activity"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F2a",
+   "catalyst mass loading"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F1i-Co",
+  "panel": "F1i-Co",
+  "quantity": "Co/Ir ratio (ICP-MS)",
+  "computed_from": [],
+  "instrument": "ICP-MS iCAP RQ",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "the proportions of each element in SrIrO3 were determined by ICP-MS (iCAP RQ) analysis."
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "ICP-MS Co and Ir readings"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F1i-Sr",
+  "panel": "F1i-Sr",
+  "quantity": "Sr/Ir ratio (ICP-MS)",
+  "computed_from": [],
+  "instrument": "ICP-MS iCAP RQ",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "the proportions of each element in SrIrO3 were determined by ICP-MS (iCAP RQ) analysis."
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "ICP-MS Sr and Ir readings"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F4a",
+  "panel": "F4a",
+  "quantity": "18O16O percentage (DEMS)",
+  "computed_from": [],
+  "instrument": "DEMS QAS 100",
+  "formula": "share of m/z 34 in the O2 signal",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "differential electrochemical mass spectrometry (DEMS) measurements were conducted using the QAS 100 apparatus"
+  },
+  "builder_level": "M",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "raw DEMS mass-spectrometric signals for oxygen isotopologues"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F4b",
+  "panel": "F4b",
+  "quantity": "in situ ICP-MS dissolved Sr, Co, Ir",
+  "computed_from": [],
+  "instrument": "ICP-MS iCAP RQ",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "In situ ICP-MS experiments were performed using a Thermo Scientific iCAP RQ instrument."
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "in situ ICP-MS elemental readings"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2f",
+  "panel": "F2f",
+  "quantity": "PEM electrolyser polarization",
+  "computed_from": [],
+  "instrument": "PEM cell",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "A home-made PEM water electrolysis cell with a proton exchange membrane was used to evaluate the performance of SI series catalyst."
+  },
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "PEM-cell current and voltage readings",
+   "electrode area"
+  ],
+  "sol_stated": true
+ }
+]

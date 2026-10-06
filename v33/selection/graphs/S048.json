@@ -1,0 +1,715 @@
+{
+ "key": "S048",
+ "doi": "10.1038/s41598-026-54064-4",
+ "publisher": "Springer Nature (Scientific Reports)",
+ "domain": "metakaolin geopolymer composites with 0-50 wt.% TiO2 (tribology, compression, thermal stability)",
+ "license_span": "This article is licensed under a Creative Commons Attribution 4.0 International License",
+ "conditions": {
+  "variable": "TiO2 content of powder blend (wt.%)",
+  "values": [
+   "0%",
+   "10%",
+   "20%",
+   "30%",
+   "40%",
+   "50%"
+  ],
+  "same_samples_note": "All 6 in XRD (F3), SEM (F4), FTIR (F5), compression (F6), TGA/DSC (F8), tribology (F9-F12); post-compression SEM (F7) only 0/40/50%; F2 is raw kaolin/metakaolin. Bulk density/porosity/water absorption in Table 2 only (not plotted)."
+ },
+ "nodes": [
+  {
+   "id": "x_TiO2",
+   "quantity": "TiO2 content of the geopolymer powder blend (wt.%)",
+   "panel": null,
+   "level": "D",
+   "computed_from": [],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "Geopolymer composite powders with titanium dioxide content (x = 0, 10, 20, 30, 40, and 50 wt.%) were mechanically mixed with MK for 3 h to"
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": null,
+   "scale_bar": null
+  },
+  {
+   "id": "tribo_cond",
+   "quantity": "tribometer test condition (Al2O3 ball r = 3 mm, 30 mm/s, 5 N, RT, 35-40% RH; 8 m sliding)",
+   "panel": null,
+   "level": "D",
+   "computed_from": [],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "Tribological behavior, including wear rate and coefficient of friction, was assessed utilizing an oscillating ball-on-disk tribometer"
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": null,
+   "scale_bar": null
+  },
+  {
+   "id": "xrd_raw",
+   "quantity": "XRD patterns of kaolin and metakaolin (raw materials)",
+   "panel": "F2",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "XRD Bruker D8",
+   "evidence": {
+    "kind": "span",
+    "text": "The phase characteristics of both raw material powders and hardened GPC samples were determined by X-ray diffraction (XRD) type Bruker D8 using CuKα radiation"
+   },
+   "conditions_shown": [
+    "kaolin",
+    "metakaolin"
+   ],
+   "chart_type": "spectrum",
+   "scale_bar": null
+  },
+  {
+   "id": "xrd_gpc",
+   "quantity": "XRD patterns of hardened GPC (anatase, quartz reflections, amorphous hump)",
+   "panel": "F3",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "XRD Bruker D8",
+   "evidence": {
+    "kind": "span",
+    "text": "The phase characteristics of both raw material powders and hardened GPC samples were determined by X-ray diffraction (XRD) type Bruker D8 using CuKα radiation"
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "spectrum",
+   "scale_bar": null
+  },
+  {
+   "id": "sem",
+   "quantity": "FE-SEM micrographs of polished GPC (x10k, 1 um bar; inset 2 um bar)",
+   "panel": "F4",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "FE-SEM ZEISS Sigma 500",
+   "evidence": {
+    "kind": "span",
+    "text": "Microstructural characterization was performed using a Field Emission Scanning Electron Microscope (FE-SEM) (FE-SEM, ZEISS-Sigma 500 FE-SEM, Sohag, Egypt)."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "micrograph",
+   "scale_bar": true,
+   "note": "figure labels read 'Ti2O' (typo)"
+  },
+  {
+   "id": "ftir",
+   "quantity": "FTIR spectra (Si-O-T ~1019 cm-1, O-H, Ti-O region)",
+   "panel": "F5",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "Bruker Vertex FT-IR",
+   "evidence": {
+    "kind": "span",
+    "text": "Bruker Vertex FT-IR spectroscopy was used to identify functional groups formed after polymerization."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "spectrum",
+   "scale_bar": null
+  },
+  {
+   "id": "stress_strain",
+   "quantity": "compressive stress-strain curves (representative; peak stress and failure strain)",
+   "panel": "F6a",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "Instron 3369, 50 kN",
+   "evidence": {
+    "kind": "span",
+    "text": "The compressive strength of the various hardened pastes was investigated using an Instron 3369 universal test machine"
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "line",
+   "scale_bar": null
+  },
+  {
+   "id": "ucs_bar",
+   "quantity": "ultimate compressive strength and failure strain (bars, average of five samples)",
+   "panel": "F6b",
+   "level": "A",
+   "computed_from": [
+    "stress_strain"
+   ],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "For each parameter, five samples were tested to obtain an average compressive strength value."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "bar",
+   "scale_bar": null,
+   "note": "bar values (68.35..139.44 MPa) coincide with the F6a curve peaks; conservative A (replicate average)"
+  },
+  {
+   "id": "sem_fract",
+   "quantity": "SEM of surfaces after compression test (x100/x200, 100 um bar)",
+   "panel": "F7",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "SEM (not the ZEISS data bar; instrument not named)",
+   "evidence": {
+    "kind": "span",
+    "text": "Figure 7 displays SEM images of geopolymer samples containing 0, 40, and $5 0 \\ \\mathrm { w t . } \\% \\ \\mathrm { T i O } _ { 2 }$ after performing the compressive test at the same magnification."
+   },
+   "conditions_shown": [
+    "0%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "micrograph",
+   "scale_bar": true,
+   "note": "text says same magnification, image bars read X100, X100, X200"
+  },
+  {
+   "id": "tga_0",
+   "quantity": "TGA mass curve and residue at 950 C, control (0%)",
+   "panel": "F8",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "Shimadzu TGA-50",
+   "evidence": {
+    "kind": "span",
+    "text": "Both analyses were performed using Shimadzu instruments (TGA-50 and DSC-60, respectively) from Kyoto, Japan."
+   },
+   "conditions_shown": [
+    "0%"
+   ],
+   "chart_type": "line",
+   "scale_bar": null
+  },
+  {
+   "id": "tga_ti",
+   "quantity": "TGA mass curve and residue at 950 C, TiO2-bearing samples",
+   "panel": "F8",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "Shimadzu TGA-50",
+   "evidence": {
+    "kind": "span",
+    "text": "Both analyses were performed using Shimadzu instruments (TGA-50 and DSC-60, respectively) from Kyoto, Japan."
+   },
+   "conditions_shown": [
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "line",
+   "scale_bar": null
+  },
+  {
+   "id": "dsc",
+   "quantity": "DSC heat-flow curves",
+   "panel": "F8",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "Shimadzu DSC-60",
+   "evidence": {
+    "kind": "span",
+    "text": "Both analyses were performed using Shimadzu instruments (TGA-50 and DSC-60, respectively) from Kyoto, Japan."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "line",
+   "scale_bar": null
+  },
+  {
+   "id": "cof_trace",
+   "quantity": "coefficient of friction vs sliding distance (0-8 m)",
+   "panel": "F10m",
+   "level": "M",
+   "computed_from": [
+    "tribo_cond"
+   ],
+   "instrument": "ball-on-disk tribometer force sensor",
+   "evidence": {
+    "kind": "span",
+    "text": "Concurrently, the coefficient of friction was continuously monitored throughout the test duration using a force sensor."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "line",
+   "scale_bar": null
+  },
+  {
+   "id": "wear_profile",
+   "quantity": "wear-track cross-section profiles (depth vs width)",
+   "panel": "F11",
+   "level": "M",
+   "computed_from": [
+    "tribo_cond"
+   ],
+   "instrument": "profilometer",
+   "evidence": {
+    "kind": "span",
+    "text": "Wear volume loss was quantified by analyzing the wear track profile using a profilometer."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "line",
+   "scale_bar": null,
+   "note": "dossier lists F11 as micrograph; image checked: it is a line plot of profilometer track profiles"
+  },
+  {
+   "id": "cof_bar",
+   "quantity": "friction coefficient (bars with error bars)",
+   "panel": "F9",
+   "level": "A",
+   "computed_from": [
+    "cof_trace"
+   ],
+   "instrument": null,
+   "evidence": {
+    "kind": "default",
+    "text": "default: derived figure of merit (mean/steady-state COF summarised from the friction trace) is A"
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "bar",
+   "scale_bar": null
+  },
+  {
+   "id": "wear_rate",
+   "quantity": "specific wear rate (mm3/N.m, bars)",
+   "panel": "F9",
+   "level": "A",
+   "computed_from": [
+    "wear_profile",
+    "tribo_cond"
+   ],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "Wear volume loss was quantified by analyzing the wear track profile using a profilometer."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "bar",
+   "scale_bar": null,
+   "note": "wear rate = volume (from profile) / (load x distance): computed from the plotted F11 profiles, hence A. Abstract/conclusion values (3.45e-5 -> 1.12e-5) disagree with F9/text (1.395e-3 -> 2.63e-4)."
+  },
+  {
+   "id": "optical_wear",
+   "quantity": "optical micrographs of wear tracks",
+   "panel": "F12",
+   "level": "M",
+   "computed_from": [],
+   "instrument": "optical microscope (not named in Methods)",
+   "evidence": {
+    "kind": "span",
+    "text": "Fig. 12. Optical micrographs of wear tracks of the geopolymer composites with varying $\\mathrm { T i O } _ { 2 }$ additions $( 0 \\% - 5 0 \\% )$ ."
+   },
+   "conditions_shown": [
+    "0%",
+    "10%",
+    "20%",
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "chart_type": "micrograph",
+   "scale_bar": true,
+   "note": "small 200 um bars bottom-right of each tile (legible only on 0%)"
+  },
+  {
+   "id": "schem",
+   "quantity": "synthesis schematic",
+   "panel": "F1",
+   "level": "S",
+   "computed_from": [],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "Fig. 1. Synthesis steps of GPC samples."
+   },
+   "conditions_shown": [],
+   "chart_type": "schematic",
+   "scale_bar": null
+  },
+  {
+   "id": "I_inert",
+   "quantity": "interpretation: TiO2 is a chemically inert, physically embedded filler",
+   "panel": null,
+   "level": "I",
+   "computed_from": [
+    "xrd_gpc"
+   ],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "indicate that $\\mathrm { T i O } _ { 2 }$ functions predominantly as a chemically inert reinforcing filler within the geopolymer matrix"
+   },
+   "conditions_shown": [],
+   "chart_type": null,
+   "scale_bar": null
+  },
+  {
+   "id": "I_thirdbody",
+   "quantity": "interpretation: third-body TiO2/gel tribolayer lowers steady-state COF",
+   "panel": null,
+   "level": "I",
+   "computed_from": [
+    "cof_trace"
+   ],
+   "instrument": null,
+   "evidence": {
+    "kind": "span",
+    "text": "Coefficient of friction stabilization beyond $4 \\textrm { m }$ indicates third-body tribolayer formation."
+   },
+   "conditions_shown": [],
+   "chart_type": null,
+   "scale_bar": null
+  }
+ ],
+ "candidate_laws": [
+  {
+   "id": "bragg_anatase_ref",
+   "family": "Bragg agreement with external reference lattice (anatase a=3.785, c=9.514 A; alpha-quartz)",
+   "inputs": [
+    "x_TiO2"
+   ],
+   "target": "xrd_gpc",
+   "agreement": false,
+   "params": [
+    {
+     "name": "anatase/quartz lattice constants",
+     "kind": "external",
+     "source": "ICDD anatase 21-1272, quartz 46-1045; lambda CuKa 0.15406 nm (Methods)",
+     "spread": 0.002,
+     "fit_on": []
+    }
+   ],
+   "opportunities": 36,
+   "note": "opportunities = 6 anatase reflections x 5 TiO2 samples (30) + quartz (101) on all 6 samples (6); peak positions printed in text (25.23, 37.78, 48.15, 53.94, 55.17, 62.73; quartz 20.86/26.7) -> contamination; essentially a phase-ID check."
+  },
+  {
+   "id": "xrd_intensity_fraction",
+   "family": "XRD phase fraction (anatase (101) intensity rises with TiO2 mass fraction), ranking only",
+   "inputs": [
+    "x_TiO2"
+   ],
+   "target": "xrd_gpc",
+   "agreement": false,
+   "params": [
+    {
+     "name": "reference intensity ratio",
+     "kind": "external",
+     "source": "RIR method (anatase I/Icor ~3.3)",
+     "spread": 0.5,
+     "fit_on": []
+    }
+   ],
+   "opportunities": 5,
+   "note": "ranking over 10-50%; text says intensity 'grows monotonically'."
+  },
+  {
+   "id": "tga_mass_balance",
+   "family": "mass-balance mixing (TGA residue: inert TiO2 + control-paste residue), ranking only",
+   "inputs": [
+    "tga_0",
+    "x_TiO2"
+   ],
+   "target": "tga_ti",
+   "agreement": false,
+   "params": [
+    {
+     "name": "TiO2 residue = 100%",
+     "kind": "external",
+     "source": "anatase is non-volatile to 950 C",
+     "spread": 0.0,
+     "fit_on": []
+    },
+    {
+     "name": "TiO2 mass fraction of hardened paste",
+     "kind": "external",
+     "source": "not given (activator/solid ratio unreported) -> only monotonic ranking",
+     "spread": 0.5,
+     "fit_on": []
+    }
+   ],
+   "opportunities": 5,
+   "note": "Predicts residue >= control and rising with x. F8 as read: 0% ~89.5%, 10% ~71%, 20% ~82%, 30% ~83%, 40% ~81%, 50% ~86% -> law VIOLATED by the curves, and the text ('TiO2-bearing samples exhibit a markedly lower mass loss') contradicts the figure. Usable only as a figure-vs-text consistency probe."
+  },
+  {
+   "id": "recompute_ucs",
+   "family": "definition recompute (UCS and failure strain = peak/end of stress-strain curve)",
+   "inputs": [
+    "stress_strain"
+   ],
+   "target": "ucs_bar",
+   "agreement": false,
+   "params": [],
+   "opportunities": 12,
+   "note": "6 UCS + 6 failure strain cells; F6b prints values on bars and text repeats several (contamination)."
+  },
+  {
+   "id": "recompute_cof",
+   "family": "definition recompute (bar COF = steady-state mean of COF trace)",
+   "inputs": [
+    "cof_trace"
+   ],
+   "target": "cof_bar",
+   "agreement": false,
+   "params": [],
+   "opportunities": 6,
+   "note": "F10m steady values (~0.37-0.38, 0.35, 0.33, 0.30-0.32, 0.29, 0.28-0.30) vs F9 bars (0.397..0.284); averaging window not stated."
+  },
+  {
+   "id": "recompute_wear",
+   "family": "definition recompute (wear rate = track cross-section area x track length / (load x distance)), ranking only",
+   "inputs": [
+    "wear_profile",
+    "tribo_cond"
+   ],
+   "target": "wear_rate",
+   "agreement": false,
+   "params": [
+    {
+     "name": "stroke/track length",
+     "kind": "external",
+     "source": "not reported -> ranking only",
+     "spread": 0.5,
+     "fit_on": []
+    }
+   ],
+   "opportunities": 6,
+   "note": "F11 profile area ranking 0 > 10 > 20 > 30 > 40 > 50 vs F9 wear bars (30% ~ 40%)."
+  },
+  {
+   "id": "archard_ucs",
+   "family": "Archard (wear rate ~ K / hardness, UCS as hardness proxy)",
+   "inputs": [
+    "stress_strain",
+    "tribo_cond"
+   ],
+   "target": "wear_rate",
+   "agreement": false,
+   "params": [
+    {
+     "name": "K (wear coefficient)",
+     "kind": "fit",
+     "source": "fit on 0-20% cells",
+     "spread": null,
+     "fit_on": [
+      "wear_rate"
+     ]
+    }
+   ],
+   "opportunities": 6,
+   "note": "fit class -> T7; UCS is a weak proxy for hardness (no hardness test); 40% sample (UCS drop, same wear as 30%) is the discriminating cell."
+  }
+ ],
+ "t5_pairs": [
+  {
+   "mechanisms": [
+    "TiO2 is a chemically inert physical filler (dilution + pore filling)",
+    "TiO2 chemically incorporates into the aluminosilicate network (Ti substitution / titanium silicate formation)"
+   ],
+   "authors_choice": "chemically inert physical filler",
+   "authors_span": "Also, this observation is attributed to a physical dilution effect and the high crystallinity of the titania filler rather than a chemical alteration of the geopolymer network43,57.",
+   "observables": [
+    {
+     "name": "quartz/anatase peak positions and new reflections vs x",
+     "panel": "F3",
+     "direction_A": "no shift, no new reflections; anatase intensity rises with x",
+     "direction_B": "new Ti-silicate reflections and/or shifted hump/peaks"
+    },
+    {
+     "name": "Si-O-T asymmetric stretch (~1019 cm-1) position vs x",
+     "panel": "F5",
+     "direction_A": "no shift (intensity only diluted)",
+     "direction_B": "shift to lower wavenumber (heavier Ti in T-O-Si)"
+    }
+   ],
+   "cause_panels": [
+    "x_TiO2 (D)"
+   ],
+   "outcome_panels": [
+    "F3",
+    "F5"
+   ],
+   "note": "authors are internally inconsistent: they report 'slight wavenumber shifts' and 'Ti-O-Si linkages' while choosing the inert-filler reading"
+  },
+  {
+   "mechanisms": [
+    "reinforcing filler: TiO2 densifies matrix and raises strength",
+    "dilution: TiO2 replaces reactive metakaolin, less N-A-S-H binder, weaker paste"
+   ],
+   "authors_choice": "reinforcing filler / densification",
+   "authors_span": "These results confirm the dual role of $\\mathsf { T i O } _ { 2 }$ as a microstructural densifier and a reinforcing agent",
+   "observables": [
+    {
+     "name": "peak compressive stress vs x",
+     "panel": "F6a",
+     "direction_A": "increases with x",
+     "direction_B": "decreases with x"
+    }
+   ],
+   "cause_panels": [
+    "x_TiO2 (D)",
+    "F4"
+   ],
+   "outcome_panels": [
+    "F6a"
+   ]
+  },
+  {
+   "mechanisms": [
+    "third-body TiO2/gel tribolayer and micro-bearing rolling lowers friction and wear",
+    "hard anatase particles act as abrasive third bodies (ploughing) raising friction and wear"
+   ],
+   "authors_choice": "third-body protective tribolayer",
+   "authors_span": "In addition, $\\mathrm { T i O } _ { 2 }$ improves frictional stability and lowers the steady-state coefficient, demonstrating its dual function as a structural densifier and third-body protector85.",
+   "observables": [
+    {
+     "name": "steady-state COF vs x",
+     "panel": "F10m",
+     "direction_A": "decreases with x",
+     "direction_B": "increases with x"
+    },
+    {
+     "name": "wear-track depth/width vs x",
+     "panel": "F11",
+     "direction_A": "shallower/narrower with x",
+     "direction_B": "deeper/wider with x"
+    }
+   ],
+   "cause_panels": [
+    "x_TiO2 (D)"
+   ],
+   "outcome_panels": [
+    "F10m",
+    "F11"
+   ]
+  }
+ ],
+ "t7_candidates": [
+  {
+   "law": "Archard wear: k = K / H with UCS as hardness proxy",
+   "free_parameter": "K (wear coefficient)",
+   "fit_cells": [
+    "0%",
+    "10%",
+    "20%"
+   ],
+   "test_cells": [
+    "30%",
+    "40%",
+    "50%"
+   ],
+   "note": "wear rate is A (from F11 profiles); UCS from F6a peaks (M). 40% cell (UCS drop but wear ~30%) tests the law; proxy weak, ranking-level only."
+  }
+ ],
+ "micrograph_series": {
+  "panels": [
+   "F4",
+   "F7",
+   "F12"
+  ],
+  "conditions_with_scale_bar": 6,
+  "note": "F4 FE-SEM all 6 with 1 um bars (checked image); F12 optical all 6 with tiny 200 um bars; F7 SEM 3 conditions with 100 um bars. F11 is NOT a micrograph (profilometer line plot)."
+ },
+ "key_panel_chart_types": {
+  "line": 4,
+  "scatter": 0,
+  "bar": 2,
+  "box": 0
+ },
+ "contamination_v024_items": [
+  "W2-026",
+  "W3-012"
+ ],
+ "risks": [
+  "Figure-text contradictions: F8 TGA shows the 0% control with the LOWEST mass loss (~10%) while text says TiO2 lowers mass loss; abstract/conclusion wear rates (3.45e-5 -> 1.12e-5 at 40%) disagree with F9/text (1.395e-3 -> 2.63e-4 at 50%); abstract friction 0.36->0.29 vs F9 0.397->0.284",
+  "Methods says ball-on-disk tribometer, Results says pin-on-disc; F7 text says same magnification but bars read X100/X200; panel labels 'Ti2O'",
+  "only one independent quantitative law family usable (Bragg vs external anatase lattice, essentially phase ID with printed peak positions); TGA mass balance violated by the curves",
+  "bulk density/porosity/water absorption only in Table 2 (no panel) - porosity agreement and density rule-of-mixtures not supportable from figures",
+  "F6b and F9 print values on bars; text repeats UCS values (contamination for recompute items)",
+  "F8 is six small dual-axis panels under one figure id; F10m/F11 dossier ids are auto-split (F11 mislabelled micrograph in dossier)",
+  "multi-instrument (6) but no two instruments measure the same physical quantity -> no agreement law"
+ ]
+}

@@ -1,0 +1,273 @@
+[
+ {
+  "id": "F2c",
+  "panel": "F2c",
+  "quantity": "density",
+  "computed_from": [
+   "mass",
+   "dimensions"
+  ],
+  "instrument": null,
+  "formula": "rho = m / V",
+  "level": "M",
+  "evidence": {
+   "kind": "default",
+   "text": "named default: bulk density of the cut prisms from mass and geometric volume (specimen dimensions 40 mm x 40 mm x 160 mm stated; the density method itself is not stated in the paper)"
+  },
+  "note": "settled: method not stated -> named default; specimen means of three specimens (Source Data lists the three values)",
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "density-test raw readings"
+  ],
+  "sol_stated": false
+ },
+ {
+  "id": "F3e",
+  "panel": "F3e",
+  "quantity": "thermal conductivity (Hot Disk)",
+  "computed_from": [],
+  "instrument": "Hot Disk TPS 2500S",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "the thermal conductivity along the depth direction was quantitatively measured using a Hot Disk TPS 2500S (Sweden) at room temperature"
+  },
+  "note": "middle bar = literature value for lightweight concrete (I), not keyed",
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "Hot Disk sensor readings"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F3b",
+  "panel": "F3b",
+  "quantity": "backside temperature versus heating time",
+  "computed_from": [],
+  "instrument": "IR camera",
+  "formula": null,
+  "level": "M",
+  "evidence": {
+   "kind": "span",
+   "text": "an infrared camera was positioned 10 cm away from the opposite side of the specimen to record the temperature evolution on the specimen’s back surface"
+  },
+  "note": "representative curves",
+  "builder_level": "M",
+  "sol_level": "M",
+  "sol_computed_from": [
+   "infrared-camera temperature readings"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2a",
+  "panel": "F2a",
+  "quantity": "specific load versus midspan displacement (3PB)",
+  "computed_from": [
+   "load (not plotted)",
+   "F2c"
+  ],
+  "instrument": null,
+  "formula": "load / density",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Representative 3-point bending (3PB) curves"
+  },
+  "note": "normalised by density -> A; representative curves",
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "3PB load and midspan-displacement readings",
+   "F2c"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2e",
+  "panel": "F2e",
+  "quantity": "specific load versus displacement (SENB)",
+  "computed_from": [
+   "load (not plotted)",
+   "F2c"
+  ],
+  "instrument": null,
+  "formula": "load / density",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Representative SENB test curves"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "SENB load and displacement readings",
+   "F2c"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2b",
+  "panel": "F2b",
+  "quantity": "strain at failure",
+  "computed_from": [
+   "F2a"
+  ],
+  "instrument": null,
+  "formula": "computed from the load-displacement record",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "The details of the mechanical parameter calculation including MOR, Flexural toughness, KIC, and KJC are given in the Suppl. method 1."
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "3PB displacement readings",
+   "specimen and span dimensions"
+  ],
+  "sol_stated": false
+ },
+ {
+  "id": "F2d",
+  "panel": "F2d",
+  "quantity": "specific MOR",
+  "computed_from": [
+   "load",
+   "F2c",
+   "b, d, L"
+  ],
+  "instrument": null,
+  "formula": "3PL/(2bd^2) / rho",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "the specific modulus of rupture (specific MOR) was not significantly affected"
+  },
+  "note": "specimen dimensions 40 x 40 mm, span 100 mm stated in Methods",
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "3PB load readings",
+   "specimen and span dimensions",
+   "F2c"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2f",
+  "panel": "F2f",
+  "quantity": "specific K_IC",
+  "computed_from": [
+   "F2e",
+   "F2c"
+  ],
+  "instrument": null,
+  "formula": null,
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "The details of the mechanical parameter calculation including MOR, Flexural toughness, KIC, and KJC are given in the Suppl. method 1."
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "SENB load-displacement readings",
+   "notch and specimen dimensions",
+   "crack-initiation node identified by DIC",
+   "F2c"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2g",
+  "panel": "F2g",
+  "quantity": "flexural toughness",
+  "computed_from": [
+   "F2a"
+  ],
+  "instrument": null,
+  "formula": "integral of the load-displacement curve",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "The details of the mechanical parameter calculation including MOR, Flexural toughness, KIC, and KJC are given in the Suppl. method 1."
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "integral of 3PB load-displacement curve"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2h",
+  "panel": "F2h",
+  "quantity": "specific K_JC",
+  "computed_from": [
+   "F2j",
+   "F2c"
+  ],
+  "instrument": null,
+  "formula": null,
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "The values corresponding to this limit on the curves were used to calculate the fracture toughness KJC."
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "F2j",
+   "ASTM crack-extension limit",
+   "F2c"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F2j",
+  "panel": "F2j",
+  "quantity": "J-R curves",
+  "computed_from": [
+   "F2e"
+  ],
+  "instrument": null,
+  "formula": "J-integral",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "Representative crack-resistance curves (J-R curves)"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "SENB load-displacement readings",
+   "DIC crack-extension measurements",
+   "notch and specimen dimensions"
+  ],
+  "sol_stated": true
+ },
+ {
+  "id": "F4b",
+  "panel": "F4b",
+  "quantity": "weak-phase thickness and length distributions (X-CT)",
+  "computed_from": [],
+  "instrument": null,
+  "formula": "image statistics",
+  "level": "A",
+  "evidence": {
+   "kind": "span",
+   "text": "The thickness distributions of the weakness phase and the solid phase were determined by creating five equally spaced slices"
+  },
+  "builder_level": "A",
+  "sol_level": "A",
+  "sol_computed_from": [
+   "X-CT reconstructed slice pixels",
+   "manual ImageJ length measurements"
+  ],
+  "sol_stated": true
+ }
+]
