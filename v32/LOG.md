@@ -134,3 +134,6 @@ T2 8, T4 39 = 13/13/13 incl. recompute 2+2, T7 2); Sol cannot-tell 13/13 (cached
 
 ## Held-out inputs (after F6, before the run)
 - fidelity/heldout_inputs.py/.json: colours (sampled points, or declared from dominant colour-bin listings for X1 4a/4b, X3 2b/3d, X4 3i/4d, S098 F5c/F6a/F7h), exclusion boxes, axis kinds, dual axes, gradient flag, declared shared-axis ticks (X1 2b/2d y, X2 4top x, S039 F16 x), S039 F16 subplot crops. Corrections before any read: X2 Fig 4 boxes (frame rows 15-370 / 391-746); X1 4a two series out of scope (sheet names contradict figure labels). S039 F8 unsupported (4 y axes).
+
+## Held-out gate (F6)
+- fidelity/heldout_run.py: accuracy fails (bar_top, internal extremum); coverage low (calibration on publication-resolution figures). Stopped per instruction 5; 5D not run (E14).
