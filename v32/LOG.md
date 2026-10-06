@@ -128,3 +128,6 @@ T2 8, T4 39 = 13/13/13 incl. recompute 2+2, T7 2); Sol cannot-tell 13/13 (cached
 
 ## Held-out sets (after Phase 3 review)
 - External X1-X4 (Communications Materials 01193-y, 01347-y; Nature Communications 78108-5, 77568-z) and internal S039/S098 table panels chosen and frozen (fidelity/HELDOUT.md, heldout_spec.py, heldout_truth.json) before any F6 code; S030 becomes development data.
+
+## F6 readers
+- DE study (replicas/de_study.json): DE_MIN = 15. Replica gate 36/6/1 refused. S030 development check (fidelity/s030_dev_F6.json): 8 of 9 panels refused for colour separation. Freeze F6 PASS.

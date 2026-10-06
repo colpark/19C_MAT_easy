@@ -85,7 +85,7 @@ def render(style, rng):
         if style.get('separated'): Ec = [xr[1] * (0.12 + 0.07 * k + rng.uniform(-0.01, 0.01)) for k in range(n)]; Ps = [rng.uniform(0.8, 0.9) for _ in range(n)]
         else: Ec = [rng.uniform(0.35, 0.6) * xr[1] for _ in range(n)]; Ps = [rng.uniform(0.6, 0.9) for _ in range(n)]
         yr = (-1.0, 1.0) if kind == 'loop' else (-0.1, 1.0)
-    elif kind == 'bar': yr = (0.0, 1.0)
+    elif kind == 'bar': yr = (-0.5, 1.0) if style.get('negative') else (0.0, 1.0)
     elif kind == 'stress_strain':
         fs = make_series(kind, n, rng, xr); yr = (-0.05, 1.08)
         def ss_fn(prm, x):
@@ -93,21 +93,22 @@ def render(style, rng):
             return np.where(xx <= xb, Sm * (1 - np.exp(-t / tau)) / (1 - np.exp(-(xb - xs_) / tau)) * (xb - xs_ > 0), np.nan)
     else:
         fs = make_series(kind, n, rng, xr); vals = np.concatenate([fn(xs) for fn in fs]); pad = 0.05 * (vals.max() - vals.min()); yr = (float(vals.min()) - pad, float(vals.max()) + 1.6 * pad)
+    TW = style.get('tick_w', 2) * sc; g_ = style.get('frame_grey', 0); TC = (g_, g_, g_)   # thin grey frames and ticks (resampled figures)
     S = lambda p: p * sc + (sc - 1) / 2   # output pixel centre p -> supersampled coordinate (LANCZOS 2x box: output j = sup 2j..2j+1)
     fx = lambda x: x0 + (x - xr[0]) / (xr[1] - xr[0]) * (x1 - x0); fy = lambda y: yb - (y - yr[0]) / (yr[1] - yr[0]) * (yb - yt)
     for t in nice_ticks(*xr):
         p = fx(t)
-        if x0 < p < x1: stroke(d, [(S(p), S(yb)), (S(p), S(yb - 7))], 2 * sc, (0, 0, 0)); s = '%g' % t; d.text(((p - 0.27 * fs_ * len(s)) * sc, (yb + 6) * sc), s, fill=(0, 0, 0), font=f)
+        if x0 < p < x1: stroke(d, [(S(p), S(yb)), (S(p), S(yb - 7))], TW, TC); s = '%g' % t; d.text(((p - 0.27 * fs_ * len(s)) * sc, (yb + 6) * sc), s, fill=(0, 0, 0), font=f)
     if not style.get('y_none'):
         for t in nice_ticks(*yr):
             p = fy(t)
             if not yt < p < yb: continue
             s = '%g' % t
             if style.get('y_side') == 'right':   # quantity on the right axis; the left axis carries another quantity (scaled 0..100)
-                stroke(d, [(S(x1), S(p)), (S(x1 - 7), S(p))], 2 * sc, (0, 0, 0)); d.text(((x1 + 6) * sc, (p - 0.6 * fs_) * sc), s, fill=(0, 0, 0), font=f)
-                lv = '%g' % round((p - yt) / (yb - yt) * 100); stroke(d, [(S(x0), S(p)), (S(x0 + 7), S(p))], 2 * sc, (0, 0, 0)); d.text(((x0 - 0.6 * fs_ * len(lv) - 6) * sc, (p - 0.6 * fs_) * sc), lv, fill=(0, 0, 0), font=f)
+                stroke(d, [(S(x1), S(p)), (S(x1 - 7), S(p))], TW, TC); d.text(((x1 + 6) * sc, (p - 0.6 * fs_) * sc), s, fill=(0, 0, 0), font=f)
+                lv = '%g' % round((p - yt) / (yb - yt) * 100); stroke(d, [(S(x0), S(p)), (S(x0 + 7), S(p))], TW, TC); d.text(((x0 - 0.6 * fs_ * len(lv) - 6) * sc, (p - 0.6 * fs_) * sc), lv, fill=(0, 0, 0), font=f)
             else:
-                stroke(d, [(S(x0), S(p)), (S(x0 + 7), S(p))], 2 * sc, (0, 0, 0)); d.text(((x0 - 0.6 * fs_ * len(s) - 6) * sc, (p - 0.6 * fs_) * sc), s, fill=(0, 0, 0), font=f)
+                stroke(d, [(S(x0), S(p)), (S(x0 + 7), S(p))], TW, TC); d.text(((x0 - 0.6 * fs_ * len(s) - 6) * sc, (p - 0.6 * fs_) * sc), s, fill=(0, 0, 0), font=f)
     def draw(i, pts, col):   # a series as a line, as markers (every marker_step px along the path), or both
         targets = ((d, col), (di, i + 1), (ImageDraw.Draw(solo[i]), 255))
         if not style.get('marker') or style.get('marker_line'):
@@ -143,7 +144,19 @@ def render(style, rng):
                                   {'type': 'y_at_extremum', 'series': str(i), 'args': {'kind': 'max', 'window': [xr[0], xr[1]]}, 'value': ytop, 'at': [[fx(xb) - 2, fy(ytop)]]}]
         elif kind == 'bar':
             v = make_series('bar', 1, rng, xr)[0]; bw = (x1 - x0) / (2.5 * n); cx_ = x0 + (i + 0.75) * (x1 - x0) / (n + 0.5)
-            d.rectangle([S(cx_ - bw / 2), S(fy(v)), S(cx_ + bw / 2), S(yb)], fill=col)
+            if style.get('negative') and i == n - 1: v = -rng.uniform(0.1, 0.4)   # one bar below the zero line
+            ytop, ybot = (fy(v), fy(0.0)) if v >= 0 else (fy(0.0), fy(v))
+            if style.get('gradient'):   # fill fades from the bar colour at the outer edge toward white at the zero line
+                for yy in np.arange(ytop, ybot, 0.5):
+                    f_ = (yy - ytop) / max(ybot - ytop, 1e-6) if v >= 0 else (ybot - yy) / max(ybot - ytop, 1e-6)
+                    cc = tuple(int(c + (255 - c) * style['gradient'] * f_) for c in col); d.line([(S(cx_ - bw / 2), S(yy)), (S(cx_ + bw / 2), S(yy))], fill=cc, width=sc)
+            else: d.rectangle([S(cx_ - bw / 2), S(ytop), S(cx_ + bw / 2), S(ybot)], fill=col)
+            if style.get('errorbars'):   # central error bar with caps, and three replicate dots near the outer edge
+                e = rng.uniform(0.03, 0.08) * (yr[1] - yr[0]); sg = 1 if v >= 0 else -1
+                stroke(d, [(S(cx_), S(fy(v - e))), (S(cx_), S(fy(v + e)))], 1.5 * sc, (20, 20, 20))
+                for vv in (v - e, v + e): stroke(d, [(S(cx_ - 0.2 * bw), S(fy(vv))), (S(cx_ + 0.2 * bw), S(fy(vv)))], 1.5 * sc, (20, 20, 20))
+                for dx_, dv in ((-0.12, 0.6), (0.0, -0.5), (0.12, 0.1)):
+                    px_, py_ = S(cx_ + dx_ * bw), S(fy(v + dv * e)); d.ellipse([px_ - 2.5 * sc, py_ - 2.5 * sc, px_ + 2.5 * sc, py_ + 2.5 * sc], outline=(30, 90, 160), width=sc)
             truth['features'].append({'type': 'bar_top', 'series': str(i), 'args': {'index': 0}, 'value': float(v)})
         else:
             fn = fs[i]; xd = xs[(xs >= xr[0] + 0.08 * (xr[1] - xr[0])) & (xs <= xr[0] + 0.95 * (xr[1] - xr[0]))] if kind == 'wear' else xs   # real wear profiles stay clear of the axes
@@ -176,14 +189,15 @@ def render(style, rng):
                 truth['features'].append({'type': 'peak_x', 'series': sv, 'args': {'window': list(win)}, 'value': float(c), 'at': [[fx(c), fy(float(y[j]))]]})
     # frame drawn last (spines on top of the data, as matplotlib/Origin do)
     fw = style.get('frame_w', 1.5) * sc   # frame lines centred on the frame coordinates (pixel-aligned after downsampling)
+    o_ = rng.uniform(0.2, 0.8) if style.get('frame_split') else 0.0   # a 1-px line at a sub-pixel position: resampling splits it over two pixels
     for (p0, p1) in (((x0, yb), (x1, yb)), ((x0, yt), (x1, yt)), ((x0, yt), (x0, yb)), ((x1, yt), (x1, yb))):
-        stroke(d, [(S(p0[0]), S(p0[1])), (S(p1[0]), S(p1[1]))], fw, (0, 0, 0))
+        stroke(d, [(S(p0[0] + o_), S(p0[1] + o_)), (S(p1[0] + o_), S(p1[1] + o_))], fw, TC)
     ida = np.asarray(idm)   # visibility: >= 75% of the series' own line footprint within 1.5 px of the check point is on top (series-id render)
     for ft in truth['features']:
         if 'at' not in ft: ft['visible'] = True; continue
         sid = int(ft['series']) + 1; hit = []
         for xp, yp in ft.pop('at'):
-            a, b = int(round(S(yp))), int(round(S(xp))); r_ = int(1.5 * sc) + (lw * sc) // 2
+            a, b = int(round(S(yp))), int(round(S(xp))); r_ = int(1.5 * sc) + int(lw * sc) // 2
             fp = np.asarray(solo[sid - 1])[max(a - r_, 0):a + r_ + 1, max(b - r_, 0):b + r_ + 1] > 0
             top = ida[max(a - r_, 0):a + r_ + 1, max(b - r_, 0):b + r_ + 1] == sid
             hit.append(bool(fp.any() and (top & fp).sum() >= 0.75 * fp.sum()))
@@ -193,6 +207,7 @@ def render(style, rng):
     pc = {'series': series_decl, 'y_none': bool(style.get('y_none'))}
     if style.get('y_side'): pc['y_side'] = style['y_side']
     if style.get('marker'): pc['merge_gap'] = int(math.ceil(style['marker']))   # declared with the series in the real profile
+    if style.get('gradient'): pc['gradient_fill'] = True   # declared with the series in the profile (the fill is visible)
     if style.get('y_ticks_declared'): pc['y_ticks'] = [t for t in nice_ticks(*yr) if yt < fy(t) < yb]   # negative labels OCR-unreliable: declared
     if style.get('x_ticks_declared'): pc['x_ticks'] = [t for t in nice_ticks(*xr) if x0 < fx(t) < x1]   # x labels clipped in the real crop: values declared in the profile
     return im, truth, pc
@@ -203,12 +218,14 @@ def styles():
 def make():
     os.makedirs(TRUTH, exist_ok=True); out = []
     for st in styles():
-        rgb = np.asarray(Image.open(f"{HOSTP}/{st['paper']}/crops/{st['panel']}.jpg").convert('RGB'))
+        src = f"/home/aid1/Documents/harbor/v32_host/fidelity/{st['paper']}/crops/{st['panel']}.jpg" if st['paper'] == 'S030' else f"{HOSTP}/{st['paper']}/crops/{st['panel']}.jpg"
+        rgb = np.asarray(Image.open(src).convert('RGB'))
         if st.get('subplot'):   # style taken from one subplot of a grid figure (fractions of the crop)
             fa, fb, fc, fd = st['subplot']; H_, W_ = rgb.shape[:2]; rgb = rgb[int(fb * H_):int(fd * H_), int(fa * W_):int(fc * W_)]
         ax = D.find_axes(rgb.mean(2))
         h_, w_ = rgb.shape[:2]; st['size'] = [w_, h_]
-        if ax: st['frame'] = [ax['x_left'], ax['x_right'], ax['x_row'], ax['y_top']]
+        if st.get('frame_declared'): st['frame'] = st['frame_declared']   # geometry of a real panel whose thin frame find_axes misses
+        elif ax: st['frame'] = [ax['x_left'], ax['x_right'], ax['x_row'], ax['y_top']]
         else: st['frame'] = [int(0.2 * w_), int(0.95 * w_), int(0.8 * h_), int(0.08 * h_)]; print(st['id'], 'no frame found on the real panel: default frame')
         if st.get('colours'): pass   # declared in the style file (e.g. a black loop)
         elif st['kind'] != 'spectrum' or st.get('chromatic'): st['colours'] = palette(rgb, st['frame'], st['n'])
@@ -227,6 +244,9 @@ def check():
         t = json.load(open(tf)); st = t['style']; img = f"{OUT}/{os.path.basename(tf)[:-5]}/panel.jpg"
         pc = dict(t['pc']); pc['y_none'] = t['pc'].get('y_none')
         try: P = R.Panel(img, pc)
+        except R.Refused as e:   # refusal by design: no read, no key
+            for ft in t['truth']['features']: res.setdefault((st['id'], ft['type']), []).append(('refused', None))
+            continue
         except Exception as e:
             for ft in t['truth']['features']: res.setdefault((st['id'], ft['type']), []).append(('calibration failed', None))
             continue
@@ -241,8 +261,9 @@ def check():
         e = [x for s, x in v if s == 'ok']; found = len(e); w = sum(abs(x) <= 2 for x in e) / max(found, 1); b = float(np.mean(e)) if e else float('nan')
         nflag = sum(s == 'flagged (occluded)' for s, _ in v); vis = len(v) - nflag
         cov = found / max(vis, 1); ok = cov >= 0.8 and found > 0 and w >= 0.95 and abs(b) <= 0.5   # coverage criterion as the Phase 3 gate (>= 80%)
+        if v and all(s_ == 'refused' for s_, _ in v): ok = None   # the style is refused as a whole
         out.append({'style': sid, 'feature': ft, 'n': len(v), 'found': found, 'flagged_occluded': nflag, 'coverage_visible': cov, 'all_visible_found': found == vis, 'within_2u': float(w), 'bias_u': b, 'pass': bool(ok), 'fail_kinds': sorted({s for s, _ in v if s != 'ok'})})
-        print(f'{sid:22} {ft:14} {len(v):3d} {found:5d} {nflag:4d} {cov:5.0%} {w:6.0%} {b:8.2f} {"PASS" if ok else "FAIL"}')
+        print(f'{sid:22} {ft:14} {len(v):3d} {found:5d} {nflag:4d} {cov:5.0%} {w:6.0%} {b:8.2f} {"REFUSED" if ok is None else ("PASS" if ok else "FAIL")}')
     json.dump(out, open(f'{V32}/replicas/feature_check.json', 'w'), indent=1)
 
 if __name__ == '__main__':

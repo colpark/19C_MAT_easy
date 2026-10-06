@@ -14,38 +14,74 @@ Features (value, u in data units; u = hypot(feature pixel uncertainty, calibrati
   crossing('x=0' -> y, branch) / crossing('y=0' -> x, branch): loop or curve intercepts (Pr, Ec)
   plateau(x_from, x_to)     mean level of a flat segment (TGA residue, COF steady state)   u = hypot(line half-width, std of the level)
   peak_x(window)            spectrum peak position (top of the trace in a window, parabolic sub-pixel)   u_px = hypot(0.5, half-width at 1 px below the top / 4)
-  bar_top(index)            bar value (top edge of the k-th bar of a colour, left to right)   u_px = 1
+  bar_top(index)            bar value (outer edge of the k-th bar of a colour; negative bars at the bottom edge)   u_px = hypot(1, column spread)
   y_at_extremum(max|min, window)  value at the extremum (peak stress, maximum wear depth)       u_px = 1
   x_end(side)               x of the last traced column (break strain)                         u_px = hypot(line half-width, 1)
-Every reader returns None (not a guess) when the feature is not found; a miss is counted by the replica gate."""
+Every reader returns None (not a guess) when the feature is not found; a miss is counted by the replica gate.
+F6 (after Phase 3; S030 = development data): thin-line frame fallback (find_frame), dual-axis panels (right_series -> 'y2'), refusal of
+panels whose declared series colours are closer than DE_MIN (Refused), edge-based bar tops with negative bars."""
 import json, math, os, re, sys
 import numpy as np
 from PIL import Image
 from scipy import ndimage as ndi
 sys.path.insert(0, '/home/aid1/Documents/harbor/v32')
-import digitize as D
+import digitize as D   # (digitize puts the tool_ceiling dir on sys.path: plot.find_axes)
+
+def find_frame(gray):
+    """frozen tool_ceiling find_axes first (dark < 110); if it finds no frame, a thin-line fallback: a 1-px frame line that resampling
+    splits over two pixels (grey 100-170 each) is merged by a 3-px minimum filter across the line before the dark threshold (< 170).
+    Returns (axes dict, dark mask used for ticks, which detector)."""
+    ax = D.find_axes(gray)
+    if ax: return ax, gray < 110, 'find_axes'
+    gh = ndi.minimum_filter(gray, size=(3, 1)); gv = ndi.minimum_filter(gray, size=(1, 3)); h, w = gray.shape   # symmetric (odd) window: no half-pixel shift
+    import plot as _pl
+    xa = next(((y,) + tuple(_pl._longest_run(gh[y] < 170)[1:]) for y in range(h - 1, int(0.3 * h), -1) if _pl._longest_run(gh[y] < 170)[0] >= 0.4 * w), None)
+    ya = next(((x,) + tuple(_pl._longest_run(gv[:, x] < 170)[1:]) for x in range(0, int(0.7 * w)) if _pl._longest_run(gv[:, x] < 170)[0] >= 0.4 * h), None)
+    if not xa or not ya: return None, None, None
+    (yr, xl, xr), (xc, yt, yb) = xa, ya
+    ax = dict(x_row=yr, x_left=max(xl, xc), x_right=xr, y_col=xc, y_top=yt, y_bottom=min(yb, yr))
+    return ax, np.minimum(gh, gv) < 170, 'thin-line fallback'
 
 def calibrate(rgb, pc):
-    gray = rgb.mean(2); dark = gray < 110; ax = D.find_axes(gray)
+    gray = rgb.mean(2); ax, dark, how = find_frame(gray)
     if not ax: return None
+    out = _calibrate(rgb, pc, ax, dark, how)
+    # thin (1-px, resampled) ticks are only partly darker than 110: where an axis fit is missing or has residual > 0.5 px, the ticks are
+    # detected again on the symmetric 3-px minimum-filtered mask and the better fit is kept per axis
+    keys = [k for k in ('x', 'y', 'y2') if k in out and not pc.get(f'{k}_none')]
+    if any(out[k] is None or (isinstance(out[k], tuple) and out[k][3] > 0.5) for k in keys):
+        thin = np.minimum(ndi.minimum_filter(gray, size=(3, 1)), ndi.minimum_filter(gray, size=(1, 3))) < 170
+        alt = _calibrate(rgb, pc, ax, thin, how)
+        for k in keys:
+            if isinstance(alt.get(k), tuple) and (out[k] is None or alt[k][3] < out[k][3]): out[k] = alt[k]; out['thin_ticks_' + k] = True
+    return out
+
+def _calibrate(rgb, pc, ax, dark, how):
+    ax = dict(ax)
     if ax['x_left'] - ax['y_col'] > 10 and dark[ax['x_row'], ax['y_col']:ax['x_left']].mean() >= 0.8: ax['x_left'] = ax['y_col']
     x0, x1, yb, yt = ax['x_left'], ax['x_right'], ax['x_row'], ax['y_top']
-    right = pc.get('y_side') == 'right'   # quantity on the right-hand axis (e.g. TGA mass over a DSC plot): ticks and labels of the right frame line
-    xt = D.ticks_along(dark, yb, x0, x1, 'x'); yt_ = D.ticks_along(dark, x1 if right else ax['y_col'], yt, yb, 'y')
-    bot = rgb[yb + 2:yb + 34, :]
-    left = rgb[:, x1 + 2:x1 + 72] if right else rgb[:, max(ax['y_col'] - 62, 0):ax['y_col'] - 2]
+    right = pc.get('y_side') == 'right'   # main quantity on the right-hand axis (e.g. TGA mass over a DSC plot)
+    xt = D.ticks_along(dark, yb, x0, x1, 'x'); bot = rgb[yb + 2:yb + 34, :]
     xl = [(t['cx'], numval(t['text'])) for t in D.ocr(bot) if numval(t['text']) is not None]
-    yl = [(t['cy'], numval(t['text'])) for t in D.ocr(left) if numval(t['text']) is not None]
-    out = {'frame': (x0, x1, yb, yt)}
-    for key, majors, ticks, labels in (('x', [t for t, r in xt if r >= 6], xt, xl), ('y', [t for t, r in yt_ if r >= 6], yt_, yl)):
+    def side(r_):
+        ticks = D.ticks_along(dark, x1 if r_ else ax['y_col'], yt, yb, 'y')
+        reg = rgb[:, x1 + 2:x1 + 72] if r_ else rgb[:, max(ax['y_col'] - 62, 0):ax['y_col'] - 2]
+        return ticks, [(t['cy'], numval(t['text'])) for t in D.ocr(reg) if numval(t['text']) is not None]
+    yt_, yl = side(right)
+    out = {'frame': (x0, x1, yb, yt), 'frame_detector': how}
+    axes = [('x', [t for t, r in xt if r >= 6], xl), ('y', [t for t, r in yt_ if r >= 6], yl)]
+    if pc.get('right_series'):   # dual-axis panel: series listed here are read on the right axis ('y2')
+        t2, l2 = side(not right); axes.append(('y2', [t for t, r in t2 if r >= 6], l2))
+    for key, majors, labels in axes:
         if pc.get(f'{key}_ticks'):   # declared tick values (profile): matched to the contiguous run of detected majors that fits best
-            vals = pc[f'{key}_ticks']; log = pc.get(f'{key}_log', False); maj = sorted(majors, reverse=(key == 'y')); n_ = len(vals)
+            vals = pc[f'{key}_ticks']; log = pc.get(f'{key}_log', False); maj = sorted(majors, reverse=(key != 'x')); n_ = len(vals)
             if len(maj) < n_: out[key] = None; continue
             fits = [D.fit(maj[i:i + n_], vals, log) for i in range(len(maj) - n_ + 1)]; a, b, r = min(fits, key=lambda f: f[2]); out[key] = (log, a, b, r)
-        elif pc.get(f'{key}_none'): out[key] = 'none'   # e.g. intensity (a.u.): no calibration needed
+        elif pc.get(f'{key}_none'): out[key] = 'none'   # e.g. intensity (a.u.), category axis: no calibration needed
         else:
             cal = D.robust(labels, majors, pc.get(f'{key}_log')); out[key] = cal[:4] if cal else None
         if isinstance(out[key], tuple) and out[key][3] > 1.5: out[key] = None   # residual > 1.5 px: calibration rejected (it would inflate u)
+    out['dark'] = dark
     return out
 
 def numval(t):
@@ -59,6 +95,18 @@ def to_px(cal, v):
     log, a, b, _ = cal; return ((math.log10(v) if log else v) - b) / a
 def scale(cal, p):   # |d value / d px| at pixel p
     return abs(to_data(cal, p + 0.5) - to_data(cal, p - 0.5))
+
+class Refused(Exception):
+    """a panel the readers decline (no read, no key): e.g. two declared series colours closer than DE_MIN."""
+
+def lab(rgb):
+    """sRGB (0-255) -> CIE L*a*b* (D65)."""
+    c = np.asarray(rgb, float) / 255.0; c = np.where(c <= 0.04045, c / 12.92, ((c + 0.055) / 1.055) ** 2.4)
+    M = np.array([[0.4124, 0.3576, 0.1805], [0.2126, 0.7152, 0.0722], [0.0193, 0.1192, 0.9505]]); xyz = c @ M.T / np.array([0.95047, 1.0, 1.08883])
+    f = np.where(xyz > (6 / 29) ** 3, np.cbrt(xyz), xyz / (3 * (6 / 29) ** 2) + 4 / 29)
+    return np.stack([116 * f[..., 1] - 16, 500 * (f[..., 0] - f[..., 1]), 200 * (f[..., 1] - f[..., 2])], -1)
+
+DE_MIN = 15.0   # replicas/de_study.py: every Delta E level >= 15 passes (98-100% within 2u, no |z| > 5); levels <= 12 fail
 
 LUMA = np.array([0.299, 0.587, 0.114])
 def _lch(rgb):
@@ -135,26 +183,42 @@ class Panel:
         self.rgb = np.asarray(Image.open(path).convert('RGB')); self.pc = pc
         if pc.get('crop'):   # one subplot of a stacked figure: [x0, y0, x1, y1] in crop pixels (profile input, logged)
             a, b, c, d = pc['crop']; self.rgb = self.rgb[b:d, a:c]
+        cols = [s['colour'] for s in pc.get('series', []) if isinstance(s.get('colour'), list)]
+        de_min = pc.get('de_min', DE_MIN)
+        if de_min is not None and len(cols) > 1:   # refusal: two declared series colours closer than DE_MIN (CIE76) cannot be separated
+            L_ = lab(np.array(cols, float)); d = min(float(np.linalg.norm(L_[i] - L_[j])) for i in range(len(cols)) for j in range(i + 1, len(cols)))
+            if d < de_min: raise Refused(f'series colours too close: min Delta E {d:.1f} < {de_min}')
+            if pc.get('gradient_fill'):   # gradient bars: a colour close to another bar's fade toward white is refused too
+                for i, ci in enumerate(L_):
+                    for j, cj in enumerate(L_):
+                        if i == j: continue
+                        ramp = cj + np.linspace(0, 1, 41)[:, None] * (lab(np.array([255., 255., 255.])) - cj)
+                        dr = float(np.linalg.norm(ramp - ci, axis=1).min())
+                        if dr < de_min: raise Refused(f'gradient bars: colour {i} within Delta E {dr:.1f} of bar {j} fading to white')
         self.cal = calibrate(self.rgb, pc)
         if not self.cal or not self.cal.get('x') or self.cal['y'] is None: raise ValueError('calibration failed')
+        if pc.get('right_series') and not self.cal.get('y2'): raise ValueError('calibration failed (right axis)')
         x0, x1, yb, yt = self.cal['frame']; self.inner = np.zeros(self.rgb.shape[:2], bool); self.inner[yt + 3:yb - 2, x0 + 3:x1 - 2] = True
         # tick stubs: inward ticks are short dark strokes inside the frame that a black/gray series mask would take; blank a band of the
         # tick length + 2 px at every tick found on the bottom/left axes, mirrored on the top/right frame lines
-        dark = self.rgb.mean(2) < 110
+        dark = self.cal['dark']
         for t, r in D.ticks_along(dark, yb, x0, x1, 'x'):
             c = int(round(t)); self.inner[max(yb - r - 2, 0):yb + 1, c - 2:c + 3] = False; self.inner[yt:yt + r + 3, c - 2:c + 3] = False
         for t, r in D.ticks_along(dark, x0, yt, yb, 'y'):
             c = int(round(t)); self.inner[c - 2:c + 3, x0:x0 + r + 3] = False; self.inner[c - 2:c + 3, max(x1 - r - 2, 0):x1 + 1] = False
         for box in pc.get('exclude_boxes', []):   # legend or inset regions declared in the profile
             a, b, c, d = box; self.inner[b:d, a:c] = False
-        self._traces = {}; self.series = {}; cols = [s['colour'] for s in pc.get('series', []) if isinstance(s.get('colour'), list)]
+        self._traces = {}; self.series = {}
         raw, colours = {}, {}
         for s in pc.get('series', []):
             if isinstance(s.get('colour'), list):
                 m, tol, core = series_mask(self.rgb, s['colour'], [c for c in cols if c != s['colour']], self.inner)
                 raw[str(s['value'])] = (m, core); colours[str(s['value'])] = s['colour']; self.series[str(s['value'])] = {'tol': tol}
             else: self.series[str(s['value'])] = {'order': int(str(s['colour']).split(':')[1])}
-        for k, m in graded_cleanup(raw, colours).items(): self.series[k]['mask'] = m
+        for k, m in graded_cleanup(raw, colours).items(): self.series[k]['mask'] = m; self.series[k]['core'] = raw[k][1] & m
+
+    def _cy(self, sv):   # y calibration of a series: the right axis for series listed in the profile's right_series
+        return self.cal['y2'] if str(sv) in [str(v) for v in self.pc.get('right_series', [])] else self.cal['y']
 
     def _col_runs(self, sv, col):
         s = self.series[sv]; col = int(round(col))
@@ -223,23 +287,36 @@ class Panel:
             if r_ is None: return None
             row, w, gap_u = r_
         tr = self.trace(sv, branch)
-        cy = self.cal['y']; v = to_data(cy, row)
+        cy = self._cy(sv); v = to_data(cy, row)
         sl = [abs(tr[px + dc][0] - row) / 2 for dc in (-2, 2) if px + dc in tr]   # slope term: rows 2 columns either side
         upx = math.hypot(w / 2, cy[3], (max(sl) if sl else 0), gap_u)
         return v, scale(cy, row) * upx
 
+    def _touches_other(self, sv, row, col, r=2):
+        """True when another declared series has mask pixels within r px of (row, col): an extreme there is not attributable."""
+        r0, c0 = int(round(row)), int(round(col))
+        for k, s in self.series.items():
+            if k == str(sv) or 'mask' not in s: continue
+            if s['mask'][max(r0 - r, 0):r0 + r + 1, max(c0 - r, 0):c0 + r + 1].any(): return True
+        return False
+
     def x_at_extremum(self, sv, kind, window):
-        cx, cy = self.cal['x'], self.cal['y']; a, b = sorted(to_px(cx, w) for w in window); tr = self.trace(sv)
+        cx, cy = self.cal['x'], self._cy(sv); a, b = sorted(to_px(cx, w) for w in window); tr = self.trace(sv)
         best = [(c, tr[c][0] - (tr[c][1] - 1) / 2 * (1 if kind == 'max' else -1)) for c in range(int(math.ceil(a)), int(b) + 1) if c in tr]
         if len(best) < 3: return None
         rows = np.array([t[1] for t in best]); ext = rows.min() if kind == 'max' else rows.max()
         near = [c for c, rw in best if abs(rw - ext) <= 1.0]; cpos = float(np.mean(near)); halfw = (max(near) - min(near)) / 2
+        if any(q not in tr for q in range(min(near) - 3, max(near) + 4)): return None   # a gap next to the extreme: the true peak may be hidden
+        if self._touches_other(sv, ext, cpos): return None   # the extreme touches another series (coincident curves): not attributable
+        sg_ = 1 if kind == 'max' else -1   # a genuine local extreme: the trace exists 6 columns either side and is not more extreme there
+        for q in (min(near) - 6, max(near) + 6):
+            if a <= q <= b and (q not in tr or sg_ * (tr[q][0] - ext) < 0): return None
         return to_data(cx, cpos), scale(cx, cpos) * math.hypot(halfw, 0.5, cx[3])
 
     def y_at_extremum(self, sv, kind, window):
         """value at the extremum of a single-valued curve (peak stress, maximum wear depth): extreme run centre of the trace in the window,
         u = hypot(1 px, line half-width / 2, calibration residual)."""
-        cx, cy = self.cal['x'], self.cal['y']; a, b = sorted(to_px(cx, w) for w in window); tr = self.trace(sv)
+        cx, cy = self.cal['x'], self._cy(sv); a, b = sorted(to_px(cx, w) for w in window); tr = self.trace(sv)
         cs = [c for c in range(int(math.ceil(a)), int(b) + 1) if c in tr]
         if len(cs) < 3: return None
         wmed = float(np.median([tr[q][1] for q in tr])); sg = 1 if kind == 'max' else -1
@@ -247,6 +324,9 @@ class Panel:
         # (not the middle) of a vertical segment such as the drop at a stress-strain break
         edge = {q: tr[q][0] - sg * (tr[q][1] - wmed) / 2 for q in cs}
         c = (min if kind == 'max' else max)(cs, key=lambda q: edge[q]); row = edge[c]
+        if self._touches_other(sv, row, c): return None   # the extreme touches another series: not attributable
+        if any(q not in tr for q in range(c - 3, c + 4)) and not any(tr[q][1] > 3 * wmed for q in range(c - 1, c + 2) if q in tr):
+            return None   # a gap next to the extreme (not the end of a vertical drop): the true extreme may be hidden
         # local roughness of a noisy trace (rows minus a 9-column running median, within 10 columns): the extreme of a noisy line is
         # not defined better than that
         near = [q for q in range(c - 10, c + 11) if q in tr]
@@ -262,7 +342,7 @@ class Panel:
         return to_data(cx, c), scale(cx, c) * math.hypot(hw, 1.0, cx[3])
 
     def crossing(self, sv, line, branch='upper'):
-        cx, cy = self.cal['x'], self.cal['y']
+        cx, cy = self.cal['x'], self._cy(sv)
         if line == 'x=0':   # value of y where the curve crosses x = 0
             return self.y_at_x(sv, 0.0, branch)
         # line == 'y=0': x where the branch crosses y = 0 (branch 'left' / 'right' for loops)
@@ -280,7 +360,7 @@ class Panel:
         return to_data(cx, cpos), scale(cx, cpos) * math.hypot((max(g) - min(g)) / 2 + 0.5, cx[3])
 
     def plateau(self, sv, x_from, x_to):
-        cx, cy = self.cal['x'], self.cal['y']; a, b = sorted((to_px(cx, x_from), to_px(cx, x_to))); tr = self.trace(sv); rows, ws = [], []
+        cx, cy = self.cal['x'], self._cy(sv); a, b = sorted((to_px(cx, x_from), to_px(cx, x_to))); tr = self.trace(sv); rows, ws = [], []
         for c in range(int(math.ceil(a)), int(b) + 1):
             if c in tr: rows.append(tr[c][0]); ws.append(tr[c][1])
         if len(rows) < 3: return None
@@ -303,15 +383,39 @@ class Panel:
         return to_data(cx, c0), scale(cx, c0) * math.hypot(0.5, halfw / 4, cx[3])
 
     def bar_top(self, sv, index):
-        s = self.series[sv]; m = s['mask']; colsum = m.sum(0); bars = []; inbar = False
-        for c, n in enumerate(colsum):
-            if n >= 3 and not inbar: start = c; inbar = True
-            elif n < 3 and inbar: bars.append((start, c - 1)); inbar = False
+        """value of the index-th bar of a colour (left to right). Edge-based: in two sample columns at 1/4 and 3/4 of the bar width (away
+        from a central error bar), the bar's outer edge is the row of the strongest colour change within 4 px of the mask's end, refined
+        to sub-pixel by a parabola; a bar lying below the zero line is read at its bottom edge (negative value). Gradient fills fade away
+        from the outer edge, so the outer edge stays sharp. u = hypot(1 px, half the difference between the two sample columns, calibration)."""
+        s = self.series[sv]; m = s['mask']; bars = []; inbar = False
+        core = s['core']   # bar bodies are found on core pixels (colour-faithful); a lighter bar of a similar hue passes the mask, not the core
+        colrun = [max((t[1] for t in runs(core[:, c])), default=0) for c in range(m.shape[1])]   # longest core run per column
+        for c, n in enumerate(colrun):   # a bar column holds a run >= 6 px (replicate dots and caps are smaller)
+            if n >= 6 and not inbar: start = c; inbar = True
+            elif n < 6 and inbar: bars.append((start, c - 1)); inbar = False
         bars = [b for b in bars if b[1] - b[0] >= 3]
         if index >= len(bars): return None
-        a, b = bars[index]; tops = [np.nonzero(m[:, c])[0].min() for c in range(a + 1, b) if m[:, c].any()]
-        row = float(np.median(tops)); cy = self.cal['y']
-        return to_data(cy, row), scale(cy, row) * math.hypot(1.0, cy[3])
+        a, b = bars[index]; cy = self._cy(sv); w = b - a + 1
+        rows_all = np.nonzero(m[:, a:b + 1].any(1))[0]
+        r0 = to_px(cy, 0.0) if cy[1] != 0 else None
+        neg = r0 is not None and float(np.median(rows_all)) > r0      # the bar hangs below the zero line
+        rgb = self.rgb.astype(float); edges = []
+        for c in sorted({int(round(a + 0.25 * (w - 1))), int(round(a + 0.75 * (w - 1)))}):
+            col = m[:, c]
+            if not col.any(): continue
+            ext = [[c_ - w_ / 2, c_ + w_ / 2] for c_, w_ in runs(col)]; mg = [ext[0]]
+            for e in ext[1:]:   # runs split by a replicate dot or an error-bar cap drawn over the bar (gap <= 7 px) are one body
+                if e[0] - mg[-1][1] <= 7: mg[-1][1] = e[1]
+                else: mg.append(e)
+            rr = [((x0_ + x1_) / 2, x1_ - x0_) for x0_, x1_ in mg]; body = max(rr, key=lambda t: t[1])      # the bar body = the longest (merged) run
+            e0 = int(round(body[0] + (body[1] - 1) / 2)) if neg else int(round(body[0] - (body[1] - 1) / 2))
+            prof = rgb[:, max(c - 1, 0):c + 2].mean(1); g = np.linalg.norm(np.diff(prof, axis=0), axis=1)   # g[k]: change between rows k, k+1
+            lo, hi = max(e0 - 5, 1), min(e0 + 4, len(g) - 2); k = lo + int(g[lo:hi + 1].argmax())
+            den = g[k - 1] - 2 * g[k] + g[k + 1]; dk = 0.5 * (g[k - 1] - g[k + 1]) / den if den else 0.0
+            edges.append(k + 0.5 + dk)
+        if not edges: return None
+        row = float(np.mean(edges)); spread = (max(edges) - min(edges)) / 2
+        return to_data(cy, row), scale(cy, row) * math.hypot(1.0, spread, cy[3])
 
 FEATURES = ('y_at_x', 'x_at_extremum', 'y_at_extremum', 'x_end', 'crossing', 'plateau', 'peak_x', 'bar_top')
 def read(panel, feat):
