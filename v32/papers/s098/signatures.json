@@ -1,0 +1,38 @@
+{
+ "tocnf_intercalation": {
+  "mechanism": "TOCNF chains intercalate between MXene sheets, expanding the interlayer spacing",
+  "relation": "Bragg: d(002) = lambda/(2 sin theta); intercalation raises d(002)",
+  "source": "Cullity; Naguib et al., Adv. Mater. 26 (2014) 992 (MXene intercalation)",
+  "prior_rank": 1,
+  "predicts": {
+   "mxene_002_2theta(TOCNF fraction up)": "down"
+  }
+ },
+ "no_intercalation_mixing": {
+  "mechanism": "physical mixing without intercalation: MXene restacks with its own spacing",
+  "relation": "phase-separated blend: each phase keeps its d-spacing",
+  "source": "standard two-phase composite picture",
+  "prior_rank": 2,
+  "predicts": {
+   "mxene_002_2theta(TOCNF fraction up)": "none"
+  }
+ },
+ "hbond_network": {
+  "mechanism": "hydrogen bonds between TOCNF -OH/-COOH and MXene terminations",
+  "relation": "H-bonding lowers the O-H stretching frequency (red shift)",
+  "source": "Pimentel & McClellan, The Hydrogen Bond (1960)",
+  "prior_rank": 1,
+  "predicts": {
+   "oh_stretch_wavenumber(blend vs TOCNF)": "down"
+  }
+ },
+ "no_interaction_blend": {
+  "mechanism": "no specific interfacial interaction: the spectrum is the superposition of the components",
+  "relation": "linear superposition of component spectra",
+  "source": "standard non-interacting blend picture",
+  "prior_rank": 2,
+  "predicts": {
+   "oh_stretch_wavenumber(blend vs TOCNF)": "none"
+  }
+ }
+}

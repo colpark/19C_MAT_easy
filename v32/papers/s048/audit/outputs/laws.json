@@ -1,0 +1,212 @@
+[
+ {
+  "tag": "law:s048:bragg_anatase_ref",
+  "temperature": 0,
+  "reply": "{\"class\":\"dependent\",\"reason\":\"The TiO2 blend content and XRD pattern are linked because composition affects phase intensities, but the pattern is not determined from TiO2 content by Bragg\u2019s law, and the external lattice references only identify reflections.\"}",
+  "usage": {
+   "prompt_tokens": 428,
+   "completion_tokens": 57,
+   "total_tokens": 485,
+   "cost": 0.00141174,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.001426,
+    "upstream_inference_prompt_cost": 0.000856,
+    "upstream_inference_completions_cost": 0.00057
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  },
+  "model": "openai/gpt-5.6-sol",
+  "id": "gen-1791247354-tzX7wv9uDNlfPiFXKDe1",
+  "parsed": {
+   "class": "dependent",
+   "reason": "The TiO2 blend content and XRD pattern are linked because composition affects phase intensities, but the pattern is not determined from TiO2 content by Bragg\u2019s law, and the external lattice references only identify reflections."
+  },
+  "binding": "bragg_anatase_ref"
+ },
+ {
+  "tag": "law:s048:tga_mass_balance",
+  "temperature": 0,
+  "reply": "{\"class\":\"independent\",\"reason\":\"Mass-balance mixing uses the independently measured control TGA response and known TiO2 fraction to predict the separately measured TiO2-bearing response without fitted parameters.\"}",
+  "usage": {
+   "prompt_tokens": 487,
+   "completion_tokens": 263,
+   "total_tokens": 750,
+   "cost": 0.00356796,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.003604,
+    "upstream_inference_prompt_cost": 0.000974,
+    "upstream_inference_completions_cost": 0.00263
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 216,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  },
+  "model": "openai/gpt-5.6-sol",
+  "id": "gen-1791247356-U9wNo55UG5ZQa8LgKo4w",
+  "parsed": {
+   "class": "independent",
+   "reason": "Mass-balance mixing uses the independently measured control TGA response and known TiO2 fraction to predict the separately measured TiO2-bearing response without fitted parameters."
+  },
+  "binding": "tga_mass_balance"
+ },
+ {
+  "tag": "law:s048:recompute_ucs",
+  "temperature": 0,
+  "reply": "{\"class\":\"dependent\",\"reason\":\"The bar values average five samples, while the plotted stress\u2013strain curve is only representative, so its peak and endpoint cannot definitionally reproduce the reported averages despite sharing the same measurement procedure.\"}",
+  "usage": {
+   "prompt_tokens": 377,
+   "completion_tokens": 112,
+   "total_tokens": 489,
+   "cost": 0.00185526,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.001874,
+    "upstream_inference_prompt_cost": 0.000754,
+    "upstream_inference_completions_cost": 0.00112
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 61,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  },
+  "model": "openai/gpt-5.6-sol",
+  "id": "gen-1791247363-z1QdEsIy8MuA1KvhP1AG",
+  "parsed": {
+   "class": "dependent",
+   "reason": "The bar values average five samples, while the plotted stress\u2013strain curve is only representative, so its peak and endpoint cannot definitionally reproduce the reported averages despite sharing the same measurement procedure."
+  },
+  "binding": "recompute_ucs"
+ },
+ {
+  "tag": "law:s048:recompute_cof",
+  "temperature": 0,
+  "reply": "{\"class\":\"definition\",\"reason\":\"The bar friction coefficient is computed as the steady-state mean of the measured coefficient-of-friction trace, so the relation reproduces the authors' arithmetic.\"}",
+  "usage": {
+   "prompt_tokens": 350,
+   "completion_tokens": 42,
+   "total_tokens": 392,
+   "cost": 0.0011088,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.00112,
+    "upstream_inference_prompt_cost": 0.0007,
+    "upstream_inference_completions_cost": 0.00042
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  },
+  "model": "openai/gpt-5.6-sol",
+  "id": "gen-1791247367-1h2F1qm9v6eRMf1T2VIc",
+  "parsed": {
+   "class": "definition",
+   "reason": "The bar friction coefficient is computed as the steady-state mean of the measured coefficient-of-friction trace, so the relation reproduces the authors' arithmetic."
+  },
+  "binding": "recompute_cof"
+ },
+ {
+  "tag": "law:s048:recompute_wear",
+  "temperature": 0,
+  "reply": "{\"class\":\"definition\",\"reason\":\"The specific wear rate was calculated from the profilometer-derived wear-track cross-sectional area and track length, normalized by the applied load and sliding distance, so the relation reproduces the authors' arithmetic.\"}",
+  "usage": {
+   "prompt_tokens": 459,
+   "completion_tokens": 51,
+   "total_tokens": 510,
+   "cost": 0.00141372,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.001428,
+    "upstream_inference_prompt_cost": 0.000918,
+    "upstream_inference_completions_cost": 0.00051
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 0,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  },
+  "model": "openai/gpt-5.6-sol",
+  "id": "gen-1791247369-xJuZdIyA1NgeAjh7UV8q",
+  "parsed": {
+   "class": "definition",
+   "reason": "The specific wear rate was calculated from the profilometer-derived wear-track cross-sectional area and track length, normalized by the applied load and sliding distance, so the relation reproduces the authors' arithmetic."
+  },
+  "binding": "recompute_wear"
+ },
+ {
+  "tag": "law:s048:archard_ucs",
+  "temperature": 0,
+  "reply": "{\"class\":\"fit\",\"reason\":\"Archard\u2019s relation requires the material-specific wear coefficient K, which must be calibrated from wear data that include the target wear rates.\"}",
+  "usage": {
+   "prompt_tokens": 480,
+   "completion_tokens": 205,
+   "total_tokens": 685,
+   "cost": 0.0029799,
+   "is_byok": false,
+   "prompt_tokens_details": {
+    "cached_tokens": 0,
+    "cache_write_tokens": 0,
+    "audio_tokens": 0,
+    "video_tokens": 0
+   },
+   "cost_details": {
+    "upstream_inference_cost": 0.00301,
+    "upstream_inference_prompt_cost": 0.00096,
+    "upstream_inference_completions_cost": 0.00205
+   },
+   "completion_tokens_details": {
+    "reasoning_tokens": 165,
+    "image_tokens": 0,
+    "audio_tokens": 0
+   }
+  },
+  "model": "openai/gpt-5.6-sol",
+  "id": "gen-1791247370-H5bm4tfHLvuYj9OyEd2b",
+  "parsed": {
+   "class": "fit",
+   "reason": "Archard\u2019s relation requires the material-specific wear coefficient K, which must be calibrated from wear data that include the target wear rates."
+  },
+  "binding": "archard_ucs"
+ }
+]

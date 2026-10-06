@@ -1,0 +1,484 @@
+{
+ "rows": [
+  {
+   "id": "density",
+   "panel": "F1a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "Archimedes mass and buoyancy readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "porosity",
+   "panel": "F1a",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "density",
+    "theoretical density"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "sem",
+   "panel": [
+    "F1b",
+    "F1d",
+    "F1f",
+    "F1h"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "SEM detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "gs_hist",
+   "panel": [
+    "F1c",
+    "F1e",
+    "F1g",
+    "F1i"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "sem"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "ags",
+   "panel": "F1a",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "sem"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xrd",
+   "panel": "F2a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "XRD detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xrd_peaks",
+   "panel": [
+    "F2b",
+    "F2c"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "XRD detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "rietveld",
+   "panel": [
+    "F2d",
+    "F2e",
+    "F2f",
+    "F2g"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "xrd"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "phase_frac",
+   "panel": "F2h",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "xrd",
+    "rietveld"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "hrtem",
+   "panel": [
+    "F3a",
+    "F3b"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "TEM image-detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "d_hrtem",
+   "panel": [
+    "F3a",
+    "F3b"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "hrtem",
+    "image spatial calibration"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "bf_tem",
+   "panel": [
+    "F3c",
+    "F3d"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "TEM image-detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "saed",
+   "panel": [
+    "F3e",
+    "F3f"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "electron-diffraction detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "eds",
+   "panel": [
+    "F3g",
+    "F3h"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "TEM-EDS X-ray counts"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xps_survey",
+   "panel": [
+    "F4a",
+    "F4b"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "XPS electron-energy counts"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xps_hr",
+   "panel": [
+    "F4c",
+    "F4d",
+    "F4e",
+    "F4f",
+    "F4g",
+    "F4h"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "XPS electron-energy counts"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xps_fit",
+   "panel": [
+    "F4c",
+    "F4d",
+    "F4e",
+    "F4f",
+    "F4g",
+    "F4h"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "xps_hr"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman",
+   "panel": "F5a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "Raman spectrometer readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "ftir",
+   "panel": "F5b",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "FTIR spectrometer readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "k_force",
+   "panel": "F5c",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "raman",
+    "ftir",
+    "reduced mass"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "eps_T",
+   "panel": [
+    "F6a",
+    "F6b",
+    "F6c",
+    "F6d"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "LCR meter capacitance and loss readings",
+    "sample geometry"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Ts_Tm",
+   "panel": "F6e",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "eps_T"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "dT",
+   "panel": "F6e",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "Ts_Tm"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "epsmax",
+   "panel": "F6f",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "eps_T",
+    "Ts_Tm"
+   ],
+   "stated": false,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "pe",
+   "panel": [
+    "F7a",
+    "F7b",
+    "F7c",
+    "F7d"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "ferroelectric-tester charge, current, and electric-field readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "pmax_pr",
+   "panel": "F7e",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "pe"
+   ],
+   "stated": false,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "Ec",
+   "panel": "F7f",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "pe"
+   ],
+   "stated": false,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "dP",
+   "panel": "F7f",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "pmax_pr"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "se_bip",
+   "panel": [
+    "F8a",
+    "F8b",
+    "F8c",
+    "F8d"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "optical displacement-sensor readings",
+    "applied electric field",
+    "sample dimensions"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "se_uni",
+   "panel": "F8e",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "optical displacement-sensor readings",
+    "applied electric field",
+    "sample dimensions"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Smax",
+   "panel": "F8f",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "se_bip"
+   ],
+   "stated": false,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "d33s",
+   "panel": "F8f",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "Smax",
+    "se_bip"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "s_p2",
+   "panel": [
+    "F9a",
+    "F9b",
+    "F9c",
+    "F9d"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "pe",
+    "se_bip"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  }
+ ],
+ "cost": 0.03171069
+}

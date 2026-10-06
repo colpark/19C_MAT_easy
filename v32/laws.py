@@ -157,3 +157,35 @@ LIBRARY['mo21_mu_recompute'] = {'formula': 'mu_H = 1/(e n_H rho)', 'inputs': {'n
 for _k, _v in LAWS.items():
     LIBRARY[f'mo21_{_k}'] = {'formula': _v['formula'], 'inputs': {q: q for q, _ in _v['inputs']}, 'target': _v['target'][0], 'f': _v['f'],
                              'params': [], 'model_err': _v['model_err'], 'paper_law': _k}
+
+# ======================================================================================================================================
+# v3.2 Stage 5B: paper-specific library entries (papers 2-6). 'reader' names the panel reader the inputs need (marker | curve | spectrum |
+# bar | annotation); an entry whose reader the frozen digitizer lacks makes no item until Stage 5C provides it (logged).
+# ======================================================================================================================================
+def colaneri_shacklette_SE(sigma_S_per_m, t_m):
+    """far-field SE of a thin conductive film: SE = 20 log10(1 + Z0 sigma t / 2), Z0 = 376.73 ohm (dB)."""
+    return 20 * _m.log10(1 + 376.73 * sigma_S_per_m * t_m / 2)
+
+def electrostriction_S(P, Q33):
+    """S = Q33 P^2 (P in C/m^2, Q33 in m^4/C^2)."""
+    return Q33 * P * P
+
+LIBRARY.update({
+    'colaneri_shacklette': {'formula': 'SE_T = 20 log10(1 + Z0 sigma t / 2)', 'inputs': {'sigma': 'electrical conductivity (S/m)', 't': 'film thickness (m)'},
+                            'target': 'total EMI shielding effectiveness (dB)', 'f': lambda v, c: colaneri_shacklette_SE(v['sigma'], v['t']),
+                            'params': [{'name': 'Z0', 'kind': 'external', 'source': 'impedance of free space 376.73 ohm', 'spread': 0.0}],
+                            'model_err': 0.30, 'mode': 'ranking', 'reader': 'bar+curve', 'note': 'thin-film limit; multiple reflections and absorption in thick films: ranking only'},
+    'pr_agreement': {'formula': 'P_r (P-E loop) = released charge density on thermal depolarisation', 'inputs': {'Pr_PE': 'remanent polarisation from the P-E loop'},
+                     'target': 'charge density released on heating', 'f': lambda v, c: v['Pr_PE'], 'agreement': True, 'params': [], 'model_err': 0.15, 'reader': 'curve',
+                     'note': 'both measure the switchable remanent polarisation; leakage and back-switching scatter ~15%'},
+    'td_agreement': {'formula': 'T_d (dielectric loss/permittivity anomaly) = T at which Pr(T) collapses', 'inputs': {'Td_diel': 'depolarisation temperature from dielectric data'},
+                     'target': 'temperature of the Pr collapse in T-dependent P-E', 'f': lambda v, c: v['Td_diel'], 'agreement': True, 'params': [], 'model_err': 0.05, 'reader': 'curve',
+                     'note': 'frequency dispersion of the dielectric anomaly ~ +-10 K'},
+    'electrostriction': {'formula': 'S = Q33 P^2', 'inputs': {'P': 'polarisation (C/m^2)'}, 'target': 'strain', 'f': lambda v, c, p=None: electrostriction_S(v['P'], p if p is not None else c['Q33']),
+                         'params': [{'name': 'Q33', 'kind': 'fit', 'by': 'us'}], 'model_err': 0.10, 'reader': 'curve'},
+    'archard_ucs': {'formula': 'wear rate = K / H (UCS as hardness proxy)', 'inputs': {'H': 'compressive strength'}, 'target': 'wear rate', 'f': lambda v, c, p=None: (p if p is not None else c['K']) / v['H'],
+                    'params': [{'name': 'K', 'kind': 'fit', 'by': 'us'}], 'model_err': 0.30, 'reader': 'curve+bar'},
+    'bragg_reference': {'formula': 'anatase reflections at 2theta from a = 3.785 A, c = 9.514 A (Bragg, tetragonal)', 'inputs': {'x': 'TiO2 fraction (D)'},
+                        'target': 'anatase (101) peak position', 'f': lambda v, c: 2 * _m.degrees(_m.asin(0.15406 / (2 * 1 / _m.sqrt((1 + 0) / 0.3785 ** 2 + 1 / 0.9514 ** 2)))),
+                        'params': [{'name': 'anatase lattice', 'kind': 'external', 'source': 'ICDD 21-1272 (a = 3.785 A, c = 9.514 A)', 'spread': 0.001}], 'model_err': 0.01, 'reader': 'spectrum'},
+})

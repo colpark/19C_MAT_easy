@@ -1,0 +1,40 @@
+{
+ "mn_electron_trap": {
+  "mechanism": "high-valence B-site Mn traps electrons and suppresses Ti4+ -> Ti3+ reduction, lowering electronic leakage",
+  "relation": "fewer free electrons -> lower conductivity sigma = n e mu",
+  "source": "Smyth, The Defect Chemistry of Metal Oxides (2000)",
+  "prior_rank": 2,
+  "predicts": {
+   "leakage_J(x up)": "down"
+  }
+ },
+ "mn_acceptor_vacancy": {
+  "mechanism": "acceptor Mn on Ti sites is compensated by oxygen vacancies, raising ionic conduction",
+  "relation": "Kroger-Vink: Mn_Ti'' compensated by V_O^.. ; more V_O -> higher conduction",
+  "source": "Smyth (2000); Kroger & Vink (1956)",
+  "prior_rank": 1,
+  "predicts": {
+   "leakage_J(x up)": "up"
+  }
+ },
+ "mn_soft_domains": {
+  "mechanism": "moderate Mn promotes ferroelectric domain formation (soft-like), raising Pr",
+  "relation": "larger switchable polarization",
+  "source": "Jaffe, Cook & Jaffe, Piezoelectric Ceramics (1971)",
+  "prior_rank": 2,
+  "predicts": {
+   "Pr(x up)": "up",
+   "Ec(x up)": "down"
+  }
+ },
+ "mn_acceptor_hardening": {
+  "mechanism": "acceptor defect dipoles clamp domain walls (classic hardening)",
+  "relation": "domain-wall pinning raises Ec and lowers Pr",
+  "source": "Jaffe, Cook & Jaffe (1971); Carl & Hardtl, Ferroelectrics 17 (1978) 473",
+  "prior_rank": 1,
+  "predicts": {
+   "Pr(x up)": "down",
+   "Ec(x up)": "up"
+  }
+ }
+}

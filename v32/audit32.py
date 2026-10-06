@@ -46,7 +46,7 @@ def tags(paper):
     PD = f'{V32}/papers/{paper}'; H = f'/home/aid1/Documents/harbor/v32_host/papers/{paper}'
     nodes = [n for n in json.load(open(f'{PD}/nodes.json')) if n['level'] in ('M', 'A') and n.get('panel')]
     methods = open(f'{H}/text/methods.txt').read(); caps = json.load(open(f'{H}/text/captions.json'))
-    ql = '\n'.join(f"- {n['id']}: {n['quantity']}, panel {n['panel']}" for n in nodes)
+    ql = '\n'.join(f"- {n['id']}: {n['quantity']}, panel {n['panel'] if isinstance(n['panel'], str) else ', '.join(n['panel'])}" for n in nodes)
     p = open(f'{PR}/tags.txt').read().replace('{methods}', methods).replace('{captions}', '\n'.join(caps.values())).replace('{quantities}', ql)
     r = call(p, None, f'tags:{paper}'); r['parsed'] = parse_json(r.get('reply')); json.dump([r], open(f'{PD}/audit/outputs/tags.json', 'w'), indent=1)
     got = (r['parsed'] or {}).get('quantities', {}); rows = []; over = {}
@@ -107,6 +107,46 @@ def cannot(paper):
     rem = [r['item_key'] for r in out if (r.get('parsed') or {}).get('decidable') != 'no']
     json.dump({'remove_item_keys': rem, 'cost': cost(out)}, open(f'{PD}/audit/cannot_audit.json', 'w'), indent=1); print('remove', rem, 'cost $%.4f' % cost(out))
 
+OBS_TEXT = {'(x up)': 'as the series variable x increases', '(TOCNF fraction up)': 'as the cellulose-nanofibril (TOCNF) fraction increases',
+            '(blend vs TOCNF)': 'in the blend compared with pure TOCNF'}
+def signatures(paper):
+    PD = f'{V32}/papers/{paper}'; sig = json.load(open(f'{PD}/signatures.json')); out = []; rem = []; rows = []
+    def desc(o):
+        q, cond = o.split('(', 1); cond = '(' + cond
+        return f"{o}: {q.replace('_', ' ')} {OBS_TEXT.get(cond, cond)}"
+    for sid, e in sig.items():
+        obs = '\n'.join('- ' + desc(o) for o in e['predicts'])
+        r = call(open(f'{PR}/signature.txt').read().replace('{mechanism}', e['mechanism']).replace('{observables}', obs), None, f'signature:{paper}:{sid}')
+        r['parsed'] = parse_json(r.get('reply')); r['entry'] = sid; out.append(r)
+        got = (r['parsed'] or {}).get('predictions', {}); mism = {o: (d, got.get(o)) for o, d in e['predicts'].items() if got.get(o) != d}
+        rows.append({'entry': sid, 'agree': not mism, 'mismatch': mism}); print(paper, sid, 'OK' if not mism else mism)
+        if mism: rem.append(sid)
+    json.dump(out, open(f'{PD}/audit/outputs/signatures.json', 'w'), indent=1)
+    json.dump({'rows': rows, 'removed': rem, 'cost': cost(out)}, open(f'{PD}/audit/signature_audit.json', 'w'), indent=1)
+    r_ = json.load(open(f'{PD}/audit/removals.json')) if os.path.exists(f'{PD}/audit/removals.json') else {'claims': [], 'cells': [], 'item_keys': [], 'reasons': []}
+    r_['signatures'] = sorted(set(r_.get('signatures', [])) | set(rem)); r_.setdefault('reasons', []).extend(f'signature {x}: Sol direction disagreement' for x in rem)
+    json.dump(r_, open(f'{PD}/audit/removals.json', 'w'), indent=1); print('cost $%.4f' % cost(out))
+
+def laws(paper):
+    """blind law-class audit of the bindings; any disagreement excludes the law (restrictive)."""
+    import laws as LW
+    PD = f'{V32}/papers/{paper}'; B = json.load(open(f'{PD}/law_bindings.json')); nodes = {n['id']: n for n in json.load(open(f'{PD}/nodes.json'))}; out = []; rows = []; excl = []
+    d = lambda i: f"{i}: {nodes[i]['quantity']} (panel {nodes[i].get('panel')}, instrument {nodes[i].get('instrument')}) - \"{(nodes[i].get('evidence') or {}).get('text', '')[:300]}\""
+    for b in B:
+        if b['law_class'] in ('not bound', 'error'): continue
+        formula = b.get('family') or (LW.LIBRARY[b['library']]['formula'] if b.get('library') not in (None, 'definition') else 'the authors computation')
+        p = open(f'{PR}/law_class.txt').read().replace('{formula}', formula).replace('{inputs}', ', '.join(nodes[i]['quantity'] for i in b['inputs'])).replace('{target}', nodes[b['target']]['quantity'])
+        p = p.replace('{evidence}', '\n'.join('- ' + d(i) for i in b['inputs'] + [b['target']]))
+        r = call(p, None, f'law:{paper}:{b["id"]}'); r['parsed'] = parse_json(r.get('reply')); r['binding'] = b['id']; out.append(r)
+        sc = (r['parsed'] or {}).get('class'); agree = sc == b['law_class']
+        rows.append({'binding': b['id'], 'builder': b['law_class'], 'sol': sc, 'agree': agree, 'reason': (r['parsed'] or {}).get('reason')})
+        if not agree: excl.append(b['id'])
+        print(paper, b['id'], b['law_class'], '| Sol', sc, '' if agree else '-> EXCLUDED')
+    json.dump(out, open(f'{PD}/audit/outputs/laws.json', 'w'), indent=1); json.dump({'rows': rows, 'excluded': excl, 'cost': cost(out)}, open(f'{PD}/audit/law_audit.json', 'w'), indent=1)
+    for b in B:
+        if b['id'] in excl: b['law_class_builder'] = b['law_class']; b['law_class'] = 'excluded (Sol class disagreement)'
+    json.dump(B, open(f'{PD}/law_bindings.json', 'w'), indent=1, ensure_ascii=False); print('cost $%.4f' % cost(out))
+
 if __name__ == '__main__':
     paper = sys.argv[1]
-    for what in sys.argv[2:]: {'tags': tags, 'legends': legends, 'cannot': cannot}[what](paper)
+    for what in sys.argv[2:]: {'tags': tags, 'legends': legends, 'cannot': cannot, 'signatures': signatures, 'laws': laws}[what](paper)

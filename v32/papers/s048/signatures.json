@@ -1,0 +1,60 @@
+{
+ "inert_filler": {
+  "mechanism": "TiO2 is a chemically inert filler (dilution and pore filling)",
+  "relation": "no new phase; XRD = superposition; anatase intensity proportional to its fraction",
+  "source": "standard composite filler picture",
+  "prior_rank": 1,
+  "predicts": {
+   "new_reflections(x up)": "none",
+   "anatase_101_intensity(x up)": "up"
+  }
+ },
+ "ti_incorporation": {
+  "mechanism": "TiO2 incorporates into the aluminosilicate network (Ti substitution, titanosilicate)",
+  "relation": "consumption of anatase and new or shifted reflections",
+  "source": "Davidovits, Geopolymer Chemistry and Applications",
+  "prior_rank": 2,
+  "predicts": {
+   "new_reflections(x up)": "up",
+   "anatase_101_intensity(x up)": "none"
+  }
+ },
+ "filler_reinforcement": {
+  "mechanism": "TiO2 densifies the matrix and raises strength",
+  "relation": "filler densification: fewer pores, higher strength (Ryshkewitch: sigma = sigma0 exp(-b P))",
+  "source": "Ryshkewitch, J. Am. Ceram. Soc. 36 (1953) 65",
+  "prior_rank": 2,
+  "predicts": {
+   "compressive_strength(x up)": "up"
+  }
+ },
+ "binder_dilution": {
+  "mechanism": "TiO2 replaces reactive metakaolin, leaving less binder gel and a weaker paste",
+  "relation": "strength scales with binder (gel) fraction",
+  "source": "Duxson et al., J. Mater. Sci. 42 (2007) 2917",
+  "prior_rank": 1,
+  "predicts": {
+   "compressive_strength(x up)": "down"
+  }
+ },
+ "third_body_lubrication": {
+  "mechanism": "a TiO2/gel third-body tribolayer lowers friction and wear",
+  "relation": "tribolayer reduces adhesion: lower mu and wear",
+  "source": "Godet, Wear 100 (1984) 437 (third-body approach)",
+  "prior_rank": 2,
+  "predicts": {
+   "cof(x up)": "down",
+   "wear_rate(x up)": "down"
+  }
+ },
+ "abrasive_third_body": {
+  "mechanism": "hard anatase particles act as abrasive third bodies (ploughing)",
+  "relation": "Archard/abrasive wear: harder debris raises wear and friction",
+  "source": "Archard 1953; Rabinowicz, Friction and Wear of Materials",
+  "prior_rank": 1,
+  "predicts": {
+   "cof(x up)": "up",
+   "wear_rate(x up)": "up"
+  }
+ }
+}

@@ -1,0 +1,191 @@
+[
+ {
+  "id": "bragg_xrd_hrtem",
+  "library": "bragg",
+  "inputs": [
+   "xrd"
+  ],
+  "target": "hrtem",
+  "params": [
+   {
+    "name": "lambda",
+    "kind": "external",
+    "source": "Cu K-alpha1 = 0.15406 nm (or the wavelength stated in Methods)",
+    "spread": 0.0
+   }
+  ],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "Bragg agreement (XRD 2theta vs HRTEM (400) d-spacing)",
+  "opportunities": 3,
+  "reader": null,
+  "methods_span": "Lattice planes and crystallinity were further examined using HRTEM."
+ },
+ {
+  "id": "bragg_xrd_saed",
+  "library": "bragg",
+  "inputs": [
+   "xrd"
+  ],
+  "target": "saed",
+  "params": [
+   {
+    "name": "lambda",
+    "kind": "external",
+    "source": "Cu K-alpha1 = 0.15406 nm (or the wavelength stated in Methods)",
+    "spread": 0.0
+   }
+  ],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "Bragg agreement (XRD 2theta vs SAED ring radii)",
+  "opportunities": 3,
+  "reader": null,
+  "methods_span": "(j–l) selected area electron diffraction (SAED) patterns confirming the crystalline spinel structure."
+ },
+ {
+  "id": "scherrer_vs_tem",
+  "library": "scherrer",
+  "inputs": [
+   "xrd"
+  ],
+  "target": "D_TEM",
+  "params": [
+   {
+    "name": "K",
+    "kind": "external",
+    "source": "Scherrer shape factor 0.89-0.94 (Langford & Wilson 1978)",
+    "spread": 0.3
+   }
+  ],
+  "law_class": "excluded (Sol class disagreement)",
+  "mode": "ranking",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "Scherrer (ranking only) vs TEM particle size",
+  "opportunities": 3,
+  "reader": null,
+  "methods_span": "ImageJ software was employed to measure particle sizes from TEM micrographs.",
+  "law_class_builder": "agreement"
+ },
+ {
+  "id": "scherrer_vs_sem",
+  "library": "scherrer",
+  "inputs": [
+   "xrd"
+  ],
+  "target": "D_SEM",
+  "params": [
+   {
+    "name": "K",
+    "kind": "external",
+    "source": "Scherrer shape factor 0.89-0.94 (Langford & Wilson 1978)",
+    "spread": 0.3
+   }
+  ],
+  "law_class": "excluded (Sol class disagreement)",
+  "mode": "ranking",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "Scherrer (ranking only) vs SEM particle size",
+  "opportunities": 3,
+  "reader": null,
+  "methods_span": "The particle distribution was analyzed using ImageJ and Origin Lab software.",
+  "law_class_builder": "agreement"
+ },
+ {
+  "id": "tem_vs_sem_size",
+  "law_class": "not bound",
+  "reason": "both sizes are histogram statistics of the authors' images (A): no M target"
+ },
+ {
+  "id": "recompute_tauc",
+  "library": "definition",
+  "inputs": [
+   "tauc_dir",
+   "tauc_ind"
+  ],
+  "target": "Eg_dir",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target Eg_dir is A, computed_from ['tauc_dir'] lies within the inputs and their ancestors",
+  "family": "definition recompute (Tauc extrapolation -> Eg)",
+  "opportunities": 6,
+  "reader": "curve/bar",
+  "methods_span": "Using Tauc’s equation54, the optical band-gap energy $\\mathrm { ( E _ { g } ) }$ of the produced nanoparticles was calculated as follows:"
+ },
+ {
+  "id": "recompute_urbach",
+  "library": "definition",
+  "inputs": [
+   "urbach_plot"
+  ],
+  "target": "E_U",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target E_U is A, computed_from ['urbach_plot'] lies within the inputs and their ancestors",
+  "family": "definition recompute (Urbach slope -> E_U)",
+  "opportunities": 6,
+  "reader": "curve/bar",
+  "methods_span": "the $\\mathrm { E } _ { \\mathrm { u } }$ values were computed by calculating the reciprocal of the slope of the linear plots"
+ },
+ {
+  "id": "recompute_force_const",
+  "library": "definition",
+  "inputs": [
+   "ftir_fp"
+  ],
+  "target": "F_const",
+  "params": [
+   {
+    "name": "reduced mass mu",
+    "kind": "external",
+    "source": "Fe-O reduced mass (paper prints garbled value '2.0611026 kg')",
+    "spread": 0.0,
+    "fit_on": []
+   }
+  ],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target F_const is A, computed_from ['ftir_fp'] lies within the inputs and their ancestors",
+  "family": "definition recompute (force constant from FTIR band nu)",
+  "opportunities": 12,
+  "reader": "curve/bar",
+  "methods_span": "The following formula was used to determine the force constant"
+ },
+ {
+  "id": "recompute_debye",
+  "library": "definition",
+  "inputs": [
+   "ftir_fp"
+  ],
+  "target": "theta_D",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target theta_D is A, computed_from ['ftir_fp'] lies within the inputs and their ancestors",
+  "family": "definition recompute (theta_D = h c nu_av / k_B)",
+  "opportunities": 6,
+  "reader": "curve/bar",
+  "methods_span": "The following formula was used to determine the Debye temperature of the produced nanoparticles57:"
+ },
+ {
+  "id": "recompute_etaB",
+  "library": "definition",
+  "inputs": [
+   "Ms_exp",
+   "las_fit"
+  ],
+  "target": "eta_B",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target eta_B is A, computed_from ['Ms_exp', 'las_fit'] lies within the inputs and their ancestors",
+  "family": "definition recompute (eta_B = Mw Ms / 5585)",
+  "opportunities": 6,
+  "reader": "curve/bar",
+  "methods_span": "The following formula was used to determine the experimental magnetic moment"
+ }
+]

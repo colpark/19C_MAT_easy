@@ -17,3 +17,50 @@ reason: F1 (Phase 1 framework): provenance ladder (provenance.py), law library w
 - `digitize.py` ec6a39f0a0fa402354c5db335bf2320145b4f20cc534c4e4cb76007b90d1ecf4
 - `build_matrix.py` bfe36d8c2cb6cecdb718ce10a7bbce1853d93c8fd9104ac6f4e7c90735d60dbd
 - `papers/mo21/gen_config.py` 99f641041815f8dc1b3b3ad5f207dc87c09fe83b462066a4ae0968c9b27888bc
+
+## F2 (2026-10-05T19:28:46-05:00)
+
+reason: F2 (user decisions after the Phase 4 checkpoint): recompute audits capped at 2 items per anomaly (binding x sample x verdict) and T7 at 2 per held-out sample; items carry a group tag (anomaly / held-out sample) for per-group accuracy; TEXT_TABLE_PANELS tag text_recoverable='text_table'; EXCLUDE_PANELS remove a panel from every key; T4 class balance trims the source holding most of the largest class (the old last-first trim removed all recompute items in a synthetic run). Unit tests and synthetic runs pass. Paper 1 regenerated.
+
+- `provenance.py` d16015934959d6563ba4a7803924b65a49bf272c34ecafd217ed7873b8a93b08
+- `laws.py` fe3a731a2f36de889a52eb7c934700e081e619c7730504314dc82f5e6a6d92f7
+- `signatures.py` d365299cce5103ed403fc2f15b8583202b158b6f9aeb46c3cd94bc75b05ae0ee
+- `grade.py` 9d65c086f2ad784e96863ad55cd6fdb04250de8e52b15af58c169ee98ca2b841
+- `generate.py` d1605a0f0e5d7730c85205c46c91bc63f057bc5722ffc6480e26af746f8edfa8
+- `gen_claims.py` 03afc54a8dbabdeacb872196a61a69e5d28c55bc69ff28279fa25ec18511f3c4
+- `gen_mech.py` 6485e1634836c3edb77ca4a86913d6cad2309109e1eb6a0e5e97b74a95fb2a66
+- `render.py` fa73b7937c14d827ad1ab324878e07dda903369be7cd649a32e5215a12970247
+- `digitize.py` ec6a39f0a0fa402354c5db335bf2320145b4f20cc534c4e4cb76007b90d1ecf4
+- `build_matrix.py` bfe36d8c2cb6cecdb718ce10a7bbce1853d93c8fd9104ac6f4e7c90735d60dbd
+- `papers/mo21/gen_config.py` 99f641041815f8dc1b3b3ad5f207dc87c09fe83b462066a4ae0968c9b27888bc
+
+## F3 (2026-10-05T19:43:20-05:00)
+
+reason: F3 (end of Stage 5B): physics tables of papers 2-6 frozen before any decidability is computed: nodes.json (audited, Sol overrides applied), law_bindings.json (classes by code; Sol class audit: 4 exclusions), signatures.json (25 entries; Sol direction audit: 1 removed); law library entries colaneri_shacklette, pr_agreement, td_agreement, electrostriction, archard_ucs, bragg_reference. Unit tests all pass.
+
+- `provenance.py` d16015934959d6563ba4a7803924b65a49bf272c34ecafd217ed7873b8a93b08
+- `laws.py` 674ca584ebc267de0bf0025ea9da31c416b46099e9167d0b4b573194a539bfde
+- `signatures.py` d365299cce5103ed403fc2f15b8583202b158b6f9aeb46c3cd94bc75b05ae0ee
+- `grade.py` 9d65c086f2ad784e96863ad55cd6fdb04250de8e52b15af58c169ee98ca2b841
+- `generate.py` d1605a0f0e5d7730c85205c46c91bc63f057bc5722ffc6480e26af746f8edfa8
+- `gen_claims.py` 03afc54a8dbabdeacb872196a61a69e5d28c55bc69ff28279fa25ec18511f3c4
+- `gen_mech.py` 6485e1634836c3edb77ca4a86913d6cad2309109e1eb6a0e5e97b74a95fb2a66
+- `render.py` fa73b7937c14d827ad1ab324878e07dda903369be7cd649a32e5215a12970247
+- `digitize.py` ec6a39f0a0fa402354c5db335bf2320145b4f20cc534c4e4cb76007b90d1ecf4
+- `build_matrix.py` bfe36d8c2cb6cecdb718ce10a7bbce1853d93c8fd9104ac6f4e7c90735d60dbd
+- `papers/mo21/gen_config.py` 99f641041815f8dc1b3b3ad5f207dc87c09fe83b462066a4ae0968c9b27888bc
+- `papers/s039/nodes.json` f02e0ee3817bda23713901dcb73df58df016b8d7289c11136fc98e239c41b97a
+- `papers/s039/law_bindings.json` c717c2ff3b387b180578e8a14b089e977261d3ea557699fca414ae8b161fa57b
+- `papers/s039/signatures.json` c98b3708831998f6c374886d667090625318302a60528d804f0964527247f92e
+- `papers/s098/nodes.json` 2fddab5b61815b8a98f27421bd6af1ce001d9e4a59965de1d5caf60a9d0fef30
+- `papers/s098/law_bindings.json` 736be233fe9f035f3a7bc82d3218556591f6d9da89aad86eb9523910b3607538
+- `papers/s098/signatures.json` d2b9a4e5fc0530f111c57c513e79c42ae0b4740ca91681e425eb974e7ce49aeb
+- `papers/t042/nodes.json` 9bdfded35c36cac06f0ae4abbda77c1351135b202d2c45e7a952c3c533e0772f
+- `papers/t042/law_bindings.json` 37427297160d2483d2c0c401ff294c5b4af3e0f0005d146fb501f991ab55b743
+- `papers/t042/signatures.json` 0fd2a5ac8dac77a53e55381dbf513cef988c25428e61ca24c628449c1f7c8b98
+- `papers/t051/nodes.json` 6fc0774b62fa8bf94e2c6ac5db82a250c2736ad7a460ca38b1096757e4dec953
+- `papers/t051/law_bindings.json` c9c7926c86f24d39864c1d566dd7ae6d220150664192410a6b1208a69e99205f
+- `papers/t051/signatures.json` c027f42e743e1d194dd89d023e1db18e24105c06aa83d96e8d3c73026bde93b3
+- `papers/s048/nodes.json` df34a75bb881a73085d0de25030a5e95a18e430c084441ce066a121f80113fb7
+- `papers/s048/law_bindings.json` faa18c12a2dacda408267703f57ac417e856eb3b1d5783dd1a8ac0f2f46bf1fa
+- `papers/s048/signatures.json` 26eed00a1d3f32c89c838da69bab4aff837430f13bb25ffed791b713be8051e5

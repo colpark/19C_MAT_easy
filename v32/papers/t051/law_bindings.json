@@ -1,0 +1,111 @@
+[
+ {
+  "id": "Pr_PE_vs_HTD",
+  "library": "pr_agreement",
+  "inputs": [
+   "pe_rt"
+  ],
+  "target": "htd",
+  "params": [],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "two-instrument agreement: remanent polarization (P-E loop Pr vs thermal-depolarization released charge)",
+  "opportunities": 6,
+  "reader": "curve",
+  "methods_span": "The poled samples were placed in silicone oil at $2 5 0 ^ { \\circ } \\mathrm { C } ,$ and the released charges were collected and integrated using an electrometer connected with a standard capacitor."
+ },
+ {
+  "id": "Td_diel_vs_PrT",
+  "library": "td_agreement",
+  "inputs": [
+   "diel_T"
+  ],
+  "target": "Pr_T",
+  "params": [],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "transition temperature agreement: depolarization temperature from poled tan-delta peak (LCR) vs Pr(T) collapse (P-E)",
+  "opportunities": 6,
+  "reader": "curve",
+  "methods_span": null
+ },
+ {
+  "id": "FE_RFE_IE_vs_XRD",
+  "law_class": "not bound",
+  "reason": "presence/absence of a transition, not a value; 2 opportunities"
+ },
+ {
+  "id": "mlcc_Pr_PE_vs_shock",
+  "library": "pr_agreement",
+  "inputs": [
+   "mlcc_pe_E"
+  ],
+  "target": "mlcc_shock_Q",
+  "params": [],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "two-instrument agreement: MLCC remanent polarization (P-E at 12.5 kV/mm) vs shock-released charge density",
+  "opportunities": 1,
+  "reader": "curve",
+  "methods_span": null
+ },
+ {
+  "id": "Td_mlcc_diel_vs_PE",
+  "library": "td_agreement",
+  "inputs": [
+   "mlcc_diel"
+  ],
+  "target": "mlcc_pe_T",
+  "params": [],
+  "law_class": "agreement",
+  "mode": "value",
+  "reason": "two instruments measure the same physical quantity on disjoint M ancestors",
+  "family": "transition temperature agreement: MLCC Td from dielectric (F6f) vs Pr decay in T-dependent P-E (F6c)",
+  "opportunities": 1,
+  "reader": "curve",
+  "methods_span": "The polarization–electric $\\left( P \\mathrm { - } E \\right)$ loops were recorded using a ferroelectric measurement system (TF Analyzer 2000E, aixACCT Co., Germany)"
+ },
+ {
+  "id": "recompute_PrT",
+  "library": "definition",
+  "inputs": [
+   "pe_T_x0_x20"
+  ],
+  "target": "Pr_T",
+  "params": [],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target Pr_T is A, computed_from ['pe_T_x0_x20'] lies within the inputs and their ancestors",
+  "family": "definition recompute (Pr(T) read off temperature-dependent P-E loops)",
+  "opportunities": 10,
+  "reader": "curve/bar",
+  "methods_span": null
+ },
+ {
+  "id": "recompute_w",
+  "library": "definition",
+  "inputs": [
+   "pe_rt"
+  ],
+  "target": "lit_w",
+  "params": [
+   {
+    "name": "eps after pressure-driven depolarization",
+    "kind": "external",
+    "source": "not shown on any panel (implied ~790 from 52.21 uC/cm2 and 19.52 J/cm3)",
+    "spread": null,
+    "fit_on": []
+   }
+  ],
+  "law_class": "definition",
+  "mode": "value",
+  "reason": "target lit_w is A, computed_from ['pe_rt'] lies within the inputs and their ancestors",
+  "family": "definition recompute (w = Pr^2 / (2 eps eps0))",
+  "opportunities": 1,
+  "reader": "curve/bar",
+  "methods_span": "The theoretical energy density $( w )$ of FE materials can be calculated using equation $w = P _ { \\mathrm { r } } ^ { 2 } / ( 2 \\varepsilon \\varepsilon _ { 0 } )$ [2],"
+ }
+]
