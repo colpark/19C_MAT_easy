@@ -1,0 +1,129 @@
+[
+ {
+  "panel": "F2",
+  "node": "xrd_raw",
+  "roles": [
+   "T1"
+  ],
+  "style": "mono_spectrum",
+  "features": [
+   "peak_x"
+  ],
+  "crop": "tier B accepted",
+  "status": "ready",
+  "note": ""
+ },
+ {
+  "panel": "F3",
+  "node": "xrd_gpc",
+  "roles": [
+   "T1"
+  ],
+  "style": "t042_spectrum",
+  "features": [
+   "peak_x"
+  ],
+  "crop": "tier B accepted",
+  "status": "ready",
+  "note": "labelled stacked traces"
+ },
+ {
+  "panel": "F5",
+  "node": "ftir",
+  "roles": [
+   "T1"
+  ],
+  "style": null,
+  "features": [],
+  "crop": "not in inputs.json (not segmented)",
+  "status": "no crop",
+  "note": "not segmented (sub-panels F5a-c dropped/unverified)"
+ },
+ {
+  "panel": "F6a",
+  "node": "stress_strain",
+  "roles": [
+   "archard_ucs",
+   "T1"
+  ],
+  "style": "s048_curve",
+  "features": [
+   "y_at_extremum",
+   "x_at_extremum"
+  ],
+  "crop": "tier A accepted",
+  "status": "ready",
+  "note": "UCS = peak stress"
+ },
+ {
+  "panel": "F8",
+  "node": "tga_0/tga_ti",
+  "roles": [
+   "tga_mass_balance",
+   "T1"
+  ],
+  "style": "s048_tga_right",
+  "features": [
+   "plateau"
+  ],
+  "crop": "tier B accepted",
+  "status": "ready",
+  "note": "3x2 grid: crop per subplot; TGA on the right axis"
+ },
+ {
+  "panel": "F10m",
+  "node": "cof_trace",
+  "roles": [
+   "recompute_cof",
+   "T1"
+  ],
+  "style": null,
+  "features": [],
+  "crop": "not in inputs.json (not segmented)",
+  "status": "no crop",
+  "note": "not segmented (only the full figure exists)"
+ },
+ {
+  "panel": "F11",
+  "node": "wear_profile",
+  "roles": [
+   "recompute_wear",
+   "T1"
+  ],
+  "style": "s048_wear",
+  "features": [
+   "y_at_extremum"
+  ],
+  "crop": "tier B accepted",
+  "status": "no validated style",
+  "note": "replica gate FAIL on s048_wear: y_at_extremum"
+ },
+ {
+  "panel": "F6b",
+  "node": "ucs_bar",
+  "roles": [
+   "audit object"
+  ],
+  "style": "s098_bar",
+  "features": [
+   "bar_top"
+  ],
+  "crop": "tier A accepted",
+  "status": "ready",
+  "note": ""
+ },
+ {
+  "panel": "F9",
+  "node": "cof_bar/wear_rate",
+  "roles": [
+   "audit object"
+  ],
+  "style": "s098_bar",
+  "features": [
+   "bar_top"
+  ],
+  "crop": "tier B accepted",
+  "status": "ready",
+  "note": ""
+ }
+]

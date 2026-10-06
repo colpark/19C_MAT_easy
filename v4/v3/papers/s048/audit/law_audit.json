@@ -1,0 +1,51 @@
+{
+ "rows": [
+  {
+   "binding": "bragg_anatase_ref",
+   "builder": "independent",
+   "sol": "dependent",
+   "agree": false,
+   "reason": "The TiO2 blend content and XRD pattern are linked because composition affects phase intensities, but the pattern is not determined from TiO2 content by Bragg\u2019s law, and the external lattice references only identify reflections."
+  },
+  {
+   "binding": "tga_mass_balance",
+   "builder": "independent",
+   "sol": "independent",
+   "agree": true,
+   "reason": "Mass-balance mixing uses the independently measured control TGA response and known TiO2 fraction to predict the separately measured TiO2-bearing response without fitted parameters."
+  },
+  {
+   "binding": "recompute_ucs",
+   "builder": "definition",
+   "sol": "dependent",
+   "agree": false,
+   "reason": "The bar values average five samples, while the plotted stress\u2013strain curve is only representative, so its peak and endpoint cannot definitionally reproduce the reported averages despite sharing the same measurement procedure."
+  },
+  {
+   "binding": "recompute_cof",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The bar friction coefficient is computed as the steady-state mean of the measured coefficient-of-friction trace, so the relation reproduces the authors' arithmetic."
+  },
+  {
+   "binding": "recompute_wear",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The specific wear rate was calculated from the profilometer-derived wear-track cross-sectional area and track length, normalized by the applied load and sliding distance, so the relation reproduces the authors' arithmetic."
+  },
+  {
+   "binding": "archard_ucs",
+   "builder": "fit",
+   "sol": "fit",
+   "agree": true,
+   "reason": "Archard\u2019s relation requires the material-specific wear coefficient K, which must be calibrated from wear data that include the target wear rates."
+  }
+ ],
+ "excluded": [
+  "bragg_anatase_ref",
+  "recompute_ucs"
+ ],
+ "cost": 0.01233738
+}

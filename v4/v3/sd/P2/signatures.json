@@ -1,0 +1,24 @@
+{
+ "p2_te_loss": {
+  "mechanism": "Annealing volatilises Te from the Bi2Te3 film; the Te vacancies act as electron donors, so the electron (carrier) concentration rises.",
+  "relation": "Te vacancy V_Te donates electrons (V_Te -> V_Te** + 2e-); sigma = n e mu; Pisarenko: |S| falls as n rises",
+  "source": "Goldsmid, Introduction to Thermoelectricity (2010), ch. 4 (Bi2Te3 antisite/vacancy doping); Pisarenko relation",
+  "prior_rank": 1,
+  "predicts": {
+   "Te_content(anneal step)": "down",
+   "sigma_RT(anneal step)": "up",
+   "S_RT_signed(anneal step)": "up"
+  }
+ },
+ "p2_mobility_gain": {
+  "mechanism": "Annealing improves crystallinity and reduces carrier scattering at grain boundaries and defects, raising the carrier mobility at an unchanged carrier concentration and composition.",
+  "relation": "sigma = n e mu with n fixed; S depends on n (and weakly on the scattering exponent), not on mu",
+  "source": "Ioffe, Semiconductor Thermoelements (1957); Snyder & Toberer, Nat. Mater. 7, 105 (2008)",
+  "prior_rank": 2,
+  "predicts": {
+   "Te_content(anneal step)": "none",
+   "sigma_RT(anneal step)": "up",
+   "S_RT_signed(anneal step)": "none"
+  }
+ }
+}

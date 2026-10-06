@@ -1,0 +1,34 @@
+{
+ "rows": [
+  {
+   "binding": "mix_tga_residue",
+   "builder": "independent",
+   "sol": "independent",
+   "agree": true,
+   "reason": "The composite TGA curve or residue is predicted by externally specified mass-balance weighting of independently measured pure-component TGA data using the known MXene mass fraction, without fitting to the composite measurements."
+  },
+  {
+   "binding": "thinfilm_SE_rank",
+   "builder": "independent",
+   "sol": "independent",
+   "agree": true,
+   "reason": "The external thin-film shielding law uses independently obtained conductivity and thickness to predict VNA-measured EMI shielding effectiveness without fitting to or reusing the target measurement."
+  },
+  {
+   "binding": "recompute_SE_eff",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The shielding efficiency was directly computed by the authors from the measured total EMI shielding effectiveness using the stated formula."
+  },
+  {
+   "binding": "recompute_SSE_t",
+   "builder": "definition",
+   "sol": "definition",
+   "agree": true,
+   "reason": "The target SSE/t was explicitly calculated by the authors from the measured total shielding effectiveness and film thickness (with density as used in their definition), so the relation only reproduces their arithmetic."
+  }
+ ],
+ "excluded": [],
+ "cost": 0.00767844
+}

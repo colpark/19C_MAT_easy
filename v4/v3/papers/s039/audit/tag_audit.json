@@ -1,0 +1,426 @@
+{
+ "rows": [
+  {
+   "id": "xrd",
+   "panel": "F2",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw XRD intensity and 2\u03b8 readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "rietveld",
+   "panel": "F2",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "xrd",
+    "CIF reference files"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "phase_pct",
+   "panel": "F3",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "rietveld"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "D_DS",
+   "panel": "F8",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "xrd"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "tem",
+   "panel": [
+    "F4a",
+    "F4b",
+    "F4c"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw TEM detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "D_TEM",
+   "panel": [
+    "F4d",
+    "F4e",
+    "F4f"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "tem"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "hrtem",
+   "panel": [
+    "F4g",
+    "F4h",
+    "F4i"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw HRTEM detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "saed",
+   "panel": [
+    "F4j",
+    "F4k",
+    "F4l"
+   ],
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw selected-area electron-diffraction readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "sem",
+   "panel": "F5a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw SEM detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "D_SEM",
+   "panel": "F5b",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "sem"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "edx",
+   "panel": "F5c",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw EDX X-ray counts and energies"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "uvvis",
+   "panel": "F6",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw spectrophotometer intensity readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "tauc_dir",
+   "panel": "F7a",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "uvvis"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "tauc_ind",
+   "panel": "F7b",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "uvvis"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Eg_dir",
+   "panel": "F8",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "tauc_dir"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Eg_ind",
+   "panel": "F8",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "tauc_ind"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "urbach_plot",
+   "panel": "F9",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "uvvis"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "E_U",
+   "panel": "F8",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "urbach_plot"
+   ],
+   "stated": false,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "band_edges",
+   "panel": "F10",
+   "builder": "A",
+   "sol": "S",
+   "sol_from": [
+    "Eg_dir",
+    "Mulliken electronegativity values"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "keep A (builder already restrictive)"
+  },
+  {
+   "id": "ftir",
+   "panel": "F11a",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw FTIR detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "ftir_fp",
+   "panel": "F11b",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw FTIR detector readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "F_const",
+   "panel": "F12",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "ftir_fp"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "theta_D",
+   "panel": "F12",
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "ftir_fp"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "raman",
+   "panel": "F13",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "raw Raman detector readings"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "xps_survey",
+   "panel": "F14",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw XPS electron-count and binding-energy readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "xps_hr",
+   "panel": [
+    "F15a",
+    "F15b",
+    "F15c",
+    "F15d",
+    "F15e",
+    "F15f"
+   ],
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "raw high-resolution XPS readings"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "mh",
+   "panel": "F16",
+   "builder": "M",
+   "sol": "M",
+   "sol_from": [
+    "raw VSM magnetic-moment and applied-field readings"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Ms_exp",
+   "panel": "F16",
+   "builder": "M",
+   "sol": "A",
+   "sol_from": [
+    "mh"
+   ],
+   "stated": true,
+   "agree": false,
+   "action": "tag A (restrictive)"
+  },
+  {
+   "id": "las_fit",
+   "panel": [
+    "F17a",
+    "F17b",
+    "F17c",
+    "F17d",
+    "F17e",
+    "F17f"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "mh"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "Ms_models",
+   "panel": [
+    "F18a",
+    "F18b",
+    "F18c",
+    "F18d",
+    "F18e",
+    "F18f"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "Ms_exp",
+    "las_fit"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  },
+  {
+   "id": "eta_B",
+   "panel": [
+    "F19a",
+    "F19b",
+    "F19c",
+    "F19d",
+    "F19e",
+    "F19f"
+   ],
+   "builder": "A",
+   "sol": "A",
+   "sol_from": [
+    "Ms_exp",
+    "Ms_models",
+    "nominal composition and molecular weight"
+   ],
+   "stated": true,
+   "agree": true,
+   "action": "none"
+  }
+ ],
+ "cost": 0.04027419
+}
