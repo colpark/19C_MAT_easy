@@ -148,3 +148,15 @@ reason: Track D CrFeNi grain-size reader (TV + Canny / watershed) and synthetic 
 reason: Track D CrFeNi real-image measurement driver (before real images)
 
 - `trackD/measure_crfeni.py` b22b0b6f929028b690ede4dbebd6c380fb64af3b4754cf15d83aeb1d80a07473
+
+## B11a (2026-10-06T18:52:17-05:00)
+
+reason: Q1b audit script (approved quote Q1b-v4-reaudit-allende-v2), frozen before the paid run
+
+- `allende/audit_q1b.py` 01c3ce84045593523f7fc0610170eecc6c4fb1a63ae61403d1280a73da9dc5ba
+
+## B11 (2026-10-06T18:54:59-05:00)
+
+reason: Allende v2: apply Q1b re-audit restrictively (before balance trims)
+
+- `allende/generate_v2.py` afd8924c833ada6d7691d0d42ba258a32c1c9572499691438ef9f7aa35506617

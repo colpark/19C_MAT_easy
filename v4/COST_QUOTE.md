@@ -43,6 +43,7 @@ the claim spans, never keys or rendered panels. Restrictive choice on disagreeme
 - Hard cap enforced by the run: **$1.50** (checked before each call, from `usage.cost`).
 - Not included: Track D audits (CrFeNi tags, Hall-Petch law class, claim parses), which come as a separate quote once the CrFeNi items exist.
 - **Quote id to approve: Q1b-v4-reaudit-allende-v2.**
+- **Approved by David 2026-10-06 and run:** 29 calls, actual $0.0582 (expected $0.12, cap $1.50). Outcomes in allende/audit_q1b/; applied restrictively (B11).
 
 ## Planned (not yet quoted)
 - **Q2:** v4.0 evaluation with gpt-5-nano. Arms: A0, B0, B1, R0 and R0all on the 248 v3 items; A0, B0, T-code and T-FM on the raw-array items; k >= 3 where claims are made.
