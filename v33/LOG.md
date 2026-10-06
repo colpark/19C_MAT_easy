@@ -79,3 +79,28 @@ F9 (definitions), F10 (physics tables).
   images identical.
 - Fuzz (sd/fuzz33.py): 159/159 oracle answers grade 1.0, 159/159 targeted wrong answers grade 0.
 - Export: v33_host/sd/<P>/tasks (159), paper-1 tasks from the v33 regeneration in v33_host/papers_v33/mo21/tasks (89).
+
+## A6 push
+- Branch v3.3/2026-10-06 created from ba26fe4f in the scratch clone; rsync v33/ (excluding __pycache__, papers/_synth); 583 files; staged
+  diff scanned for credentials (none); commit f283c5c6 pushed to origin. Oracle gate (before the push): 248/248 reward 1.0, 0 exceptions
+  (harbor run -p tasks -y -a oracle -n 8, per paper; paper-1 tasks re-exported from the v33 regeneration).
+
+## Part B setup
+- B1 text P2-P6: MinerU 2.7.6 (~/Documents/harbor/v02/.venv-mineru, pipeline backend) on the user-supplied PDFs -> v33_host/mineru/<id>
+  (32-72 s each, rc 0); partB/make_arms33.py keeps text/equation blocks, cuts at References, drops admin sections and source-data
+  sentences -> v33_host/b1text/<P>.md (host only; 6.4k-10.9k words).
+- Arms (partB/make_arms33.py, partB/make_arms33_p1.py): A0 248, B0 248, B1 137 (T4 + T5 + 3 T1 found in the text), R0 152 (all but T1;
+  cannot-tell dense curves thinned to <= 25 points per series; T3/T7 hidden cells asserted absent). Total 785 trials.
+- Cost estimate (v3.2 Phase 6 per-trial means: A0 $0.0033, B0 $0.00155, B1 $0.00329, R0 $0.00241; no cap hits at 30 iterations):
+  expected $2.02; upper bound with every trial x 50/30 $3.37; per-arm maximum on every trial $5.40. Under the $10 cap -> launch.
+- Launch 2026-10-06T11:57:56-05:00: partB/run_partB33.sh all (A0, B0, B1, R0 x mo21, P2-P6), harbor 0.23.0, openhands-sdk, -k 1 -n 8, --ak max_iterations=50,
+  model openrouter/openai/gpt-5-nano; jobs in v33_host/partB33/jobs/<paper>/<arm>; R0 oracle running in parallel (v33_host/partB33/r0_oracle.sh).
+- R0 oracle (partB33/r0_oracle.sh): 152/152 reward 1.0 (P2 23, P3 23, P4 19, P5 19, P6 19, paper 1 49).
+- Part B done 2026-10-06T14:38 (started 11:58 after the monitor PAUSE cleared; E21): 785 trials, 0 exceptions, 0 cap hits, 0 flagged
+  network/key calls (audit_runs.sh per arm); agent cost $1.87 (A0 0.77, B0 0.40, B1 0.41, R0 0.28). audit_runs.sh undercounts missing
+  answer.md (E22); analyze33.py detects 160 trials without answer.md from the trajectories (lenient = final message graded).
+- partB/analyze33.py -> RESULTS_v33_nano.md, partB/results33.json (per-trial strict/lenient/cap/opened/cost/tokens; no images).
+- make_report33.py -> V33_REPORT.md. Total spend v3.3: Sol audits $0.4359 + nano $1.87.
+
+## Part C
+- Push v33/ to v3.3/2026-10-06 (not merged); stop and wait for the user's call.
