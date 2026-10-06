@@ -135,3 +135,16 @@ reason: Track D CrFeNi: 0.2% offset yield procedure + synthetic validation (befo
 reason: Track D CrFeNi M0 screen + separability pilot (before real data)
 
 - `trackD/m0_crfeni.py` 2e71462f41b59fdeb8c00f4f390bc438ad0d632f2413e96f3e13df1b41a397d5
+
+## D3 (2026-10-06T17:52:13-05:00)
+
+reason: Track D CrFeNi grain-size reader (TV + Canny / watershed) and synthetic validation; params from dev seed 101, gates restated as constant-bias before freeze; real images used only for noise level
+
+- `trackD/grainsize.py` 265188a59f782b73c8e684e15ee3643deed7fd6f9021f6b9b888a31872dbbb81
+- `trackD/validate_grainsize.py` 1ba742a1fc3a7c43c8cd0f9849644cab9ff94dd1faa49268b791be340a080aa5
+
+## D4 (2026-10-06T17:56:52-05:00)
+
+reason: Track D CrFeNi real-image measurement driver (before real images)
+
+- `trackD/measure_crfeni.py` b22b0b6f929028b690ede4dbebd6c380fb64af3b4754cf15d83aeb1d80a07473

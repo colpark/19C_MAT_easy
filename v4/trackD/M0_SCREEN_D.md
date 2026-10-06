@@ -28,3 +28,24 @@ on synthetic microstructures, then checked against the authors' file-name values
 | Images | 8-bit, no FEI metadata (pixel size from the scale bar only). Grain-orientation channeling contrast makes some matrix grains as bright as sigma: a global threshold fails (the UHCS reader failure mode, V4-E03/E04) |
 | Separability pilot | not run: it needs a validated precipitate reader first. Running it on an unvalidated reader would repeat V4-E03 |
 | Decision | build rank 1. Rank 2 can come back as a T-FM item source once the Track C FM result is known |
+
+## CrFeNi grain-size reader (M2, freezes D3 and D4)
+- trackD/grainsize.py: TV denoising, then two methods: Canny edge intercept (I) and watershed label intercept (II). Twins are counted (BSE has no orientation data).
+- Development on synthetic dev seed 101. Absolute recovery is unreachable at the real noise level (boundaries between near-equal grays are invisible), so the gates were restated as a constant bias **before** the freeze.
+- Fresh-seed validation (validate_grainsize.json):
+
+  | Measure | I | II |
+  |---|---|---|
+  | Reader/truth | 1.41 | 1.37 |
+  | Spread | 0.084 | 0.057 |
+  | Size slope | -0.118 | -0.037 |
+  | 1.4x ordering | 100 % | 100 % |
+
+  The methods agree within 15 % on 95 % of images. All gates pass; method I's size slope sits close to its 0.12 limit.
+- Real TIFFs (grains_crfeni.json): 29 images, 6 conditions. All are in the validated range after noise-driven binning.
+  - Held-out check against the authors' twin-inclusive intercepts c (A level, rank and ratio only): Spearman 1.0 for both methods; our/c = 1.21 (CV 0.14) for I and 1.30 (CV 0.21) for II.
+- 1573 K: stitched JPG with a scale bar and seams. Excluded from keys until the scale bar passes a pixel check plus a blind read.
+- Hall-Petch with our grain sizes, 6 conditions: r = 0.972 (I) and 0.960 (II).
+  - Leave-one-out residuals are -2 to -18 MPa, except 16.5mm/1273K at +42 MPa (I).
+  - The two bar thicknesses (8.1 and 16.5 mm) may not share one line.
+  - The model error must be frozen in the physics table before any T7 key.
