@@ -118,3 +118,5 @@ T2 8, T4 39 = 13/13/13 incl. recompute 2+2, T7 2); Sol cannot-tell 13/13 (cached
 - No qualifying image-ordering set; two-method measurement not built.
 - T3 opportunities ready: 14 (< 20, reported, no relaxation).
 - freeze.py F4 PASS (adds readers.py, papers/*/features.json); unit tests pass.
+
+- 5C recovery (Bragg from images): lattice.py, replicas/tem_replicas.py (6/7 styles PASS), F5 freeze, Sol input check $0.006; real: SAED refused (anisotropic), no rebinding (E11).

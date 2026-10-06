@@ -85,3 +85,19 @@ readers.py: y_at_x (incl. loop/butterfly branches), x_at_extremum, y_at_extremum
 - Freeze F4 (readers.py, features.json) PASS; all unit tests pass (incl. test_readers_crop.py).
 - Sol in 5C: crops $0.096, annotations $0.026. v3.2 audit total about $0.48.
 - Ledger: E05-E10.
+
+## Recovery attempt: Bragg agreement from images (user instruction, after review)
+
+lattice.py (from tool_ceiling tem.py): scale bar measured in px (label declared + blind Sol check, OCR as cross-check), HRTEM dominant fringe by whitened windowed FFT (high-pass, JPEG-grid peaks removed, periods 2.2-16 px), SAED ring d by background-subtracted radial profile with an azimuthal-coverage test, rings assigned to printed hkl by rank of radius; refusal when the beam spot is elliptical (axis ratio > 1.08). Gate in d units on replicas/tem_replicas.py (12 per style):
+
+| style | read | coverage | within 2u | bias (u) | refused | gate |
+|---|---|---|---|---|---|---|
+| hrtem_s039g | 12 | 100% | 92% | -0.19 | 0 | **FAIL** |
+| hrtem_s039h | 11 | 100% | 100% | 0.01 | 0 | PASS |
+| hrtem_t042 | 10 | 91% | 100% | 0.05 | 0 | PASS |
+| saed_s039j | 72 | 100% | 100% | 0.04 | 0 | PASS |
+| saed_s039k | 72 | 100% | 99% | -0.44 | 0 | PASS |
+| saed_stretched | 0 | 0% | 0% | nan | 12 | PASS |
+| saed_wide_bar | 72 | 100% | 100% | -0.06 | 0 | PASS |
+
+Frozen as F5, then real panels (profile inputs Sol-checked, $0.006): S039 F4j, F4k **refused** (beam-spot axis ratio 1.25, 1.27: anisotropically scaled figure); S039 F4h d = 0.418 +- 0.006 nm but no XRD (111) route (scan starts at 20 deg); S039 F4g style failed; T042 F3a 0.766 nm (coarse fringes; labelled spacings unresolvable at 12.8 px/nm), F3b bar not found. **No rebinding; the T3 shortfall stays (14 ready, at most 18).** Ledger E11.
