@@ -137,3 +137,10 @@ T2 8, T4 39 = 13/13/13 incl. recompute 2+2, T7 2); Sol cannot-tell 13/13 (cached
 
 ## Held-out gate (F6)
 - fidelity/heldout_run.py: accuracy fails (bar_top, internal extremum); coverage low (calibration on publication-resolution figures). Stopped per instruction 5; 5D not run (E14).
+
+## Phase 6 (paper 1, user instruction 2026-10-06)
+- partB/make_arms_v32.py: A0 89, B0 89, B1 39 (T4; no v3.2 T1 cell stated in the text), R0 49 (T2 8, T4 39, T7 2). R0 oracle 49/49.
+- Estimate (v3.1 per-trial actuals): about $0.64 ($0.45-1.3) + audit ~$0.35; under $10: launched ./run_phase6.sh all (gpt-5-nano, one attempt, max 30 iterations, -n 8).
+
+## Source Data build set (user course change 2026-10-06)
+- Screening (Crossref CC BY + nature.com), 11 shortlisted, user downloaded PDFs; 5 chosen after printed-number checks (fidelity/BUILD_SET_SD.md).

@@ -15,7 +15,7 @@ for aid in sys.argv[1:]:
     if not os.path.exists(page): get(f'https://www.nature.com/articles/{aid}', page)
     html = open(page).read()
     for u in sorted(set(re.findall(r'https://media\.springernature\.com/original/springer-static/esm/[^"]*\.xlsx', html))): get(u, f'{d}/{os.path.basename(u)}')
-    j = aid[1:6]; n = aid.split('-')[2].lstrip('0'); pre = f'{j}_2026_{n}'
+    j = aid[1:6]; n = aid.split('-')[2].lstrip('0'); pre = f"{j}_20{aid.split('-')[1][1:]}_{n}"
     for k in range(1, 13):
         fn = f'{pre}_Fig{k}_HTML.png'
         if not get(f'https://media.springernature.com/full/springer-static/image/art%3A10.1038%2F{aid}/MediaObjects/{fn}', f'{d}/{fn}'): break
