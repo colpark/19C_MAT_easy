@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 """eds.py (v4 Track B, skill M2 raw data): element net-count maps from the Bruker EDS spectrum images of the Allende grain.
-Per (binned) pixel, non-negative least squares of fixed-shape Gaussian lines plus a linear background over each fit window:
+Per (binned) pixel, non-negative least squares of fixed-shape Gaussian lines plus a quadratic background over each fit window
+(B1b: a linear background overshot the curved bremsstrahlung near 5.4 keV and absorbed the Cr peak):
   FWHM(E) = sqrt(0.0504^2 + 0.002434 E) keV (Fano law, FWHM 130 eV at Mn Ka), K-alpha / K-beta and L lines at tabulated energies.
   window LOW 0.85-2.65 keV: Ni La 0.851, Cu La 0.930, Na Ka 1.041, Mg Ka 1.254, Al Ka 1.487, Si Ka 1.740, Si Kb 1.836, S Ka 2.307, S Kb 2.464
   window HIGH 5.2-8.9 keV: Cr Ka 5.415, Fe Ka 6.404, Fe Kb 7.058, Ni Ka 7.478, Cu Ka 8.048, Ni Kb 8.265
@@ -26,12 +27,12 @@ def design(E, win):
         for b, (a, r) in KB.items():
             if a == n and b in LINES[win]: col = col + r * g(LINES[win][b])
         cols.append(col)
-    return names, np.column_stack(cols + [np.ones_like(E), E - E.mean()])
+    x = E - E.mean(); return names, np.column_stack(cols + [np.ones_like(E), x, x ** 2])   # B1b: quadratic background (curved bremsstrahlung)
 
 def fit_spectrum(E, s, win):
     lo, hi = WIN[win]; m = (E >= lo) & (E <= hi); names, X = design(E[m], win)
-    # linear background may be negative in slope: split into +/- columns for NNLS
-    X2 = np.column_stack([X, -X[:, -1]]); coef, res = nnls(X2, s[m].astype(float))
+    # background terms may be negative: split slope and curvature into +/- columns for NNLS
+    X2 = np.column_stack([X, -X[:, -2], -X[:, -1]]); coef, res = nnls(X2, s[m].astype(float))
     area = {n: float(coef[i] * (fwhm(LINES[win][n]) / 2.355) * np.sqrt(2 * np.pi)) for i, n in enumerate(names)}   # net counts (channels = 1 per dE unit handled by caller)
     return area, res
 
