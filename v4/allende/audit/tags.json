@@ -1,0 +1,60 @@
+{
+ "stxm_jump": {
+  "builder": "M",
+  "sol": "A",
+  "agree": false,
+  "sol_from": [
+   "per-pixel STXM pre-edge and post-edge optical-density readings"
+  ]
+ },
+ "stxm_spectrum": {
+  "builder": "M",
+  "sol": "M",
+  "agree": true,
+  "sol_from": [
+   "STXM transmitted-x-ray readings across photon energies"
+  ]
+ },
+ "eds_net": {
+  "builder": "M",
+  "sol": "M",
+  "agree": true,
+  "sol_from": [
+   "EDS spectrum-image x-ray counts"
+  ]
+ },
+ "regions": {
+  "builder": "M",
+  "sol": "A",
+  "agree": false,
+  "sol_from": [
+   "eds_net",
+   "HAADF-STEM reconstructions"
+  ]
+ },
+ "l3l2_sep": {
+  "builder": "M",
+  "sol": "A",
+  "agree": false,
+  "sol_from": [
+   "stxm_spectrum"
+  ]
+ },
+ "cu_signal": {
+  "builder": "S",
+  "sol": "M",
+  "agree": false,
+  "sol_from": [
+   "EDS spectrum-image Cu-line x-ray counts"
+  ]
+ },
+ "pentlandite_claim": {
+  "builder": "I",
+  "sol": "A",
+  "agree": false,
+  "sol_from": [
+   "eds_net",
+   "regions"
+  ]
+ }
+}

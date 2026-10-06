@@ -70,3 +70,14 @@ reason: Allende generator with the two-route T4 rule (restrictive, V4-E05)
 reason: Allende generator: T3 naming order shuffled; T5 textbook-prior trim (shortcut gates)
 
 - `allende/generate.py` 09bf9ad681598d8e45d59d02c2e0bdd6c9129220736eafe78bf55d382bbad9d7
+
+## B8 (2026-10-06T16:52:05-05:00)
+
+reason: Q1 audit outcomes applied restrictively (tags: stxm_jump, regions, l3l2_sep -> A; region default rejected; 4 parses rejected; fe_2p law excluded; ni_in_olivine signature removed)
+
+- `allende/generate.py` 71a70da9d3b3b7396ff451059c79784a593af549965a313cd641cf7272c773e2
+- `allende/audit/tags.json` 486c84d82c396918f277ef5781719c799ae6d7f271951647e6d544e04a15e957
+- `allende/audit/laws.json` e348716ce42572cb4272a948259d9e3658f6600e79f5cb71af6641c7e5334a03
+- `allende/audit/signatures.json` 2ab715c13e83f1cd9edf07781d6546c6aa3aab7381dc9d213b75325ed0c4000e
+- `allende/audit/parse.json` 9996ea9aaac091e625544959843aa485ada03276ce64fb593f3dd86055be52a0
+- `allende/audit/defaults.json` 38a378e561216ed223080998abff9b8276ab19358ea2662890875f559233bfa6

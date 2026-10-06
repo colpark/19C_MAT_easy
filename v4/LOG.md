@@ -89,3 +89,16 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 ## Track D
 - Undermind workspace a176df59-1b52-4443-9a50-c693060cc3c9: 2 deep searches (56 and 146 relevant papers). search/SHORTLIST.md.
 - Track A oracle (v3/partB/oracle_v4.sh, harbor 0.23.0, -a oracle -n 8): 937/937 reward 1.0 across 6 papers x 5 arms.
+
+## Q1-v4-audit-allende (approved by David 2026-10-06)
+- allende/audit_q1.py: openai/gpt-5.6-sol, temperature 0, hard cap $1.00 checked before each call; 11 calls, $0.0429 (quote: 10 calls, $0.041 expected).
+  - Deviation: claim al2 also carries a span, so 4 parse calls instead of 3.
+- Outcomes, applied restrictively (B8, V4-E06):
+  - tags: stxm_jump, regions and l3l2_sep M -> A;
+  - laws: xmodal_agreement agrees; fe_2p_splitting excluded;
+  - signatures: ni_in_olivine removed;
+  - parses: 4/4 rejected;
+  - defaults: region thresholds rejected; the two-route rule, onset windows and Cu system peak accepted.
+  Items 15 -> 1 (T2). Oracle A0 1/1, B0 1/1.
+- Decision (David): UHCSDB option (c), FM test only; the condition-series seed comes from Track D.
+- STATS_v4_day1.md: in-depth statistics for Tracks A-C.

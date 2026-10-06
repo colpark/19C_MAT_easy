@@ -189,6 +189,25 @@ def build():
     t5 = [i for i in items if i['family'] == 't5']; pri = lambda it: it['expected']['mechanism'] == it['provenance']['labels'][min(it['provenance']['labels'], key=lambda m: PH.SIGNATURES[m]['prior_rank'])]
     while len(t5) >= 3 and sum(pri(i) for i in t5) / len(t5) > 1 / 3 + 0.10:
         j = max(k for k, i in enumerate(t5) if pri(i)); log.setdefault('t5_prior_trim', []).append(t5[j]['provenance']['pair']); items.remove(t5[j]); t5.pop(j)
+    # B8: Q1 audit outcomes, applied restrictively (skill I3). Items keyed on a node Sol tags A/S/I where the builder said M drop; a rejected
+    # named default drops the items relying on it; a law with a class disagreement is excluded; removed signatures drop their pairs; claims
+    # whose parse Sol rejects drop. T2 keeps STXM maps as targets (A values may be T2 targets, I2) under the agreed xmodal law.
+    AU = f'{D}/audit'
+    if os.path.exists(f'{AU}/tags.json'):
+        tg = json.load(open(f'{AU}/tags.json')); dfl = json.load(open(f'{AU}/defaults.json')); lw = json.load(open(f'{AU}/laws.json'))
+        sg = json.load(open(f'{AU}/signatures.json'))['removed']; ps = json.load(open(f'{AU}/parse.json'))
+        downgraded = {k for k, v in tg.items() if v['builder'] == 'M' and v['sol'] != 'M'}; regions_rejected = (dfl.get('1') or {}).get('verdict') == 'reject'
+        keep = []
+        for it in items:
+            f = it['family']; why = None
+            if f == 't1' and 'l3l2_sep' in downgraded: why = 'key node l3l2_sep tagged A by Sol'
+            if f == 't3' and ('stxm_jump' in downgraded or regions_rejected): why = 'hidden STXM jump tagged A / region default rejected'
+            if f == 't4' and (regions_rejected or ps.get(it['provenance']['claim']['sid'], {}).get('agree') is False or ('stxm_jump' in downgraded and it['provenance']['claim']['map'].startswith('STXM'))): why = 'region default rejected / parse rejected / STXM map tagged A'
+            if f == 't5' and (regions_rejected or any(m in sg for m in it['provenance']['pair'])): why = 'region default rejected / signature removed'
+            if f == 't2' and lw.get('xmodal_agreement', {}).get('agree') is not True: why = 'xmodal law not agreed'
+            if why: log.setdefault('audit_drops', []).append({'item': it['question'][:80], 'family': f, 'why': why})
+            else: it['tags']['audit_pending'] = False; it['tags']['audit'] = 'Q1-v4-audit-allende passed'; keep.append(it)
+        items[:] = keep
     out = []; seen = {}
     for fam in ['t1', 't2', 't3', 't4', 't5']:
         for n, it in enumerate([i for i in items if i['family'] == fam], 1):
