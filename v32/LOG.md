@@ -125,3 +125,6 @@ T2 8, T4 39 = 13/13/13 incl. recompute 2+2, T7 2); Sol cannot-tell 13/13 (cached
 
 - Source Data downloaded (S030 xlsx, S021 xlsx, S001 Zenodo xlsx; S013 none); hashes in fidelity/PHASE3.md. S001 and S021 excluded (mismatch / supplementary only).
 - fidelity/crops.py (v0.24 store procedure), fidelity/phase3.py (frozen readers F5). Result: all keyed feature types FAIL (E12); crossing, x_end replica-only. 5D not started.
+
+## Held-out sets (after Phase 3 review)
+- External X1-X4 (Communications Materials 01193-y, 01347-y; Nature Communications 78108-5, 77568-z) and internal S039/S098 table panels chosen and frozen (fidelity/HELDOUT.md, heldout_spec.py, heldout_truth.json) before any F6 code; S030 becomes development data.
