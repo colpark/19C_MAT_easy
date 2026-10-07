@@ -543,3 +543,27 @@ reason: round 3 desk stage: DESK_refodat90.md, DESK_refodat91.md, physics_refoda
 - `trackS/DESK_refodat90.md` c0c53065a8c5a90288e5f72bb2b719476e1cd2e30b3a45d2f34fa0d182490fa0
 - `trackS/DESK_refodat91.md` 3beb948bdf4d46dd386c431329bbcffc94b5d21ff73f872691436ed846bf3e71
 - `trackS/physics_refodat.py` 5b3f561742774417fd102b0e0a72235afbeec0ed24d863c7aca23cacda35d249
+
+## S4r-split (2026-10-07T14:07:16-05:00)
+
+reason: refodat91 spatial split (seed 91, 2x2 dev block per specimen) and the frozen ITZ bins, before the reader touches any tile
+
+- `trackS/s4r/split_refodat91.json` a6f31f16d055f929dd0abfa620371cbc6ea746f37d0ddeb57a628b209df381ee
+
+## S4r (2026-10-07T14:22:33-05:00)
+
+reason: reader S4r for refodat91 (3-class Otsu, SIGMA 1.5, OPEN 3, PORE_SHIFT 5 from tune on dev seeds 0-29; drafts 1-2 replaced on dev evidence), synthetic generator (dev ranges), dev stats, tuning record, fresh-seed gates (validate_s4r.py, seeds 10000+); before any fresh-seed gate or held-out read
+
+- `trackS/s4r/s4r_reader.py` 89caaa9c1ce637a8a98b41ccc87ca9e883668c87a5959234b8a5917ad3bf1987
+- `trackS/s4r/synth_s4r.py` 8fdabc7781fe8513cc347e100d7b68567259c5aa0f8b1419c4349e239b613bed
+- `trackS/s4r/dev_stats.py` e27e3f6bec6ee62de595b00ac2343ff2412535c8c361288474fd68494c55f396
+- `trackS/s4r/dev_stats.json` 1e7db916bb35e9eddca130ce2b252973c0c97e2bc50b07181351e99d07046526
+- `trackS/s4r/tune_s4r.py` 8826a8d006c44966619b1bca5aebeb04c80fece4d9ea67dcc27c306209e9b474
+- `trackS/s4r/tune_s4r.json` b6cdaca8a9358766f3bbc9d9a121afb296fab0377f2661a713824bb0fcc09449
+- `trackS/s4r/validate_s4r.py` eefd9fefaad91b9e1b84a8c922a216bd08a101b76daa64aff5fd1c50945f7151
+
+## S4r-read (2026-10-07T14:29:55-05:00)
+
+reason: read_s4r_r91.py: frozen reader on refodat91 tiles (dev and held-out flagged), before the read
+
+- `trackS/s4r/read_s4r_r91.py` 7464258c02f4b2b7cf7df536a884cb261691b36e88925b3c25dfbd4587a366f0

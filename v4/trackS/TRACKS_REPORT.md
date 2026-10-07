@@ -17,7 +17,36 @@
   - The LTDSC pastes III.70.04/06 (c-d, unc-d) map to 21C/21H/25C/25H. Raw heat flow is M; the ice mass is A.
   - Strength comes as raw cubes (M per DIN); frost as raw masses and transit times (M) beside calculated columns (A).
   - Mechanism pairs are pre-registered in physics_refodat.py.
-- **Open:** S4r for refodat91 alone can pass synthetic gates only. Its only real evidence (LTDSC) is report-only, so R5 cannot be met. This waits for David's call.
+- **David chose to run S4r on refodat91 anyway (synthetic gates plus an exploratory pilot).**
+
+## Reader S4r on refodat91 (round 3)
+- **Split (frozen S4r-split, seed 91):** a 2 × 2 dev block per specimen (21C cols 1-2, 21H 5-6, 25C 2-3, 25H 6-7), with 12 held-out tiles per condition. The ITZ bins were frozen too.
+- **Dev findings:**
+  - Pixel noise is about 31-59 gray levels SD (3 µs dwell at 0.1 nA); blur σ is 1.0-1.4 px.
+  - Detector contrast differs by specimen (84.9-89.2). Carbonated tiles are brighter and saturate (7-12 % of pixels at 255 against < 1 % for uncarbonated), and slag clips together with clinker. So "clinker only" cannot be keyed, and the reader classifies each tile against its own histogram.
+- **Reader (s4r_reader.py, frozen S4r):** 3 × 3 median, Gaussian σ 1.5, a deterministic per-tile 3-class Otsu, a pore detection limit of 3 px (opening), and a +5 pore threshold shift. The parameters were tuned on synthetic dev seeds 0-29 (node 2). Two dev-only drafts (an EM mixture, and a raw-saturation rule) were replaced before the freeze.
+- **Generator (synth_s4r.py):** ranges from the dev tiles only: levels, texture, noise, blur, clipping, angular slag grains, lognormal pores and cracks, and an ITZ mode.
+- **Fresh-seed gates (seeds 10000+, node 2):**
+  - G1 phase fractions within 0.02 on 9/10 tiles: **pass**.
+  - G2 porosity bias constant (slope -0.03, bin range 0.009, mean bias -0.001): **pass**.
+  - G3 ITZ slope sign 0/10: **FAIL (V4-E30)**. The aggregate mask never fired, so the ITZ observable is stopped.
+  - G4 CH/C-S-H split not attempted: hydrates stay merged and are not keyed.
+- **Held-out reads:** 48 tiles. The hash is identical on host A and host B (9d5e3893...).
+  - Mean porosity: 21H 0.40, 21C 0.19, 25H 0.36, 25C 0.45. Mean anhydrous: 0.24 / 0.47 / 0.27 / 0.32.
+  - Realism warning: BSE porosity of 0.2-0.45 is implausibly high, so dark paste is likely counted as pore.
+- **LTDSC (report-only; ice mass B is A level):**
+  - Carbonated minus uncarbonated: at w/c 0.60, BSE porosity is up and LTDSC is up (agree). At w/c 0.40, BSE is down while LTDSC is up (disagree).
+  - Spearman over the 4 conditions: 0.40.
+- **Separability (EXPLORATORY; marked by hand, since separability_s.py does not know the real-evidence status):**
+  - Porosity: 3/3 adjacent pairs, p 1.5e-12.
+  - Anhydrous: 3/3, p 8.5e-20.
+  - Hydrate: 1/3, with classes [[21H, 21C, 25H], [25C]].
+  - All rest on optimistic tile units with one specimen per condition, and are possibly confounded by the brightness and saturation difference.
+- **M0:** refodat91 GO WITH CHECKS, unchanged (no validated pilot). refodat90 GO WITH CHECKS, unchanged (no reader stage).
+- **Item projection (distinct facts):** 0 SEM-keyed facts in every family.
+  - T1-T6 need R5 (a reader validated on real evidence), which no available route can supply. A real route would be EDX of these specimens, or a second BSE acquisition at matched contrast without saturation.
+  - T7 is impossible (3 levels).
+  - Non-SEM M data exist (cube loads, raw LTDSC heat flow, frost masses) for T1 and T4 on curves, outside this round.
 
 # Track S: SA508 reader S5a (after round 2, David 2026-10-07)
 - **Reader.** sa508_op.py computes Oliver-Pharr H and Er from each raw indent curve (level M), using textbook defaults with an ideal Berkovich area function. The area function and frame compliance are not in the deposit (D gap). Freeze labels S5a, S5a-2 and S5a-rv.
