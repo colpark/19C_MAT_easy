@@ -536,3 +536,25 @@ reason: pipeline cards builder-frozen, blind audit pending (Q-C1 quoted, not run
 - `trackC/CARD_jarvis.json` 0efdd007902330b4f7ccafe08601fe592804eb54b0c7a16e0b9a3630337edc81
 - `trackC/AUDIT_PACKET_C1.md` 6b32578b3244ff0bef429de408dca35dd37ddf8fa779766cd803a7790b06c07b
 - `COST_QUOTE_trackC.md` c7c0d283b31983a0bb289683a7a7fbb5d6074b4f7ca4bcf66c391f4749d1ee4c
+
+## C2 (2026-10-07T21:56:29+00:00)
+
+reason: C2 reconstruction + C2b bridges: reconciliation reports, frozen tolerances, materials.jsonl, B2 matches and metrics (VC-E16..21)
+
+- `trackC/reconstruct.py` c32f655acceed5f83745a28b6773dfc9bf4a7aafd074ad398839d52366473903
+- `trackC/reconstruct_jarvis.py` 2b21bf991944592baf5bfb1008b30e582a778269019ce1e0bbe43b32fd42b389
+- `trackC/reconcile.py` dda4ad173e736f31d647b01f0cb87b9b8e3dcb4ae42f61dac21b2fce8d6b730c
+- `trackC/paper_tables.py` 4f4f02404f81b1abd6ac98c0e472a44e019ff30843ecdfeaedc9f4ee5cc2f9aa
+- `trackC/match_exp.py` 0f19d87bcc2f2ed22229c5871ec41e0c5a49d6c6416828af0183a244604057f0
+- `trackC/bridge.py` 76ca0a9d328306ab55c28864cea735bd17d76eb34ff66d84a3bcf7d34d11a206
+- `trackC/RECONCILE_liion.md` 262fdc353d0c04370942a3ae93e9b26f6b1d560b97a3989caa099e088b672579
+- `trackC/RECONCILE_jarvis.md` c6595258da2421aaa9b3dcfff059e98842f39de5a3856c5cce534932ff1e5c35
+- `trackC/TOLERANCES_trackC.json` 6cb7397cf967944e6a4286ad16d90d103dddd71672bd9cf6d9ea7ec7d08ee9b0
+- `trackC/materials.jsonl` 5af3d96212637c4d45236c8a5b3a8274468edf2623d4517a6c3bcd9ca5a879ea
+- `trackC/materials_liion.jsonl` c27ec21fbeba51a89e590daaac1526f8f3778f6db81787cf8f275dea9e8e2315
+- `trackC/materials_jarvis.jsonl` db3246c7dcc1fc6cbb615427257440911f6c525e0f33fe7823abcc2524511092
+- `trackC/b2_matches.jsonl` 8fb1f99523ba22eba9ae7fc49d208ff00b2bde7d429a2f4a0799e7ec7eec9595
+- `trackC/BRIDGE_liion.csv` 9b8b5517476e9e9d2a6bce2105793971d9b3d3c3263fcbed0b298446a9b950cd
+- `trackC/BRIDGE_B2_results.json` a76dada1f401deb13aac1b78a3f988c226199c0728397f3ddcf25adf2ca9bb49
+- `trackC/tests/test_procedures.py` dcfca7df73b7b1feccca6c9af3fb68956723838332aca5e13d0c6b1e88ebded1
+- `trackC/tests/test_match_exp.py` 7e6cd773c1c28dd066b92531172dc51f75046e96996d8821a10d90a9c887475d
