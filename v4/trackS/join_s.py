@@ -26,7 +26,26 @@ import re
 HERE = os.path.dirname(os.path.abspath(__file__))
 HARBOR = os.environ.get('HARBOR', '/home/aid1/Documents/harbor')
 ROOT_DEFAULT = os.path.join(HARBOR, 'v4_host/trackS')
-CARRY = ('pixel_size_nm', 'pixel_size_source', 'hfw_um', 'magnification', 'detector', 'kv', 'width', 'height', 'bits', 'lossy')
+CARRY = ('pixel_size_nm', 'pixel_size_source', 'hfw_um', 'magnification', 'detector', 'kv', 'width', 'height', 'bits', 'lossy', 'XStep', 'XSTEP', 'ebsd_step')   # K2: native EBSD steps
+
+
+BSE_DET = ('cbs', 'bse', 'bsed', 'vcd', 'abs', 'cbs detector', 'rbse', 'aes', 'qbsd', 'asb', 'esb')
+
+
+def modality_of(rec):
+    """K2: modality tag per file (SE, BSE, EBSD, EDS, optical, curve, indentation, DIC; '' for documents and other). A rule's
+    'set': {'modality': ...} wins; SEM images use the 'mode' field, then the detector tag (ETD, TLD, InLens -> SE; CBS, BSED, vCD -> BSE)."""
+    role = rec.get('role', '')
+    if role in ('sem_image', 'sem_montage_tile'):
+        mode = str(rec.get('mode') or '').upper()
+        if mode in ('SE', 'BSE'):
+            return mode
+        det = str(rec.get('detector') or '').lower()
+        if any(b in det for b in BSE_DET):
+            return 'BSE'
+        return 'SE' if det else 'SEM'
+    return {'ebsd_map': 'EBSD', 'ebsd_export': 'EBSD', 'ebsd_patterns': 'EBSD', 'eds_map': 'EDS', 'eds_spectrum': 'EDS', 'optical_image': 'optical',
+            'curve': 'curve', 'indent': 'indentation', 'dic_field': 'DIC', 'xct': 'XCT'}.get(role, '')
 
 
 def apply_rules(rows, spec):
@@ -50,6 +69,7 @@ def apply_rules(rows, spec):
         for k in CARRY:
             if row.get(k) is not None:
                 rec[k] = row[k]
+        rec.setdefault('modality', modality_of(rec))
         out.append(rec)
     return out
 

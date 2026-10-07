@@ -352,6 +352,7 @@ def cmd_scan(root, ids):
 
 
 # ---------------------------------------------------------------- R2 reader checks
+TWINS = {'.osc': ['.ang'], '.cpr': ['.ctf'], '.crc': ['.ctf']}   # K2: proprietary file -> open twins with the same stem
 NO_OPEN_READER = {'.osc': 'EDAX OIM binary: export .ang', '.opju': 'Origin project', '.opj': 'Origin project', '.crp': 'proprietary creep file',
                   '.rtx': 'Bruker Esprit project', '.cpr': 'Oxford Channel 5 binary (try DefDAP)', '.crc': 'Oxford Channel 5 binary (try DefDAP)'}
 KEYED = IMG | RASTER | {'.ang', '.ctf', '.h5', '.h5oina', '.hdf5', '.h5ebsd', '.up1', '.up2', '.bcf', '.spx', '.emd', '.dm3', '.dm4', '.msa',
@@ -460,6 +461,16 @@ def cmd_readers(root, ids, per_ext=3):
                 out['notes'].append(f'{os.path.basename(rel)}: {note}')
             out['status'] = 'pass' if out['ok'] == out['tested'] else ('fail' if out['reader'] == 'none' or out['fail'] else 'check')
             res[e] = out
+        # K2: a proprietary file is redundant (never keyed, ignored by R2) when every copy has an open twin with the same stem
+        stems = collections.defaultdict(set)
+        for r in rows:
+            stems[os.path.splitext(r['path'])[0]].add(r['ext'])
+        for e, twins in TWINS.items():
+            if e in res and res[e]['status'] == 'fail':
+                ok_twins = [t for t in twins if t in res and res[t]['status'] == 'pass']
+                if ok_twins and all(stems[os.path.splitext(pth)[0]] & set(ok_twins) for pth in by[e]):
+                    res[e].update({'status': 'redundant', 'keyed': False, 'redundant_with': ok_twins})
+                    res[e]['notes'].append(f'redundant: open twin {ok_twins} with the same stem for every file (K2)')
         keyed = {e: v for e, v in res.items() if v['keyed']}
         verdict = 'fail' if any(v['status'] == 'fail' for v in keyed.values()) else (
             'pass' if keyed and all(v['status'] == 'pass' for v in keyed.values()) else 'check')

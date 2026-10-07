@@ -1,4 +1,15 @@
-# v4.1 Track S (branch v4.1/2026-10-07): S0-S6 done for the available data (trackS/TRACKS_REPORT.md)
+# v4.1 Track S round 2 (in progress)
+- K done: kit K2 (fetch throttle, error bodies, twins, modality, provenance, widened SEM rule, default tiers); 24 new tests + 53 old pass.
+- M0 after K2:
+
+  | Dataset | M0 |
+  |---|---|
+  | amb2022_03 | GO WITH CHECKS |
+  | stinville2022 | NO-GO (parked by David; DIC = A) |
+  | anjaria2025 | GO WITH CHECKS (deferred by David: no DIC reader this round) |
+  | alsi10mg_luo2024 | GO WITH CHECKS (active pilot S1b) |
+
+# v4.1 Track S round 1 (branch v4.1/2026-10-07): S0-S6 done for the available data (trackS/TRACKS_REPORT.md)
 - **M0 results:**
 
   | Dataset | Pilot | M0 | Main reason |

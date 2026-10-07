@@ -409,3 +409,14 @@ reason: measure_amb.py (real measurement with the frozen S4a reader)
 reason: join rules alsi10mg_luo2024 (sets 1-32 from the PSP table), before join counts
 
 - `trackS/joinrules/alsi10mg_luo2024.json` ea1e49a759ab6ce2a26223dc91358489e25bd652527708ca8ce67892f09eb1ed
+
+## K2 (2026-10-07T06:34:52-05:00)
+
+reason: Track S kit round 2: throttle/skip/error bodies (fetch_s), redundant twins (inventory_s), modality + native steps (join_s), provenance stop, desk_A ratio, parked, widened SEM rule (m0_s), default tier rules; tests/test_k2.py 24/24, test_kit.py 53/53
+
+- `trackS/fetch_s.py` ab0292e8f451ed3eec6c2e066473dfe4cc9ccae7004e69a578e55af6105bcdc6
+- `trackS/inventory_s.py` 2b10530df5baa57ae32b0397619e96729c7bd146b9280921d2d7d7c7075d7083
+- `trackS/join_s.py` 67273f384cff04eecc92292f8ed67789584c0eea8a06e4f686f04ccd6405404e
+- `trackS/m0_s.py` 132e363bfc574ec60d89447e18a0528ee703ebaf9a4d977911183e925a440736
+- `trackS/tests/test_k2.py` d7013f1fc6a0166776992c2a43795d101e1353c58efad9c4dada4ed3234c49dc
+- `trackS/cards/stinville2022.json` f5c98c31a11ae935253b1474090a30549701d92d9deabb3db0e9aefbc2210b44

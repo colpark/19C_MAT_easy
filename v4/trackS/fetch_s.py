@@ -4,7 +4,7 @@
 Commands
   plan   [--tier N] [--dataset ID ...]            resolve every file list from the repository API, print sizes per tier,
                                                     check free disk, write <root>/<id>/plan.json and <root>/_plan_summary.json
-  get    [--tier N] [--dataset ID ...] [--yes] [--jobs K]
+  get    [--tier N] [--dataset ID ...] [--yes] [--jobs K] [--delay S]   (K2: per-host throttle, skip verified, error bodies kept as .bad)
                                                     download the planned files (resume with HTTP Range, retry with backoff),
                                                     check each file against the repository checksum, write <root>/<id>/manifest.json
   verify [--dataset ID ...]                         recompute sha256 for every manifest entry and compare
@@ -29,6 +29,7 @@ import hashlib
 import html as htmllib
 import http.client
 import json
+import random
 import os
 import re
 import shutil
@@ -44,6 +45,56 @@ REGISTRY = os.path.join(HERE, 'datasets_s.json')
 HARBOR = os.environ.get('HARBOR', '/home/aid1/Documents/harbor')
 UA = os.environ.get('FETCH_UA', 'panelbench-v4-trackS/1.0 (research data fetch; github.com/colpark/19C_MAT_easy)')
 CHUNK = 8 * 1024 * 1024
+# K2 (round 2): per-host throttle. SLOW_HOSTS default to one job and a minimum interval between request starts on that host.
+SLOW_HOSTS = {'data.mendeley.com': 10.0, 'data.nist.gov': 5.0}
+_HOST_LAST = {}
+_HOST_LOCK = threading.Lock()
+TEXT_EXT = {'.txt', '.md', '.json', '.html', '.htm', '.xml'}
+
+
+def host_of(url):
+    return urllib.parse.urlsplit(url).hostname or ''
+
+
+def default_jobs(hosts, jobs=None):
+    """K2: --jobs wins; otherwise 1 when any slow host serves the files, else 2."""
+    return jobs if jobs else (1 if set(hosts) & set(SLOW_HOSTS) else 2)
+
+
+def already_verified(entry, dest):
+    """K2: skip a file that the manifest marks verified and that sits on disk with the recorded size."""
+    e = entry or {}
+    return e.get('verified') is True and os.path.exists(dest) and os.path.getsize(dest) == e.get('bytes')
+
+
+def throttle(url, delay):
+    """Wait until this host's minimum interval has passed since its last request start; the interval is max(--delay, SLOW_HOSTS)
+    with 0-50 % random jitter, so a rate-limited host sees one spaced request at a time."""
+    h = host_of(url); base = max(delay or 0.0, SLOW_HOSTS.get(h, 0.0))
+    if base <= 0:
+        return 0.0
+    gap = base * (1 + random.uniform(0, 0.5))
+    with _HOST_LOCK:
+        t = time.monotonic(); wait = max(0.0, _HOST_LAST.get(h, -1e9) + gap - t); _HOST_LAST[h] = t + wait
+    if wait:
+        time.sleep(wait)
+    return wait
+
+
+def looks_like_error_body(path, expected_bytes=None):
+    """K2: a small JSON or HTML body where a data file was expected (for example Mendeley's 395-byte JSON wrapping an HTML page).
+    True only for bodies under 64 KB that start with '{' or '<' after whitespace, when the size differs from the repository size or the
+    file type is not a text type."""
+    try:
+        n = os.path.getsize(path)
+    except OSError:
+        return False
+    if n >= 65536 or (isinstance(expected_bytes, int) and expected_bytes == n):
+        return False
+    with open(path, 'rb') as fh:
+        head = fh.read(512).lstrip().lower()
+    marker = head[:1] in (b'{', b'<') and (b'error' in head or b'<!doctype' in head or b'<html' in head or b'"message"' in head)
+    return bool(marker) and (os.path.splitext(path.replace('.part', ''))[1].lower() not in TEXT_EXT or isinstance(expected_bytes, int))
 BIG = 20 * 10 ** 9
 LOCK = threading.Lock()
 LAST_PAGES = {}  # pdr_id -> landing HTML, saved next to plan.json for inspection when parsing finds nothing
@@ -343,9 +394,17 @@ RESOLVERS = {'dryad': resolve_dryad, 'nist_pdr': resolve_nist, 'zenodo': resolve
              'direct': resolve_direct, 'refodat_manual': resolve_refodat}
 
 
+DEFAULT_TIER_RULES = [   # K2: records of unknown size (part without 'tier', or 'tier': 'auto') are tiered by file type
+    {'tier': 1, 'names': ['*.txt', '*.md', '*.pdf', '*.json', '*.xml', '*.ctf', '*.ang', '*.csv', '*.tsv', '*.xlsx', '*.xls']},
+    {'tier': 2, 'names': ['*.tif', '*.tiff', '*.png', '*.jpg', '*.jpeg', '*.h5', '*.h5oina', '*.hdf5', '*.dream3d', '*.zip', '*.7z']},
+    {'tier': 3, 'names': ['*']}]
+
+
 def tier_of(part, name):
-    if 'tier' in part:
+    if 'tier' in part and part['tier'] != 'auto':
         return part['tier']
+    if not part.get('tier_rules'):
+        part = dict(part, tier_rules=DEFAULT_TIER_RULES)
     for rule in part.get('tier_rules', []):
         if any(fnmatch.fnmatch(name, pat) for pat in rule['names']):
             return rule['tier']
@@ -381,7 +440,7 @@ def plan(args):
         files, metas = [], []
         for part in d['parts']:
             label = part.get('pdr_id') or part.get('doi') or part.get('record_id') or part.get('dataset_id') or part.get('name')
-            min_tier = part.get('tier', min([r['tier'] for r in part.get('tier_rules', [])] or [1]))
+            min_tier = part['tier'] if isinstance(part.get('tier'), int) else min([r['tier'] for r in part.get('tier_rules', DEFAULT_TIER_RULES)] or [1])
             if min_tier > args.tier:
                 metas.append({'part': label, 'repository': part['repository'], 'skipped': f'tier {min_tier} > {args.tier}'})
                 continue
@@ -502,8 +561,9 @@ def _expected_total(r, pos):
     return int(cl) if cl and cl.isdigit() and r.status == 200 else None
 
 
-def download_one(f, dest):
-    """Stream f['url'] to dest with resume. A short body raises and resumes. Returns a manifest entry."""
+def download_one(f, dest, delay=0.0):
+    """Stream f['url'] to dest with resume. A short body raises and resumes. Returns a manifest entry.
+    K2: each request start waits for the host throttle; an error body (looks_like_error_body) is kept as .bad, never as data."""
     os.makedirs(os.path.dirname(dest), exist_ok=True)
     if not f.get('digest') and f.get('sha256_companion'):
         dg = _companion_sha256(f)
@@ -526,6 +586,7 @@ def download_one(f, dest):
     for attempt in range(8):
         extra = {'Range': f'bytes={pos}-'} if pos else {}
         req = urllib.request.Request(url, headers=_headers(f['url'], extra))
+        throttle(f['url'], delay)
         try:
             with OPENER.open(req, timeout=600) as r:
                 if pos and r.status == 200:  # server ignored the range: restart cleanly
@@ -568,7 +629,10 @@ def download_one(f, dest):
         entry[f['digest_type']] = hs[f['digest_type']].hexdigest()
     ok = _check(entry, f)
     entry['verified'] = ok
-    if ok is False:
+    if ok is not True and looks_like_error_body(part, f.get('bytes')):
+        os.replace(part, dest + '.bad')
+        entry.update({'status': 'error_body', 'verified': False})
+    elif ok is False:
         os.replace(part, dest + '.bad')
         entry['status'] = 'checksum_or_size_mismatch'
     else:
@@ -615,6 +679,14 @@ def get(args):
         ddir = os.path.join(root, d['id'])
         p = json.load(open(os.path.join(ddir, 'plan.json')))
         todo = [f for f in p['files'] if f['tier'] <= args.tier]
+        mpath0 = os.path.join(ddir, 'manifest.json'); prior = json.load(open(mpath0))['files'] if os.path.exists(mpath0) else {}
+        def done_before(f):   # K2: a file verified in the manifest and present on disk with its size is not fetched again
+            return already_verified(prior.get(f['path']), os.path.join(ddir, 'files', f['path']))
+        skipped = [f for f in todo if done_before(f)]; todo = [f for f in todo if not done_before(f)]
+        if skipped:
+            log(f"== {d['id']}: {len(skipped)} files already verified in the manifest, skipped")
+        hosts = {host_of(f['url']) for f in todo}
+        jobs = default_jobs(hosts, args.jobs)
         if not todo:
             log(f"== {d['id']}: nothing to fetch by script" + (' (manual dataset)' if summary['datasets'][d['id']]['manual'] else ''))
             continue
@@ -624,11 +696,11 @@ def get(args):
         man['unresolved_parts'] = p.get('unresolved_parts', [])
         if man['unresolved_parts']:
             log(f"== {d['id']}: WARNING unresolved parts {man['unresolved_parts']}: the dataset stays incomplete (R1)")
-        log(f"== {d['id']}: fetching {len(todo)} files with {args.jobs} jobs")
+        log(f"== {d['id']}: fetching {len(todo)} files with {jobs} jobs, delay {args.delay} s (hosts {sorted(hosts)})")
 
         def work(f):
             try:
-                e = download_one(f, os.path.join(ddir, 'files', f['path']))
+                e = download_one(f, os.path.join(ddir, 'files', f['path']), args.delay)
             except Exception as ex:  # noqa: BLE001 (one bad file never stops the other datasets)
                 e = {'path': f['path'], 'url': f['url'], 'status': 'failed', 'verified': None, 'error': f'{type(ex).__name__}: {ex}'}
             with LOCK:
@@ -637,9 +709,9 @@ def get(args):
                 _atomic_json(mpath, man)
             log(f"  {e['status']:>24} {f['path']} {e.get('bytes')} verified={e.get('verified')}")
             return e
-        with cf.ThreadPoolExecutor(max_workers=args.jobs) as ex:
+        with cf.ThreadPoolExecutor(max_workers=jobs) as ex:
             res = list(ex.map(work, todo))
-        bad = [e for e in res if e.get('verified') is False or e.get('status') in ('failed', 'checksum_or_size_mismatch') or str(e.get('status')).startswith('HTTP')]
+        bad = [e for e in res if e.get('verified') is False or e.get('status') in ('failed', 'checksum_or_size_mismatch', 'error_body') or str(e.get('status')).startswith('HTTP')]
         unverified = [e for e in res if e.get('verified') is None]
         bad_total += len(bad)
         log(f"== {d['id']}: {len(res) - len(bad)} ok ({len(unverified)} without a repository digest), {len(bad)} failed")
@@ -758,7 +830,8 @@ def main(argv=None):
         s.add_argument('--dataset', nargs='*')
         if name == 'get':
             s.add_argument('--yes', action='store_true')
-            s.add_argument('--jobs', type=int, default=2)
+            s.add_argument('--jobs', type=int, default=None, help='default 2, or 1 when a slow host (SLOW_HOSTS) serves the files')
+            s.add_argument('--delay', type=float, default=0.0, help='minimum seconds between request starts per host (0-50 %% jitter)')
     s = sub.add_parser('verify')
     s.add_argument('--dataset', nargs='*')
     s = sub.add_parser('manual')

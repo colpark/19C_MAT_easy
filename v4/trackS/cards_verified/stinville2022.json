@@ -6,7 +6,7 @@
   "license": "CC0 1.0"
  },
  "readers": {
-  "all_formats": false,
+  "all_formats": true,
   "notes": "16-bit TIFF SEM tiles and 32-bit TIFF HR-DIC fields (tifffile); 2D EBSD .ang (orix, kikuchipy) with .osc duplicate (EDAX binary, MTEX only); raw patterns .up2 (kikuchipy EDAX binary reader); 3D .dream3d HDF5 with .xdmf (h5py, DREAM.3D, ParaView); meshes .inp and .vtk (meshio) and Ansys APDL text decks. 11 files, about 69 GB. Raw SEM DIC tiles are described in the descriptor; the Dryad list shows no separate raw-tile archive, so confirm in README_file.txt which zip holds them (or BisQue)"
  },
  "inputs_on_host": {
@@ -21,19 +21,23 @@
  "observables": [
   {
    "name": "in-plane slip amplitude, slip direction and effective strain per slip band (Heaviside HR-DIC fields)",
-   "level": "M",
+   "level": "A",
    "validated_synthetic": null,
    "validated_real": null,
    "routes": 2,
-   "notes": "second route: slip traces visible in the deposited BSE images; descriptor says every DIC slip event sits where the BSE images show it"
+   "notes": "second route: slip traces visible in the deposited BSE images; descriptor says every DIC slip event sits where the BSE images show it",
+   "series": true,
+   "level_note": "author-computed HR-DIC fields (Heaviside DIC by the authors): level A, never a key (David, 2026-10-07)"
   },
   {
    "name": "area-averaged DIC strain against macroscopic strain (stress-strain data provided)",
-   "level": "M",
+   "level": "A",
    "validated_synthetic": null,
    "validated_real": null,
    "routes": 2,
-   "notes": "authors report differences of -0.68% to +0.29% across load steps"
+   "notes": "authors report differences of -0.68% to +0.29% across load steps",
+   "series": true,
+   "level_note": "author-computed HR-DIC fields (Heaviside DIC by the authors): level A, never a key (David, 2026-10-07)"
   },
   {
    "name": "grain orientation and grain/twin boundaries (2D EBSD .ang and 3D TriBeam EBSD)",
@@ -45,11 +49,13 @@
   },
   {
    "name": "slip trace angle per grain (Hough on DIC maps) against slip plane traces from EBSD orientation",
-   "level": "M",
+   "level": "A",
    "validated_synthetic": null,
    "validated_real": null,
    "routes": 1,
-   "notes": null
+   "notes": null,
+   "series": true,
+   "level_note": "author-computed HR-DIC fields (Heaviside DIC by the authors): level A, never a key (David, 2026-10-07)"
   },
   {
    "name": "grain reference orientation deviation per voxel (3D EBSD)",
@@ -137,5 +143,6 @@
    "Ansys APDL .cdb/.mac"
   ],
   "magnification_leak": false
- }
+ },
+ "parked": "Stinville stays parked: DIC fields are author-computed (level A) (David, 2026-10-07)"
 }

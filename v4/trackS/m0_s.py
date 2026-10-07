@@ -31,6 +31,7 @@ HERE = os.path.dirname(os.path.abspath(__file__))
 HARBOR = os.environ.get('HARBOR', '/home/aid1/Documents/harbor')
 ROOT_DEFAULT = os.path.join(HARBOR, 'v4_host/trackS')
 SEM_ROLES = {'sem_image', 'sem_montage_tile'}
+MAP_ROLES = {'ebsd_map', 'ebsd_export', 'eds_map'}   # K2 widened SEM rule (David 2026-10-07): SEM-instrument maps with a native step count
 OTHER_ROLES = {'ebsd_map', 'ebsd_export', 'ebsd_patterns', 'eds_map', 'eds_spectrum', 'optical_image', 'dic_field', 'xct', 'curve', 'indent'}
 
 
@@ -93,9 +94,26 @@ def main(argv=None):
     if r2:
         setf(['readers', 'all_formats'], {'pass': True, 'fail': False}.get(r2), f'readers.json R2 {r2}')
 
-    sem = [r for r in jrows if r['role'] in SEM_ROLES]
-    other = collections.Counter(r['role'] for r in jrows if r['role'] in OTHER_ROLES)
-    native = sum(1 for r in sem if r.get('pixel_size_nm') not in (None, '') and r.get('pixel_size_source') not in ('none', 'resolution_tag'))
+    def native_step(r):
+        for k in ('XStep', 'XSTEP', 'ebsd_step', 'pixel_size_nm'):
+            try:
+                if float(r.get(k) or 0) > 0 and (k != 'pixel_size_nm' or r.get('pixel_size_source') not in ('none', 'resolution_tag')):
+                    return True
+            except ValueError:
+                pass
+        return False
+    sem_img = [r for r in jrows if r['role'] in SEM_ROLES]
+    sem_maps = [r for r in jrows if r['role'] in MAP_ROLES and native_step(r)]
+    sem = sem_img or sem_maps   # K2: SE/BSE images first; otherwise EBSD/EDS maps with a native step stand in as SEM-instrument data
+    sem_modalities = sorted({r.get('modality') or r['role'] for r in sem_img + sem_maps})
+    if sem_img:   # SE/BSE images are the SEM part; every other raw modality (EBSD, EDS, curves, ...) is a second modality
+        other = collections.Counter(r['role'] for r in jrows if r['role'] in OTHER_ROLES)
+    else:         # EBSD/EDS maps are the SEM part; the second modality is a non-map raw modality or a second SEM-instrument modality
+        other = collections.Counter(r['role'] for r in jrows if r['role'] in OTHER_ROLES - MAP_ROLES - {'ebsd_patterns', 'eds_spectrum'})
+        mods = collections.Counter(r.get('modality') or r['role'] for r in jrows if r['role'] in MAP_ROLES)   # the second modality needs no step
+        if len(mods) >= 2:
+            other.update({f'second SEM-instrument modality {m}': c for m, c in mods.items()})
+    native = sum(1 for r in sem if native_step(r))
     frac = native / len(sem) if sem else 0.0
     if sem:
         setf(['calibration', 'absolute_scales'], True if frac >= 0.9 else (False if native == 0 else None),
@@ -132,14 +150,26 @@ def main(argv=None):
         setf(['design', 'separability_ratio_spatial'], best_s.get('min_between_over_within'),
              f'spatial pilot {best_s["file"]} ({best_s["verdict"]}, units {best_s.get("unit_type")}): optimistic, not used for R6')
 
+    # K2 provenance: an author-derived separability ratio (desk, from author values) never counts for R6
+    des = card.setdefault('design', {})
+    if des.get('separability_ratio') is not None and not replicate:
+        des['separability_ratio_desk_A'] = des.pop('separability_ratio')
+        changes.append({'field': 'design.separability_ratio -> design.separability_ratio_desk_A', 'value': des['separability_ratio_desk_A'],
+                        'evidence': 'desk ratio from author values (A level); R6 ignores it (K2)'})
     reasons_stop, reasons_check = [], []
+    obs = card.get('observables') or []
+    series = [o_ for o_ in obs if o_.get('series')] or obs
+    if series and all(str(o_.get('level', '')).upper() == 'A' for o_ in series):
+        reasons_stop.append('Provenance: every keyed observable for the condition series is author-derived (A): no keys (K2)')
+    if card.get('parked'):
+        reasons_stop.append(f"parked: {card['parked']}")
     if not r1:
         reasons_stop.append('R1: files missing, failed checksum, unresolved repository parts, or manual count and size mismatch')
     sem_exts = {os.path.splitext(r['path'])[1].lower() for r in sem}
     if any((rd.get('by_ext', {}).get(e) or {}).get('status') == 'fail' for e in sem_exts):
         reasons_stop.append('R2: an SEM image type has no working open reader')
     if not sem:
-        reasons_stop.append('SEM rule: no raw SEM image matched the join rules')
+        reasons_stop.append('SEM rule: no raw SEM image and no EBSD or EDS map with a native step matched the join rules')
     elif cfs and not per_level:
         reasons_check.append(f'no SEM image carries a level of {cfs[0]}: the condition series sits on another modality, so SEM keys need a join first')
     elif cfs and jsum.get('conditions', {}).get(cfs[0]) and len(per_level) < len(jsum['conditions'][cfs[0]]):
@@ -178,7 +208,7 @@ def main(argv=None):
     out = {'dataset': ds, 'pilot': reg.get('pilot'), 'decision': decision, 'stop': reasons_stop, 'checks': reasons_check,
            'evidence': {'files': len(files), 'failed_files': bad[:20], 'planned_missing': planned_missing[:20], 'unresolved_parts': unresolved,
                         'R2': r2, 'sem_images': len(sem), 'sem_native_fraction': frac,
-                        'second_modalities': dict(other), 'sem_images_per_level': dict(per_level), 'magleak': mag.get('verdict'),
+                        'second_modalities': dict(other), 'sem_modalities': sem_modalities, 'sem_images_per_level': dict(per_level), 'magleak': mag.get('verdict'),
                         'pilots': pilots, 'inventory': {k: inv.get(k) for k in ('files', 'images', 'pixel_size_sources', 'n_distinct_pixel_sizes', 'detectors', 'kv')}},
            'card_changes': changes, 'scorer': {'requirements': R, 'families': {k: list(v) for k, v in F.items()}, 'report': buf.getvalue()},
            'written': dt.datetime.now().astimezone().isoformat(timespec='seconds')}
