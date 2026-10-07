@@ -466,3 +466,59 @@ reason: partB/run_v42.sh (COST_QUOTE_v42 option A approved by David 2026-10-07: 
 reason: partB/results_v42.py (analysis of the v4.2 nano run), frozen before running
 
 - `partB/results_v42.py` 5f6896d4ffa6476a58accff203b1be900cf434d7068292d9012a954a73af3546
+
+## H0 (2026-10-07T14:50:38-05:00)
+
+reason: Track H setup: kit, separability_s.py, skill v1.5, tests 20/20, default gates all_pass, API probe ok on hosts A and B
+
+- `htem/config.json` b359265b69727c409cb9bf9cd83d696d7f48b4f66b97e123c044c70fafdc48d0
+- `htem/htem_api.py` 2df2fcce0d326f423039f1f767852e17d529d824710bb53284f79f81fdc71f4d
+- `htem/census.py` b1cae2cd06d1cc53ab8cece1f1c6c86eeb5300d5e6692ee2759fdfe77f667243
+- `htem/score_systems.py` 20b38ecdb886bed8eeb7b6d77876c5f7ebf63bebf082e73b32ffa3309c21e887
+- `htem/sample_io.py` 94b66449ceddba0dc60f2ed8616dffb4566b855baae735c3a5ff4b6479c14d77
+- `htem/readers/xrd.py` 2ded2ee008384c9e4d359ff86d63b5b1eeccb88a1c9ef692e1b9178967121d15
+- `htem/readers/optical.py` 3493a970096ba6ebef599fb1293868530a4c67a61a3f7ae658fc8ac5627143d9
+- `htem/readers/fpm.py` 23b0519d20c96d5da853c5f08ce6839350f5d8dde50620e7292f676c3a1d9553
+- `htem/synth.py` 51e30f6d8904cb885769d14906f7bf0f457691127a4a7b3388e77f0fff099d15
+- `htem/validate_readers.py` 2ab9ceb2445c9e95d5e8e64ef718053ac7459c69176964a0cbfc6c4df98099c5
+- `htem/refs.py` 0729c5fb8732edae0f57ccb23ae04ce6839ea93451ce03547ad0743450cd0055
+- `htem/build_matrix.py` d09a40aaa7599a4e0b1067141da2860f155819ef340bbef4944ab5703969cc7c
+- `htem/pilot_table.py` 4182d80331c1f3c4e87b0d733b72261f976cd017843a467cfb5a9d2dfd212aa3
+- `htem/render.py` bebc7c26bfe48770ee5c3f02c61f060cbd860c6f6a4b7f7337b0fbfde71ebdfd
+- `htem/tests/test_kit.py` 24c64ea6930ade38e767359f41afbc9980d7d9bf9bdfe46bc5999315b3044509
+- `trackS/separability_s.py` 27d70a955f380633d4b0dad54d1434a0db725a6f3444b98cca088fe075dc8c6b
+- `SKILL_v1.5.md` 2f3918cd9b8cad67f7b84b922e505ae8f908b4f558eacf1598d1e3566d21b3bb
+
+## H1a (2026-10-07T14:55:11-05:00)
+
+reason: PRIOR_SYSTEMS.json (textbook-known systems, chemistry knowledge only) and config.json (frozen score section, D records) before the census
+
+- `htem/PRIOR_SYSTEMS.json` 08ba3097fc78dbb6f43cce5d7f3a62ea93bc8f9e31c190b2f6c73edf79f8cf08
+- `htem/config.json` e0d11705cebe911df2a21f4e7b20f8cafca537e82d485b8b59b0666e8cfc7e42
+- `htem/DESK_htem.md` c59c88b2b4c3016166b239fc4626138ec2f2598ddc11740fb9b01445da7fc090
+
+## H2rule (2026-10-07T14:56:36-05:00)
+
+reason: select_pilot.py: pilot library choice (replicates, temperature coverage, electrical; cap 12; seeded dev library), frozen before the census result and the sample fetch
+
+- `htem/select_pilot.py` f6be9c026e4db361faaf04dce371967582855de9ac2079ad82fd0a3a738f61f9
+
+## H1k (2026-10-07T14:57:07-05:00)
+
+reason: census.py null-safe recipe sort (VH-E02) + regression test; tests 21/21
+
+- `htem/census.py` 891fef9dde6b6b3095e4e485c068cbc0a0492941df776bef369fd3a58dce460b
+- `htem/tests/test_kit.py` 64b17eadc6a6c2e95087b0a775d5458699e0ab37aa94ebe8bfcc1bea8cc837d6
+
+## H1k2 (2026-10-07T15:42:59-05:00)
+
+reason: sample_io.composition: compound-aligned XRF (VH-E03) + test; tests 22/22
+
+- `htem/sample_io.py` a9f0bba70bdbce69b050880c59044543297ec11231cb843addb221c224bb8695
+- `htem/tests/test_kit.py` 060a84a9c7f5f23e0def2a7dd2fd4471f9b2158e8c0ca47b8e531deddc652193
+
+## H1b (2026-10-07T15:43:16-05:00)
+
+reason: census and pick (after VH-E03): CENSUS_SUMMARY.json (P1 N-Sn-Zn, P2 Mn-Se-Te-Zn)
+
+- `htem/CENSUS_SUMMARY.json` 71fa790452a26c4946dbd83c45341a6a6873e663475cb5fbcda06d0f16ffae04
