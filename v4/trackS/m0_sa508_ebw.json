@@ -1,0 +1,153 @@
+{
+ "dataset": "sa508_ebw",
+ "pilot": "reserve",
+ "decision": "GO WITH CHECKS",
+ "stop": [],
+ "checks": [
+  "magnification leak: resample to one pixel size before measuring, keep scale out of T2 panels",
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 1068,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "pass",
+  "sem_images": 420,
+  "sem_native_fraction": 1.0,
+  "second_modalities": {
+   "indent": 216
+  },
+  "sem_modalities": [
+   "SE"
+  ],
+  "sem_images_per_level": {
+   "PMHIP_SQNT": 120,
+   "PMHIP_PWHT": 150,
+   "forged_PWHT": 150
+  },
+  "magleak": "leak",
+  "pilots": [],
+  "inventory": {
+   "files": 1068,
+   "images": 843,
+   "pixel_size_sources": {
+    "none": 423,
+    "fei": 420
+   },
+   "n_distinct_pixel_sizes": 2,
+   "detectors": {
+    "ETD": 420
+   },
+   "kv": [
+    5.0
+   ]
+  }
+ },
+ "card_changes": [
+  {
+   "field": "access.license",
+   "old": "CC BY 4.0 on all three records (DataCite rightsList)",
+   "new": "CC BY 4.0",
+   "evidence": "registry (repository record)"
+  },
+  {
+   "field": "calibration.absolute_scales",
+   "old": null,
+   "new": true,
+   "evidence": "420/420 SEM images carry a native pixel size"
+  },
+  {
+   "field": "sem.image_count",
+   "old": "over 400 tiles (descriptor), exact count check",
+   "new": 420,
+   "evidence": "join.csv SEM roles"
+  },
+  {
+   "field": "sem.images_per_condition",
+   "old": null,
+   "new": 150,
+   "evidence": "median over condition levels {'PMHIP_SQNT': 120, 'PMHIP_PWHT': 150, 'forged_PWHT': 150}"
+  },
+  {
+   "field": "sem.native_metadata",
+   "old": null,
+   "new": true,
+   "evidence": "420/420 native"
+  },
+  {
+   "field": "sem.magnification_fixed",
+   "old": null,
+   "new": false,
+   "evidence": "magleak leak"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "pass",
+   "R3": "pass",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "check",
+   "R7": "pass",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 3,
+   "R11": "check",
+   "R12": "fail"
+  },
+  "families": {
+   "T1": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T2": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "fail",
+    [
+     "R12"
+    ]
+   ],
+   "T5": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T6": [
+    "fail",
+    [
+     "R10 >= 4 (has 3)"
+    ]
+   ],
+   "T7": [
+    "fail",
+    [
+     "R9 fit law",
+     "levels (params + 4)"
+    ]
+   ]
+  },
+  "report": "\n## MERGED SA508 Grade 3 RPV steel electron-beam welds (forged PWHT, PM-HIP PWHT, PM-HIP SQNT): raw SE montage across each weld plus raw nanoindentation load-displacement profiles along the same traverse. Descriptor: Nemets et al. 2025 Data in Brief doi:10.1016/j.dib.2025.112158. Data: Mendeley doi:10.17632/j2f2dxmd5m.1 (forged PWHT), 10.17632/58xvm8wt92.1 (PM-HIP PWHT), 10.17632/x8x628h3gs.1 (PM-HIP SQNT). Merged from corr_sa508_ebweld_sem_nanoind + sem_nemets2025_sa508_ebw_nanoindent\nState: merged 2026-10-06 by rule: (1) a field one card left null takes the other card's value unless the null card records a failed attempt on the same fact; (2) on conflict keep the lower-scoring value (false over true, smaller count, empty co-registration list over a filled one); (3) observables and laws merge as a union of distinct entries while R10 keeps the lower card count. Prospective desk facts only, nothing downloaded. Resolutions: claims null (sem) vs none/0 (corr) -> none/0 by rule 1 (sem track recorded no attempt; its notes confirm the descriptor reports no zone-level values); material-route series shared_entities false (sem) vs true (corr) -> false by rule 2 (max shared levels stay 3); sem.co_registered [] (sem) vs nanoindentation (corr) -> [] by rule 2, nanoindentation kept under same_specimen (fiducial alignment, not pixel registration); sem.image_count null (corr) -> 'over 400 tiles' (sem) by rule 1. The descriptor swaps the two PM-HIP DOIs; DataCite titles give the mapping used here. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 pass, R4 pass, R5 check, R6 check, R7 pass, R8 check, R9 pass, R10 3, R11 check, R12 fail\n  note R3: no claim ladder on the host: expect only the claims the builder extracts itself\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5, R6 |\n| T3 | check | R5, R6, R8 |\n| T4 | fail | R12 |\n| T5 | check | R5, R6, R11 |\n| T6 | fail | R10 >= 4 (has 3) |\n| T7 | fail | R9 fit law, levels (params + 4) |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3, T5\nCheck, in this order: R11; R5; R8; R6\n"
+ },
+ "written": "2026-10-07T10:51:08-05:00"
+}

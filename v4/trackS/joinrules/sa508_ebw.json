@@ -1,16 +1,35 @@
 {
  "dataset": "sa508_ebw",
- "_todo": "Reserve. Fill from the Data in Brief descriptor: weld condition per Mendeley record (j2f2dxmd5m forged PWHT, 58xvm8wt92 PM-HIP PWHT, x8x628h3gs PM-HIP SQNT per DataCite titles), tile positions along the traverse, indent positions.",
  "rules": [
   {
-   "name": "SE tiles",
-   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*\\.tiff?$",
+   "name": "SE raw tiles (FEI-tagged)",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/[^/]*/[^/]*Micrographs/Raw Micrographs/[^/]*_(?P<tile>\\d+)\\.tiff?$",
    "role": "sem_montage_tile"
   },
   {
-   "name": "indentation curves",
-   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*\\.(csv|txt|xlsx)$",
+   "name": "processed (cropped) tiles: derived, no native metadata",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*/Processed Micrographs/",
+   "role": "other"
+  },
+  {
+   "name": "author-stitched montage",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*Stitched Image",
+   "role": "other"
+  },
+  {
+   "name": "tile configuration (Fiji/ImageJ stitching)",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*TileConfiguration",
+   "role": "tile_layout"
+  },
+  {
+   "name": "nanoindentation load-displacement, one file per indent",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*Nanoindentation Data/[^/]*-(?P<position>\\d{2})-(?P<row>[BT][12])-(?P<zone>(?:[RL]-)?(?:BM|HAZ)|FZ)\\.csv$",
    "role": "indent"
+  },
+  {
+   "name": "author hardness profile (derived, A)",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*Nanoindentation Data/.*Profile\\.csv$",
+   "role": "other"
   }
  ],
  "maps": {
@@ -30,6 +49,7 @@
   "condition"
  ],
  "order": {},
- "unit_field": "record",
- "unit_type": "field"
+ "unit_field": "position",
+ "unit_type": "traverse position (indents) / tile (SE)",
+ "_desk_2026-10-07": "Rules rewritten against the downloaded files (round 2 part C): raw SE tiles only (Raw Micrographs, FEI tags: forged PWHT 150 at 44.97 nm, PM-HIP SQNT 120 at 44.97 nm, PM-HIP PWHT 150 at 89.93 nm); processed crops and stitched montages are derived; indentation files carry traverse position (01-19), row (B1, B2, T1, T2) and zone (R/L BM, R/L HAZ, FZ); the per-condition hardness profiles are author-derived."
 }

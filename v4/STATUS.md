@@ -1,4 +1,9 @@
-# v4.1 Track S round 2 (in progress)
+# v4.1 Track S round 2 (complete; stopped for David's call)
+- C (SA508): complete after the throttled retry (1068 files, sha256 ok). M0 GO WITH CHECKS; magnification leak (PM-HIP PWHT at 89.93 vs 44.97 nm). V4-E27.
+- D (refodat90/91): browser downloads registered; join rules fixed (V4-E26); magleak constant; M0 GO WITH CHECKS for both.
+- AlSi10Mg on all 60 sets: UTS separability partial (31/59); M0 GO for T1 and T4 only.
+- Proposal K3 (kit check against prospective join rules): David's call.
+
 - K done: kit K2 (fetch throttle, error bodies, twins, modality, provenance, widened SEM rule, default tiers); 24 new tests + 53 old pass.
 - A (AM Bench S4a-2): synthetic pass; held-out FAIL (2/7 cases, Spearman 0.64). **Cancelled by David (2026-10-07).**
 - B (AlSi10Mg S1b):

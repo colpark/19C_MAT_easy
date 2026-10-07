@@ -15,7 +15,7 @@ No paid call, no keys, no items. Hosts: host A (spark-112b), host A node 2 (spar
 | amb2022_03 | S1 (EBSD) | **NO-GO (cancelled by David)** | none | Reader S4a-2 passed synthetic but failed held-out (2/7 cases, Spearman 0.64). David cancelled the dataset on 2026-10-07. |
 | stinville2022 | S2 | NO-GO | none | Parked by David; every series observable is A (K2 provenance stop). |
 | anjaria2025 | S2 | GO WITH CHECKS | T1-T4 check | Deferred by David (needs a DIC reader). |
-| sa508_ebw | reserve | SA508_PENDING | | Throttled retry on host B. |
+| sa508_ebw | reserve (SE + indentation) | **GO WITH CHECKS** | T1 check; T2, T3, T5 check; T4, T6, T7 fail | Complete after throttled retry (1068 files, sha256 = manifest). 420 raw SE tiles; **magnification leak**: PM-HIP PWHT at 89.93 nm vs 44.97 nm (resample before measuring). Indents along the weld traverse (17-19 positions x 4 rows per condition, zones BM/HAZ/FZ). No claim ladder (R12). |
 | refodat90 | S3 (BSE tiles) | **GO WITH CHECKS** | pilot pending | Browser download (14 files, 7.36 GB = DataCite 7020.67 MiB). 176 raw BSE tiles, all FEI-tagged at 84.31 nm (magleak constant). One mortar surface: the only series is spatial (ITZ distance), so R6 needs a frozen reader and spatial bins. |
 | refodat91 | S3 (BSE tiles + LTDSC, strength, frost) | **GO WITH CHECKS** | pilot pending | Browser download (15 files, 1.09 GB). 64 raw BSE tiles (16 per specimen, 84.31 nm, constant). 2 x 2 design (w/c 0.40/0.60 x carbonated/uncarbonated, CEM III/B, M38/M44), one specimen per condition: tiles are spatial units (optimistic). T7 fails (3 levels < params + 4). |
 
@@ -108,16 +108,38 @@ No paid call, no keys, no items. Hosts: host A (spark-112b), host A node 2 (spar
   - No T2/T3/T5-T7: R6 fails, and R7 fails for T7.
 
 ## C: SA508 throttled retry (host B)
-SA508_RESULT
+- **Fetch (host B, throttled):** one job, a 10 s delay with jitter, and verified files skipped.
+  - Pass 1 (11:58 to 14:41 UTC): 733 of 741 files ok. 8 Mendeley error bodies (1.1 %) were kept as .bad.
+  - Pass 2, one hour later: 8 of 8 ok. No third pass was needed, and the 10 % stop rule never applied.
+  - With the 296 files already verified, all 1068 are present.
+- **Transfer:** rsync from host B to host A; all 1068 files match the manifest sha256. R2 passes (.tif, .csv).
+- **Join (V4-E27, same root cause as V4-E26):** the rules were rewritten against the files.
+  - SE role: raw tiles only. Forged PWHT has 150 at 44.97 nm, PM-HIP SQNT 120 at 44.97 nm, and PM-HIP PWHT 150 at 89.93 nm.
+  - Indents: one load-displacement file per indent, with traverse position 01-19, row B1/B2/T1/T2 and zone R/L BM, R/L HAZ or FZ.
+  - Units are positions: forged 19, PM-HIP PWHT 17, PM-HIP SQNT 18.
+  - Processed crops, stitched montages and the authors' hardness profiles (A) are tagged "other".
+- **Magleak: FAIL (leak).** Pixel size tracks the weld condition (Kruskal p 1e-91). Every tile must be resampled to one pixel size before measuring, and scale bars and magnification stay out of T2 panels.
+- **M0: GO WITH CHECKS.**
+
+  | Family | Status | Reason |
+  |---|---|---|
+  | T1 | check | R5 |
+  | T2, T3, T5 | check | R5, R6, R8, R11 |
+  | T4 | fail | R12: no claim ladder |
+  | T6 | fail | R10 = 3 |
+  | T7 | fail | no fit law, too few levels |
+
+  Next step: a frozen SE reader plus an indentation hardness procedure (Oliver-Pharr on the raw curves, validated against the authors' profile as A), then the separability pilot across the three conditions per zone.
 
 ## D: waiting items
-- refodat90/91: the browser downloads are still absent.
+- refodat90/91: done (see D: refodat above).
 - Anjaria: deferred (David, 2026-10-07; no DIC reader this round).
 
 ## Other
 - Node 2 MCP stack stopped at David's request (systemd user services stopped, not disabled).
 - Host B's first run also pulled mds2-2718 (tier 2 in the registry) and stalled on NIST 524s. It was stopped, and the host-B registry copy demotes mds2-2718/2716 to tier 3.
-- Storage (host A v4_host/trackS): stinville 13 GB, anjaria 11 GB, amb 7.1 GB, sa508 4.6 GB (pass 1 running), alsi 1.6 GB.
+- Storage (host A v4_host/trackS): refodat90 22 GB (with extracted), sa508 19 GB (complete), stinville 13 GB, anjaria 11 GB, amb 7.1 GB, refodat91 2.2 GB, alsi 1.6 GB. The refodat zips (8.3 GB) are kept in trackS_manual.
+- **Kit proposal K3 (V4-E26/27):** three sources had prospective join rules that over-matched. join_s.py should refuse rules that still carry `_todo`, and m0 should flag a high share of SEM-role files without native metadata. This is not applied: the frozen kit K2 would need a refreeze, so it is David's call.
 
 ---
 
