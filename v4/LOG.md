@@ -129,3 +129,5 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - 2026-10-06 David: Q1e approved with the T7-aware law-class prompt. Ruling (logged as rule clarification R-T7): a law whose parameters are fitted on samples disjoint from the target and used to predict a held-out target is the skill's T7 "fit" class; the law-class audit states this design.
 - Q1e run: audit_q1e.py, 9 calls, $0.0223, all accepted. B13 (Allende regions_v3) and D10 (CrFeNi rename) regenerated twice each: Allende 19 (8c6f78b3...), CrFeNi 61 (3008ecce...). Gates pass. Oracle Allende 19/19 and CrFeNi 61/61 on A0 and B0.
 - Q2b quote written (nano on the repaired sets with design fixes: neutral names, distractor pair panels, crossing claims, margin spread; 480 trials, $1.14 expected, cap $2.50). Not run.
+- David approved Q2b with k = 2 (Q2b-k2): 320 trials, $0.76 expected, cap $2.50.
+- Q2b-k2 launched 2026-10-06T21:50:17-05:00; run_q2b.sh sha256 ac5ab78b3c701b2f...; items CrFeNi 5a42f952..., Allende 385f7985...

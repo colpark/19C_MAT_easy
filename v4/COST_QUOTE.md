@@ -239,6 +239,7 @@ Worst case: A0 trials at $0.012 (the Q2 maximum $0.0082 plus 50 % for the extra 
 - actual spend against this quote.
 
 - **Quote id to approve: Q2b-v4-nano-eval-repaired.**
+- **Approved by David 2026-10-06 with k = 2 (amended scope, id Q2b-k2):** 320 trials, expected $0.76, worst case $2.37, hard cap $2.50 (unchanged). With k = 2, item-level claims fall short of the skill's k >= 3. The report gives trial accuracy and two-attempt agreement.
 
 ## Planned (not yet quoted)
 - **Q2:** quoted above (Q2-v4-nano-eval).
