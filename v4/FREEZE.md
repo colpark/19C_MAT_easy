@@ -487,3 +487,59 @@ reason: join rules alsi10mg_luo2024: all 60 sets (David), property series ordere
 reason: curves_alsi60.py: S4e procedures on all 60 sets, order by VED
 
 - `trackS/readers/curves_alsi60.py` 04cec731ab57cff6c240df24e4e16871802b43ec62827f9e2d49602f19c77d28
+
+## K3 (2026-10-07T10:53:37-05:00)
+
+reason: Track S kit K3 (David 2026-10-07, V4-E26/27): join_s refuses rules carrying _todo; m0 rule smell below 50 % native metadata; tests 5/5 (K2 24/24, kit 53/53)
+
+- `trackS/join_s.py` d20c62e870738e3df2ab827ca2de4c71319f35fb3b33a76b5ab3c00ef0eb519b
+- `trackS/m0_s.py` 830282c4013996a6d20073cdf6a8ac485f6f8e957741e6646e9621a53545f84f
+- `trackS/tests/test_k3.py` 7c6a16d3109b27bd097a82d833ff08db4ae4cf40546cc47049cea57342ab25b3
+- `trackS/joinrules/refodat90.json` cfd972294d130d04d412f45a699ce5988d89a3098910a6cc7473fc397f377b8c
+
+## S5a (2026-10-07T10:56:07-05:00)
+
+reason: SA508 reader: sa508_op.py (Oliver-Pharr, textbook defaults), validate_sa508.py (synthetic gates), realval_sa508.py (held-out gates vs authors' per-array H, A); frozen before any validation run
+
+- `trackS/readers/sa508_op.py` dc44b09b847ea2739000bc3123fb1a20052f299a488147e9ba3ccfa00ed1d3f5
+- `trackS/readers/validate_sa508.py` d8d66d98ac9a650af345c9b3378f739763c2c4de190958e5e30d932dffea1f7f
+- `trackS/readers/realval_sa508.py` 47b90f1e2fa6783a68abb4cd6dbc1b30b11ef68557a3e082b95c99e881b2e625
+
+## S5a-2 (2026-10-07T10:56:46-05:00)
+
+reason: sa508_op.py: contact from a Kick's-law loading fit and unloading start at the end of the hold (fix on synthetic evidence: S5a read H ~8 % high, V4-E28); held-out comparison not yet run
+
+- `trackS/readers/sa508_op.py` c5b881bb3d8fcd9180ea5952351f0da70e0d4327fc5b0448db4feb49ace5ac59
+
+## S5a-rv (2026-10-07T10:57:19-05:00)
+
+reason: realval_sa508.py: zone column is 'Region' or 'Position' (PM-HIP SQNT profile; source quirk); gates unchanged
+
+- `trackS/readers/realval_sa508.py` bc7438e3ad125a4f1925e86329bcd0120b2f401b2519affeed24919d366f97d8
+
+## K3b (2026-10-07T10:58:31-05:00)
+
+reason: K3 per David's round-3 spec: m0 reports sem_missing_native_share and flags > 5 %; tests K3 5/5, K2 24/24, kit 53/53 (77 existing pass)
+
+- `trackS/m0_s.py` b304eb208d6de7443a42302c003dc9a0e3b2b0a1ab3b50953397f775ae986428
+- `trackS/tests/test_k3.py` 584a716dbb5e10146d06761fba265bf0579af1933f3e3d9f027239f52ae0bf47
+
+## D0 (2026-10-07T10:59:28-05:00)
+
+reason: Track S round 3 decision rule (DESK_refodat_rule.md), frozen before the desk checks
+
+- `trackS/DESK_refodat_rule.md` 42ddff3e51337d1fb2cd8e3f0a7ab0b14fe0f837458f829d15d951213bdd613e
+
+## D0m (2026-10-07T11:01:09-05:00)
+
+reason: desk_registration_r90.py: D0 registration measurement as written in DESK_refodat_rule.md; frozen before running
+
+- `trackS/readers/desk_registration_r90.py` c0624d4501f78028260c822c7b05b12a5fb4f7ebbf1edd3b57d2335c689acbb5
+
+## D1 (2026-10-07T11:04:04-05:00)
+
+reason: round 3 desk stage: DESK_refodat90.md, DESK_refodat91.md, physics_refodat.py (mechanism pairs pre-registered before any reader output)
+
+- `trackS/DESK_refodat90.md` c0c53065a8c5a90288e5f72bb2b719476e1cd2e30b3a45d2f34fa0d182490fa0
+- `trackS/DESK_refodat91.md` 3beb948bdf4d46dd386c431329bbcffc94b5d21ff73f872691436ed846bf3e71
+- `trackS/physics_refodat.py` 5b3f561742774417fd102b0e0a72235afbeec0ed24d863c7aca23cacda35d249

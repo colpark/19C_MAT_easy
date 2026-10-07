@@ -180,6 +180,10 @@ def main(argv=None):
         reasons_stop.append('SEM rule: SEM images are lossy JPEG only')
     if r2 in (None, 'check'):
         reasons_check.append('R2 check: install the missing readers and rerun inventory_s.py readers')
+    miss_share = (len(sem) - native) / len(sem) if sem else 0.0
+    if sem and miss_share > 0.05:   # K3 (David's spec, round 3): flag a share of SEM-role files without native pixel metadata above 5 %
+        reasons_check.append(f'K3: {len(sem) - native} of {len(sem)} SEM-role files ({miss_share:.0%}) lack native pixel metadata (> 5 %); check the join '
+                             'rules for pyramid renders, thumbnails or processed copies before a scale-bar reader')
     if sem and frac < 0.9:
         reasons_check.append(f'R4: {len(sem) - native} SEM images without native pixel size (scale-bar reader or exclusion)')
     if not mag:
@@ -207,7 +211,7 @@ def main(argv=None):
         sd.report(vpath)
     out = {'dataset': ds, 'pilot': reg.get('pilot'), 'decision': decision, 'stop': reasons_stop, 'checks': reasons_check,
            'evidence': {'files': len(files), 'failed_files': bad[:20], 'planned_missing': planned_missing[:20], 'unresolved_parts': unresolved,
-                        'R2': r2, 'sem_images': len(sem), 'sem_native_fraction': frac,
+                        'R2': r2, 'sem_images': len(sem), 'sem_native_fraction': frac, 'sem_missing_native_share': (len(sem) - native) / len(sem) if sem else None,
                         'second_modalities': dict(other), 'sem_modalities': sem_modalities, 'sem_images_per_level': dict(per_level), 'magleak': mag.get('verdict'),
                         'pilots': pilots, 'inventory': {k: inv.get(k) for k in ('files', 'images', 'pixel_size_sources', 'n_distinct_pixel_sizes', 'detectors', 'kv')}},
            'card_changes': changes, 'scorer': {'requirements': R, 'families': {k: list(v) for k, v in F.items()}, 'report': buf.getvalue()},

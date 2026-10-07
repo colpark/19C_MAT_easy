@@ -16,6 +16,7 @@ dic_field, xct, curve, indent, tile_layout, metadata, document, other.
 Writes <root>/<ID>/join.csv and join_summary.json (with the sha256 of the rules file for LOG.md).
 """
 import argparse
+import sys
 import collections
 import csv
 import hashlib
@@ -102,6 +103,10 @@ def main(argv=None):
     a = ap.parse_args(argv)
     rules_path = a.rules or os.path.join(HERE, 'joinrules', f'{a.dataset}.json')
     spec = json.load(open(rules_path))
+    if spec.get('_todo'):   # K3 (V4-E26/27): prospective rules over-matched on three sources; confirm them against the files first
+        sys.exit(f"STOP (K3): {rules_path} still carries _todo: {spec['_todo'][:160]}\n"
+                 "Confirm every rule against inventory.jsonl (raw files vs renders, thumbnails and processed copies; capture groups on the "
+                 "file's own folder, not the archive name), record what was checked in a _desk note, and remove _todo before joining.")
     rows = [json.loads(line) for line in open(os.path.join(a.root, a.dataset, 'inventory.jsonl'))]
     recs = apply_rules(rows, spec)
     fields = ['path', 'ext', 'role', 'rule'] + sorted({k for r in recs for k in r} - {'path', 'ext', 'role', 'rule'})

@@ -1,0 +1,55 @@
+{
+ "indents": 216,
+ "indents_ok": 210,
+ "ok_frac": 0.9722222222222222,
+ "failures": [
+  [
+   "Forged-01-T2-R-BM.csv",
+   "too few points"
+  ],
+  [
+   "HIP-PWHT-04-B2-R-HAZ.csv",
+   "too few unloading points in the fit window (2)"
+  ],
+  [
+   "HIP-PWHT-04-T2-R-HAZ.csv",
+   "too few unloading points in the fit window (2)"
+  ],
+  [
+   "HIP-SQNT-05-B1-R-BM.csv",
+   "too few loading points for the contact fit"
+  ],
+  [
+   "HIP-SQNT-05-B2-R-BM.csv",
+   "too few loading points for the contact fit"
+  ],
+  [
+   "HIP-SQNT-18-T1-L-BM.csv",
+   "loading fit failed"
+  ]
+ ],
+ "arrays": 54,
+ "arrays_with_authors": 54,
+ "spearman": 0.8914978369798446,
+ "ratio_mean": 0.8730464078463261,
+ "ratio_cv": 0.14926031062925388,
+ "ratio_by_condition": {
+  "forged_PWHT": 0.8622697304840146,
+  "PMHIP_PWHT": 0.9148589784541593,
+  "PMHIP_SQNT": 0.8449321394880349
+ },
+ "zone_mismatches": [
+  [
+   "PMHIP_PWHT",
+   12,
+   "L-BM",
+   "L-HAZ"
+  ]
+ ],
+ "gates": {
+  "spearman_ge_0.90": false,
+  "ratio_cv_le_0.05": false,
+  "ok_ge_0.95": true
+ },
+ "pass": false
+}

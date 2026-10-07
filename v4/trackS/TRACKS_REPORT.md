@@ -1,3 +1,37 @@
+# Track S round 3 (2026-10-07): refodat desk checks and the D0 decision
+- **K3 (approved by David):**
+  - join_s.py refuses rules that still carry `_todo`.
+  - m0_s.py reports the share of SEM-role files without native pixel metadata and flags it above 5 % (K3b).
+  - Tests: K3 5/5, plus the 77 existing tests (K2 24, kit 53). No dataset exceeds 5 %.
+- **D0** (DESK_refodat_rule.md, frozen before the desk checks) sets the reader-stage conditions. For refodat90: a BSE-to-EDX residual with median ≤ 1.0 µm and 95th percentile ≤ 2.0 µm, plus held-out coverage. For refodat91: a resolved specimen map.
+- **refodat90: NO reader stage (V4-E29).**
+  - Registration over 558 windows, using the authors' affine (reproduced exactly): median 0.35 µm, but 95th percentile 8.86 µm.
+  - The bulk aligns well: windows with correlation ≥ 0.5 give 0.18 / 0.49 µm. The tail comes from feature-poor windows, and the frozen rule allows no filtering.
+- **refodat91: the reader stage may run** (specimen map resolved).
+- **Desk answers** (DESK_refodat90.md, DESK_refodat91.md):
+  - The methods source is the DataCite description; the PDF is a layout figure.
+  - Indentation is tables only (Hysitron O-P outputs, no raw curves, no area function: D gap).
+  - EDX raw is a proprietary Aztec project with no M route. The µXRF .spd is a raw spectrum image, an M route for later.
+  - The EDX phase labels were matched by hand to Aztec phase colours (A/I).
+  - ITZ bins: 5 levels, every one with at least 3 indents, so T7 is impossible.
+  - The LTDSC pastes III.70.04/06 (c-d, unc-d) map to 21C/21H/25C/25H. Raw heat flow is M; the ice mass is A.
+  - Strength comes as raw cubes (M per DIN); frost as raw masses and transit times (M) beside calculated columns (A).
+  - Mechanism pairs are pre-registered in physics_refodat.py.
+- **Open:** S4r for refodat91 alone can pass synthetic gates only. Its only real evidence (LTDSC) is report-only, so R5 cannot be met. This waits for David's call.
+
+# Track S: SA508 reader S5a (after round 2, David 2026-10-07)
+- **Reader.** sa508_op.py computes Oliver-Pharr H and Er from each raw indent curve (level M), using textbook defaults with an ideal Berkovich area function. The area function and frame compliance are not in the deposit (D gap). Freeze labels S5a, S5a-2 and S5a-rv.
+- **Synthetic (validate_sa508.py, 400 curves, generator from the forged dev curves).**
+  - S5a failed: H read about 8 % high because the contact point sat about 3 % of hmax below the surface.
+  - S5a-2 changes, made on synthetic evidence only: a Kick's-law contact fit and the unloading start taken at the end of the hold.
+  - S5a-2 passes: H within 5 % on 100 %, Er within 10 % on 100 %, ranking 100 %.
+  - Caveat: the synthetic loading follows Kick's law exactly, which flatters the contact fit.
+- **Held out (realval_sa508.py) against the authors' per-array Avg. HARDNESS (A), all three conditions: FAIL (V4-E28).**
+  - 210/216 indents read; 54 arrays compared.
+  - Spearman 0.891 against ≥ 0.90; ratio CV 0.149 against ≤ 0.05; mean ratio 0.87.
+  - No single factor explains the scatter. The authors' value is likely a depth-window instrument average.
+  - Not iterated (I4, I7). SA508 hardness stays unvalidated, so no separability pilot runs on it, and M0 is unchanged (GO WITH CHECKS).
+
 # Track S round 2 (2026-10-07)
 
 Prompt: v4.1 Track S round 2 (AM Bench reader 2, AlSi10Mg pilot, SA508 throttled retry, kit fixes). David's decisions:
