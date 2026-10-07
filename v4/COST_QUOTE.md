@@ -60,6 +60,7 @@ Same model, prompts and restrictive rule as Q1b (raw-data procedure prompt, pars
 
 - Worst case: 13 calls at 2,000 input and 4,000 output tokens = $0.57. Hard cap $0.80. Q1b actual for comparison: 29 calls, $0.0582.
 - **Quote id to approve: Q1d-v4-audit-crfeni.**
+- **Approved by David 2026-10-06 and run:** 12 calls (one template call fewer than quoted: the build has 3 decidable kinds), actual $0.0432 (expected $0.09, cap $0.80). Applied restrictively (D9).
 
 ## Planned (not yet quoted)
 - **Q2:** v4.0 evaluation with gpt-5-nano. Arms: A0, B0, B1, R0 and R0all on the 248 v3 items; A0, B0, T-code and T-FM on the raw-array items; k >= 3 where claims are made.

@@ -1,6 +1,6 @@
 # v4 status (2026-10-06)
 
-Spend: $0.1011 total. Q1-v4-audit-allende $0.0429 (11 calls); Q1b-v4-reaudit-allende-v2 $0.0582 (29 calls, approved 2026-10-06, quote $0.12, cap $1.50).
+Spend: $0.1443 total. Q1d-v4-audit-crfeni $0.0432 (12 calls). Q1-v4-audit-allende $0.0429 (11 calls); Q1b-v4-reaudit-allende-v2 $0.0582 (29 calls, approved 2026-10-06, quote $0.12, cap $1.50).
 
 ## Track A: carry v3 into v4.0 (v4/v3)
 - **Fixes (F11a):**
@@ -46,7 +46,7 @@ Spend: $0.1011 total. Q1-v4-audit-allende $0.0429 (11 calls); Q1b-v4-reaudit-all
   - V4-E15: the yield procedure's validation was outside the real compliance regime and circular. Fixed by D1c with validate_yield2.
   - V4-E16: s10 was read on unloading branches. Fixed by D5b.
   - Not built: T3 (tension yield is a D gap), the UTS-temperature T7 (not pre-registered), T6. T5 was trimmed by the prior gate.
-  - Audits: quote Q1d (13 calls, about $0.09), not run.
+  - **Q1d (approved, $0.0432) applied restrictively (D9): 61 -> 55 items (T1 19, T4 36 at 12/12/12), oracle 55/55 on A0 and B0.** Both grain-size methods were rejected and Hall-Petch was classed 'dependent', so T2, T7 and the grain-ranking claims dropped (V4-E17). Accepted: yieldproc, s10, tension F_max, all templates, both cannot-tell kinds, the T2 identity.
 - Rank 2 sigma phase: deferred (one instrument on the law, no validated precipitate reader, no pixel-size metadata).
 - V4-E11: tension 373 K files named 293K; resolved from headers.
 
