@@ -1,0 +1,80 @@
+{
+ "role": "P1",
+ "system": "N-Sn-Zn",
+ "libraries": [
+  6768,
+  6944,
+  7342,
+  7708,
+  7857,
+  6648,
+  6975,
+  7002,
+  7287,
+  6856,
+  7073
+ ],
+ "n_raw": {
+  "t1": 56,
+  "t4": 65
+ },
+ "prior_rows": {
+  "HTEM-P1|t1": {
+   "n": 56,
+   "chance": 0.0,
+   "score": 0.125,
+   "limit": 0.1,
+   "pass": false,
+   "trim": [
+    "cand-t1-0080",
+    "cand-t1-0079"
+   ],
+   "pass_after_trim": true,
+   "rules_hit": {
+    "T1-textbook-stick": 4,
+    "T1-typical-0.5": 2,
+    "T1-typical": 1,
+    "T1-typical-decade": 1
+   }
+  },
+  "HTEM-P1|t4": {
+   "n": 65,
+   "chance": 0.3333333333333333,
+   "score": 0.27692307692307694,
+   "limit": 0.43333333333333335,
+   "pass": true,
+   "trim": [],
+   "pass_after_trim": true,
+   "rules_hit": {
+    "T4-default": 18
+   }
+  }
+ },
+ "trimmed": [
+  {
+   "family": "t1",
+   "fact": "N-Sn-Zn|t1|peak|7287:44",
+   "why": "prior gate (t1, HTEM-P1)"
+  },
+  {
+   "family": "t1",
+   "fact": "N-Sn-Zn|t1|peak|7287:42",
+   "why": "prior gate (t1, HTEM-P1)"
+  }
+ ],
+ "t4_balance_trim": [
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld",
+  "N-Sn-Zn|t4|ct_withheld"
+ ],
+ "n_final": {
+  "t1": 54,
+  "t4": 56
+ }
+}
