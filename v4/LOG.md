@@ -126,3 +126,5 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - Q2-v4-nano-eval-A approved by David; partB/run_q2.sh frozen (sha256 eac7f7bb...), launched 2026-10-06T19:40:06-05:00.
 - Q2 done 2026-10-06T20:37: 366 trials, $0.768 (job result.json cost_usd), 0 network/key flags. partB/analyze_q2.py -> RESULTS_Q2.md, partB/results_q2.json.
 - Q1e quote written (Allende regions_v3 covariance-z repair + CrFeNi boundary-spacing re-audit; 9 calls, $0.03 expected, cap $0.50). Not run. Law-class prompt question raised to David.
+- 2026-10-06 David: Q1e approved with the T7-aware law-class prompt. Ruling (logged as rule clarification R-T7): a law whose parameters are fitted on samples disjoint from the target and used to predict a held-out target is the skill's T7 "fit" class; the law-class audit states this design.
+- Q1e run: audit_q1e.py, 9 calls, $0.0223, all accepted. B13 (Allende regions_v3) and D10 (CrFeNi rename) regenerated twice each: Allende 19 (8c6f78b3...), CrFeNi 61 (3008ecce...). Gates pass. Oracle Allende 19/19 and CrFeNi 61/61 on A0 and B0.

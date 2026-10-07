@@ -273,3 +273,29 @@ reason: Q2 runner (approved quote Q2-v4-nano-eval-A), frozen before launch
 reason: Q2 analysis script
 
 - `partB/analyze_q2.py` fa3777a6fa83cb83be4c612326a977c71aa2c209f56c9a1ab2220c7ed8c17e54
+
+## B13a (2026-10-06T21:18:55-05:00)
+
+reason: derived.fit_se / zmaps_v3 / regions_v3 (covariance z) and validate_regions_v3, before real data
+
+- `allende/derived.py` 9fbe0ccd3e63c9a380a91233fb460dae81c282772b736e6d494c4c06ae4576e3
+- `allende/validate_regions_v3.py` e41cc87d81739d4a86f44ea1b4e0f847e11e90b782efae5dcb236c7ee0621b04
+
+## B13 (2026-10-06T21:19:28-05:00)
+
+reason: generate_v2: regions_v3 (covariance z) and Q1e audit merge; neutral region-panel name
+
+- `allende/generate_v2.py` 27c722340e4a13477a797596e816e9943c7314ef5b6bb7fe15a1a956810a68e4
+
+## D10 (2026-10-06T21:20:04-05:00)
+
+reason: CrFeNi readers renamed to mean boundary spacing (Q1d repair), Q1e audit merge; procedures unchanged
+
+- `trackD/physics_crfeni.py` dca242a6243e95a1a4f8995605d9e69616b26add657013f114d77b13491bfd8a
+- `trackD/generate_crfeni.py` 0d90ba3332fd136b0de24138d5f45a2c4351924710f6541ee810e8b0293ae06e
+
+## Q1e (2026-10-06T21:21:02-05:00)
+
+reason: audit_q1e.py (approved quote Q1e-v4-repair-audits, T7-aware law prompt per R-T7), frozen before the paid run
+
+- `audit_q1e.py` 939d18a35560c9b2ee16973970333a385a300a4950ba4379246a938946444d17

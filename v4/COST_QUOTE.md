@@ -184,6 +184,7 @@ Two repairs; the code work is free and is done and frozen before any paid call:
 - Both sets then need gates and the oracle (free). A nano evaluation of the new items would be a separate quote.
 
 - **Quote id to approve: Q1e-v4-repair-audits**, and David's ruling on the law-class prompt (unchanged, or T7-aware).
+- **Approved by David 2026-10-06 with the T7-aware prompt (ruling R-T7) and run:** 9 calls, actual $0.0223 (expected $0.03, cap $0.50). All 9 judgments accepted.
 
 ## Planned (not yet quoted)
 - **Q2:** quoted above (Q2-v4-nano-eval).

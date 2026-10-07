@@ -71,3 +71,34 @@ def tilt_ratio(area): return area['Mg Ka'] / area['Si Ka']
 
 def before_after(a_before, a_after, rt_before, rt_after):
     return {k: (a_after[k] / rt_after) / (a_before[k] / rt_before) for k in a_before if a_before[k] > 0}
+
+def fit_se(E, s, win):
+    """B13 (regions_v3, Q1b repair): net line areas and their standard errors from the fit itself. NNLS as in eds.fit_spectrum; the
+    covariance is (A^T W A)^-1 over the active line columns plus the quadratic background, with Poisson weights W = 1 / max(model, 1);
+    lines NNLS set to zero get z = 0. Returns {line: (area, se)} in the eds.fit_spectrum area units."""
+    from scipy.optimize import nnls
+    import eds as X
+    lo, hi = X.WIN[win]; m = (E >= lo) & (E <= hi); names, D = X.design(E[m], win); y = s[m].astype(float); nl = len(names)
+    D2 = np.column_stack([D, -D[:, -2], -D[:, -1]]); coef, _ = nnls(D2, y); model = D2 @ coef; w = 1.0 / np.maximum(model, 1.0)
+    act = [i for i in range(nl) if coef[i] > 0]; cols = act + [nl, nl + 1, nl + 2]; A = D[:, cols]
+    cov = np.linalg.pinv(A.T @ (A * w[:, None])); out = {}
+    for i, n in enumerate(names):
+        g = (X.fwhm(X.LINES[win][n]) / 2.355) * np.sqrt(2 * np.pi)
+        out[n] = (float(coef[i] * g), float(np.sqrt(max(cov[cols.index(i), cols.index(i)], 0)) * g)) if i in act else (0.0, float('inf'))
+    return out
+
+def zmaps_v3(a, E, binning=6, lines=('Ni Ka', 'S Ka', 'Al Ka', 'Mg Ka', 'Si Ka')):
+    """per binned pixel: net area and its fit standard error for each line (both windows). Returns ({line: net}, {line: se})."""
+    H, W, C = a.shape; h, w = H // binning, W // binning
+    b = a[:h * binning, :w * binning].reshape(h, binning, w, binning, C).sum((1, 3)).astype(float)
+    net = {n: np.zeros((h, w)) for n in lines}; se = {n: np.full((h, w), np.inf) for n in lines}
+    for i in range(h):
+        for j in range(w):
+            for win in ('low', 'high'):
+                for n, (ar, sd) in fit_se(E, b[i, j], win).items():
+                    if n in net: net[n][i, j] = ar; se[n][i, j] = sd
+    return net, se
+
+def regions_v3(Z, valid):
+    """same rule as regions_v2, on z = fitted net / fit standard error (B13)."""
+    return regions_v2(Z, valid)
