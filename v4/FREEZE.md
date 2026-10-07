@@ -466,3 +466,19 @@ reason: partB/run_v42.sh (COST_QUOTE_v42 option A approved by David 2026-10-07: 
 reason: partB/results_v42.py (analysis of the v4.2 nano run), frozen before running
 
 - `partB/results_v42.py` 5f6896d4ffa6476a58accff203b1be900cf434d7068292d9012a954a73af3546
+
+## C1pre (2026-10-07T20:53:50+00:00)
+
+reason: CARD_liion.json written from arXiv 2601.03151v1 only, before any deposit value is opened (hard rule 4; no .aiida imported yet)
+
+- `trackC/card.py` 1c5161f2656198d2d54e17500824eccdabb19631ddf705dd6d4255f1c1fe7b2f
+- `trackC/CARD_liion.json` 90844acb064ab4d1ff3098367d1066d7434fb3fdf6398bf563ac40ad58356e4b
+- `trackC/mc_fetch.py` d95597760a237254e96b8fc616d699e8422724388ac87bebae5dcaf24b1a4733
+- `trackC/fetch_all.sh` 232c87d6f6a8c6e756bea2549304abe6a6452b10324b982e762579eeccb41836
+
+## B2pre (2026-10-07T21:04:55+00:00)
+
+reason: Addendum B pre-registration: match rule and bridge metrics, before any experimental record is fetched or matched (VC-E07)
+
+- `trackC/MATCH_RULE_B2.json` b167b153c978aa645231a218255684bf1e6d7bb3e454b142f2ed242785293a67
+- `trackC/BRIDGE_METRICS_B2.md` 13ea491b4df2cd1a8eb4b0e7f9e17990f555d58eee6b50a5ddfc73fa57eac453

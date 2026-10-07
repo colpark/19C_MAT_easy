@@ -1,0 +1,26 @@
+{
+ "id": "MATCH_RULE_B2",
+ "version": 1,
+ "written": "2026-10-07, before any experimental record was fetched or matched (Addendum B, B2 C0.3)",
+ "scope": "Li-ion funnel materials (CARD_liion stages S6-S12, plus KNOWN_77) against OBELiX and the Liverpool Li-ion conductivity database",
+ "normalisation": {
+  "formula": "pymatgen Composition(formula).reduced_formula after stripping charges, hydrate water only if the database lists it separately, and whitespace; element symbols case-normalised",
+  "experimental_temperature": "room temperature = record temperature in [20, 30] degC; when several RT records exist for one entry, the one closest to 25 degC, ties broken by the higher sigma (stated, not tuned)",
+  "units": "sigma converted to mS/cm; log10 used for every comparison"
+ },
+ "classes": {
+  "exact": {
+   "obelix_with_cif": "same reduced formula AND pymatgen StructureMatcher(ltol=0.2, stol=0.3, angle_tol=5, primitive_cell=True, scale=True, attempt_supercell=False).fit(computed, experimental) is True",
+   "liverpool_or_no_cif": "same reduced formula AND same structure family label (database field, case-normalised); if the database gives no family label for the entry, the pair can be at most family"
+  },
+  "family": {
+   "doped": "experimental composition differs from the computed parent only by dopant or substituent fractions <= 0.1 per site (computed from the formula normalised to the parent's anion count); doped experimental samples against an ordered computed parent always count as family, never exact",
+   "same_family_other_stoichiometry": "same structure family label with a different stoichiometry"
+  },
+  "no_match": "every unmatched record is kept with its reason: formula_absent, structure_mismatch, family_label_missing, dopant_fraction_gt_0.1, no_rt_value, parse_error"
+ },
+ "priority": "exact beats family; one experimental record may match several funnel materials (polymorphs) only through StructureMatcher, so a polymorph that fails the matcher is not exact",
+ "split_inheritance": "a matched experimental record inherits the split of its funnel material (I12)",
+ "evidence_level": "experimental sigma = A (impedance fit). Never a key (I2, I2c)",
+ "tests": "test_match_exp.py: a known exact pair, a doped family pair, a polymorph that must not match"
+}
