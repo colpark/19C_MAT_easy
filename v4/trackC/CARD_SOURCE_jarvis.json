@@ -1,0 +1,43 @@
+{
+ "card": "CARD_SOURCE_jarvis",
+ "pipeline_id": "choudhary2022_jarvis_bcs_epc",
+ "filled_from": "figshare 21370572 metadata and key inventory, jarvis-tools dft_3d field list (no keyed value opened before CARD_jarvis froze)",
+ "R1_access": {
+  "pass": true,
+  "files": "jarvis_epc_data_figshare_1058.json.zip 8.8 MB (1,058 records), jarvis_epc_data_2d.json.zip 0.64 MB (161 records); md5 = figshare computed_md5",
+  "license_span": "figshare article 21370572 license {'name': 'CC BY 4.0', 'url': 'https://creativecommons.org/licenses/by/4.0/'}",
+  "parent": "JARVIS-DFT 3D via jarvis-tools 2026.6.12: data('dft_3d') -> jdft_3d-9-24-2025.json.zip (93,902 entries), figshare ndownloader file 64391379",
+  "release_eligible": "pending: structures are JARVIS-DFT relaxations (partly ICSD-derived via the icsd field); decided per item in C7 (default false for this pilot)",
+  "year": "deposit 2023-01-30, paper 2022"
+ },
+ "R2_readers": {"pass": true, "json": "stdlib json + jarvis-tools Atoms", "parent": "jarvis-tools"},
+ "R3_paper": {"pass": true, "pdf": "arXiv:2205.00060v2; 2D twin arXiv:2211.05254v2", "si": "Supplementary Information not in the arXiv PDF (convergence tables only per the text)"},
+ "CR1_stage_coverage": {
+  "deposit_per_material": {"J4 EPC": "a2F, a2F_original_x/y, lamb, wlog on 1,058", "J5 Tc": "Tc on 1,058", "J6 stability": "stability string on 1,058", "pressure": "press"},
+  "parent_rebuild": {"J1 theta_D": "eq. 2 from bulk_modulus_kv, shear_modulus_gv, density, atoms (C2)", "J3 n_atoms": "nat / atoms", "J2 N(0)": "no DOS-at-E_F field in dft_3d: not rebuildable"},
+  "stages_with_values": ["J1 (parent)", "J3 (parent)", "J4", "J5", "J6"]
+ },
+ "CR2_reject_coverage": {
+  "stages_with_rejects": ["J5 Tc >= 5 K (within the 1,058)", "J6 dynamic stability (within the 1,058)", "J1 theta_D (parent rebuild)", "J3 n_atoms (parent rebuild)"],
+  "count_with_rejects": 4,
+  "caveats": ["J5 and J6 order differs between Fig. 1 and the text: materials failing both are never Fate keys (CARD_jarvis J6 frozen reading)", "parent version 2025 vs paper 2021: J1/J3 recounts drift (classed in RECONCILE_jarvis.md)", "J2 is a template-only stage"]
+ },
+ "CR3_parent_rebuild": {"pass": "partial", "stages": ["J1", "J3"], "not": ["J2"]},
+ "CR4_provenance_depth": "none (no workflow graphs deposited)",
+ "CR5_demonstrators": {
+  "J6 stability": "MACE-MPA-0, Orb v3, MatterSim v1: Gamma-point phonons (C3); trained on PBE relaxations (MPtrj, Alexandria), not on JARVIS DFPT stability: leak status by id and structure match in C3",
+  "J4/J5 Tc": "ALIGNN Tc/lambda/wlog models: leaky (trained on this deposit, same group); BEE-NET: weights and training list checked in C3, else unknown and skipped"
+ },
+ "CR6_laws": ["eq. 6 lambda and eq. 8 omega_log from alpha2F (definition)", "eq. 7 McMillan-Allen-Dynes, mu* = 0.09 (independent given alpha2F)", "eq. 2 Debye temperature from elastic data"],
+ "CR7_recency": "2022-2023 and in the JARVIS-DFT parent (Tc_supercon field): high recall risk; the B2 probe decides",
+ "family_needs": {
+  "Fate": {"open": true, "why": "CR1 and CR2 on 4 stages (J1, J3 via parent; J5, J6 deposited)"},
+  "Route": {"open": true, "why": "Fate needs plus D3 named-default cost (3 x n_atoms phonon-mode units)"},
+  "Escalate": {"open": false, "why": "CR4 none"},
+  "Recover": {"open": false, "why": "CR4 none"},
+  "Arbitrate": {"open": "pending C3", "why": "two clean MLIP stability verdicts against the DFPT J6 key"},
+  "T3": {"open": true, "why": "alpha2F panel -> Tc by eq. 7 (Fate and T3 JARVIS family)"}
+ },
+ "c0_decision": "fallback (CARD_SOURCE_liion c0_decision): JARVIS carries Fate and Route through C2 to C7, plus its alpha2F T3",
+ "bridges": {"B1": "jid origin tagged from the dft_3d icsd field (ICSD-derived when non-empty, else unknown; JARVIS also holds hypothetical prototypes)"}
+}

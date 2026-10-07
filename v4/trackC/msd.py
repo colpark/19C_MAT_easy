@@ -8,7 +8,9 @@ Procedure (frozen at C2 after synthetic validation, I4/I7; change only on synthe
     `origin_stride` frames;
   * the slope is a least-squares line on lags in [FIT_START, FIT_END] x the trajectory length (the first
     10 % carries the ballistic and vibrational regime, lags past 50 % carry few independent origins);
-  * the uncertainty is the standard error of D over N_BLOCKS contiguous blocks (each fitted the same way).
+  * the uncertainty is the larger of (a) the standard error of D over N_BLOCKS contiguous blocks (each fitted
+    the same way) and (b) the per-atom bootstrap SE of the slope (revision R2, synthetic validation: block SE
+    alone covered 77 % of errors within 3 SE).
 Units: positions in Å, time in ps, D returned in cm^2/s (1 Å^2/ps = 1e-4 cm^2/s).
 """
 import numpy as np
@@ -57,6 +59,31 @@ def fit_slope(lags_ps, msd, t_total_ps, start=FIT_START, end=FIT_END):
     return s, b
 
 
+def _atom_se(upos, dt_ps, t_total, stride, n_boot=200, seed=5):
+    n = upos.shape[1]
+    if n < 3:
+        return float('nan')
+    T = len(upos)
+    L = int(FIT_END * T) + 1
+    lags = np.arange(L)
+    origins = np.arange(0, T - 1, stride)
+    per = np.zeros((L, n))
+    for k in lags[1:]:
+        o = origins[origins + k < T]
+        d = upos[o + k] - upos[o]
+        per[k] = np.mean(np.sum(d * d, axis=-1), axis=0)
+    t = lags * dt_ps
+    m = (t >= FIT_START * t_total) & (t <= FIT_END * t_total)
+    A = np.vstack([t[m], np.ones(m.sum())]).T
+    rng = np.random.default_rng(seed)
+    sl = []
+    for _ in range(n_boot):
+        idx = rng.integers(0, n, n)
+        (sb, _), *_ = np.linalg.lstsq(A, per[m][:, idx].mean(1), rcond=None)
+        sl.append(sb)
+    return float(np.std(sl, ddof=1) / 6.0 * A2PS_TO_CM2S)
+
+
 def diffusion(pos, cell, dt_ps, species_mask=None, wrapped=True, origin_stride=None, n_blocks=N_BLOCKS):
     """Return dict(D, D_se, slope, intercept, t_total_ps, n_atoms, n_frames) with D in cm^2/s."""
     pos = np.asarray(pos, float)
@@ -77,8 +104,10 @@ def diffusion(pos, cell, dt_ps, species_mask=None, wrapped=True, origin_stride=N
             lb, mb = msd_curve(u, dt_ps, max(1, nb // 200))
             sb, _ = fit_slope(lb, mb, (len(u) - 1) * dt_ps)
             Db.append(sb / 6.0 * A2PS_TO_CM2S)
-    se = float(np.std(Db, ddof=1) / np.sqrt(len(Db))) if len(Db) > 1 else float('nan')
-    return {'D': float(D), 'D_se': se, 'D_blocks': [float(x) for x in Db], 'slope_A2_per_ps': float(s),
+    se_block = float(np.std(Db, ddof=1) / np.sqrt(len(Db))) if len(Db) > 1 else float('nan')
+    se_atom = _atom_se(upos, dt_ps, t_total, stride)
+    se = float(np.nanmax([se_block, se_atom]))
+    return {'D': float(D), 'D_se': se, 'D_se_block': se_block, 'D_se_atom': se_atom, 'D_blocks': [float(x) for x in Db], 'slope_A2_per_ps': float(s),
             'intercept_A2': float(b), 't_total_ps': float(t_total), 'n_atoms': int(pos.shape[1]),
             'n_frames': int(T), 'fit_window': [FIT_START, FIT_END], 'origin_stride': int(stride)}
 

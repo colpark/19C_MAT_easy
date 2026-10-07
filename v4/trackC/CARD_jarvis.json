@@ -1,0 +1,233 @@
+{
+ "card": "CARD_jarvis",
+ "pipeline_id": "choudhary2022_jarvis_bcs_epc",
+ "source": {
+  "paper": "K. Choudhary, K. Garrity, Designing high-TC superconductors with BCS-inspired screening, density functional theory and deep-learning, npj Comput. Mater. 8, 244 (2022), doi:10.1038/s41524-022-00933-1",
+  "read_from": "arXiv:2205.00060v2 PDF (main text; Supplementary Information not in the arXiv PDF)",
+  "deposit": "figshare 21370572 (JARVIS-SuperconDB), CC BY 4.0; parent JARVIS-DFT 3D via jarvis-tools",
+  "twin_2d": "arXiv:2211.05254v2 (Wines, Choudhary et al., 2D superconductors): held-out transfer set only"
+ },
+ "written_before_deposit_values": true,
+ "stages": [
+  {
+   "rule_gap": null,
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": 0.0,
+   "cost_unit": "phonon_mode_units",
+   "count_source": "Fig. 1 arrow \"55723\"; text p3 (17419 with elastic tensors)",
+   "span_source": "Sec 2.1 p3",
+   "id": "J0",
+   "order": 0,
+   "name": "sources",
+   "observable": "JARVIS-DFT entry with electronic DOS",
+   "comparator": "in",
+   "threshold": "JARVIS-DFT v08.18.2021",
+   "unit": null,
+   "method": "database query",
+   "level_of_theory": "VASP OptB88vdW (JARVIS-DFT)",
+   "decision_type": "static",
+   "verbatim_span": "Currently, there are electronic DOS database available for 55723 materials and elastic tensors for 17419 materials (using the v08.18.2021 version of JARVIS-DFT database at the time of writing).",
+   "stated_count": 55723
+  },
+  {
+   "rule_gap": {
+    "what": "the database field holding theta_D is not named; materials without an elastic tensor cannot pass",
+    "frozen_reading": "theta_D recomputed from JARVIS-DFT elastic data with eq. 2 in C2 (parent rebuild) and compared to any deposited Debye field"
+   },
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": 0.0,
+   "cost_unit": "phonon_mode_units",
+   "count_source": "text p3 and Fig. 1 \"5618\"",
+   "span_source": "Sec 2.1 p3",
+   "id": "J1",
+   "order": 1,
+   "name": "debye",
+   "observable": "Debye temperature from the finite-difference elastic tensor",
+   "comparator": ">",
+   "threshold": 300.0,
+   "unit": "K",
+   "method": "theta_D from sound velocity of the elastic tensor (eq. 2)",
+   "level_of_theory": "VASP OptB88vdW elastic tensor",
+   "decision_type": "static",
+   "verbatim_span": "Out of 17419 materials, we find 5618 of them with θD greater than 300 K.",
+   "stated_count": 5618
+  },
+  {
+   "rule_gap": {
+    "what": "smearing/energy window for N(0) unstated",
+    "frozen_reading": "not recomputed unless jarvis-tools exposes the DOS at E_F; else the stage is template only"
+   },
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": 0.0,
+   "cost_unit": "phonon_mode_units",
+   "count_source": "text p3 and Fig. 1 \"1736\"",
+   "span_source": "Sec 2.1 p3",
+   "id": "J2",
+   "order": 2,
+   "name": "dos_fermi",
+   "observable": "electronic DOS at the Fermi level per valence electron",
+   "comparator": ">",
+   "threshold": 1.0,
+   "unit": "states/eV/Nelect",
+   "method": "JARVIS-DFT DOS normalised by the total number of valence electrons",
+   "level_of_theory": "VASP OptB88vdW",
+   "decision_type": "static",
+   "verbatim_span": "Furthermore, selecting materials with electronic DOS at the Fermi level greater than 1 states/eV/Nelect, we find 1736 materials.",
+   "stated_count": 1736
+  },
+  {
+   "rule_gap": {
+    "what": "\"As of now\" means 1058 may be a subset of the materials passing J1-J3; the cell basis (primitive or conventional) is unstated",
+    "frozen_reading": "atoms as deposited (sites in the JARVIS atoms record) <= 5; parent materials passing J1-J3 but absent from the 1058 are logged as \"not run\", never as rejects"
+   },
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": 0.0,
+   "cost_unit": "phonon_mode_units",
+   "count_source": "text p8 and Fig. 1 \"1058\" (the atoms gate is not drawn in Fig. 1)",
+   "span_source": "Sec 2.1 p8",
+   "id": "J3",
+   "order": 3,
+   "name": "natoms",
+   "observable": "number of atoms in the cell",
+   "comparator": "<=",
+   "threshold": 5,
+   "unit": "atoms",
+   "method": "count",
+   "level_of_theory": "none",
+   "decision_type": "static",
+   "verbatim_span": "Next, we apply the J-Scr workflow on materials with number of atoms less than equal to 5, θD >300K and N (0) >1 as discussed in the previous section. As of now, we have applied J-Scr to 1058 materials.",
+   "stated_count": 1058
+  },
+  {
+   "rule_gap": null,
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": "3 * n_atoms",
+   "cost_unit": "phonon_mode_units",
+   "count_source": "text p8",
+   "span_source": "Sec 2.1 p6",
+   "id": "J4",
+   "order": 4,
+   "name": "epc",
+   "observable": "Eliashberg function alpha2F, lambda, omega_log",
+   "comparator": "computed",
+   "threshold": null,
+   "unit": null,
+   "method": "DFT-PT EPC, Quantum ESPRESSO, GBRV pseudopotentials, JARVIS-converged k-grid, q-grid >= 2x2x2, broadening 0.05 Ry, interpolated (Gaussian) method; structures fully relaxed with QE settings",
+   "level_of_theory": "DFT-PBEsol (DFPT)",
+   "decision_type": "escalation",
+   "verbatim_span": "During this step, we use the same k-points grid found during the JARVIS-DFT total energy convergence, as well as a q-point grid of at least 2 × 2 × 2 with a broadening of 0.05 Rydberg (≈ 0.68 eV).",
+   "stated_count": 1058
+  },
+  {
+   "rule_gap": {
+    "what": "abstract and Fig. 1 say \">= 5 K\", Sec 2.1 says \"> 5 K\"",
+    "frozen_reading": ">= 5 K; items with Tc within rounding of 5 K (|Tc - 5| < 0.05 K at the deposit precision, widened to the second-route tolerance in C2) reported apart"
+   },
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": 0.0,
+   "cost_unit": "phonon_mode_units",
+   "count_source": "Fig. 1 arrow \"283\" after \"TC ≥ 5 K\"",
+   "span_source": "Abstract; Sec 2.1 p8; Fig. 1 (\"TC ≥ 5 K\" -> 283)",
+   "id": "J5",
+   "order": 5,
+   "name": "tc",
+   "observable": "Tc from McMillan-Allen-Dynes (eq. 7) with mu* = 0.09",
+   "comparator": ">=",
+   "threshold": 5.0,
+   "unit": "K",
+   "method": "eq. 5, 7, 8 on alpha2F",
+   "level_of_theory": "DFT-PBEsol (DFPT)",
+   "decision_type": "static",
+   "verbatim_span": "we identify 105 dynamically stable materials with transition temperatures, TC ≥ 5 K. ... only 626 of them are dynamically stable (i.e. no imaginary phonon modes) and 105 of them have TC >5 K",
+   "stated_count": 283
+  },
+  {
+   "rule_gap": {
+    "what": "tolerance for \"imaginary\" unstated; gate order differs between Fig. 1 (Tc then stability: 1058 -> 283 -> 105) and the text (626 stable of 1058, 105 of those with Tc)",
+    "frozen_reading": "stability = the deposited \"stability\" field; a material failing BOTH J5 and J6 has an order-dependent eliminating gate and is never a Fate key (restrictive reading); Fate keys only materials failing exactly one"
+   },
+   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "cost": 0.0,
+   "cost_unit": "phonon_mode_units",
+   "count_source": "Fig. 1 arrow \"105\"; text: 626 of 1058 stable",
+   "span_source": "Sec 2.1 p8; Fig. 1 (\"Dynamically stable\" -> 105)",
+   "id": "J6",
+   "order": 6,
+   "name": "dynamic_stability",
+   "observable": "imaginary phonon modes",
+   "comparator": "==",
+   "threshold": "none",
+   "unit": null,
+   "method": "DFPT phonons on the q-grid",
+   "level_of_theory": "DFT-PBEsol (DFPT)",
+   "decision_type": "static",
+   "verbatim_span": "As of now, we have applied J-Scr to 1058 materials. Out of these, only 626 of them are dynamically stable (i.e. no imaginary phonon modes)",
+   "stated_count": 105
+  }
+ ],
+ "derived_laws": [
+  {
+   "id": "JL1",
+   "name": "lambda",
+   "law": "lambda = 2 int alpha2F(w)/w dw (eq. 6)",
+   "source": "Sec 3.2 p15"
+  },
+  {
+   "id": "JL2",
+   "name": "omega_log",
+   "law": "omega_log = exp[(2/lambda) int dw alpha2F(w)/w ln w] (eq. 8)",
+   "source": "Sec 3.2 p15"
+  },
+  {
+   "id": "JL3",
+   "name": "mcmillan_allen_dynes",
+   "law": "Tc = omega_log/1.2 exp[-1.04(1+lambda)/(lambda - mu*(1+0.62 lambda))] (eq. 7)",
+   "mustar": 0.09,
+   "span": "the TC from the McMillan-Allen-Dynes formula, using µ∗ = 0.09, from our J-Scr workflow has an excellent agreement",
+   "source": "Sec 2.1 p6",
+   "note": "eq. 7 has no f1 f2 factors: allen_dynes.tc_mcmillan_ad (not the full Allen-Dynes form)"
+  },
+  {
+   "id": "JL4",
+   "name": "debye",
+   "law": "theta_D = h/kB (3 n NA rho / (4 pi M))^(1/3) v_m (eq. 2)",
+   "source": "Sec 3.1 p14"
+  }
+ ],
+ "cost_units": {
+  "unit": "phonon_mode_units",
+  "definition": "named default (D3): EPC cost per material = 3 x n_atoms (phonon modes per q-point) from the span \"the number of modes to calculate at each q-point increases with the number of atoms in the primitive cell\"; q-grid size and k-grid are not stated per material, so they are not counted",
+  "stages": {
+   "J1": 0.0,
+   "J2": 0.0,
+   "J3": 0.0,
+   "J4": "3 * n_atoms",
+   "J5": 0.0,
+   "J6": 0.0
+  },
+  "lookup_note": "J1-J3 read precomputed JARVIS-DFT values (cost 0 in this pipeline; their own DFT cost is sunk)",
+  "rule_gap": true
+ },
+ "inconsistencies": [
+  {
+   "id": "JPI1",
+   "what": "Tc comparator: \">= 5 K\" (abstract, Fig. 1) vs \"> 5 K\" (Sec 2.1)",
+   "class": "rule gap"
+  },
+  {
+   "id": "JPI2",
+   "what": "gate order: Fig. 1 Tc (283) then stability (105); text stability (626) and Tc (105)",
+   "class": "rule gap"
+  },
+  {
+   "id": "JPI3",
+   "what": "JARVIS-DFT size 55645 (Sec 1) vs 55723 materials with DOS (Sec 2.1, Fig. 1)",
+   "class": "paper inconsistency"
+  },
+  {
+   "id": "JPI4",
+   "what": "1736 -> 1058 mixes the <= 5 atoms gate with \"as of now\" incompleteness",
+   "class": "missing records"
+  }
+ ]
+}

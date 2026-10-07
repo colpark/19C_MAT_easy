@@ -65,9 +65,19 @@ def main():
     depth = Counter()
     per_struct = []
     for s in attrs_struct:
-        qb = orm.QueryBuilder().append(orm.StructureData, filters={'id': s.pk}, tag='s').append(
-            orm.ProcessNode, with_ancestors='s', project=['process_type'])
-        labs = sorted({(pt or '').split(':')[-1].split('.')[-1] for (pt,) in qb.all()})
+        # BFS with a visited set: sqlite's recursive with_ancestors CTE enumerates paths and stalls on DAGs
+        seen, front, labs = {s.pk}, [s], set()
+        while front and len(seen) < 20000:
+            nxt = []
+            for n in front:
+                for t in n.base.links.get_outgoing().all_nodes():
+                    if t.pk not in seen:
+                        seen.add(t.pk)
+                        nxt.append(t)
+                        if isinstance(t, orm.ProcessNode):
+                            labs.add(t.process_label or t.node_type)
+            front = nxt
+        labs = sorted(labs)
         depth[len(labs)] += 1
         per_struct.append({'uuid': s.uuid, 'formula': s.get_formula(mode='hill_compact'),
                            'n_sites': len(s.sites), 'n_descendant_process_types': len(labs),

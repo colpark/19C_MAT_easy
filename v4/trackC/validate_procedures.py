@@ -16,6 +16,10 @@ Revision R1 (2026-10-07, before any real trajectory was read; synthetic data onl
 failed V1 and V3 only where trajectories held < 1 hop per Li (D ~ 1e-7 cm^2/s in 100 ps). The V1 text had two
 inconsistent resolvability clauses (D >= 1e-7 and >= 1 hop per Li per 10 ps); both are replaced by the expected
 hop count, which sets the counting precision. Keys on real data additionally require D_se / D <= 0.15 (C2).
+Revision R2 (same day, synthetic only): full run gave V1 coverage 77 % and V4 87 %; the msd.py SE estimator was
+changed (max of block and per-atom bootstrap SE). Criteria unchanged.
+Revision R3 (same day, synthetic only): V4 87 % < 90 % after R2; arrhenius.py fit changed to inverse-variance
+weights on ln D. Criteria unchanged. If V4 still fails, T7 is reported as a validation shortfall (I5).
 usage: validate_procedures.py OUT.json [--quick]
 """
 import json, sys

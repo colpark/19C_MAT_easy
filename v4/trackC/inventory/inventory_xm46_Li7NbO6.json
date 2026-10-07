@@ -1,0 +1,1556 @@
+{
+ "group": "xm46_Li7NbO6",
+ "n_nodes": 904,
+ "node_types": {
+  "data.core.dict.Dict.": 313,
+  "process.calculation.calcfunction.CalcFunctionNode.": 93,
+  "data.core.array.trajectory.TrajectoryData.": 91,
+  "data.core.remote.RemoteData.": 88,
+  "process.calculation.calcjob.CalcJobNode.": 87,
+  "data.core.folder.FolderData.": 86,
+  "data.core.structure.StructureData.": 84,
+  "data.core.int.Int.": 18,
+  "data.core.bool.Bool.": 12,
+  "process.workflow.workchain.WorkChainNode.": 12,
+  "data.core.float.Float.": 6,
+  "data.core.array.kpoints.KpointsData.": 6,
+  "data.core.array.ArrayData.": 4,
+  "data.pseudo.upf.UpfData.": 3,
+  "data.core.code.Code.": 1
+ },
+ "member_groups": {
+  "xm46_Li7NbO6": 904,
+  "First_principles_MD_trajectories_all_temperatures_Li7NbO6": 4,
+  "First_principles_MD_supercells": 1,
+  "xm46_structures": 1
+ },
+ "arrays": [
+  {
+   "type": "TrajectoryData",
+   "names": [
+    "cells[3d]",
+    "forces[3d]",
+    "kinetic_energies[1d]",
+    "positions[3d]",
+    "potential_energies[1d]",
+    "scf_convergence[1d]",
+    "steps[1d]",
+    "temperatures[1d]",
+    "times[1d]",
+    "total_energies[1d]",
+    "velocities[3d]",
+    "walltimes[1d]"
+   ],
+   "count": 91
+  },
+  {
+   "type": "KpointsData",
+   "names": [],
+   "count": 6
+  },
+  {
+   "type": "ArrayData",
+   "names": [
+    "msd_isotropic_Li_0[2d]",
+    "msd_isotropic_Li_mean[1d]",
+    "msd_isotropic_Li_sem[1d]",
+    "msd_isotropic_Li_std[1d]",
+    "slopes_intercepts_isotropic_Li_0[2d]",
+    "t_list_fs[1d]"
+   ],
+   "count": 3
+  },
+  {
+   "type": "ArrayData",
+   "names": [
+    "msd_isotropic_Li_0[2d]",
+    "msd_isotropic_Li_mean[1d]",
+    "msd_isotropic_Li_sem[1d]",
+    "msd_isotropic_Li_std[1d]",
+    "slopes_intercepts_isotropic_Li_0[3d]",
+    "t_list_fs[1d]"
+   ],
+   "count": 1
+  }
+ ],
+ "dict_keysets": [
+  {
+   "keys": [
+    "CONTROL",
+    "ELECTRONS",
+    "IONS",
+    "SYSTEM"
+   ],
+   "count": 98
+  },
+  {
+   "keys": [
+    "ATOMIC_VELOCITIES",
+    "gamma_only"
+   ],
+   "count": 83
+  },
+  {
+   "keys": [
+    "bands",
+    "fft_grid",
+    "lattice_parameter_initial",
+    "number_of_atoms",
+    "number_of_bands",
+    "number_of_k_points",
+    "number_of_species",
+    "smooth_fft_grid",
+    "total_force_units",
+    "volume",
+    "wall_time",
+    "wall_time_seconds"
+   ],
+   "count": 82
+  },
+  {
+   "keys": [
+    "gamma_only"
+   ],
+   "count": 22
+  },
+  {
+   "keys": [
+    "max_md_iterations",
+    "min_md_iterations",
+    "sem_relative_threshold",
+    "sem_threshold"
+   ],
+   "count": 6
+  },
+  {
+   "keys": [
+    "handle_out_of_walltime",
+    "handle_relax_recoverable_electronic_convergence_error",
+    "handle_relax_recoverable_ionic_convergence_error",
+    "handle_vcrelax_converged_except_final_scf",
+    "sanity_check_insufficient_bands"
+   ],
+   "count": 6
+  },
+  {
+   "keys": [
+    "bands",
+    "fft_grid",
+    "lattice_parameter_initial",
+    "number_of_atoms",
+    "number_of_bands",
+    "number_of_k_points",
+    "number_of_species",
+    "smooth_fft_grid",
+    "total_force_units",
+    "volume"
+   ],
+   "count": 4
+  },
+  {
+   "keys": [
+    "decomposed",
+    "do_com",
+    "equilibration_time_fs",
+    "nr_of_blocks",
+    "species_of_interest",
+    "stepsize_t",
+    "stepsize_tau",
+    "t_end_fit_fs",
+    "t_end_fit_fs_length",
+    "t_fit_fraction",
+    "t_start_fit_fs",
+    "t_start_fs",
+    "verbosity"
+   ],
+   "count": 4
+  },
+  {
+   "keys": [
+    "decomposed",
+    "do_com",
+    "equilibration_time_fs",
+    "nr_of_blocks",
+    "species_of_interest",
+    "stepsize_t",
+    "stepsize_tau",
+    "t_end_fit_fs",
+    "t_end_fit_fs_length",
+    "t_start_fit_fs",
+    "t_start_fs",
+    "verbosity"
+   ],
+   "count": 4
+  },
+  {
+   "keys": [
+    "decomposed",
+    "do_com",
+    "equilibration_time_fs",
+    "nr_of_blocks",
+    "species_of_interest",
+    "stepsize_t",
+    "stepsize_tau",
+    "t_end_fit_fs_length",
+    "t_fit_fraction",
+    "t_start_fit_fs",
+    "t_start_fs",
+    "verbosity"
+   ],
+   "count": 3
+  },
+  {
+   "keys": [
+    "complete_missing",
+    "create_settings",
+    "recenter",
+    "step_index"
+   ],
+   "count": 1
+  }
+ ],
+ "processes": {
+  "FlipperCalculation": {
+   "finished:400": 80,
+   "finished:312": 4,
+   "killed:None": 1,
+   "finished:0": 2
+  },
+  "get_structure_from_trajectory": {
+   "finished:0": 83
+  },
+  "ReplayMDWorkChain": {
+   "finished:401": 3,
+   "killed:None": 1,
+   "finished:0": 2
+  },
+  "LinDiffusionWorkChain": {
+   "finished:0": 4,
+   "excepted:None": 1,
+   "killed:None": 1
+  },
+  "concatenate_trajectory": {
+   "finished:0": 5
+  },
+  "get_diffusion_from_msd": {
+   "finished:0": 4,
+   "excepted:None": 1
+  }
+ },
+ "structures": {
+  "count": 84,
+  "depth_hist": {
+   "1": 1,
+   "3": 4,
+   "4": 54,
+   "6": 25
+  }
+ },
+ "structure_list": [
+  {
+   "uuid": "16e50631-7eed-498f-a2fc-ca7b0d2a2c5a",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [
+    "original_unitcell"
+   ],
+   "label": "",
+   "has_description": false
+  },
+  {
+   "uuid": "00e139d8-7c70-4e8c-ba64-1624d79c3b86",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "07086949-e508-4349-9888-7c2dc51b7839",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "155feb75-3ac7-4b34-9c72-92e07431d01b",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "1dd1b876-58da-40de-a865-a1149d35f44a",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "1ddc469d-d4d8-436e-8dd5-35416e7ba661",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "252930c0-4630-46cc-9569-7a27e4bc1067",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "26a46065-2c49-4b75-80a0-926130f9ca11",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "2b79cd66-a671-4b8d-aa1b-0ab420086c8f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "2dcd00ba-f141-4828-9b37-ae16a2fb5a40",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "35b65654-4d67-49b7-a98a-78d8b13038f0",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "37a41f35-e7b4-43a7-ad7a-69e5c7d598cf",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "383d703b-b7d5-42ea-878f-16b6a411e1bd",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "3ba9099d-122e-490a-8f68-052c562658a6",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 3,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "3bad1a83-0f19-47db-8b97-6eb9e975bdda",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "3dc14472-8d8f-4666-95a6-3bccbe40eb17",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "3df46c6d-0f25-48cb-a3cf-997b2979f708",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 1,
+   "descendant_process_types": [
+    "FlipperCalculation"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "43855cf8-be7d-40d5-911a-2dc29fc22199",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "446cea0f-6cb4-40ff-a2e4-be9b489fcaf0",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 3,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "48590aeb-7c8e-4116-8eec-eec7440449bf",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "4a55f9bd-9b0f-4d51-bc7b-e65a1e3bcf55",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "4b031f13-dd50-4160-9f8a-9d2f6eb58b6f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "4d041a07-ac8c-4c61-8aad-3ad1f1c34c8b",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "546531af-ac91-4ffa-9e90-4c21b5f426ba",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "571a98ec-c6b9-448d-9950-e356aedfebcb",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "5c1837d7-bdf0-4880-9727-438345e8ddbc",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "5d5753c5-568c-43db-b32d-66e4c2905875",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "616a1d28-e9fd-47ae-8d51-b6b566535124",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "6476cba5-e807-4e6c-b7c0-b24dd185914f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "64cbfbee-4c79-4749-8c8e-096669157a4f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 3,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "65ea55fa-7f43-47d2-943d-c155f94ba5a9",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "68a39a41-c8f6-4743-b7ed-bb3dba739f96",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "6bf843d1-c330-419e-80a9-5b5375bed466",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "6e7cb766-1a0d-4c07-810a-c6119a9ec200",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "72d687c1-dcc8-49ed-8642-c201cb811169",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "77f48e7f-81e3-4d13-884b-6f0ca955d9a5",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "7806b6d8-1743-4ca4-9143-5dbfb7d652f9",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "7bff5dbf-35f1-4b1a-9e41-a3b7ba714f0e",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "7ceb5ea0-21a1-49cd-8ed8-aeda5885345b",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "7dd57d0e-1762-4c02-8a10-7cc0727a6915",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "82f1662d-4c0c-42f6-b3f5-c514dee8334b",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "8923af2d-3ecc-4538-a1ad-ab51ada50aab",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "8e34c9f3-0edc-49c2-bd1b-b3f21c99d4fd",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "9069ffcf-5650-4956-aaa8-7987e91831eb",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "95ce10c1-ace6-4416-a453-dbc8ea9b8a3c",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "9928cdfe-5753-4e4b-a896-0758370d86e6",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "9b9d269d-1478-45ac-9a9c-3f8c04cd9ba5",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "9c11aa1f-39ab-40e2-9106-7d6ec1dc0a81",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "9d16092b-ab98-45dd-a640-db3ef8f51106",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "9f40bd40-20da-4548-a7cb-726581c6352f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "a17872f2-b15b-4b1e-bca2-da95dc81aebf",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "a266306c-4a32-4cf1-ba4f-bbfc696bf92b",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "a7a1b838-d948-4e13-b409-5c814482cfff",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "b2fce3f2-b79e-48c7-89b5-86d8c4ec3eea",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "b39bd3b2-24f8-4fbf-81ce-3af7454ed840",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "b3e22877-1e14-459c-9d7e-e268b433771f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "b447425f-cc5b-4059-8b14-037660f726ac",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "c0824962-9c6b-4c38-bff0-6feebfd89171",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "c10b1dbd-db22-4ce6-b7fb-aba5faff4478",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "c2baac93-d8d1-48eb-a8cd-021e53a039f3",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "c81473e7-cc86-4bfd-841d-0e624b68bd74",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "c81911ec-ed63-4e06-87d9-c94c4b2ba93a",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "c8d7cded-0415-4f38-8f5b-2331855f2802",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "cadb4529-4ed0-404a-93fb-c348ccea4071",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "d280947e-9d4a-4c10-8cd5-6261aa6ceef1",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "d78e2613-792c-40bb-8e2a-d6e8df06031f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "d9058857-114d-4dab-bb82-be25be39a669",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e0c4b40f-5861-4756-a4e7-d395560fd378",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e3209a5d-fd46-4d19-887c-fbefd3fb1bb3",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e41f448d-822e-460c-b87f-de54e0a99803",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e4c70849-cd26-460f-8656-8079f0c9777f",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e6b8bc99-1be1-49ba-ab08-dc7a00b3a579",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e9753f44-6925-4187-a008-787e3b3001f8",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e9c78439-b0c2-46e6-9363-e6233dacaf1b",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "e9dceb52-04bc-4945-884f-13775f835ffb",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "ec6ccb5d-db1d-45bf-a71b-6a56e59880bc",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "efe6d517-1432-497c-b8f8-89bd107450b5",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "f3bd6716-6dda-44c7-9a35-36468f567105",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "f541b53b-9fbb-4434-9938-662003cd4b02",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "f6c380da-2d4d-482e-b45c-cdd3e5db1d61",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "f7da556e-9e5f-48ce-8425-380f82ecbfb4",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 6,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "LinDiffusionWorkChain",
+    "ReplayMDWorkChain",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "f98472ea-8ace-4790-99be-648f5c40aed6",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "feb12667-53f9-441c-aeee-2a96a833be11",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 3,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  },
+  {
+   "uuid": "ff1bd189-bd99-401c-b092-805c8c9ac2ba",
+   "formula": "Li7NbO6",
+   "n_sites": 84,
+   "n_descendant_process_types": 4,
+   "descendant_process_types": [
+    "FlipperCalculation",
+    "concatenate_trajectory",
+    "get_diffusion_from_msd",
+    "get_structure_from_trajectory"
+   ],
+   "extras_keys": [],
+   "label": "Li42Nb6O36",
+   "has_description": false
+  }
+ ]
+}

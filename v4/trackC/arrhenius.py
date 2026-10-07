@@ -9,11 +9,13 @@ import numpy as np
 KB_EV = 8.617333262e-5  # eV/K (CODATA 2018)
 
 
-def _lin(T, D):
+def _lin(T, D, w=None):
+    """Least squares of ln D on 1/T; w = 1 / var(ln D) per point (revision R3: inverse-variance weights)."""
     x = 1.0 / np.asarray(T, float)
     y = np.log(np.asarray(D, float))
-    A = np.vstack([x, np.ones_like(x)]).T
-    (m, c), *_ = np.linalg.lstsq(A, y, rcond=None)
+    sw = np.ones_like(x) if w is None else np.sqrt(np.asarray(w, float))
+    A = np.vstack([x, np.ones_like(x)]).T * sw[:, None]
+    (m, c), *_ = np.linalg.lstsq(A, y * sw, rcond=None)
     return -m * KB_EV, c
 
 
@@ -22,12 +24,16 @@ def fit(T, D, D_se=None, n_boot=2000, seed=11):
     D = np.asarray(D, float)
     if np.any(D <= 0):
         raise ValueError('non-positive D')
-    Ea, lnD0 = _lin(T, D)
+    w = None
+    if D_se is not None:
+        s_ln = np.clip(np.asarray(D_se, float) / D, 1e-3, 5.0)
+        w = 1.0 / s_ln ** 2
+    Ea, lnD0 = _lin(T, D, w)
     out = {'Ea_eV': float(Ea), 'lnD0': float(lnD0), 'T': T.tolist(), 'D': D.tolist(), 'n_boot': n_boot}
     if D_se is not None:
         s = np.clip(np.asarray(D_se, float) / D, 1e-6, 5.0)
         rng = np.random.default_rng(seed)
-        bs = np.array([_lin(T, D * np.exp(rng.normal(0, s))) for _ in range(n_boot)])
+        bs = np.array([_lin(T, D * np.exp(rng.normal(0, s)), w) for _ in range(n_boot)])
         out['Ea_boot'] = bs[:, 0]
         out['lnD0_boot'] = bs[:, 1]
         out['Ea_sd'] = float(np.std(bs[:, 0], ddof=1))
