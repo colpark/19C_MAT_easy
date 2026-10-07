@@ -79,6 +79,13 @@ _reg('curd', 1e-1, 'A m^-2', 'A/m^2', 'A m-2')
 _reg('curd', 1e3, 'A cm^-2', 'A/cm^2', 'A/cm2', 'A cm-2')
 _reg('volt', 1.0, 'mV')
 _reg('volt', 1e3, 'V')
+# v4.4 Track C (C7): diffusion coefficients, ionic conductivity in mS/cm, absolute temperature (own dimension: no
+# offset conversion from degC), activation energy uses the registered eV / meV
+_reg('diff', 1.0, 'cm^2/s', 'cm^2 s^-1', 'cm2/s', 'cm2 s-1', 'cm^2 s-1', 'cm²/s', 'cm² s⁻¹', 'cm^2·s^-1', 'cm2·s-1')
+_reg('diff', 1e4, 'm^2/s', 'm^2 s^-1', 'm2/s', 'm2 s-1', 'm²/s')
+_reg('diff', 1e-4, 'Å^2/ps', 'A^2/ps', 'Å2/ps', 'angstrom^2/ps', 'Å² ps⁻¹', 'Å^2 ps^-1')
+_reg('cond', 0.1, 'mS/cm', 'mS cm^-1', 'mS cm-1', 'mS·cm^-1', 'mS cm⁻¹', 'millisiemens per centimetre', 'millisiemens per centimeter')
+_reg('tempK', 1.0, 'K', 'kelvin', 'Kelvin')
 
 NUM = r'[-+]?\d+(?:\.\d+)?(?:[eE][-+]?\d+)?'
 

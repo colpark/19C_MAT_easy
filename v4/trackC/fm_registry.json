@@ -1,0 +1,66 @@
+{
+ "mace_mpa0": {
+  "name": "MACE-MPA-0 (medium-mpa-0)",
+  "package": "mace-torch 0.3.16",
+  "license": "MIT",
+  "training_data": "MPtrj + sAlex (PBE/PBE+U relaxation frames; public)",
+  "keyed_target_types_in_training": "none (energies, forces, stresses of near-equilibrium frames; no MD diffusivity, no DFPT phonon stability, no EPC)",
+  "leak_status": "clean",
+  "venv": ".venv",
+  "weights_sha256": {
+   "macempa0mediummodel": "75428afe3a1d7d8062e19bcaabd5c433623cabf308242ec9fb493e38604fb638"
+  }
+ },
+ "orb_v3": {
+  "name": "Orb v3 conservative inf MPA",
+  "package": "orb-models 0.5.5 (0.7.0 ships no ASE calculator)",
+  "license": "Apache-2.0",
+  "training_data": "MPtrj + Alexandria (public)",
+  "leak_status": "clean",
+  "venv": ".venv",
+  "keyed_target_types_in_training": "none (as above)",
+  "weights_sha256": {
+   "e3106cc9506964e2f567df0dd27fe0d437432ff9b1954de8b7f1c07426c48f72.ea21ddc845408d9e6d1e3c4c3bd59803a9f8daf5829350045b8a8a4448a10d3c": "bd1840d1488f3cd01d213970d9618a63f971590ad45e5e83bf5404d4b95d216a",
+   "e3106cc9506964e2f567df0dd27fe0d437432ff9b1954de8b7f1c07426c48f72.ea21ddc845408d9e6d1e3c4c3bd59803a9f8daf5829350045b8a8a4448a10d3c.lock": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+   "e3106cc9506964e2f567df0dd27fe0d437432ff9b1954de8b7f1c07426c48f72.ea21ddc845408d9e6d1e3c4c3bd59803a9f8daf5829350045b8a8a4448a10d3c.json": "4870dedf9c5c6a111a119fc9d718260aecc39b12e4ab3a1417db41ceda903ea1"
+  }
+ },
+ "mattersim_v1": {
+  "name": "MatterSim v1.0.0-5M",
+  "package": "mattersim 1.2.5",
+  "license": "MIT",
+  "training_data": "proprietary generated set (~17M structures, elements x T x P); not public",
+  "keyed_target_types_in_training": "energies/forces/stresses only (documented), but the structure list is undisclosed: the id/structure check is impossible",
+  "leak_status": "unknown",
+  "venv": ".venv-ms",
+  "weights_sha256": {
+   "mattersim-v1.0.0-5M.pth": "e3df9fa708725e3d453140646c7d1838324b347a3d1214cf1440522146f872b5"
+  }
+ },
+ "petmad_ft_1c13": {
+  "name": "PET-MAD v1.0.2 fine-tuned on Li chemistries (1c-13)",
+  "license": "record CC BY 4.0",
+  "training_data": "fine-tuning.xyz (3,558 frames, 814 formulas): covers all 52 keyed FPMD formulas (structure/formula match, C3)",
+  "leak_status": "leaky",
+  "use": "reference engine route in C2 only",
+  "weights_sha256": {}
+ },
+ "petmad_base": {
+  "name": "PET-MAD base",
+  "leak_status": "not run",
+  "note": "weights via HuggingFace/metatomic; MAD includes MC3D AIMD frames from the same group: leak unknown without a MAD structure check; skipped in this pilot",
+  "weights_sha256": {}
+ },
+ "alignn_tc": {
+  "name": "ALIGNN Tc/lambda/wlog (JARVIS)",
+  "leak_status": "leaky",
+  "note": "trained on this deposit (same group); never run",
+  "weights_sha256": {}
+ },
+ "bee_net": {
+  "name": "BEE-NET",
+  "leak_status": "unknown",
+  "note": "training list not verified to exclude these jids; skipped (prompt C3.4)",
+  "weights_sha256": {}
+ }
+}

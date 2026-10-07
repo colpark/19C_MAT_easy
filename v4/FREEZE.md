@@ -558,3 +558,29 @@ reason: C2 reconstruction + C2b bridges: reconciliation reports, frozen toleranc
 - `trackC/BRIDGE_B2_results.json` a76dada1f401deb13aac1b78a3f988c226199c0728397f3ddcf25adf2ca9bb49
 - `trackC/tests/test_procedures.py` dcfca7df73b7b1feccca6c9af3fb68956723838332aca5e13d0c6b1e88ebded1
 - `trackC/tests/test_match_exp.py` 7e6cd773c1c28dd066b92531172dc51f75046e96996d8821a10d90a9c887475d
+
+## C3split_rule (2026-10-07T21:57:42+00:00)
+
+reason: splits.py rule and seed frozen before it reads any material list (hard rule 4)
+
+- `trackC/splits.py` 6ed7baea27a5ad18ea0d797609990ebeb6db54f9a1ee23718f59b98a56d08d3b
+
+## C3split (2026-10-07T21:57:42+00:00)
+
+reason: SPLITS.json written before any FM run (I12)
+
+- `trackC/SPLITS.json` 264f777bdb152b52c68750b41b9681fbc95696462eead8b1f9af7549d909fc86
+
+## C3spec (2026-10-07T22:01:39+00:00)
+
+reason: demonstrator run spec and code frozen before any FM run (job files: liion_jobs.json, jarvis_jobs.json sha256 in LOG)
+
+- `trackC/demonstrators.py` 57014e088af53abfc5f40d8a1e0a6c5875ebbd22b768729dc3d99daad0a32879
+- `trackC/msd.py` 3592ab51e4fd302e868c2ef5ab7bbd3cf882579078238cfad0363ebf9853f5e0
+
+## C5prior (2026-10-07T22:05:22+00:00)
+
+reason: PRIOR_RULES_trackC.md (prior gate, typical-magnitude rules, composition-gate and cascade specs) frozen before any key; D3 cost units already frozen in the cards (C1)
+
+- `trackC/PRIOR_RULES_trackC.md` 24e9f5571e22cc861cb22759787395c88efe09cfda935bde3da600ab67252d91
+- `trackC/decisions.py` af51987fc865e6930b0d7ba79ee7e13568bc3a8cc03a2a842342fd2cee1bdc58
