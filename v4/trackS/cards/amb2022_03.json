@@ -20,46 +20,61 @@
  },
  "observables": [
   {
+   "name": "melt-pool depth from single-track EBSD sections (reader S4a-2)",
+   "level": "M",
+   "modality": "EBSD",
+   "series": true,
+   "validated_synthetic": true,
+   "validated_real": false,
+   "notes": "S4a-2: synthetic depth 10/10, censoring 5/5; held-out vs NIST Table 4: 2/7 cases, Spearman 0.64 (fail; keyhole roots eroded by the majority vote). A third iteration needs David."
+  },
+  {
    "name": "melt pool depth (optical cross sections)",
    "level": "M",
    "validated_synthetic": null,
    "validated_real": null,
-   "routes": 1
+   "routes": 1,
+   "modality": "optical"
   },
   {
    "name": "melt pool width (optical cross sections)",
    "level": "M",
    "validated_synthetic": null,
    "validated_real": null,
-   "routes": 1
+   "routes": 1,
+   "modality": "optical"
   },
   {
    "name": "cooling rate and time above melt (thermography)",
    "level": "M",
    "validated_synthetic": null,
    "validated_real": null,
-   "routes": null
+   "routes": null,
+   "modality": ""
   },
   {
    "name": "grain orientation in tracks (EBSD)",
    "level": "M",
    "validated_synthetic": null,
    "validated_real": null,
-   "routes": 1
+   "routes": 1,
+   "modality": "EBSD"
   },
   {
    "name": "elemental distribution in tracks (EDS)",
    "level": "M",
    "validated_synthetic": null,
    "validated_real": null,
-   "routes": 1
+   "routes": 1,
+   "modality": "EDS"
   },
   {
    "name": "pad overlap depth and width",
    "level": "M",
    "validated_synthetic": null,
    "validated_real": null,
-   "routes": null
+   "routes": null,
+   "modality": ""
   }
  ],
  "design": {
@@ -142,5 +157,6 @@
    "HDF5",
    "EBSD and EDS formats unverified"
   ]
- }
+ },
+ "parked": "AM Bench cancelled by David (2026-10-07) after reader S4a-2 failed held-out evidence"
 }

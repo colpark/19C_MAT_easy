@@ -475,3 +475,15 @@ reason: curves_alsi.py: skip and log non-numeric set headers (deposit quirk)
 reason: curves_alsi.py: keep numeric cells only ('No data' cells in the deposit)
 
 - `trackS/readers/curves_alsi.py` b72d32944ddf1ebd70697f861226c28802a3988243266080a61bb3e5cb45ab44
+
+## S2j-alsi-60 (2026-10-07T07:51:57-05:00)
+
+reason: join rules alsi10mg_luo2024: all 60 sets (David), property series ordered by VED, before computing sets 33-60
+
+- `trackS/joinrules/alsi10mg_luo2024.json` 84e73c4f4a0fdde4e18556d483d39ff8f7e430a154b077daea16234be601d8d5
+
+## S4e-60 (2026-10-07T07:52:09-05:00)
+
+reason: curves_alsi60.py: S4e procedures on all 60 sets, order by VED
+
+- `trackS/readers/curves_alsi60.py` 04cec731ab57cff6c240df24e4e16871802b43ec62827f9e2d49602f19c77d28

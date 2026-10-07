@@ -1,3 +1,116 @@
+# Track S round 2 (2026-10-07)
+
+Prompt: v4.1 Track S round 2 (AM Bench reader 2, AlSi10Mg pilot, SA508 throttled retry, kit fixes). David's decisions:
+- SEM rule widened to EBSD/EDS maps with a native step.
+- Stinville parked (DIC is level A).
+- Anjaria deferred.
+- AlSi10Mg active.
+
+No paid call, no keys, no items. Hosts: host A (spark-112b), host A node 2 (spark-0b70, AM Bench reader), host B (wcs-180522, throttled fetches). Ledger V4-E25 onward; freeze labels K2, S4a2, S4a2rv, S4d-phys, S4d, S4d-rv, S4e, S4e-b, S4e-c.
+
+## Summary
+| Dataset | Pilot | M0 | Families the scorer keeps | Why |
+|---|---|---|---|---|
+| alsi10mg_luo2024 | S1b (SE + curves), 60 sets | **GO** | T1 pass, T4 pass; T2, T3, T5, T6 fail R6; T7 fails R6 and R7 | All 60 sets (David): 177/180 specimens, UTS ratio 1.001 to the authors. Separability partial: 31/59 adjacent pairs in VED order, ANOVA p 1.7e-21, min ratio 0.072. 32-set run was 5/31. Cell reader S4d failed its constant-bias gate. Fields curated (R7 fail). |
+| amb2022_03 | S1 (EBSD) | **NO-GO (cancelled by David)** | none | Reader S4a-2 passed synthetic but failed held-out (2/7 cases, Spearman 0.64). David cancelled the dataset on 2026-10-07. |
+| stinville2022 | S2 | NO-GO | none | Parked by David; every series observable is A (K2 provenance stop). |
+| anjaria2025 | S2 | GO WITH CHECKS | T1-T4 check | Deferred by David (needs a DIC reader). |
+| sa508_ebw | reserve | SA508_PENDING | | Throttled retry on host B. |
+| refodat90/91 | S3 | waiting | | Browser downloads not on the host. |
+
+## B-60: AlSi10Mg on all 60 sets (David, 2026-10-07)
+- Join rules S2j-alsi-60: sets 1-60, series ordered by VED (J/mm3), frozen before sets 33-60 were computed. UTS for sets 1-32 was already seen; the order comes from design records only.
+- Curves S4e-60 (curves_alsi60.py, the S4e procedures, frozen before running):
+  - 177/180 specimens; sets 4, 7 and 33 have 2 replicates (blank or non-numeric columns, logged);
+  - UTS ours/authors 1.001, max |diff| 27.2 MPa;
+  - yield (A) ratio 0.976, Spearman 0.917.
+- Separability (UTS, specimens as units, VED order):
+  - partial: 31/59 adjacent pairs beyond 2 SE;
+  - ANOVA p 1.7e-21, minimum between/within ratio 0.072;
+  - 32 T2 ambiguity classes.
+- M0: GO, unchanged. T1 and T4 pass; T2, T3, T5 and T6 fail R6; T7 fails R6 and R7.
+  - R6 still needs every adjacent pair separated.
+  - SEM covers sets 1-32 only, so no SE observable reaches sets 33-60.
+- Host files (not in git): curves_alsi60.json, pilot_alsi60_uts.csv, curves_alsi60_vs_authors.json, pilot_alsi60_uts_separability.json.
+
+## K: kit fixes (frozen K2; tests/test_k2.py 24/24, tests/test_kit.py 53/53)
+1. **fetch_s.py:**
+   - `--delay` with 0-50 % jitter, a per-host minimum interval, and one job by default for data.mendeley.com and data.nist.gov;
+   - skips manifest-verified files;
+   - error bodies (small JSON or HTML where data was expected) are kept as `.bad` with status `error_body`.
+2. **inventory_s.py:** a proprietary twin (.osc/.cpr/.crc) with an open same-stem twin is `redundant`; R2 ignores it. Stinville R2 now passes.
+3. **m0_s.py provenance:**
+   - observables carry `level`, and an all-A condition series stops keys;
+   - author desk ratios move to `design.separability_ratio_desk_A` (AM Bench 4.48), which R6 ignores;
+   - `parked` stops.
+4. **Widened SEM rule:**
+   - EBSD/EDS maps with a native step (.ctf XStep, .ang XSTEP, HDF5 step) count as the SEM part;
+   - the second modality is a non-map raw modality or a second SEM-instrument modality;
+   - join.csv carries a `modality` column (SE/BSE by detector or rule; EBSD, EDS, curve, indentation, DIC, XCT).
+5. **DEFAULT_TIER_RULES** for records of unknown size: documents and native exports at 1, rendered maps and HDF5 at 2, patterns and cubes at 3.
+
+## A: AM Bench reader S4a-2 (pilot S1, modality EBSD)
+- **Dev set:** the 4 pads, the case-1.1 bottom fields, and the L112 montage (fetched on host B, sha256 d675220c on both hosts).
+  - The pad grains were labelled by position: 2,188 pool, 5,271 base.
+
+  | Feature (median) | Pool | Base |
+  |---|---|---|
+  | Sigma-3 fraction | 0 | 0.44 |
+  | KAM | 0.165 deg | 0.094 deg |
+  | Aspect ratio | 4.2 | 1.9 |
+
+  - Classifier: sigma3 <= 0.10 (balanced accuracy 0.927); KAM adds nothing.
+- **Generator from the dev statistics:**
+  - twinned base 90 % (exact Sigma-3 relations);
+  - twin-free columnar fan, 50 % epitaxy, depths 60-260 um;
+  - deep pools get a stitched bottom field.
+  - Reader: a 20 um majority vote, tuned on dev seeds.
+- **Synthetic, fresh seeds:** depth 10/10 within 10 %; censoring 5/5 flagged; stitching worked.
+- **Held-out real** (21 tracks vs NIST Table 4, I4 disclosure in the desk note): **FAIL.**
+  - 2/7 cases within max(10 %, 2 SD); Spearman 0.64.
+  - Case 0: 136 vs 139.7 um. Case 1.1: 120 vs 227 (stitched).
+- **Failure mode (V4-E25):** the majority disk erodes the narrow keyhole-like roots of real deep pools (the synthetic pools had broad bottoms). Candidate S4a-3 in DESK_amb2022_03.md.
+- **Not run:** separability; the X-pad line-spacing check (needs pool centrelines).
+
+## B: AlSi10Mg pilot S1b (modality SE + curves)
+- **Descriptor:** Europe PMC PMC10859257, sha256 52563dad.
+- **Desk:**
+  - fields a-d curated (R7 fail, T7 out);
+  - the SEM samples are the grips of the tensile specimens;
+  - curves: 3 replicate workbooks; strain from the authors' DIC virtual extensometer (A); stress = load/area (M).
+- **Physics pre-registered** (S4d-phys): cell vs P/v (fit), yield vs cell (fit, yield A: T4 only), UTS vs cell (fit, M), XCT vs Archimedes (agreement, both A: T4 only).
+- **S4d cell reader** (skeleton-bounded cells after the generator's dilation bug was fixed): fresh seeds 9/10 within 10 % but size slope -0.156 (gate 0.10): **FAIL**.
+  - Exploratory real: ratio to the authors' cell CSV 0.96 (CV 0.086), Spearman 0.39. The author set means hardly vary (0.77-1.29 um).
+- **S4e:**
+  - D1c validated in the DIC regime (94 % within 5 %, rank 100 %).
+  - UTS (M): ratio 1.00 to the authors' table.
+  - Yield (A): ratio 0.98, Spearman 0.79.
+  - 94 of 96 specimens (one backtick header, one 'No data' column).
+- **Separability:**
+  - UTS per set (specimen units): partial, 5/31, ANOVA p 0.0015, ratio 0.034. T2 classes: [[4,14,23],[8,30,13,20,32,19,12],[7,3,24,1,18,31,11,25,6],[17,26,21,10],[27],[16,2,28,22,29,5,9,15]].
+  - Cells (exploratory): partial, 6/31, ANOVA p 0.23.
+- **What an item build would need (GO, T1 and T4):**
+  - T1: reads on the curve panels (UTS) and on the 5000x fields, with keys from the S4e procedures.
+  - T4: template claims on UTS rankings between merged classes, plus cannot-tell claims on yield and porosity (A).
+  - Before any build:
+    - an audit quote for the S4e procedures, the UTS template and the class merges;
+    - the physics freeze stays (S4d-phys).
+  - No T2/T3/T5-T7: R6 fails, and R7 fails for T7.
+
+## C: SA508 throttled retry (host B)
+SA508_RESULT
+
+## D: waiting items
+- refodat90/91: the browser downloads are still absent.
+- Anjaria: deferred (David, 2026-10-07; no DIC reader this round).
+
+## Other
+- Node 2 MCP stack stopped at David's request (systemd user services stopped, not disabled).
+- Host B's first run also pulled mds2-2718 (tier 2 in the registry) and stalled on NIST 524s. It was stopped, and the host-B registry copy demotes mds2-2718/2716 to tier 3.
+- Storage (host A v4_host/trackS): stinville 13 GB, anjaria 11 GB, amb 7.1 GB, sa508 4.6 GB (pass 1 running), alsi 1.6 GB.
+
+---
+
 # Track S report (v4.1, 2026-10-07): SEM pilot datasets
 
 Branch v4.1/2026-10-07. Run on host A (CPU). **No paid model call; no keys; no items.** Every command, version and hash is in v4/LOG.md, and errors V4-E20 to V4-E24 are in ERRORS.md.

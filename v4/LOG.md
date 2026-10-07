@@ -235,3 +235,9 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
   - Cells per image (S4d failed, so exploratory and kept out of M0): partial 6/31, ANOVA p 0.23.
 - B7: card updated (sampling chosen, field_selection curated, observables with levels and modalities). m0: GO; scorer T1 pass, T4 pass; T2, T3, T5, T6 fail R6; T7 fails R6 and R7.
 - Node 2 MCP stack stopped (see above).
+- Montage .ctf (L112 P3, dev) copied host B -> host A, sha256 d675220c... on both sides (NIST gives no digest).
+- David cancelled AM Bench (2026-10-07). Card marked parked; m0 NO-GO. No AM Bench job running.
+- David: use all 60 sets for AlSi10Mg. Join rules S2j-alsi-60 (VED order, frozen before sets 33-60 were computed); join_s.py rejoin: no unmatched.
+- curves_alsi60.py frozen S4e-60 (curves_alsi.py with set<=60, VED order, author rows 1-60). Run: .venv-v4/bin/python -I trackS/readers/curves_alsi60.py -> 177 specimens; extra skip group2 col 64 (set 33, no numeric data); UTS ratio 1.001, max |diff| 27.2; yield ratio 0.976, Spearman 0.917.
+- separability_s.py --table pilot_alsi60_uts.csv --reader-freeze S4e --unit-type specimen --order-by given: partial 31/59, ANOVA p 1.65e-21, min ratio 0.072, 32 classes. sha256 3de84933c675e2c8.
+- m0_s.py --dataset alsi10mg_luo2024 --pilot pilot_alsi60_uts_separability.json: GO; T1, T4 pass; T2/T3/T5/T6 fail R6; T7 fails R6, R7.

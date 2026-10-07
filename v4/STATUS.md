@@ -1,10 +1,11 @@
 # v4.1 Track S round 2 (in progress)
 - K done: kit K2 (fetch throttle, error bodies, twins, modality, provenance, widened SEM rule, default tiers); 24 new tests + 53 old pass.
-- A (AM Bench S4a-2): synthetic pass (depth 10/10, censoring 5/5); held-out FAIL (2/7 cases, Spearman 0.64; keyhole roots eroded). Stopped; a third iteration needs David.
+- A (AM Bench S4a-2): synthetic pass; held-out FAIL (2/7 cases, Spearman 0.64). **Cancelled by David (2026-10-07).**
 - B (AlSi10Mg S1b):
   - S4d cell reader failed its constant-bias gate (exploratory real ratio 0.96, Spearman 0.39).
   - S4e: UTS (M) and yield (A, author DIC strain) validated; UTS separability partial (5/31, ANOVA p 0.0015).
   - M0 GO for T1 and T4 only.
+  - All 60 sets (David): S4e-60 177/180 specimens; UTS separability partial 31/59 (ANOVA p 1.7e-21, 32 T2 classes); M0 unchanged (T1, T4 only; R6 fails).
 - M0 after K2:
 
   | Dataset | M0 |
