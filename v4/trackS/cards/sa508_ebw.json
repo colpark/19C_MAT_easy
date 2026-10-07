@@ -1,0 +1,115 @@
+{
+ "name": "MERGED SA508 Grade 3 RPV steel electron-beam welds (forged PWHT, PM-HIP PWHT, PM-HIP SQNT): raw SE montage across each weld plus raw nanoindentation load-displacement profiles along the same traverse. Descriptor: Nemets et al. 2025 Data in Brief doi:10.1016/j.dib.2025.112158. Data: Mendeley doi:10.17632/j2f2dxmd5m.1 (forged PWHT), 10.17632/58xvm8wt92.1 (PM-HIP PWHT), 10.17632/x8x628h3gs.1 (PM-HIP SQNT). Merged from corr_sa508_ebweld_sem_nanoind + sem_nemets2025_sa508_ebw_nanoindent",
+ "state": "merged 2026-10-06 by rule: (1) a field one card left null takes the other card's value unless the null card records a failed attempt on the same fact; (2) on conflict keep the lower-scoring value (false over true, smaller count, empty co-registration list over a filled one); (3) observables and laws merge as a union of distinct entries while R10 keeps the lower card count. Prospective desk facts only, nothing downloaded. Resolutions: claims null (sem) vs none/0 (corr) -> none/0 by rule 1 (sem track recorded no attempt; its notes confirm the descriptor reports no zone-level values); material-route series shared_entities false (sem) vs true (corr) -> false by rule 2 (max shared levels stay 3); sem.co_registered [] (sem) vs nanoindentation (corr) -> [] by rule 2, nanoindentation kept under same_specimen (fiducial alignment, not pixel registration); sem.image_count null (corr) -> 'over 400 tiles' (sem) by rule 1. The descriptor swaps the two PM-HIP DOIs; DataCite titles give the mapping used here.",
+ "access": {
+  "raw_downloadable": true,
+  "license": "CC BY 4.0 on all three records (DataCite rightsList)"
+ },
+ "readers": {
+  "all_formats": true,
+  "notes": "[corr] Raw and processed SE micrographs as .tif (tifffile), stitched montage with Fiji TileConfiguration.txt tile positions, one plain-text CSV of load-displacement per indent plus a condition-level Hardness Profile.csv (pandas). Over 400 micrographs in total per the descriptor. The descriptor article carries its own non-commercial article licence, which does not bind the data records [sem] SE micrographs raw and processed as .tif (tifffile), stitched mosaics with TileConfiguration.txt (Fiji stitching layout, plain text), raw load-displacement per indent as .csv and a condition-level 'Hardness Profile' .csv with per-array H and E (pandas)"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": true,
+  "claim_ladder": false
+ },
+ "calibration": {
+  "absolute_scales": null,
+  "offset_free_quantities": true,
+  "notes": "[corr] Raw SE images carry the instrument data bar with a scale bar (cropped in processed images); pixel size and magnification not stated in the descriptor; Helios UX, ETD, 5 kV, 0.40 nA (PM-HIP) and 0.80 nA (forged). Indenter area function and frame compliance not stated [sem] descriptor gives no pixel size or magnification; processed TIFFs have the SEM databar cropped, so read the pixel size from raw TIFF tags first. Tiles step about 140 um with about 10 um overlap (stitching offsets give a scale cross-check). Indents depth-controlled to 3000 nm at 0.2 um/s, Oliver-Pharr with Berkovich area function, FIB fiducial at the fusion-zone centre aligns the profile to the weld"
+ },
+ "observables": [
+  {
+   "name": "nanoindentation hardness and modulus from raw load-displacement curves (Oliver-Pharr)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "2 x 2 arrays (100 um spacing) every 1 mm across the weld; the deposit's Hardness Profile.csv gives the authors' hardness and modulus per array, usable for validation only | [sem] validation route: authors' per-array average H and E in the Hardness Profile .csv against our Oliver-Pharr fit of the raw curves; 2 x 2 arrays (4 indents, 100 um apart) every 1 mm"
+  },
+  {
+   "name": "fusion-zone and HAZ boundary positions",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "Seen in the SE montage and as hardness steps in the indentation profile; both aligned to a FIB fiducial near the FZ centre, not point-by-point co-registered | [sem] second route: hardness steps on the same line; the authors warn that boundaries are gradual ranges, not lines"
+  },
+  {
+   "name": "constituent phase along the traverse (ferrite, bainite, martensite) from SE contrast",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "Descriptor gives qualitative contrast cues only, no quantitative phase fractions"
+  },
+  {
+   "name": "lath or packet morphology and pore fraction per tile",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "no annotations and no author values in the descriptor; SE contrast only, no EBSD or EDS"
+  }
+ ],
+ "design": {
+  "entities": 3,
+  "series": [
+   {
+    "factor": "base material route and post-weld treatment: forged PWHT, PM-HIP PWHT, PM-HIP SQNT",
+    "levels": 3,
+    "shared_entities": false
+   },
+   {
+    "factor": "weld zone along the traverse: base metal, HAZ, fusion zone",
+    "levels": 3,
+    "shared_entities": true
+   }
+  ],
+  "match_classes": 3,
+  "cross_modal_identity": true,
+  "separability_ratio": null,
+  "sampling": "systematic",
+  "m_observables_per_entity": 3
+ },
+ "laws": [
+  {
+   "name": "zone-boundary agreement between SE montage and hardness profile, with hardness ranking martensite > bainite > ferrite (same law as the sem card's: agreement of SEM-identified zone boundaries with nanoindentation hardness steps on the same weld-normal line)",
+   "class": "agreement",
+   "params": 0,
+   "levels": 3,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 2,
+  "textbook_neutral": null
+ },
+ "claims": {
+  "source": "none",
+  "count": 0
+ },
+ "sem": {
+  "modes": [
+   "SE (Everhart-Thornley), 5 kV, 0.40 nA PM-HIP and 0.80 nA forged"
+  ],
+  "image_count": "over 400 tiles (descriptor), exact count check",
+  "images_per_condition": null,
+  "native_metadata": null,
+  "magnification_fixed": null,
+  "field_selection": "systematic (stitched montage line scan normal to each weld)",
+  "co_registered": [],
+  "same_specimen": [
+   "raw nanoindentation load-displacement curves on the same weld-normal line (fiducial-aligned, not tile-registered)"
+  ],
+  "annotations_in_deposit": false,
+  "formats": [
+   ".csv",
+   ".tif processed (databar cropped)",
+   ".tif raw",
+   ".tif stitched mosaic",
+   "TileConfiguration.txt",
+   "txt (TileConfiguration)"
+  ]
+ }
+}

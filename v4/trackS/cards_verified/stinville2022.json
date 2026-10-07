@@ -1,0 +1,141 @@
+{
+ "name": "Stinville et al. 2022 Inconel 718 multi-modal dataset: in situ SEM HR-DIC at four plastic strain levels, 2D EBSD registered to DIC, TriBeam 3D EBSD with raw .up2 Kikuchi patterns and BSE/SE slice images (Dryad doi:10.5061/dryad.83bk3j9sj, CC0; descriptor Sci Data 2022 doi:10.1038/s41597-022-01525-w)",
+ "state": "prospective, filled 2026-10-06 from repository metadata (DataCite, Dryad API, Zenodo, Crossref) and descriptor pages; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host | verified desk fields 2026-10-07 from downloaded files (m0_s.py)",
+ "access": {
+  "raw_downloadable": true,
+  "license": "CC0 1.0"
+ },
+ "readers": {
+  "all_formats": false,
+  "notes": "16-bit TIFF SEM tiles and 32-bit TIFF HR-DIC fields (tifffile); 2D EBSD .ang (orix, kikuchipy) with .osc duplicate (EDAX binary, MTEX only); raw patterns .up2 (kikuchipy EDAX binary reader); 3D .dream3d HDF5 with .xdmf (h5py, DREAM.3D, ParaView); meshes .inp and .vtk (meshio) and Ansys APDL text decks. 11 files, about 69 GB. Raw SEM DIC tiles are described in the descriptor; the Dryad list shows no separate raw-tile archive, so confirm in README_file.txt which zip holds them (or BisQue)"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": true,
+  "claim_ladder": null
+ },
+ "calibration": {
+  "absolute_scales": true,
+  "offset_free_quantities": true,
+  "notes": "SEM tiles 4096 x 4096 px, HFW 137 um, 33.4 nm pixel, 20 kV, 20 us dwell; HR-DIC step 3 px = 100.34 nm, subset 31 px; 2D EBSD 0.7 um step at 20 kV; TriBeam 1 um cubic voxels, 526 slices"
+ },
+ "observables": [
+  {
+   "name": "in-plane slip amplitude, slip direction and effective strain per slip band (Heaviside HR-DIC fields)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "second route: slip traces visible in the deposited BSE images; descriptor says every DIC slip event sits where the BSE images show it"
+  },
+  {
+   "name": "area-averaged DIC strain against macroscopic strain (stress-strain data provided)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "authors report differences of -0.68% to +0.29% across load steps"
+  },
+  {
+   "name": "grain orientation and grain/twin boundaries (2D EBSD .ang and 3D TriBeam EBSD)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "second route: re-index the raw .up2 patterns (authors used EMsoft dictionary indexing; the Dryad archive is named Up2_2slices, so coverage may be two slices); authors report 7% surface-area mismatch between 3D reconstruction and 2D EBSD and 1.6 deg misorientation on a tested grain"
+  },
+  {
+   "name": "slip trace angle per grain (Hough on DIC maps) against slip plane traces from EBSD orientation",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": null
+  },
+  {
+   "name": "grain reference orientation deviation per voxel (3D EBSD)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": null
+  }
+ ],
+ "design": {
+  "entities": 1,
+  "series": [
+   {
+    "factor": "macroscopic plastic strain 0.17, 0.32, 0.61, 1.26 % on the same 8 x 8 tile region (single precipitation-hardened specimen, about 1 x 1 mm2)",
+    "levels": 4,
+    "shared_entities": true
+   }
+  ],
+  "match_classes": 4,
+  "cross_modal_identity": true,
+  "separability_ratio": null,
+  "sampling": "systematic",
+  "m_observables_per_entity": 5
+ },
+ "laws": [
+  {
+   "name": "Schmid law: highest-Schmid {111}<110> plane from EBSD orientation and the tensile axis predicts the DIC slip trace angle per grain",
+   "class": "independent",
+   "params": 0,
+   "levels": 4,
+   "validated": null
+  },
+  {
+   "name": "area-averaged DIC strain equals macroscopic strain (compatibility identity)",
+   "class": "agreement",
+   "params": 0,
+   "levels": 4,
+   "validated": null
+  },
+  {
+   "name": "mean slip amplitude or localization intensity against macroscopic strain (power law)",
+   "class": "fit",
+   "params": 2,
+   "levels": 4,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 3,
+  "textbook_neutral": true
+ },
+ "claims": {
+  "source": "paper",
+  "count": 5
+ },
+ "sem": {
+  "modes": [
+   "BSE",
+   "SE"
+  ],
+  "image_count": 546,
+  "images_per_condition": 64,
+  "native_metadata": true,
+  "magnification_fixed": false,
+  "field_selection": "montage",
+  "co_registered": [
+   "HR-DIC fields",
+   "2D EBSD (polynomial distortion correction, resampled onto the DIC grid)",
+   "TriBeam 3D EBSD below the DIC region with BSE every 30 slices and SE at 30 deg tilt; raw .up2 patterns in an archive named Up2_2slices (may hold two slices only, check README)"
+  ],
+  "same_specimen": [
+   "engineering stress-strain curve"
+  ],
+  "annotations_in_deposit": null,
+  "formats": [
+   "16-bit TIFF",
+   "32-bit TIFF",
+   ".ang",
+   ".osc",
+   ".up2",
+   ".dream3d (HDF5) + .xdmf",
+   ".inp",
+   ".vtk",
+   "Ansys APDL .cdb/.mac"
+  ],
+  "magnification_leak": false
+ }
+}

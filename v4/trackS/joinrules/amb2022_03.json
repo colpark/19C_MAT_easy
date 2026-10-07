@@ -1,0 +1,50 @@
+{
+ "dataset": "amb2022_03",
+ "_todo": "Fill maps.line and the SEM and EDS patterns after reading 2775_README.txt, the AMB2022-03 measurement PDF and the mds2-2718 README: which line ids (folder 'multiple traces L-01 to L212') and pad folders belong to which laser case (power, speed, spot), which files are SEM images (SE or BSE) and which are EDS maps or spectra. The EBSD exports seen so far are AZtec style 'Specimen N Area N Site N Map Data N_<line>-IPF-Z.csv/.tif'. Then freeze this file before magleak_s.py.",
+ "rules": [
+  {
+   "name": "docs",
+   "path_regex": "(README|\\.pdf$)",
+   "role": "document"
+  },
+  {
+   "name": "EBSD exports per line",
+   "path_regex": "EBSD maps and map data files/(?P<line>L-?\\d+)[^/]*/.*?Specimen (?P<specimen>\\d+) Area (?P<area>\\d+) Site (?P<site>\\d+)",
+   "role": "ebsd_export"
+  },
+  {
+   "name": "EBSD exports (other)",
+   "path_regex": "(?i)(IPF|BC \\+|band contrast|EBSD)",
+   "role": "ebsd_export"
+  },
+  {
+   "name": "EDS (pattern to confirm)",
+   "path_regex": "(?i)(EDS|EDX)",
+   "role": "eds_map"
+  },
+  {
+   "name": "SEM images per line (pattern to confirm)",
+   "path_regex": "^files/mds2-2775/.*?(?P<line>L-?\\d+)?[^/]*\\.tiff?$",
+   "role": "sem_image"
+  },
+  {
+   "name": "optical cross sections mds2-2718 (pattern to confirm)",
+   "path_regex": "^files/mds2-2718/.*\\.tiff?$",
+   "role": "optical_image"
+  },
+  {
+   "name": "thermography mds2-2716",
+   "path_regex": "^files/mds2-2716/",
+   "role": "other"
+  }
+ ],
+ "maps": {
+  "line": {}
+ },
+ "condition_fields": [
+  "case"
+ ],
+ "order": {},
+ "unit_field": "line",
+ "unit_type": "track"
+}

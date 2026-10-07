@@ -1,0 +1,142 @@
+{
+ "dataset": "anjaria2025",
+ "pilot": "S2",
+ "decision": "GO WITH CHECKS",
+ "stop": [],
+ "checks": [
+  "R4: 320 SEM images without native pixel size (scale-bar reader or exclusion)",
+  "magnification test inconclusive (missing)",
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 4,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "pass",
+  "sem_images": 320,
+  "sem_native_fraction": 0.0,
+  "second_modalities": {
+   "ebsd_export": 1,
+   "ebsd_map": 1
+  },
+  "sem_images_per_level": {
+   "1.02": 64,
+   "1.95": 64,
+   "0.38": 64,
+   "0.62": 64,
+   "0": 64
+  },
+  "magleak": "missing",
+  "pilots": [],
+  "inventory": {
+   "files": 324,
+   "images": 321,
+   "pixel_size_sources": {
+    "none": 321
+   },
+   "n_distinct_pixel_sizes": 0,
+   "detectors": {},
+   "kv": []
+  }
+ },
+ "card_changes": [
+  {
+   "field": "readers.all_formats",
+   "old": null,
+   "new": true,
+   "evidence": "readers.json R2 pass"
+  },
+  {
+   "field": "calibration.absolute_scales",
+   "old": true,
+   "new": false,
+   "evidence": "0/320 SEM images carry a native pixel size"
+  },
+  {
+   "field": "sem.image_count",
+   "old": null,
+   "new": 320,
+   "evidence": "join.csv SEM roles"
+  },
+  {
+   "field": "sem.native_metadata",
+   "old": null,
+   "new": false,
+   "evidence": "0/320 native"
+  },
+  {
+   "field": "sem.magnification_fixed",
+   "old": true,
+   "new": false,
+   "evidence": "magleak missing"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "pass",
+   "R3": "check",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "check",
+   "R7": "pass",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 2,
+   "R11": "check",
+   "R12": "check"
+  },
+  "families": {
+   "T1": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T2": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "check",
+    [
+     "R5",
+     "R12"
+    ]
+   ],
+   "T5": [
+    "fail",
+    [
+     "R10 >= 3 (has 2)"
+    ]
+   ],
+   "T6": [
+    "fail",
+    [
+     "R10 >= 4 (has 2)"
+    ]
+   ],
+   "T7": [
+    "fail",
+    [
+     "R9 fit law",
+     "levels (params + 4)"
+    ]
+   ]
+  },
+  "report": "\n## Anjaria and Stinville 2025 solutionized Inconel 718 in situ SEM tensile dataset: BSE images for HR-DIC at four strain levels with EBSD (Dryad doi:10.5061/dryad.98sf7m0tt, CC0)\nState: prospective, filled 2026-10-06 from repository metadata (DataCite, Dryad API, Zenodo, Crossref) and descriptor pages; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host. Same lab, SEM and pixel size as ebsd_stinville2022_in718_tribeam_hrdic, but solutionized instead of precipitation hardened, so the pair forms a heat-treatment contrast | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 check, R4 pass, R5 check, R6 check, R7 pass, R8 check, R9 pass, R10 2, R11 check, R12 check\n  note R4: no absolute scale: key only differences and ratios\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5, R6 |\n| T3 | check | R5, R6, R8 |\n| T4 | check | R5, R12 |\n| T5 | fail | R10 >= 3 (has 2) |\n| T6 | fail | R10 >= 4 (has 2) |\n| T7 | fail | R9 fit law, levels (params + 4) |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3\nCheck, in this order: R12; R5; R8; R6\n"
+ },
+ "written": "2026-10-07T00:46:59-05:00"
+}

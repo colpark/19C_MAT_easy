@@ -1,0 +1,136 @@
+{
+ "dataset": "stinville2022",
+ "pilot": "S2",
+ "decision": "GO WITH CHECKS",
+ "stop": [],
+ "checks": [
+  "no SEM image carries a level of strain_pct: the condition series sits on another modality, so SEM keys need a join first",
+  "magnification test inconclusive (untested)",
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 4,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "fail",
+  "sem_images": 546,
+  "sem_native_fraction": 1.0,
+  "second_modalities": {
+   "dic_field": 16,
+   "ebsd_map": 3,
+   "ebsd_export": 2
+  },
+  "sem_images_per_level": {},
+  "magleak": "untested",
+  "pilots": [],
+  "inventory": {
+   "files": 571,
+   "images": 565,
+   "pixel_size_sources": {
+    "none": 19,
+    "fei": 546
+   },
+   "n_distinct_pixel_sizes": 2,
+   "detectors": {
+    "ETD": 529,
+    "CBS": 17
+   },
+   "kv": [
+    30.0
+   ]
+  }
+ },
+ "card_changes": [
+  {
+   "field": "readers.all_formats",
+   "old": true,
+   "new": false,
+   "evidence": "readers.json R2 fail"
+  },
+  {
+   "field": "sem.image_count",
+   "old": null,
+   "new": 546,
+   "evidence": "join.csv SEM roles"
+  },
+  {
+   "field": "sem.native_metadata",
+   "old": null,
+   "new": true,
+   "evidence": "546/546 native"
+  },
+  {
+   "field": "sem.magnification_fixed",
+   "old": true,
+   "new": false,
+   "evidence": "magleak untested"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "fail",
+   "R3": "pass",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "check",
+   "R7": "pass",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 5,
+   "R11": "pass",
+   "R12": "pass"
+  },
+  "families": {
+   "T1": [
+    "fail",
+    [
+     "R2"
+    ]
+   ],
+   "T2": [
+    "fail",
+    [
+     "R2"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T5": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T6": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T7": [
+    "fail",
+    [
+     "levels (params + 4) >= 6 (has 4)"
+    ]
+   ]
+  },
+  "report": "\n## Stinville et al. 2022 Inconel 718 multi-modal dataset: in situ SEM HR-DIC at four plastic strain levels, 2D EBSD registered to DIC, TriBeam 3D EBSD with raw .up2 Kikuchi patterns and BSE/SE slice images (Dryad doi:10.5061/dryad.83bk3j9sj, CC0; descriptor Sci Data 2022 doi:10.1038/s41597-022-01525-w)\nState: prospective, filled 2026-10-06 from repository metadata (DataCite, Dryad API, Zenodo, Crossref) and descriptor pages; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 fail, R3 pass, R4 pass, R5 check, R6 check, R7 pass, R8 check, R9 pass, R10 5, R11 pass, R12 pass\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | fail | R2 |\n| T2 | fail | R2 |\n| T3 | check | R5, R6, R8 |\n| T4 | check | R5 |\n| T5 | check | R5, R6 |\n| T6 | check | R5, R6 |\n| T7 | fail | levels (params + 4) >= 6 (has 4) |\nInference families open: 0 of 5 (none)  possible after checks: T3, T5, T6\nCheck, in this order: R5; R8; R6\n"
+ },
+ "written": "2026-10-07T00:46:59-05:00"
+}

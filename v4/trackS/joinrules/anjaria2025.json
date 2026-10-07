@@ -1,0 +1,64 @@
+{
+ "dataset": "anjaria2025",
+ "_source": "README.md: 718_SS_SEM_Images.zip holds five folders step0 (before deformation) to step4; loading interrupted at total strains 0.38, 0.62, 1.02, 1.95 %; 8 x 8 tiles per step, file names end Py_x.tif.tif with y_x the grid position; 16-bit raw SEM (speckle) images, 33.4 nm per pixel stated in the README (no native tags). EBSD (718_SS.ang, EBSD_SS.tif) before deformation; the README gives no registration to the tiles.",
+ "rules": [
+  {
+   "name": "docs",
+   "path_regex": "README",
+   "role": "document"
+  },
+  {
+   "name": "EBSD export",
+   "path_regex": "718_SS\\.ang$",
+   "role": "ebsd_export"
+  },
+  {
+   "name": "EBSD map",
+   "path_regex": "EBSD_SS\\.tif$",
+   "role": "ebsd_map"
+  },
+  {
+   "name": "SEM tiles",
+   "path_regex": "718_SS_SEM_Images/.*/step(?P<level>[0-4])/.*_(?P<tile>P(?P<row>\\d)_(?P<col>\\d))\\.tif\\.tif$",
+   "role": "sem_montage_tile"
+  },
+  {
+   "name": "archives",
+   "path_regex": "^files/[^/]*\\.zip$",
+   "role": "other"
+  }
+ ],
+ "maps": {
+  "level": {
+   "0": {
+    "strain_pct": "0"
+   },
+   "1": {
+    "strain_pct": "0.38"
+   },
+   "2": {
+    "strain_pct": "0.62"
+   },
+   "3": {
+    "strain_pct": "1.02"
+   },
+   "4": {
+    "strain_pct": "1.95"
+   }
+  }
+ },
+ "condition_fields": [
+  "strain_pct"
+ ],
+ "order": {
+  "strain_pct": [
+   "0",
+   "0.38",
+   "0.62",
+   "1.02",
+   "1.95"
+  ]
+ },
+ "unit_field": "tile",
+ "unit_type": "tile"
+}

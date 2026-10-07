@@ -1,0 +1,146 @@
+{
+ "name": "FOLDED from the first screen: MERGED AMB2022-03 IN718 single tracks and pads (combi_ambench2022_03_in718_tracks + venue_ambench2022_tracks; mech_ambench2022_in625_tensile kept separate as AMB2022-04)",
+ "state": "merged 2026-10-06 by rule: pool a value the other card left unchecked, keep null where the other card records a failed attempt on the same fact, take the lower-scoring value on conflict, union observables and laws | Folded into the SEM screen 2026-10-06: R1 to R12 fields unchanged from the first-screen card; sem block filled only from facts stated in the first-screen cards and notes (null = not stated). SEM inclusion: met",
+ "access": {
+  "raw_downloadable": true,
+  "license": "NIST Open License (both cards)"
+ },
+ "readers": {
+  "all_formats": null,
+  "notes": "both null: mds2-2716 HDF5 and TIFF verified (h5py, tifffile), mds2-2718 and mds2-2775 formats unverified"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": true,
+  "claim_ladder": false
+ },
+ "calibration": {
+  "absolute_scales": true,
+  "offset_free_quantities": true,
+  "notes": "both true; thermography rests on an assumed emissivity of 0.5 (combi)"
+ },
+ "observables": [
+  {
+   "name": "melt pool depth (optical cross sections)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1
+  },
+  {
+   "name": "melt pool width (optical cross sections)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1
+  },
+  {
+   "name": "cooling rate and time above melt (thermography)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": null
+  },
+  {
+   "name": "grain orientation in tracks (EBSD)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1
+  },
+  {
+   "name": "elemental distribution in tracks (EDS)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1
+  },
+  {
+   "name": "pad overlap depth and width",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": null
+  }
+ ],
+ "design": {
+  "entities": 21,
+  "series": [
+   {
+    "factor": "single-track laser case, 3 tracks each",
+    "levels": 7,
+    "shared_entities": true
+   },
+   {
+    "factor": "pad scan direction",
+    "levels": 2,
+    "shared_entities": true
+   }
+  ],
+  "match_classes": 7,
+  "cross_modal_identity": false,
+  "separability_ratio": 4.48,
+  "separability_notes": "venue desk value from Weaver 2024 Table 4 depths; combi left null pending a pilot without disputing it",
+  "sampling": "systematic",
+  "m_observables_per_entity": 5
+ },
+ "laws": [
+  {
+   "name": "Rosenthal with IN718 literature constants",
+   "class": "independent",
+   "params": 0,
+   "levels": 7,
+   "validated": null
+  },
+  {
+   "name": "normalized enthalpy keyhole threshold",
+   "class": "independent",
+   "params": 0,
+   "levels": 7,
+   "validated": null
+  },
+  {
+   "name": "Rosenthal depth with a fitted absorptivity",
+   "class": "fit",
+   "params": 1,
+   "levels": 7,
+   "validated": null
+  },
+  {
+   "name": "depth against volumetric energy density",
+   "class": "fit",
+   "params": 2,
+   "levels": 7,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 2,
+  "textbook_neutral": true
+ },
+ "claims": {
+  "source": "paper",
+  "count": 3
+ },
+ "sem": {
+  "modes": [
+   "SEM cross sections of the same tracks and pads (mds2-2775, detector unverified)"
+  ],
+  "image_count": null,
+  "images_per_condition": null,
+  "native_metadata": null,
+  "magnification_fixed": null,
+  "field_selection": "systematic (every track sectioned at set locations; card sampling)",
+  "co_registered": [],
+  "same_specimen": [
+   "EBSD and EDS cross sections (mds2-2775)",
+   "optical cross sections (mds2-2718)",
+   "in situ thermography (mds2-2716)"
+  ],
+  "annotations_in_deposit": null,
+  "formats": [
+   "TIFF",
+   "HDF5",
+   "EBSD and EDS formats unverified"
+  ]
+ }
+}

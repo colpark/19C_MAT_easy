@@ -1,0 +1,76 @@
+{
+ "dataset": "stinville2022",
+ "_source": "README_file.txt (Dryad v7): tensile test interrupted at macroscopic plastic strains 0.17, 0.32, 0.61, 1.26 %; HR-DIC fields as 32-bit tiff at 100.34 nm; BSE and SEM images per TriBeam slice; 2D EBSD distorted to match the DIC fields. E1-E4 -> the four interruptions in increasing order (inferred from the naming; the README lists the levels in that order but does not name the files).",
+ "rules": [
+  {
+   "name": "docs",
+   "path_regex": "README",
+   "role": "document"
+  },
+  {
+   "name": "HR-DIC fields",
+   "path_regex": "HRDIC_Results_Full_Fields/.*/E(?P<step>[1-4])_718_(?P<field>Exx_DF4px|Exx|SlipDirection|SlipIntensity)\\.tif$",
+   "role": "dic_field"
+  },
+  {
+   "name": "2D EBSD exports",
+   "path_regex": "2D_EBSD_Dataset/.*\\.(ang|osc)$",
+   "role": "ebsd_export"
+  },
+  {
+   "name": "2D EBSD maps",
+   "path_regex": "2D_EBSD_Dataset/.*/(?P<map>IPF_[A-Za-z]+_[XZ])\\.tif$",
+   "role": "ebsd_map"
+  },
+  {
+   "name": "TriBeam BSE slices",
+   "path_regex": "3D_EBSD_Dataset_Images/.*/BSE_images/Slice(?P<slice>\\d+)\\.tif$",
+   "role": "sem_image",
+   "set": {
+    "mode": "BSE"
+   }
+  },
+  {
+   "name": "TriBeam SE slices",
+   "path_regex": "3D_EBSD_Dataset_Images/.*/SE_images/Slice(?P<slice>\\d+)\\.tif$",
+   "role": "sem_image",
+   "set": {
+    "mode": "SE"
+   }
+  },
+  {
+   "name": "archives",
+   "path_regex": "^files/[^/]*\\.zip$",
+   "role": "other"
+  }
+ ],
+ "maps": {
+  "step": {
+   "1": {
+    "strain_pct": "0.17"
+   },
+   "2": {
+    "strain_pct": "0.32"
+   },
+   "3": {
+    "strain_pct": "0.61"
+   },
+   "4": {
+    "strain_pct": "1.26"
+   }
+  }
+ },
+ "condition_fields": [
+  "strain_pct"
+ ],
+ "order": {
+  "strain_pct": [
+   "0.17",
+   "0.32",
+   "0.61",
+   "1.26"
+  ]
+ },
+ "unit_field": "grain",
+ "unit_type": "grain"
+}

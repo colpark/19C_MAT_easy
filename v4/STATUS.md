@@ -1,3 +1,13 @@
+# v4.1 Track S (branch v4.1/2026-10-07, in progress)
+- S0: kit installed; 53/53 tests after V4-E20.
+- S1:
+  - Dryad 8/8 verified (with David's DRYAD_TOKEN, environment only).
+  - mds2-2775 is 3.37 TB: tier 1 cut to TIFF maps and documents (V4-E21, V4-E22, NIST HTTP 524).
+  - The AM Bench download is still running (latency bound).
+  - refodat absent, so S3 (cement) is waiting.
+- Stinville and Anjaria: desk checks, join, magleak and M0 done (both GO WITH CHECKS). Both readers are deferred (DESK_*.md).
+- No paid call.
+
 # v4 status (2026-10-06)
 
 Spend: $1.9257 total. Q3a-sol-t2 $0.274 (5 Sol trials). Q2b-k2 $0.701 (320 nano trials). Q1e-v4-repair-audits $0.0223 (9 calls). Q2-v4-nano-eval-A $0.768 (366 nano trials). Q1c-v4-reaudit-allende-claims $0.0158 (9 calls). Q1d-v4-audit-crfeni $0.0432 (12 calls). Q1-v4-audit-allende $0.0429 (11 calls); Q1b-v4-reaudit-allende-v2 $0.0582 (29 calls, approved 2026-10-06, quote $0.12, cap $1.50).

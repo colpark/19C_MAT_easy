@@ -1,0 +1,251 @@
+{
+ "_about": "Track S (SEM pilots) dataset registry, 2026-10-07. Facts come from the SEM multimodal screen and an independent check of repository records (claude/20261006_sem_multimodal_datasets.md). fetch_s.py resolves every file list from the repository API at run time and never trusts the expected_* fields, which serve only as a cross-check. Tier 1 = desk checks and pilot, tier 2 = second route, tier 3 = everything else.",
+ "host_root": "v4_host/trackS",
+ "datasets": [
+  {
+   "id": "amb2022_03",
+   "pilot": "S1",
+   "title": "NIST AM Bench 2022 AMB2022-03 IN718 single tracks and pads: SEM, EBSD and EDS cross sections, optical cross sections, thermography",
+   "license": "NIST open license (https://www.nist.gov/open/license), shown on data.nist.gov, absent from DataCite",
+   "parts": [
+    {
+     "repository": "nist_pdr",
+     "pdr_id": "mds2-2775",
+     "doi": "10.18434/mds2-2775",
+     "what": "SEM, EBSD and EDS cross sections (Traces/, Pads/, 2775_README.txt, measurement PDF)",
+     "tier_rules": [
+      {
+       "tier": 1,
+       "names": [
+        "*.txt",
+        "*.pdf",
+        "*.tif",
+        "*.tiff",
+        "*.oipx"
+       ]
+      },
+      {
+       "tier": 2,
+       "names": [
+        "*.ctf",
+        "*.h5oina",
+        "*.csv"
+       ]
+      },
+      {
+       "tier": 3,
+       "names": [
+        "*"
+       ]
+      }
+     ],
+     "tier_note": "V4-E21 (2026-10-07): the landing page lists 10,747 files, 3.37 TB (raw .ebsp patterns 2.66 TB, raw EDS .raw cubes 0.58 TB, Aztec .dat 90 GB). Tier 1 keeps SEM TIFFs, .ctf and .oipx exports, README and PDFs (~8 GB); tier 2 the .h5oina and CSV exports (~31 GB); tier 3 the raw patterns and cubes. V4-E22 (2026-10-07 02:00): .ctf moved to tier 2 because data.nist.gov returns HTTP 524 (origin timeout) on the ~70 MB .ctf files; the TIFF maps the S1 reader needs come first."
+    },
+    {
+     "repository": "direct",
+     "tier": 1,
+     "name": "AMB2022-03_measurement_and_result_descriptions_v10.pdf",
+     "url": "https://www.nist.gov/document/am-bench-amb2022-03-measurement-and-result-descriptions-v10",
+     "what": "NIST measurement and result description (Table 4 depths with SDs, laser cases, emissivity 0.5)"
+    },
+    {
+     "repository": "nist_pdr",
+     "pdr_id": "mds2-2718",
+     "doi": "10.18434/mds2-2718",
+     "tier": 2,
+     "what": "optical cross sections of the same tracks (second route for depth and width)"
+    },
+    {
+     "repository": "nist_pdr",
+     "pdr_id": "mds2-2716",
+     "doi": "10.18434/mds2-2716",
+     "tier": 3,
+     "what": "in situ thermography and scan strategy (version 1.3.1, 2026-01-06)"
+    }
+   ],
+   "expected": {
+    "note": "the RMM record of mds2-2775 lists Traces and Pads as subcollections without files, so fetch_s.py reads the file list embedded in the landing page. Visible file names: AZtec style exports such as 'Specimen 1 Area 6 Site 1 Map Data 7_L-03-IPF-Z.csv' and '.tif'"
+   },
+   "descriptors": [
+    "https://doi.org/10.1007/s40192-024-00355-5",
+    "https://link.springer.com/article/10.1007/s40192-024-00361-7"
+   ]
+  },
+  {
+   "id": "stinville2022",
+   "pilot": "S2",
+   "title": "Stinville et al. 2022 IN718: HR-DIC at four strain levels, 2D EBSD on the DIC grid, TriBeam 3D EBSD with BSE and SE slices",
+   "license": "CC0 1.0",
+   "parts": [
+    {
+     "repository": "dryad",
+     "doi": "10.5061/dryad.83bk3j9sj",
+     "tier_rules": [
+      {
+       "tier": 1,
+       "names": [
+        "README_file.txt",
+        "2D_EBSD_Dataset.zip",
+        "HRDIC_Results_Full_Fields.zip",
+        "3D_EBSD_Dataset_Images.zip"
+       ]
+      },
+      {
+       "tier": 3,
+       "names": [
+        "*"
+       ]
+      }
+     ]
+    }
+   ],
+   "expected": {
+    "version_id": 190078,
+    "files": 11,
+    "bytes_total_approx": 55000000000,
+    "tier1_bytes_approx": 4062000000,
+    "note": "version 7 (2022-08-03). Raw .up2 patterns cover two slices only (3D_EBSD_Dataset_Up2_2slices_.zip). No raw DIC tile archive. No separate stress strain file in the list."
+   },
+   "descriptors": [
+    "https://www.nature.com/articles/s41597-022-01525-w"
+   ]
+  },
+  {
+   "id": "anjaria2025",
+   "pilot": "S2",
+   "title": "Anjaria and Stinville 2025 solutionized IN718: BSE images at 0.38, 0.62, 1.02 and 1.95 % strain, one EBSD map",
+   "license": "CC0 1.0",
+   "parts": [
+    {
+     "repository": "dryad",
+     "doi": "10.5061/dryad.98sf7m0tt",
+     "tier_rules": [
+      {
+       "tier": 1,
+       "names": [
+        "*"
+       ]
+      }
+     ]
+    }
+   ],
+   "expected": {
+    "version_id": 348782,
+    "files": 4,
+    "bytes_total_approx": 5497000000,
+    "note": "718_SS_SEM_Images.zip 4.40 GB, 718_SS.ang 1.03 GB, EBSD_SS.tif 58.8 MB, README.md. No descriptor paper. No DIC results deposited."
+   },
+   "descriptors": []
+  },
+  {
+   "id": "refodat90",
+   "pilot": "S3",
+   "title": "Weimar CEM I mortar ITZ: BSE montage 47104 x 18232 px at 84.3099 nm, EDX phase map, uXRF, two nanoindentation grids, LM and confocal, QGIS alignment",
+   "license": "CC BY 4.0",
+   "parts": [
+    {
+     "repository": "refodat_manual",
+     "doi": "10.71758/refodat.90",
+     "landing": "https://refodat.de/receive/refodat_mods_00000090",
+     "tier": 1
+    }
+   ],
+   "expected": {
+    "files": 14,
+    "bytes_total_approx": 7020670000,
+    "datacite_size_text": "7020.67 MB",
+    "names_seen": [
+     "BSE_High-Res.tif",
+     "BSE_High-Res-RAW.7z",
+     "EDX_full_phase_map.tif",
+     "NI_pos2.csv",
+     "CM-RAW_and_CM-XRF_evaluation.7z",
+     "Full-alginment.7z",
+     "NI-EDX-alignment.7z",
+     "NI-EDX_phase_evaluation.7z",
+     "EDX-python-preprocessing.7z"
+    ],
+    "note": "the landing page serves a proof-of-work security check to scripts, so a person downloads the files in a browser. The EDX map has 13 index values and 11 distinct labels. Nanoindentation grids 40 x 20 and 65 x 20."
+   },
+   "descriptors": []
+  },
+  {
+   "id": "refodat91",
+   "pilot": "S3",
+   "title": "Weimar concrete carbonation and frost: BSE MAPS montages of four CEM III/B specimens (21C, 21H, 25C, 25H) at 84.3099 nm, LTDSC on paste, strength, CF/CIF scaling, RDME",
+   "license": "CC BY 4.0",
+   "parts": [
+    {
+     "repository": "refodat_manual",
+     "doi": "10.71758/refodat.91",
+     "landing": "https://refodat.de/receive/refodat_mods_00000091",
+     "tier": 1
+    }
+   ],
+   "expected": {
+    "files": 15,
+    "bytes_total_approx": 1038680000,
+    "datacite_size_text": "1038.68 MB",
+    "names_seen": [
+     "RAW_Maps_project_21H-25H-21C-25C.7z"
+    ],
+    "note": "browser download (security check). SEM covers only the four CEM III/B specimens. LTDSC ran on hardened cement paste. The record says relative dynamic modulus (RDME), not ultrasonic."
+   },
+   "descriptors": []
+  },
+  {
+   "id": "sa508_ebw",
+   "pilot": "reserve",
+   "title": "SA508 Grade 3 electron beam welds: raw SE TIFF montages and raw nanoindentation curves along the same traverse, three conditions",
+   "license": "CC BY 4.0",
+   "parts": [
+    {
+     "repository": "mendeley",
+     "dataset_id": "j2f2dxmd5m",
+     "version": 1,
+     "tier": 1,
+     "what": "forged, PWHT"
+    },
+    {
+     "repository": "mendeley",
+     "dataset_id": "58xvm8wt92",
+     "version": 1,
+     "tier": 1,
+     "what": "PM-HIP, PWHT (DataCite title; the descriptor swaps the two PM-HIP DOIs)"
+    },
+    {
+     "repository": "mendeley",
+     "dataset_id": "x8x628h3gs",
+     "version": 1,
+     "tier": 1,
+     "what": "PM-HIP, SQNT"
+    }
+   ],
+   "expected": {
+    "note": "descriptor Data in Brief 10.1016/j.dib.2025.112158"
+   },
+   "descriptors": [
+    "https://doi.org/10.1016/j.dib.2025.112158"
+   ]
+  },
+  {
+   "id": "alsi10mg_luo2024",
+   "pilot": "reserve",
+   "title": "AlSi10Mg LPBF, 60 process sets: raw tensile curves, hardness, porosity, SEM cell images (slides and a zip)",
+   "license": "CC BY 4.0",
+   "parts": [
+    {
+     "repository": "zenodo",
+     "record_id": "10008435",
+     "tier": 1
+    }
+   ],
+   "expected": {
+    "note": "SEM files: '[IR] SEM AlSi10Mg cell.pptx' 172.5 MB and '[IR] SEM AlSi10Mg cell (high magn).zip' 420.2 MB. EBSD only as pptx. Raw XCT appears to come only on request. The zip decides inclusion."
+   },
+   "descriptors": [
+    "https://doi.org/10.1016/j.dib.2024.110130"
+   ]
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+{
+ "dataset": "refodat90",
+ "_todo": "Confirm member names after extraction. One mortar surface: the series is distance from the aggregate interface, so distance bins come from the frozen analysis, not from file names. The EDX phase map has 13 index values and 11 distinct labels. Two indentation grids (40 x 20, 65 x 20).",
+ "rules": [
+  {
+   "name": "BSE montage",
+   "path_regex": "BSE_High-Res(\\.tif|-RAW)",
+   "role": "sem_image"
+  },
+  {
+   "name": "EDX phase map",
+   "path_regex": "EDX_full_phase_map\\.tif$|EDX-python-preprocessing|NI-EDX_phase_evaluation",
+   "role": "eds_map"
+  },
+  {
+   "name": "nanoindentation",
+   "path_regex": "NI_pos\\d*\\.csv$|NI-EDX-alignment",
+   "role": "indent"
+  },
+  {
+   "name": "confocal and uXRF",
+   "path_regex": "CM-RAW_and_CM-XRF_evaluation",
+   "role": "other"
+  },
+  {
+   "name": "alignment",
+   "path_regex": "Full-alginment",
+   "role": "tile_layout"
+  },
+  {
+   "name": "docs",
+   "path_regex": "\\.pdf$",
+   "role": "document"
+  }
+ ],
+ "maps": {},
+ "condition_fields": [],
+ "unit_field": null,
+ "unit_type": "indent"
+}

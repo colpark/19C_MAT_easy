@@ -1,0 +1,30 @@
+{
+ "dataset": "alsi10mg_luo2024",
+ "_todo": "Reserve. Open the high magnification SEM zip first: raw TIFF with tags keeps the deposit, slide exports drop it to the secondary list. Fill the process set id pattern (60 sets, triplicate specimens).",
+ "rules": [
+  {
+   "name": "SEM cell images",
+   "path_regex": "SEM AlSi10Mg cell.*?(?P<set>\\d+).*\\.tiff?$",
+   "role": "sem_image"
+  },
+  {
+   "name": "tensile curves",
+   "path_regex": "(?i)stress.?strain",
+   "role": "curve"
+  },
+  {
+   "name": "slides",
+   "path_regex": "\\.pptx$",
+   "role": "document"
+  }
+ ],
+ "maps": {
+  "set": {}
+ },
+ "condition_fields": [
+  "set"
+ ],
+ "order": {},
+ "unit_field": "set",
+ "unit_type": "specimen"
+}

@@ -1,0 +1,92 @@
+{
+ "name": "Anjaria and Stinville 2025 solutionized Inconel 718 in situ SEM tensile dataset: BSE images for HR-DIC at four strain levels with EBSD (Dryad doi:10.5061/dryad.98sf7m0tt, CC0)",
+ "state": "prospective, filled 2026-10-06 from repository metadata (DataCite, Dryad API, Zenodo, Crossref) and descriptor pages; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host. Same lab, SEM and pixel size as ebsd_stinville2022_in718_tribeam_hrdic, but solutionized instead of precipitation hardened, so the pair forms a heat-treatment contrast | verified desk fields 2026-10-07 from downloaded files (m0_s.py)",
+ "access": {
+  "raw_downloadable": true,
+  "license": "CC0 1.0"
+ },
+ "readers": {
+  "all_formats": true,
+  "notes": "files: 718_SS_SEM_Images.zip (4.4 GB, image format inside not verified), 718_SS.ang (1.03 GB, orix or kikuchipy), EBSD_SS.tif (58.8 MB, tifffile), README.md. No DIC results deposited: the user runs DIC (open options: muDIC, py2DIC, Ncorr)"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": null,
+  "claim_ladder": null
+ },
+ "calibration": {
+  "absolute_scales": false,
+  "offset_free_quantities": true,
+  "notes": "Dryad methods: 0.137 x 0.137 mm per 4096 x 4096 image, 33.4 nm pixel, ThermoFisher Versa3D; EBSD EDAX OIM-Hikari at 0.8 um step"
+ },
+ "observables": [
+  {
+   "name": "slip localization and in-plane strain from BSE image pairs (HR-DIC run by the user)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "slip traces also visible directly in BSE images"
+  },
+  {
+   "name": "grain orientation (EBSD .ang, 0.8 um step)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": null
+  }
+ ],
+ "design": {
+  "entities": 1,
+  "series": [
+   {
+    "factor": "macroscopic strain 0.38, 0.62, 1.02, 1.95 % (1050 C / 30 min water quenched IN718)",
+    "levels": 4,
+    "shared_entities": true
+   }
+  ],
+  "match_classes": 4,
+  "cross_modal_identity": null,
+  "separability_ratio": null,
+  "sampling": "systematic",
+  "m_observables_per_entity": 2
+ },
+ "laws": [
+  {
+   "name": "Schmid law: highest-Schmid {111}<110> plane from EBSD predicts slip trace angle",
+   "class": "independent",
+   "params": 0,
+   "levels": 4,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 2,
+  "textbook_neutral": null
+ },
+ "claims": {
+  "source": null,
+  "count": null
+ },
+ "sem": {
+  "modes": [
+   "BSE"
+  ],
+  "image_count": 320,
+  "images_per_condition": 64,
+  "native_metadata": false,
+  "magnification_fixed": false,
+  "field_selection": "montage",
+  "co_registered": [
+   "EBSD (.ang), region match by design, registration not verified"
+  ],
+  "same_specimen": [],
+  "annotations_in_deposit": null,
+  "formats": [
+   "zip of SEM images (format not verified)",
+   ".ang",
+   ".tif"
+  ],
+  "magnification_leak": false
+ }
+}

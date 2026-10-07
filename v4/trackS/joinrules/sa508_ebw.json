@@ -1,0 +1,35 @@
+{
+ "dataset": "sa508_ebw",
+ "_todo": "Reserve. Fill from the Data in Brief descriptor: weld condition per Mendeley record (j2f2dxmd5m forged PWHT, 58xvm8wt92 PM-HIP PWHT, x8x628h3gs PM-HIP SQNT per DataCite titles), tile positions along the traverse, indent positions.",
+ "rules": [
+  {
+   "name": "SE tiles",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*\\.tiff?$",
+   "role": "sem_montage_tile"
+  },
+  {
+   "name": "indentation curves",
+   "path_regex": "^files/(?P<record>j2f2dxmd5m|58xvm8wt92|x8x628h3gs)/.*\\.(csv|txt|xlsx)$",
+   "role": "indent"
+  }
+ ],
+ "maps": {
+  "record": {
+   "j2f2dxmd5m": {
+    "condition": "forged_PWHT"
+   },
+   "58xvm8wt92": {
+    "condition": "PMHIP_PWHT"
+   },
+   "x8x628h3gs": {
+    "condition": "PMHIP_SQNT"
+   }
+  }
+ },
+ "condition_fields": [
+  "condition"
+ ],
+ "order": {},
+ "unit_field": "record",
+ "unit_type": "field"
+}

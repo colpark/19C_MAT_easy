@@ -348,3 +348,38 @@ reason: analyze_q2b: panel-opening check on neutral names; header
 reason: run_q3a.sh (Q3a-sol-t2), frozen before launch
 
 - `partB/run_q3a.sh` 5e6336595c6461e46f95bb4d2e6f95a5062755b6642702b4890b6db8206a0a42
+
+## S2j-dryad (2026-10-07T00:37:35-05:00)
+
+reason: Track S join rules stinville2022, anjaria2025 (from the READMEs), before join_s.py counts
+
+- `trackS/joinrules/stinville2022.json` ad37d9ceb2df9c9fdf2b0ed498acc91884f0d1fbeba780a62ef5a92e9857078d
+- `trackS/joinrules/anjaria2025.json` 277438946d1f7a39923934760c82a9daa55abf4e254dff344c3e3a7f0be0f49b
+
+## S2j-dryad-b (2026-10-07T00:37:44-05:00)
+
+reason: join rules: archive paths under files/, tile unit field (before any separability use)
+
+- `trackS/joinrules/stinville2022.json` 2e015d9245d661986b62abd39e7415e690ac280a79f1d622e17cbc58a05d1da3
+- `trackS/joinrules/anjaria2025.json` 5687f9d1a5e87ea5783900b5990712bd4a4a872d4ddff7827dacd7b488e2afe0
+
+## S4b (2026-10-07T00:43:45-05:00)
+
+reason: Track S pilot S2 (stinville2022) reader stv_reader.py + synth_stv.py + validate_stv.py: segmentation (sigma 0.85, grad 18), domain-mean Exx; localization deferred. Before real strain fields and the .ang comparison
+
+- `trackS/readers/stv_reader.py` 2e289c7ecc791277b033c800b53d524cf43a93304781f23562570ca0b7d9105e
+- `trackS/readers/synth_stv.py` 510f1c784bcadea73f365161d7288b92250f029996ad6fb46fc9dd81a0e16bff
+- `trackS/readers/validate_stv.py` 31ac7f9da4241a688cad55fc89efeb958cb18392ffe76e04e02af64ef49d15c5
+
+## S4b-2 (2026-10-07T00:44:14-05:00)
+
+reason: stv_reader: domain mean over the interior (erode 3 px); S4b failed the fresh-seed domain-mean gate (4/10). Fresh seeds 3000-3009
+
+- `trackS/readers/stv_reader.py` a31ae95d9b6e6523873b672e1a915749a878b87e93b7d538b3a914c312a58f18
+- `trackS/readers/validate_stv.py` 061d6a4f30bd7eb1073d673aee3c23355b8d9b06d9f697218d367f6872e0bed7
+
+## S4b-2rv (2026-10-07T00:44:50-05:00)
+
+reason: realval_stv.py (held-out .ang comparison), frozen before running
+
+- `trackS/readers/realval_stv.py` 0e7d1b72945e9e752c4377f110b2dc7819b6418e41eb28bff4cd69e8be60d211

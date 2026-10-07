@@ -1,0 +1,50 @@
+{
+ "dataset": "refodat91",
+ "_todo": "Fill maps.specimen with mix (M38 or M44), w/c and carbonation state for 21C, 21H, 25C and 25H from the record description, and the LTDSC paste specimens that join each mix. SEM covers only these four CEM III/B specimens.",
+ "rules": [
+  {
+   "name": "MAPS raw tiles",
+   "path_regex": "RAW_Maps_project[^/]*/.*?(?P<specimen>2[15][CH])[^/]*/.*LayersData.*\\.tiff?$",
+   "role": "sem_montage_tile"
+  },
+  {
+   "name": "MAPS images (other)",
+   "path_regex": "RAW_Maps_project.*?(?P<specimen>2[15][CH]).*\\.tiff?$",
+   "role": "sem_montage_tile"
+  },
+  {
+   "name": "MAPS project files",
+   "path_regex": "RAW_Maps_project",
+   "role": "tile_layout"
+  },
+  {
+   "name": "LTDSC",
+   "path_regex": "(?i)(LTDSC|heat.?flow|melting|cycle_[AB]|baseline)",
+   "role": "curve"
+  },
+  {
+   "name": "strength, frost, uptake",
+   "path_regex": "(?i)(compress|strength|scaling|CIF|RDME|uptake|ice)",
+   "role": "curve"
+  },
+  {
+   "name": "figures",
+   "path_regex": "\\.svg$",
+   "role": "document"
+  }
+ ],
+ "maps": {
+  "specimen": {
+   "21C": {},
+   "21H": {},
+   "25C": {},
+   "25H": {}
+  }
+ },
+ "condition_fields": [
+  "specimen"
+ ],
+ "order": {},
+ "unit_field": "specimen",
+ "unit_type": "tile"
+}
