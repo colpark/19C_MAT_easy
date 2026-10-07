@@ -133,3 +133,5 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - Q2b-k2 launched 2026-10-06T21:50:17-05:00; run_q2b.sh sha256 ac5ab78b3c701b2f...; items CrFeNi 5a42f952..., Allende 385f7985...
 - Q2b-k2 done 22:37: 320 trials, $0.701, 0 audit flags. analyze_q2b.py (Q2banb fix: neutral-name panel-opening check) -> RESULTS_Q2b.md, partB/results_q2b.json.
 - Q3a-sol-t2 quote written (Sol on the 5 T2 tasks, A0, k = 1; $1.27 expected, cap $3.00; auditor-contaminated caveat). Not run.
+- Q3a-sol-t2 approved by David; partB/run_q3a.sh frozen, launched 2026-10-06T23:00:06-05:00.
+- Q3a done 23:05: 5 Sol trials, $0.274; RESULTS_Q3a.md.

@@ -342,3 +342,9 @@ reason: analyze_q2b.py
 reason: analyze_q2b: panel-opening check on neutral names; header
 
 - `partB/analyze_q2b.py` 875d99d0ac2c46a6d745b16e8ed36b2d08d506bba6f41bfbee5c2ae0ef6040d3
+
+## Q3arun (2026-10-06T23:00:06-05:00)
+
+reason: run_q3a.sh (Q3a-sol-t2), frozen before launch
+
+- `partB/run_q3a.sh` 5e6336595c6461e46f95bb4d2e6f95a5062755b6642702b4890b6db8206a0a42
