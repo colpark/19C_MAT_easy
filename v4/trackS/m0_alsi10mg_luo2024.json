@@ -1,11 +1,9 @@
 {
  "dataset": "alsi10mg_luo2024",
  "pilot": "reserve",
- "decision": "GO WITH CHECKS",
+ "decision": "GO",
  "stop": [],
- "checks": [
-  "separability pilot pending (needs a validated, frozen reader)"
- ],
+ "checks": [],
  "evidence": {
   "files": 12,
   "failed_files": [],
@@ -54,7 +52,20 @@
    "120.000": 5
   },
   "magleak": "independent",
-  "pilots": [],
+  "pilots": [
+   {
+    "file": "v4_host/trackS/alsi10mg_luo2024/pilot_alsi_uts_separability.json",
+    "verdict": "partial",
+    "pairs_separated": 5,
+    "pairs": 31,
+    "anova_p": 0.0015317395132576335,
+    "min_between_over_within": 0.03395292653004844,
+    "optimistic_spatial_units": false,
+    "reader_freeze": "S4e",
+    "exploratory": false,
+    "unit_type": "specimen"
+   }
+  ],
   "inventory": {
    "files": 913,
    "images": 192,
@@ -112,6 +123,12 @@
    "old": null,
    "new": false,
    "evidence": "magleak independent"
+  },
+  {
+   "field": "design.separability_ratio",
+   "old": null,
+   "new": 0.03395292653004844,
+   "evidence": "pilot v4_host/trackS/alsi10mg_luo2024/pilot_alsi_uts_separability.json (partial, freeze S4e)"
   }
  ],
  "scorer": {
@@ -120,9 +137,9 @@
    "R2": "pass",
    "R3": "pass",
    "R4": "pass",
-   "R5": "check",
-   "R6": "check",
-   "R7": "check",
+   "R5": "pass",
+   "R6": "fail",
+   "R7": "fail",
    "R8": "check",
    "R9": "pass",
    "R10": 5,
@@ -131,59 +148,46 @@
   },
   "families": {
    "T1": [
-    "check",
-    [
-     "R5"
-    ]
+    "pass",
+    []
    ],
    "T2": [
-    "check",
+    "fail",
     [
-     "R5",
      "R6"
     ]
    ],
    "T3": [
-    "check",
+    "fail",
     [
-     "R5",
-     "R6",
-     "R8"
+     "R6"
     ]
    ],
    "T4": [
-    "check",
-    [
-     "R5"
-    ]
+    "pass",
+    []
    ],
    "T5": [
-    "check",
+    "fail",
     [
-     "R5",
-     "R6",
-     "R11"
+     "R6"
     ]
    ],
    "T6": [
-    "check",
+    "fail",
     [
-     "R5",
-     "R6",
-     "R11"
+     "R6"
     ]
    ],
    "T7": [
-    "check",
+    "fail",
     [
-     "R5",
      "R6",
-     "R7",
-     "R9 fit law validated on real data"
+     "R7"
     ]
    ]
   },
-  "report": "\n## AlSi10Mg laser powder bed fusion, 60 power-speed-hatch sets: SEM cell images, EBSD images, raw stress-strain curves, Vickers, Archimedes and XCT porosity tables (Zenodo 10008435; descriptor Data in Brief 2024 doi:10.1016/j.dib.2024.110130; research paper doi:10.1016/j.addma.2023.103804)\nState: prospective, filled 2026-10-06 from repository metadata (DataCite, Zenodo record pages) and the open descriptor full text read through Undermind; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host. SEM images sit in a .pptx and a zip whose inner format is unverified; open the zip listing before any pilot. Sister Ti-6Al-4V set already carded (venue_luo23_ti64_lpbf.json); this card does not supersede it. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 pass, R4 pass, R5 check, R6 check, R7 check, R8 check, R9 pass, R10 5, R11 check, R12 pass\n  note R3: no claim ladder on the host: expect only the claims the builder extracts itself\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5, R6 |\n| T3 | check | R5, R6, R8 |\n| T4 | check | R5 |\n| T5 | check | R5, R6, R11 |\n| T6 | check | R5, R6, R11 |\n| T7 | check | R5, R6, R7, R9 fit law validated on real data |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3, T5, T6, T7\nCheck, in this order: R11; R5; R8; R6; R7; R9 fit law validated on real data\n"
+  "report": "\n## AlSi10Mg laser powder bed fusion, 60 power-speed-hatch sets: SEM cell images, EBSD images, raw stress-strain curves, Vickers, Archimedes and XCT porosity tables (Zenodo 10008435; descriptor Data in Brief 2024 doi:10.1016/j.dib.2024.110130; research paper doi:10.1016/j.addma.2023.103804)\nState: prospective, filled 2026-10-06 from repository metadata (DataCite, Zenodo record pages) and the open descriptor full text read through Undermind; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host. SEM images sit in a .pptx and a zip whose inner format is unverified; open the zip listing before any pilot. Sister Ti-6Al-4V set already carded (venue_luo23_ti64_lpbf.json); this card does not supersede it. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 pass, R4 pass, R5 pass, R6 fail, R7 fail, R8 check, R9 pass, R10 5, R11 check, R12 pass\n  note R3: no claim ladder on the host: expect only the claims the builder extracts itself\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | pass |  |\n| T2 | fail | R6 |\n| T3 | fail | R6 |\n| T4 | pass |  |\n| T5 | fail | R6 |\n| T6 | fail | R6 |\n| T7 | fail | R6, R7 |\nInference families open: 0 of 5 (none)\n"
  },
- "written": "2026-10-07T06:34:33-05:00"
+ "written": "2026-10-07T07:41:43-05:00"
 }

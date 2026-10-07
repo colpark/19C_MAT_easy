@@ -20,44 +20,42 @@
  },
  "observables": [
   {
-   "name": "solidification cell equivalent diameter from SEM (32 small-hatch sets)",
+   "name": "solidification cell equivalent diameter from SEM 5000x fields (reader S4d)",
    "level": "M",
-   "validated_synthetic": null,
-   "validated_real": null,
-   "routes": 1,
-   "notes": "validation route: authors' per-set mean and SD (Table 7: means 0.77 to 1.29 um, per-cell SD 0.39 to 1.02 um)"
+   "modality": "SE",
+   "series": true,
+   "validated_synthetic": false,
+   "validated_real": false,
+   "notes": "S4d failed its synthetic constant-bias gate (slope -0.156); exploratory real: ratio to author cell CSV 0.96 (CV 0.086), Spearman 0.39"
   },
   {
-   "name": "porosity",
+   "name": "ultimate tensile strength (maximum engineering stress) from raw curves (S4e)",
    "level": "M",
-   "validated_synthetic": null,
-   "validated_real": null,
-   "routes": 2,
-   "notes": "XCT table against Archimedes table for all 60 sets (both author tables; XCT means 0.045 to 14.4 percent, Archimedes 0.26 to 16.4 percent); raw XCT on request"
+   "modality": "curve",
+   "series": true,
+   "validated_synthetic": true,
+   "validated_real": true,
+   "notes": "stress = load/area (standard instrument equation); matches the authors table (mean ratio 1.00, max |diff| 27 MPa)"
   },
   {
-   "name": "yield, UTS, elongation and modulus from raw stress-strain curves",
-   "level": "M",
-   "validated_synthetic": null,
-   "validated_real": null,
-   "routes": 1,
-   "notes": "three duplicates per set, 178 tested; YS means 150 to 240 MPa with per-set SD 0 to 41 MPa; UTS 184 to 388 MPa with SD 0 to 78 MPa"
+   "name": "0.2 % offset yield from raw curves (S4e)",
+   "level": "A",
+   "modality": "curve",
+   "validated_synthetic": true,
+   "validated_real": true,
+   "notes": "strain from the authors DIC virtual extensometer (A); ratio 0.98, Spearman 0.79 vs authors yields; T4 only"
   },
   {
-   "name": "Vickers microhardness",
-   "level": "M",
-   "validated_synthetic": null,
-   "validated_real": null,
-   "routes": 1,
-   "notes": "table only"
+   "name": "porosity (XCT and Archimedes, author tables)",
+   "level": "A",
+   "modality": "XCT",
+   "notes": "author segmentation and author density measurements: T4 only"
   },
   {
-   "name": "surface roughness",
-   "level": "M",
-   "validated_synthetic": null,
-   "validated_real": null,
-   "routes": 1,
-   "notes": "XCT-derived table"
+   "name": "Vickers microhardness (author table)",
+   "level": "A",
+   "modality": "indentation",
+   "notes": "author table only"
   }
  ],
  "design": {
@@ -76,8 +74,8 @@
   ],
   "match_classes": 32,
   "cross_modal_identity": false,
-  "separability_ratio": null,
-  "sampling": null,
+  "separability_ratio": 0.03395292653004844,
+  "sampling": "chosen",
   "m_observables_per_entity": 5
  },
  "laws": [
@@ -113,13 +111,13 @@
  },
  "sem": {
   "modes": [
-   "check (not stated in the descriptor)"
+   "SE (ETD)"
   ],
   "image_count": 160,
   "images_per_condition": 5,
   "native_metadata": true,
   "magnification_fixed": false,
-  "field_selection": null,
+  "field_selection": "curated",
   "co_registered": [],
   "same_specimen": [
    "EBSD (grip regions, images in .pptx only)",
@@ -134,6 +132,7 @@
    ".zip (inner format check)",
    ".xlsx"
   ],
+  "note_round2": "fields a-d placed by the authors on the annotated overviews (desk B2): curated, R7 fails, T7 out",
   "magnification_leak": false,
   "slide_exports": [
    "files/[IR] SEM AlSi10Mg cell.pptx",

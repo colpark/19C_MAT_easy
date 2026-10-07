@@ -420,3 +420,58 @@ reason: Track S kit round 2: throttle/skip/error bodies (fetch_s), redundant twi
 - `trackS/m0_s.py` 132e363bfc574ec60d89447e18a0528ee703ebaf9a4d977911183e925a440736
 - `trackS/tests/test_k2.py` d7013f1fc6a0166776992c2a43795d101e1353c58efad9c4dada4ed3234c49dc
 - `trackS/cards/stinville2022.json` f5c98c31a11ae935253b1474090a30549701d92d9deabb3db0e9aefbc2210b44
+
+## S4a2 (2026-10-07T07:05:14-05:00)
+
+reason: AM Bench reader S4a-2: amb2_reader.py (sigma3 <= 0.10 from the dev pads, majority 20 um from synthetic dev seeds), synth_amb2.py (dev statistics), measure_amb2.py (stitch), validate_amb2.py; before any held-out single track
+
+- `trackS/readers/amb2_reader.py` c51dc8817fe7e478574acfa60e023b583c4b49031d36c4525be7319088b5c6bc
+- `trackS/readers/synth_amb2.py` cbc4d64a9431025f23409fe4c3df159b38ffa94e9a7dbe53ea2c4be92c09a5d8
+- `trackS/readers/measure_amb2.py` eeed7ec3a72b85ca5f645bd7804b02d412fa8f1561746f21bf4cb77be726c9b6
+- `trackS/readers/validate_amb2.py` e12bd269f4fa0afaa681165182e7b2d77e1b06f3daf0a8afc39d49a49c25caad
+- `trackS/readers/dev_amb2.py` 9060e8e2d66a2a653e414d994c6fb48dcd988612a8bece1bf8c9e6f516f5fe0f
+
+## S4a2rv (2026-10-07T07:08:05-05:00)
+
+reason: realval_amb2.py (held-out 21 tracks vs NIST Table 4), frozen before running
+
+- `trackS/readers/realval_amb2.py` d491d255865f72bb7c4af313484bc3bfacc83f941f25eebb35033e207128a7bb
+
+## S4d-phys (2026-10-07T07:11:59-05:00)
+
+reason: AlSi10Mg physics table (laws pre-registered before any per-set value from our readers)
+
+- `trackS/physics_alsi.py` e1d18886f477a04f3ae97882ddd268b3a6f101ff0fbc505a44c3089140a29989
+
+## S4d (2026-10-07T07:39:17-05:00)
+
+reason: AlSi10Mg cell reader S4d: alsi_reader.py (skeleton cells, K_WALL 0.3, sigma 0.7, window 5 um, min 0.02 um2, B0 0.908 from synthetic dev seeds), synth_alsi.py (dilation bug fixed, recalibrated), validate_alsi.py; before any real field
+
+- `trackS/readers/alsi_reader.py` 62aee51b9bb88b511172eba60224ba891bcaba54b8ecfbb47b7ac81e7f159176
+- `trackS/readers/synth_alsi.py` 03351632ab8d8f1b03d4aa65774539dad096c88bbf62304683adbaeec09e1605
+- `trackS/readers/validate_alsi.py` 636b2db3d295b70af75119b2f0e199f71fc812e1662cee3fd3f894dbb04c1777
+
+## S4d-rv (2026-10-07T07:39:48-05:00)
+
+reason: realval_alsi.py (exploratory held-out vs author cell CSVs), frozen before running
+
+- `trackS/readers/realval_alsi.py` 363afbe5414489d82183ba4c1c87c29b1d606f779dada864f3d99551fbc9917d
+
+## S4e (2026-10-07T07:40:36-05:00)
+
+reason: AlSi10Mg S4e: validate_yield_alsi.py (D1c in the DIC regime) and curves_alsi.py (UTS M, yield A), before real curves
+
+- `trackS/readers/validate_yield_alsi.py` 3aaa8a669df7f77a8c9e538af7bdfbc3b0f0fc1a9d3390a6587ca601d9fb535a
+- `trackS/readers/curves_alsi.py` 44262fb14915a3edc7327602310c3aa1f01ed6049a7faa5338f2b8e7d6ede02d
+
+## S4e-b (2026-10-07T07:40:54-05:00)
+
+reason: curves_alsi.py: skip and log non-numeric set headers (deposit quirk)
+
+- `trackS/readers/curves_alsi.py` 275e60c48342d8a3e10598809a75832fdf0a646ed5930110509846831a2a38a0
+
+## S4e-c (2026-10-07T07:41:02-05:00)
+
+reason: curves_alsi.py: keep numeric cells only ('No data' cells in the deposit)
+
+- `trackS/readers/curves_alsi.py` b72d32944ddf1ebd70697f861226c28802a3988243266080a61bb3e5cb45ab44
