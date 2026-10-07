@@ -227,3 +227,30 @@ reason: generate_crfeni: apply Q1d restrictively before selection and balance
 reason: generate_crfeni: audit tags after Q1d
 
 - `trackD/generate_crfeni.py` 8512d4de3f53c446d1639fe4c63ef3760dea086758809aa9ec8a5494b65d13c0
+
+## B12 (2026-10-06T19:26:41-05:00)
+
+reason: Allende claims rebuilt from full verbatim sentences (V4-E12 repair); D3 split; D4 decided from the Fe energy range; rebuilt claims pending Q1c
+
+- `allende/physics_v2.py` eee362560253f65ab17bcdc792aafeda15870125453d89824ce2457b77af6f7f
+- `allende/generate_v2.py` 3f9bf082dc4734babfbd9ae1e69b6280f86e356bc8e822e26bfb021a02165669
+
+## B12 (2026-10-06T19:26:49-05:00)
+
+reason: Allende claims rebuilt from full verbatim sentences (V4-E12 repair); D3 split; D4 decided from the Fe energy range; rebuilt claims pending Q1c (indent fix)
+
+- `allende/physics_v2.py` eee362560253f65ab17bcdc792aafeda15870125453d89824ce2457b77af6f7f
+- `allende/generate_v2.py` e9568e76042675001f8f86f576d89d82d5ffbe758bde79674ac841dd23a374d4
+
+## B12b (2026-10-06T19:27:24-05:00)
+
+reason: generate_v2: T4 balance also enforces the 28 % floor (B10c enforced only the 38 % ceiling)
+
+- `allende/generate_v2.py` 1b1e6af20ba74dee971e1f509e7dda56ee0ce884ef805a38fb9f5cd5c94d8fab
+
+## B12c (2026-10-06T19:27:28-05:00)
+
+reason: Q1c audit script written (not run; waits for quote approval)
+
+- `allende/audit_q1c.py` ded6399bca8a29b9108ce2b8ee0f4b6e4e0f76f419fe505305865fd720d6fa42
+- `allende/audit_q1b_prompts.py` a712af09567aa53715add0ab40a27e1125ac713a47494cc19b221d94357469db

@@ -62,6 +62,22 @@ Same model, prompts and restrictive rule as Q1b (raw-data procedure prompt, pars
 - **Quote id to approve: Q1d-v4-audit-crfeni.**
 - **Approved by David 2026-10-06 and run:** 12 calls (one template call fewer than quoted: the build has 3 decidable kinds), actual $0.0432 (expected $0.09, cap $0.80). Applied restrictively (D9).
 
+## Q1c-v4-reaudit-allende-claims (2026-10-06): parse re-audit of the rebuilt full-sentence Allende claims (NOT RUN; waits for approval)
+
+B12 rebuilt the ladder claims from full verbatim sentences (V4-E12 repair). Q1b's parse verdicts covered the old fragments, so the rebuilt
+claims are pending. Only claims that can still become items are audited. M2, A1, A2 and A3 rest on procedures Q1b rejected, and M1 is
+undecided (Cr z = 4.1). Script: allende/audit_q1c.py (frozen B12c), with the same prompts as Q1b.
+
+| Stage | Calls | Mean input tokens | Mean output tokens | Token basis | Expected $ |
+|---|---|---|---|---|---|
+| claim parse (D1, D2, D3, D3b, D4, A4, I1) | 7 | 350 | 150 | Q1b parse calls | 0.020 |
+| cannot-tell (rebuilt A4, I1) | 2 | 400 | 150 | Q1b cannot-tell calls | 0.006 |
+| **Total** (openai/gpt-5.6-sol) | **9** | | | | **0.03** |
+
+- Worst case: 9 calls at 2,000 input and 4,000 output tokens = $0.40. Hard cap $0.50.
+- If every audit agrees: T4 gains D1, D2 and M3 (contradicted), D3, D3b and D4 (consistent), and A4 and I1 (cannot tell). The B12b balance trim then keeps 2/2/2, for about 9 Allende items.
+- **Quote id to approve: Q1c-v4-reaudit-allende-claims.**
+
 ## Planned (not yet quoted)
 - **Q2:** v4.0 evaluation with gpt-5-nano. Arms: A0, B0, B1, R0 and R0all on the 248 v3 items; A0, B0, T-code and T-FM on the raw-array items; k >= 3 where claims are made.
   For scale: v3.3 Part B spent $1.87 on 785 trials, with A0 means of 47.7K input and 5.8K output tokens per trial.
