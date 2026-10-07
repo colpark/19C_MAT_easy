@@ -525,3 +525,14 @@ reason: C0 intake: source cards (fallback decision), manifest, B1 origins, KNOWN
 - `trackC/inventory/inventory_xm46_Li7NbO6.json` 8550a7e51793e72bf8067c92b2629ce8caa5c76e3377df47ab6b12f30ac7a5aa
 - `trackC/inventory/inventory_xm46_structures.json` 8cd178b45fcaf04de4ec655b5277289640185a784bde009a5ee0bc7777e05e68
 - `trackC/inventory/inventory_xm46_trajectories.json` f5a3ce3d362635d0246ae81ba91b2ac67342214c405eccb2982d5361834212fd
+
+## C1 (2026-10-07T21:37:57+00:00)
+
+reason: pipeline cards builder-frozen, blind audit pending (Q-C1 quoted, not run); rule gaps VC-E05, VC-E12; D3 cost units in the cards
+
+- `trackC/card.py` 085ed5b4501636d05850b927748345c874ce8717ebfa0ed5fcbf20a546c1e0c5
+- `trackC/card_jarvis.py` 11be053585b8a798f8d91f5b5e2dd158049dceb8108db86deae77ebd6124b10c
+- `trackC/CARD_liion.json` 90844acb064ab4d1ff3098367d1066d7434fb3fdf6398bf563ac40ad58356e4b
+- `trackC/CARD_jarvis.json` 0efdd007902330b4f7ccafe08601fe592804eb54b0c7a16e0b9a3630337edc81
+- `trackC/AUDIT_PACKET_C1.md` 6b32578b3244ff0bef429de408dca35dd37ddf8fa779766cd803a7790b06c07b
+- `COST_QUOTE_trackC.md` c7c0d283b31983a0bb289683a7a7fbb5d6074b4f7ca4bcf66c391f4749d1ee4c

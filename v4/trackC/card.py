@@ -287,8 +287,49 @@ def check(card):
     return errs
 
 
+AUDIT_SYSTEM = ('You audit a computational screening pipeline description. Use only the quoted text. Answer in JSON with '
+                'keys: order_after (the stage this one follows, or "first"), observable, comparator (one of >, >=, <, <=, '
+                '==, in, class, computed, unstated), threshold (number or text, or "unstated"), unit, decision_type (one '
+                'of static, recovery, refinement, escalation, literature, engine, outcome_class), rule_fully_stated '
+                '(true/false), missing (what the text leaves unstated). When the text is ambiguous, say so; never guess.')
+LAW_SYSTEM = ('You audit a law used by a computational pipeline. Use only the quoted text. Answer in JSON with keys: '
+              'law_class (definition, fit, independent, agreement), inputs, target, constants_with_source, '
+              'stated_assumptions, missing.')
+
+
+def audit_packet(cards, out):
+    """Blind second-family audit packet (I3): spans, counts and stage names only; never our frozen readings,
+    comparators, thresholds or keys. One call per stage and per law, temperature 0."""
+    L = ['# AUDIT_PACKET_C1 (blind pipeline-card audit; quote Q-C1; NOT RUN)', '',
+         'Auditor: a model family different from the evaluated models (I3), temperature 0, fixed prompts. The auditor '
+         'sees the verbatim spans below and never the builder card, its frozen readings or any key. On disagreement '
+         'the restrictive reading wins; an approved audit that changes a card triggers a refreeze and regeneration.', '',
+         '## System prompt (stages)', '', '```', AUDIT_SYSTEM, '```', '', '## System prompt (laws)', '', '```',
+         LAW_SYSTEM, '```', '']
+    n = 0
+    for c in cards:
+        L += [f'## {c["card"]} ({c["pipeline_id"]})', '', f'Source: {c["source"]["paper"]}', '']
+        names = [s['name'] for s in sorted(c['stages'], key=lambda s: s['order'])]
+        for s in sorted(c['stages'], key=lambda s: s['order']):
+            n += 1
+            L += [f'### call {n}: stage "{s["name"]}"', '',
+                  f'Pipeline stage names in the paper\'s order of mention: {", ".join(names)}.', '',
+                  f'Quoted text ({s["span_source"]}):', '', '> ' + s['verbatim_span'], '',
+                  f'Stated count after this stage: {s["stated_count"]} ({s["count_source"]})', '']
+        for d in c['derived_laws']:
+            n += 1
+            span = d.get('span', d['law'])
+            L += [f'### call {n}: law "{d["name"]}"', '', f'Quoted text ({d["source"]}):', '', '> ' + span, '']
+    L += [f'Total calls: {n}', '']
+    open(out, 'w').write('\n'.join(L))
+    print(out, n, 'calls')
+
+
 def main():
     cmd, out = sys.argv[1], sys.argv[2]
+    if cmd == 'audit-packet':
+        audit_packet([json.load(open(p)) for p in sys.argv[3:]], out)
+        return
     if cmd == 'check':
         c = json.load(open(out))
         e = check(c)
