@@ -1,12 +1,17 @@
-# v4.1 Track S (branch v4.1/2026-10-07, in progress)
-- S0: kit installed; 53/53 tests after V4-E20.
-- S1:
-  - Dryad 8/8 verified (with David's DRYAD_TOKEN, environment only).
-  - mds2-2775 is 3.37 TB: tier 1 cut to TIFF maps and documents (V4-E21, V4-E22, NIST HTTP 524).
-  - The AM Bench download is still running (latency bound).
-  - refodat absent, so S3 (cement) is waiting.
-- Stinville and Anjaria: desk checks, join, magleak and M0 done (both GO WITH CHECKS). Both readers are deferred (DESK_*.md).
-- No paid call.
+# v4.1 Track S (branch v4.1/2026-10-07): S0-S6 done for the available data (trackS/TRACKS_REPORT.md)
+- **M0 results:**
+
+  | Dataset | Pilot | M0 | Main reason |
+  |---|---|---|---|
+  | amb2022_03 | S1 | **NO-GO** | no raw SEM image; S1 depth reader failed its held-out gate vs NIST Table 4 |
+  | stinville2022 | S2 | GO WITH CHECKS | reader S4b-2 failed its segmentation gates; pilot exploratory only |
+  | anjaria2025 | S2 | GO WITH CHECKS | slip traces need DIC; reader deferred |
+  | alsi10mg_luo2024 | reserve | GO WITH CHECKS | raw tagged TIFFs; magnification independent |
+  | sa508_ebw | reserve | fetch incomplete | Mendeley error pages (V4-E24) |
+  | refodat90/91 | S3 | waiting | browser downloads absent |
+
+- No validated reader yet, so no separability pilot counts and no family opens. The decisions for David are listed at the end of TRACKS_REPORT.md.
+- No paid call. Errors V4-E20 to V4-E24.
 
 # v4 status (2026-10-06)
 

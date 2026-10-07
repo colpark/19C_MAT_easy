@@ -383,3 +383,29 @@ reason: stv_reader: domain mean over the interior (erode 3 px); S4b failed the f
 reason: realval_stv.py (held-out .ang comparison), frozen before running
 
 - `trackS/readers/realval_stv.py` 0e7d1b72945e9e752c4377f110b2dc7819b6418e41eb28bff4cd69e8be60d211
+
+## S4a (2026-10-07T00:50:20-05:00)
+
+reason: Track S pilot S1 (amb2022_03) reader amb_reader.py + synth_amb.py + validate_amb.py (A_MIN 6, lower envelope 20 um), before any real single-track measurement
+
+- `trackS/readers/amb_reader.py` 2c59a71690efad413c62f275e893b8cea2a5952324ff59ee90b06b43ed989e10
+- `trackS/readers/synth_amb.py` 23812b46da7c6fec15eccd3e041c627be95b0a475644c35874be98f77c78024e
+- `trackS/readers/validate_amb.py` eed75031e9ea3867b50213a3f90d7f52a5edd80177ed076c5ec2daecca7fd41d
+
+## S2j-amb (2026-10-07T00:51:50-05:00)
+
+reason: join rules amb2022_03 (track codes, case order by P/(vD)), before join_s.py counts
+
+- `trackS/joinrules/amb2022_03.json` b2aa3eaf4bd6439e3a14b2654360eeb4153341fbfe95fbfd12bd5c24cfbad91a
+
+## S5amb (2026-10-07T01:06:54-05:00)
+
+reason: measure_amb.py (real measurement with the frozen S4a reader)
+
+- `trackS/pilots/measure_amb.py` b52cac8f70a15d46f9a5998bb448dc18672c304443bed294685c2f2031922fc3
+
+## S2j-alsi (2026-10-07T01:17:48-05:00)
+
+reason: join rules alsi10mg_luo2024 (sets 1-32 from the PSP table), before join counts
+
+- `trackS/joinrules/alsi10mg_luo2024.json` ea1e49a759ab6ce2a26223dc91358489e25bd652527708ca8ce67892f09eb1ed

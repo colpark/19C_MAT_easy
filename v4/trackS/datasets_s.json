@@ -19,17 +19,16 @@
        "names": [
         "*.txt",
         "*.pdf",
-        "*.tif",
-        "*.tiff",
-        "*.oipx"
+        "*Site*Map Data*.ctf"
        ]
       },
       {
        "tier": 2,
        "names": [
-        "*.ctf",
-        "*.h5oina",
-        "*.csv"
+        "*.tif",
+        "*.tiff",
+        "*.oipx",
+        "*.ctf"
        ]
       },
       {
@@ -39,7 +38,7 @@
        ]
       }
      ],
-     "tier_note": "V4-E21 (2026-10-07): the landing page lists 10,747 files, 3.37 TB (raw .ebsp patterns 2.66 TB, raw EDS .raw cubes 0.58 TB, Aztec .dat 90 GB). Tier 1 keeps SEM TIFFs, .ctf and .oipx exports, README and PDFs (~8 GB); tier 2 the .h5oina and CSV exports (~31 GB); tier 3 the raw patterns and cubes. V4-E22 (2026-10-07 02:00): .ctf moved to tier 2 because data.nist.gov returns HTTP 524 (origin timeout) on the ~70 MB .ctf files; the TIFF maps the S1 reader needs come first."
+     "tier_note": "V4-E21 (2026-10-07): the landing page lists 10,747 files, 3.37 TB (raw .ebsp patterns 2.66 TB, raw EDS .raw cubes 0.58 TB, Aztec .dat 90 GB). Tier 1 keeps SEM TIFFs, .ctf and .oipx exports, README and PDFs (~8 GB); tier 2 the .h5oina and CSV exports (~31 GB); tier 3 the raw patterns and cubes. V4-E22 (2026-10-07 02:00): .ctf moved to tier 2 because data.nist.gov returns HTTP 524 (origin timeout) on the ~70 MB .ctf files; the TIFF maps the S1 reader needs come first. V4-E23 (2026-10-07): tier 1 = documents and the single-track .ctf exports the S1 depth reader reads (native 0.25 um step); TIFF maps (borders, no pixel tag) and pad .ctf to tier 2."
     },
     {
      "repository": "direct",

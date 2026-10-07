@@ -1,0 +1,122 @@
+{
+ "dataset": "amb2022_03",
+ "pilot": "S1",
+ "decision": "NO-GO",
+ "stop": [
+  "SEM rule: no raw SEM image matched the join rules"
+ ],
+ "checks": [
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 71,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "pass",
+  "sem_images": 0,
+  "sem_native_fraction": 0.0,
+  "second_modalities": {
+   "ebsd_export": 28,
+   "ebsd_map": 22,
+   "eds_map": 13
+  },
+  "sem_images_per_level": {},
+  "magleak": "no_sem_images",
+  "pilots": [],
+  "inventory": {
+   "files": 71,
+   "images": 35,
+   "pixel_size_sources": {
+    "none": 35
+   },
+   "n_distinct_pixel_sizes": 0,
+   "detectors": {},
+   "kv": []
+  }
+ },
+ "card_changes": [
+  {
+   "field": "access.license",
+   "old": "NIST Open License (both cards)",
+   "new": "NIST open license (https://www.nist.gov/open/license), shown on data.nist.gov, absent from DataCite",
+   "evidence": "registry (repository record)"
+  },
+  {
+   "field": "readers.all_formats",
+   "old": null,
+   "new": true,
+   "evidence": "readers.json R2 pass"
+  },
+  {
+   "field": "sem.magnification_fixed",
+   "old": null,
+   "new": false,
+   "evidence": "magleak no_sem_images"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "pass",
+   "R3": "pass",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "pass",
+   "R7": "pass",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 5,
+   "R11": "pass",
+   "R12": "pass"
+  },
+  "families": {
+   "T1": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T2": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T5": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T6": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T7": [
+    "check",
+    [
+     "R5",
+     "R9 fit law validated on real data"
+    ]
+   ]
+  },
+  "report": "\n## FOLDED from the first screen: MERGED AMB2022-03 IN718 single tracks and pads (combi_ambench2022_03_in718_tracks + venue_ambench2022_tracks; mech_ambench2022_in625_tensile kept separate as AMB2022-04)\nState: merged 2026-10-06 by rule: pool a value the other card left unchecked, keep null where the other card records a failed attempt on the same fact, take the lower-scoring value on conflict, union observables and laws | Folded into the SEM screen 2026-10-06: R1 to R12 fields unchanged from the first-screen card; sem block filled only from facts stated in the first-screen cards and notes (null = not stated). SEM inclusion: met | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 pass, R4 pass, R5 check, R6 pass, R7 pass, R8 check, R9 pass, R10 5, R11 pass, R12 pass\n  note R3: no claim ladder on the host: expect only the claims the builder extracts itself\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5 |\n| T3 | check | R5, R8 |\n| T4 | check | R5 |\n| T5 | check | R5 |\n| T6 | check | R5 |\n| T7 | check | R5, R9 fit law validated on real data |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3, T5, T6, T7\nCheck, in this order: R5; R8; R9 fit law validated on real data\n"
+ },
+ "written": "2026-10-07T01:10:41-05:00"
+}

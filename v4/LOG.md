@@ -198,3 +198,15 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - anjaria2025: raw tiles show only speckle at the highest strain; slip traces need DIC; reader deferred.
 - m0_s.py: stinville2022 GO WITH CHECKS (pilot pending, condition on DIC only, magnification untested); anjaria2025 GO WITH CHECKS (no native pixel size, pilot pending).
 - Calvat et al. 2026 (Adv. Eng. Mater., 10.1002/adem.202503166) found by web search: not confirmed as the descriptor of anjaria2025 (600 C fatigue / grain boundary sliding).
+- V4-E23: tier 1 = documents + single-track .ctf (27 files, 1.67 GB); fetch restarted --jobs 2 at 2026-10-07T00:51:10-05:00.
+- S4a held-out real gate for amb2022_03, frozen before any real single-track measurement (2026-10-07 ~01:00): per laser case except 1.1 (depth censored by the field height; its 'bottom' maps cannot be stitched without an offset), our mean melt-pool depth over the 3 repeats must lie within max(10 %, 2 x NIST SD) of the NIST Table 4 mean in >= 5 of 6 cases; and our deepest/shallowest case-mean ratio must reproduce the desk ratio 4.48 within +-15 %. Width deferred (failed the synthetic gate 8/10).
+- CORRECTION before any real measurement (logged): the "desk depth ratio 4.48" is the screen's separability ratio on NIST Table 4 depths (minimum between/within over cases adjacent in depth order: 3.1 vs 2.2, 10.4 / sqrt((2.0^2 + 2.6^2)/2) = 4.48), not a deepest/shallowest ratio. The S4a ratio check therefore reads: our minimum adjacent between/within ratio (depth order, case 1.1 excluded, n = 3 tracks per case) must reach 2 (the screens' target); it is reported against 4.48. The per-case depth gate (>= 5 of 6 cases within max(10 %, 2 NIST SD)) is unchanged.
+- amb2022_03 M0 NO-GO (SEM rule: mds2-2775 holds no raw SEM image; EBSD/EDS exports and rendered maps only). S1 reader S4a: synthetic depth 10/10, width 8/10 (deferred); held-out real 0/6 cases within tolerance, min adjacent ratio 0.09 (fail): deferred. Reserves fetched at tier 1: alsi10mg_luo2024 (12 files, 0.70 GB) and sa508_ebw (1068 files, 19.40 GB), --jobs 2 each, 2026-10-07T01:11:05-05:00.
+- sa508_ebw: 296 ok, 772 failed (Mendeley returned a 395-byte JSON error wrapping an HTML page for each). One retry with --jobs 1 at 2026-10-07T01:20:05-05:00, per the prompt (stop after one retry).
+- sa508_ebw retry: 327 ok, 741 failed (V4-E24); stopped after one retry; no workaround.
+- fetch_s.py inputs (INPUTS_trackS.md):
+  - alsi10mg_luo2024: 12 files, 0.705 GB, repository-verified 12, manifest sha256 1e7aa873c7bcf8b5bed86c63f10ec2c3738325c11ccedfcdaa20acc0a6c26cf7
+  - amb2022_03: 71 files, 7.297 GB, repository-verified 70, manifest sha256 d7ed3344f9506009384dd266b41591aa62b202ba0f4ded297cf55ff31530c3d9
+  - anjaria2025: 4 files, 5.496 GB, repository-verified 4, manifest sha256 913584e53cb82b63d4ea0b1115bb0ef26fb77d2d6163faa9a7547c21a4fa1b3b
+  - sa508_ebw: 1068 files, 4.873 GB, repository-verified 327, manifest sha256 712a998c006563df97ae41e05e47435969eed2349fbe22c2b6ad78faa5cfcb68
+  - stinville2022: 4 files, 4.045 GB, repository-verified 4, manifest sha256 8d6cbbb8bf420831e0af8f0379cbea8af4fc6cbfa92b1f82ec5d22bfab9e3d9c

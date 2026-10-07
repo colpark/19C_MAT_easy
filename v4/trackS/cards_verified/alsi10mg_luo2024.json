@@ -1,0 +1,143 @@
+{
+ "name": "AlSi10Mg laser powder bed fusion, 60 power-speed-hatch sets: SEM cell images, EBSD images, raw stress-strain curves, Vickers, Archimedes and XCT porosity tables (Zenodo 10008435; descriptor Data in Brief 2024 doi:10.1016/j.dib.2024.110130; research paper doi:10.1016/j.addma.2023.103804)",
+ "state": "prospective, filled 2026-10-06 from repository metadata (DataCite, Zenodo record pages) and the open descriptor full text read through Undermind; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host. SEM images sit in a .pptx and a zip whose inner format is unverified; open the zip listing before any pilot. Sister Ti-6Al-4V set already carded (venue_luo23_ti64_lpbf.json); this card does not supersede it. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)",
+ "access": {
+  "raw_downloadable": true,
+  "license": "CC BY 4.0"
+ },
+ "readers": {
+  "all_formats": true,
+  "notes": "xlsx tables (openpyxl), Stress-strain curves.zip with Excel inside (178 specimens), 'SEM AlSi10Mg cell.pptx' 172.5 MB (python-pptx extracts embedded images, no instrument metadata), 'SEM AlSi10Mg cell (high magn).zip' 420.2 MB inner format unverified, EBSD only as images in an 89.2 MB .pptx (no .ang or .ctf), Grain-cell morphology.zip 17.9 MB and Defect pore morphology.zip 3.3 MB (Excel)"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": true,
+  "claim_ladder": false
+ },
+ "calibration": {
+  "absolute_scales": true,
+  "offset_free_quantities": true,
+  "notes": "SEM pixel size not stated; check whether the high-magnification zip holds TIFF with databar or tags. Layer 60 um fixed; 7 powers (60 to 460 W), 8 speeds (250 to 3000 mm/s), 2 hatches (100, 150 um)"
+ },
+ "observables": [
+  {
+   "name": "solidification cell equivalent diameter from SEM (32 small-hatch sets)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "validation route: authors' per-set mean and SD (Table 7: means 0.77 to 1.29 um, per-cell SD 0.39 to 1.02 um)"
+  },
+  {
+   "name": "porosity",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "XCT table against Archimedes table for all 60 sets (both author tables; XCT means 0.045 to 14.4 percent, Archimedes 0.26 to 16.4 percent); raw XCT on request"
+  },
+  {
+   "name": "yield, UTS, elongation and modulus from raw stress-strain curves",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "three duplicates per set, 178 tested; YS means 150 to 240 MPa with per-set SD 0 to 41 MPa; UTS 184 to 388 MPa with SD 0 to 78 MPa"
+  },
+  {
+   "name": "Vickers microhardness",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "table only"
+  },
+  {
+   "name": "surface roughness",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "XCT-derived table"
+  }
+ ],
+ "design": {
+  "entities": 180,
+  "series": [
+   {
+    "factor": "laser power x scan speed at 100 um hatch (sets with SEM cell images on the tensile grips)",
+    "levels": 32,
+    "shared_entities": true
+   },
+   {
+    "factor": "laser power x scan speed x hatch (all sets, tensile and porosity)",
+    "levels": 60,
+    "shared_entities": true
+   }
+  ],
+  "match_classes": 32,
+  "cross_modal_identity": false,
+  "separability_ratio": null,
+  "sampling": null,
+  "m_observables_per_entity": 5
+ },
+ "laws": [
+  {
+   "name": "cell-size strengthening, yield strength linear in d_cell^-1/2 (Hall-Petch type) across small-hatch sets",
+   "class": "fit",
+   "params": 2,
+   "levels": 32,
+   "validated": null
+  },
+  {
+   "name": "cell size against the power/speed cooling-rate proxy, d = a (P/v)^n",
+   "class": "fit",
+   "params": 2,
+   "levels": 32,
+   "validated": null
+  },
+  {
+   "name": "XCT porosity against Archimedes porosity per set",
+   "class": "agreement",
+   "params": 0,
+   "levels": 60,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 2,
+  "textbook_neutral": null
+ },
+ "claims": {
+  "source": "paper",
+  "count": null
+ },
+ "sem": {
+  "modes": [
+   "check (not stated in the descriptor)"
+  ],
+  "image_count": 160,
+  "images_per_condition": 5,
+  "native_metadata": true,
+  "magnification_fixed": false,
+  "field_selection": null,
+  "co_registered": [],
+  "same_specimen": [
+   "EBSD (grip regions, images in .pptx only)",
+   "raw tensile curves",
+   "Vickers hardness",
+   "Archimedes density",
+   "XCT porosity and roughness tables"
+  ],
+  "annotations_in_deposit": null,
+  "formats": [
+   ".pptx",
+   ".zip (inner format check)",
+   ".xlsx"
+  ],
+  "magnification_leak": false,
+  "slide_exports": [
+   "files/[IR] SEM AlSi10Mg cell.pptx",
+   "files/[IR] EBSD AlSi10Mg grain.pptx"
+  ]
+ }
+}

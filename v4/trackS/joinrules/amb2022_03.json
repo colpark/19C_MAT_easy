@@ -1,6 +1,6 @@
 {
  "dataset": "amb2022_03",
- "_todo": "Fill maps.line and the SEM and EDS patterns after reading 2775_README.txt, the AMB2022-03 measurement PDF and the mds2-2718 README: which line ids (folder 'multiple traces L-01 to L212') and pad folders belong to which laser case (power, speed, spot), which files are SEM images (SE or BSE) and which are EDS maps or spectra. The EBSD exports seen so far are AZtec style 'Specimen N Area N Site N Map Data N_<line>-IPF-Z.csv/.tif'. Then freeze this file before magleak_s.py.",
+ "_source": "AMB2022-03-Microstructure Measurements.pdf (Table 1, Figure 1, folder layout) and 2775_README.txt. Track code L<case digits><repeat> (L-0r for the baseline case 0, some names drop the L, one uses '-L'); 'bottom' marks the second field of the deep case-1.1 tracks. Cases ordered by areal energy density P/(v D) in J/mm2 (computed from Table 1, fixed before any measurement).",
  "rules": [
   {
    "name": "docs",
@@ -8,43 +8,553 @@
    "role": "document"
   },
   {
-   "name": "EBSD exports per line",
-   "path_regex": "EBSD maps and map data files/(?P<line>L-?\\d+)[^/]*/.*?Specimen (?P<specimen>\\d+) Area (?P<area>\\d+) Site (?P<site>\\d+)",
+   "name": "track EBSD export",
+   "path_regex": "Traces/.*Map Data \\d+[_-](?P<track>L?-?\\d{2,3})(?P<part> bottom)?\\.ctf$",
    "role": "ebsd_export"
   },
   {
-   "name": "EBSD exports (other)",
-   "path_regex": "(?i)(IPF|BC \\+|band contrast|EBSD)",
+   "name": "track EBSD h5oina",
+   "path_regex": "Traces/.*Map Data \\d+[_-](?P<track>L?-?\\d{2,3})(?P<part> bottom)?\\.h5oina$",
    "role": "ebsd_export"
   },
   {
-   "name": "EDS (pattern to confirm)",
-   "path_regex": "(?i)(EDS|EDX)",
+   "name": "track EBSD maps",
+   "path_regex": "Traces/.*Map Data \\d+[_-](?P<track>L?-?\\d{2,3})(?P<part> bottom)?-(?P<map>[^/]+)\\.tif$",
+   "role": "ebsd_map"
+  },
+  {
+   "name": "track EDS maps",
+   "path_regex": "Traces/.*_Trace (?P<track>L-?\\d{2,3}) [^/]*EDS map_(?P<line>[^/]+)\\.tiff?$",
    "role": "eds_map"
   },
   {
-   "name": "SEM images per line (pattern to confirm)",
-   "path_regex": "^files/mds2-2775/.*?(?P<line>L-?\\d+)?[^/]*\\.tiff?$",
-   "role": "sem_image"
+   "name": "L112 montage (P3)",
+   "path_regex": "Traces/[^/]*P3-112[^/]*/.*\\.(tif|tiff|ctf|h5oina)$",
+   "role": "ebsd_map",
+   "set": {
+    "track": "L112",
+    "part": "montage"
+   }
   },
   {
-   "name": "optical cross sections mds2-2718 (pattern to confirm)",
-   "path_regex": "^files/mds2-2718/.*\\.tiff?$",
-   "role": "optical_image"
+   "name": "pad EBSD",
+   "path_regex": "Pads/.*\\.(ctf|h5oina)$",
+   "role": "ebsd_export",
+   "set": {
+    "case": "pad"
+   }
   },
   {
-   "name": "thermography mds2-2716",
-   "path_regex": "^files/mds2-2716/",
+   "name": "pad maps",
+   "path_regex": "Pads/.*Map Data-[^/]+\\.tif$",
+   "role": "ebsd_map",
+   "set": {
+    "case": "pad"
+   }
+  },
+  {
+   "name": "pad EDS maps",
+   "path_regex": "Pads/.*EDS map[^/]*\\.tiff?$",
+   "role": "eds_map",
+   "set": {
+    "case": "pad"
+   }
+  },
+  {
+   "name": "csv exports",
+   "path_regex": "\\.csv$",
+   "role": "ebsd_export"
+  },
+  {
+   "name": "raw EBSD patterns",
+   "path_regex": "\\.(ebsp|uebsp)$",
+   "role": "ebsd_patterns"
+  },
+  {
+   "name": "raw EDS cubes",
+   "path_regex": "\\.raw$",
+   "role": "eds_spectrum"
+  },
+  {
+   "name": "AZtec project",
+   "path_regex": "\\.(oipx|dat)$",
    "role": "other"
   }
  ],
  "maps": {
-  "line": {}
+  "track": {
+   "L-01": {
+    "case": "0",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "4.43"
+   },
+   "L-02": {
+    "case": "0",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "4.43"
+   },
+   "L-03": {
+    "case": "0",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "4.43"
+   },
+   "L111": {
+    "case": "1.1",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "L-111": {
+    "case": "1.1",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "111": {
+    "case": "1.1",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "112": {
+    "case": "1.1",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "L112": {
+    "case": "1.1",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "L-112": {
+    "case": "1.1",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "L113": {
+    "case": "1.1",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "L-113": {
+    "case": "1.1",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "113": {
+    "case": "1.1",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "49",
+    "E_J_mm2": "6.06"
+   },
+   "121": {
+    "case": "1.2",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L-121": {
+    "case": "1.2",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L121": {
+    "case": "1.2",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L-122": {
+    "case": "1.2",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L122": {
+    "case": "1.2",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "122": {
+    "case": "1.2",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L123": {
+    "case": "1.2",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "123": {
+    "case": "1.2",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L-123": {
+    "case": "1.2",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "960",
+    "spot_um": "82",
+    "E_J_mm2": "3.62"
+   },
+   "L211": {
+    "case": "2.1",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "211": {
+    "case": "2.1",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "L-211": {
+    "case": "2.1",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "212": {
+    "case": "2.1",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "L-212": {
+    "case": "2.1",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "L212": {
+    "case": "2.1",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "L213": {
+    "case": "2.1",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "213": {
+    "case": "2.1",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "L-213": {
+    "case": "2.1",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "1200",
+    "spot_um": "67",
+    "E_J_mm2": "3.54"
+   },
+   "221": {
+    "case": "2.2",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "L-221": {
+    "case": "2.2",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "L221": {
+    "case": "2.2",
+    "rep": "1",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "L-222": {
+    "case": "2.2",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "L222": {
+    "case": "2.2",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "222": {
+    "case": "2.2",
+    "rep": "2",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "L223": {
+    "case": "2.2",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "L-223": {
+    "case": "2.2",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "223": {
+    "case": "2.2",
+    "rep": "3",
+    "P_W": "285",
+    "v_mm_s": "800",
+    "spot_um": "67",
+    "E_J_mm2": "5.32"
+   },
+   "311": {
+    "case": "3.1",
+    "rep": "1",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L-311": {
+    "case": "3.1",
+    "rep": "1",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L311": {
+    "case": "3.1",
+    "rep": "1",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "312": {
+    "case": "3.1",
+    "rep": "2",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L312": {
+    "case": "3.1",
+    "rep": "2",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L-312": {
+    "case": "3.1",
+    "rep": "2",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L313": {
+    "case": "3.1",
+    "rep": "3",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "313": {
+    "case": "3.1",
+    "rep": "3",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L-313": {
+    "case": "3.1",
+    "rep": "3",
+    "P_W": "325",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "5.05"
+   },
+   "L321": {
+    "case": "3.2",
+    "rep": "1",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "L-321": {
+    "case": "3.2",
+    "rep": "1",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "321": {
+    "case": "3.2",
+    "rep": "1",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "L322": {
+    "case": "3.2",
+    "rep": "2",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "322": {
+    "case": "3.2",
+    "rep": "2",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "L-322": {
+    "case": "3.2",
+    "rep": "2",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "L323": {
+    "case": "3.2",
+    "rep": "3",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "L-323": {
+    "case": "3.2",
+    "rep": "3",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   },
+   "323": {
+    "case": "3.2",
+    "rep": "3",
+    "P_W": "245",
+    "v_mm_s": "960",
+    "spot_um": "67",
+    "E_J_mm2": "3.81"
+   }
+  }
  },
  "condition_fields": [
   "case"
  ],
- "order": {},
- "unit_field": "line",
+ "order": {
+  "case": [
+   "2.1",
+   "1.2",
+   "3.2",
+   "0",
+   "3.1",
+   "2.2",
+   "1.1"
+  ]
+ },
+ "unit_field": "track",
  "unit_type": "track"
 }

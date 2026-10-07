@@ -1,30 +1,326 @@
 {
  "dataset": "alsi10mg_luo2024",
- "_todo": "Reserve. Open the high magnification SEM zip first: raw TIFF with tags keeps the deposit, slide exports drop it to the secondary list. Fill the process set id pattern (60 sets, triplicate specimens).",
+ "_source": "readme.txt in the high-magnification zip (32 samples = processing parameter sets 1-32, small hatch group; per sample a 2000x overview, an annotated overview and four 5000x images a-d) and 'AlSi10Mg PSP feature table.xlsx' (P, v, t, h, LED, VED per set). The annotated overview carries author drawings and is not a measurement image.",
  "rules": [
   {
-   "name": "SEM cell images",
-   "path_regex": "SEM AlSi10Mg cell.*?(?P<set>\\d+).*\\.tiff?$",
-   "role": "sem_image"
+   "name": "docs",
+   "path_regex": "(?i)(readme|\\.pptx$)",
+   "role": "document"
   },
   {
-   "name": "tensile curves",
-   "path_regex": "(?i)stress.?strain",
+   "name": "annotated overview",
+   "path_regex": "images/[^/]*_Sample(?P<set>\\d+)-Overview_Annotated\\.tif$",
+   "role": "other",
+   "set": {
+    "kind": "annotated"
+   }
+  },
+  {
+   "name": "overview 2000x",
+   "path_regex": "images/[^/]*_Sample(?P<set>\\d+)-Overview\\.tif$",
+   "role": "sem_image",
+   "set": {
+    "kind": "overview_2000x"
+   }
+  },
+  {
+   "name": "fields 5000x",
+   "path_regex": "images/[^/]*_Sample(?P<set>\\d+)-(?P<field>[a-d])\\.tif$",
+   "role": "sem_image",
+   "set": {
+    "kind": "field_5000x"
+   }
+  },
+  {
+   "name": "stress-strain",
+   "path_regex": "(?i)stress-strain curves/.*\\.(xlsx|csv)$",
    "role": "curve"
   },
   {
-   "name": "slides",
-   "path_regex": "\\.pptx$",
-   "role": "document"
+   "name": "tables",
+   "path_regex": "\\.xlsx$",
+   "role": "metadata"
+  },
+  {
+   "name": "morphology csv",
+   "path_regex": "(?i)(morphology|XCT_pore).*\\.csv$",
+   "role": "metadata"
+  },
+  {
+   "name": "archives",
+   "path_regex": "^files/[^/]*\\.zip$",
+   "role": "other"
   }
  ],
  "maps": {
-  "set": {}
+  "set": {
+   "1": {
+    "P_W": "60",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "40.000",
+    "LED_J_mm": "0.2400"
+   },
+   "2": {
+    "P_W": "160",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "106.667",
+    "LED_J_mm": "0.6400"
+   },
+   "3": {
+    "P_W": "160",
+    "v_mm_s": "800",
+    "h_mm": "0.1",
+    "VED_J_mm3": "33.333",
+    "LED_J_mm": "0.2000"
+   },
+   "4": {
+    "P_W": "160",
+    "v_mm_s": "1350",
+    "h_mm": "0.1",
+    "VED_J_mm3": "19.753",
+    "LED_J_mm": "0.1185"
+   },
+   "5": {
+    "P_W": "260",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "173.333",
+    "LED_J_mm": "1.0400"
+   },
+   "6": {
+    "P_W": "260",
+    "v_mm_s": "800",
+    "h_mm": "0.1",
+    "VED_J_mm3": "54.167",
+    "LED_J_mm": "0.3250"
+   },
+   "7": {
+    "P_W": "260",
+    "v_mm_s": "1350",
+    "h_mm": "0.1",
+    "VED_J_mm3": "32.099",
+    "LED_J_mm": "0.1926"
+   },
+   "8": {
+    "P_W": "260",
+    "v_mm_s": "1900",
+    "h_mm": "0.1",
+    "VED_J_mm3": "22.807",
+    "LED_J_mm": "0.1368"
+   },
+   "9": {
+    "P_W": "360",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "240.000",
+    "LED_J_mm": "1.4400"
+   },
+   "10": {
+    "P_W": "360",
+    "v_mm_s": "800",
+    "h_mm": "0.1",
+    "VED_J_mm3": "75.000",
+    "LED_J_mm": "0.4500"
+   },
+   "11": {
+    "P_W": "360",
+    "v_mm_s": "1350",
+    "h_mm": "0.1",
+    "VED_J_mm3": "44.444",
+    "LED_J_mm": "0.2667"
+   },
+   "12": {
+    "P_W": "360",
+    "v_mm_s": "1900",
+    "h_mm": "0.1",
+    "VED_J_mm3": "31.579",
+    "LED_J_mm": "0.1895"
+   },
+   "13": {
+    "P_W": "360",
+    "v_mm_s": "2450",
+    "h_mm": "0.1",
+    "VED_J_mm3": "24.490",
+    "LED_J_mm": "0.1469"
+   },
+   "14": {
+    "P_W": "360",
+    "v_mm_s": "3000",
+    "h_mm": "0.1",
+    "VED_J_mm3": "20.000",
+    "LED_J_mm": "0.1200"
+   },
+   "15": {
+    "P_W": "460",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "306.667",
+    "LED_J_mm": "1.8400"
+   },
+   "16": {
+    "P_W": "460",
+    "v_mm_s": "800",
+    "h_mm": "0.1",
+    "VED_J_mm3": "95.833",
+    "LED_J_mm": "0.5750"
+   },
+   "17": {
+    "P_W": "460",
+    "v_mm_s": "1350",
+    "h_mm": "0.1",
+    "VED_J_mm3": "56.790",
+    "LED_J_mm": "0.3407"
+   },
+   "18": {
+    "P_W": "460",
+    "v_mm_s": "1900",
+    "h_mm": "0.1",
+    "VED_J_mm3": "40.351",
+    "LED_J_mm": "0.2421"
+   },
+   "19": {
+    "P_W": "460",
+    "v_mm_s": "2450",
+    "h_mm": "0.1",
+    "VED_J_mm3": "31.293",
+    "LED_J_mm": "0.1878"
+   },
+   "20": {
+    "P_W": "460",
+    "v_mm_s": "3000",
+    "h_mm": "0.1",
+    "VED_J_mm3": "25.556",
+    "LED_J_mm": "0.1533"
+   },
+   "21": {
+    "P_W": "110",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "73.333",
+    "LED_J_mm": "0.4400"
+   },
+   "22": {
+    "P_W": "210",
+    "v_mm_s": "250",
+    "h_mm": "0.1",
+    "VED_J_mm3": "140.000",
+    "LED_J_mm": "0.8400"
+   },
+   "23": {
+    "P_W": "60",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "20.000",
+    "LED_J_mm": "0.1200"
+   },
+   "24": {
+    "P_W": "110",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "36.667",
+    "LED_J_mm": "0.2200"
+   },
+   "25": {
+    "P_W": "160",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "53.333",
+    "LED_J_mm": "0.3200"
+   },
+   "26": {
+    "P_W": "210",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "70.000",
+    "LED_J_mm": "0.4200"
+   },
+   "27": {
+    "P_W": "260",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "86.667",
+    "LED_J_mm": "0.5200"
+   },
+   "28": {
+    "P_W": "360",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "120.000",
+    "LED_J_mm": "0.7200"
+   },
+   "29": {
+    "P_W": "460",
+    "v_mm_s": "500",
+    "h_mm": "0.1",
+    "VED_J_mm3": "153.333",
+    "LED_J_mm": "0.9200"
+   },
+   "30": {
+    "P_W": "110",
+    "v_mm_s": "800",
+    "h_mm": "0.1",
+    "VED_J_mm3": "22.917",
+    "LED_J_mm": "0.1375"
+   },
+   "31": {
+    "P_W": "210",
+    "v_mm_s": "800",
+    "h_mm": "0.1",
+    "VED_J_mm3": "43.750",
+    "LED_J_mm": "0.2625"
+   },
+   "32": {
+    "P_W": "210",
+    "v_mm_s": "1350",
+    "h_mm": "0.1",
+    "VED_J_mm3": "25.926",
+    "LED_J_mm": "0.1556"
+   }
+  }
  },
  "condition_fields": [
-  "set"
+  "VED_J_mm3",
+  "P_W",
+  "v_mm_s"
  ],
- "order": {},
+ "order": {
+  "VED_J_mm3": [
+   "19.753",
+   "20.000",
+   "20.000",
+   "22.807",
+   "22.917",
+   "24.490",
+   "25.556",
+   "25.926",
+   "31.293",
+   "31.579",
+   "32.099",
+   "33.333",
+   "36.667",
+   "40.000",
+   "40.351",
+   "43.750",
+   "44.444",
+   "53.333",
+   "54.167",
+   "56.790",
+   "70.000",
+   "73.333",
+   "75.000",
+   "86.667",
+   "95.833",
+   "106.667",
+   "120.000",
+   "140.000",
+   "153.333",
+   "173.333",
+   "240.000",
+   "306.667"
+  ]
+ },
  "unit_field": "set",
  "unit_type": "specimen"
 }

@@ -1,0 +1,186 @@
+{
+ "dataset": "alsi10mg_luo2024",
+ "pilot": "reserve",
+ "decision": "GO WITH CHECKS",
+ "stop": [],
+ "checks": [
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 12,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "pass",
+  "sem_images": 160,
+  "sem_native_fraction": 1.0,
+  "second_modalities": {
+   "curve": 3
+  },
+  "sem_images_per_level": {
+   "36.667": 5,
+   "25.556": 5,
+   "22.917": 5,
+   "173.333": 5,
+   "75.000": 5,
+   "106.667": 5,
+   "32.099": 5,
+   "73.333": 5,
+   "53.333": 5,
+   "95.833": 5,
+   "43.750": 5,
+   "31.293": 5,
+   "40.351": 5,
+   "86.667": 5,
+   "306.667": 5,
+   "140.000": 5,
+   "56.790": 5,
+   "20.000": 10,
+   "22.807": 5,
+   "40.000": 5,
+   "19.753": 5,
+   "240.000": 5,
+   "54.167": 5,
+   "24.490": 5,
+   "25.926": 5,
+   "31.579": 5,
+   "44.444": 5,
+   "153.333": 5,
+   "33.333": 5,
+   "70.000": 5,
+   "120.000": 5
+  },
+  "magleak": "independent",
+  "pilots": [],
+  "inventory": {
+   "files": 913,
+   "images": 192,
+   "pixel_size_sources": {
+    "fei": 192
+   },
+   "n_distinct_pixel_sizes": 4,
+   "detectors": {
+    "ETD": 192
+   },
+   "kv": [
+    10.0
+   ]
+  }
+ },
+ "card_changes": [
+  {
+   "field": "access.license",
+   "old": "CC BY 4.0 (Zenodo record 10008435); raw XCT (about 76 GB) only on contact",
+   "new": "CC BY 4.0",
+   "evidence": "registry (repository record)"
+  },
+  {
+   "field": "readers.all_formats",
+   "old": null,
+   "new": true,
+   "evidence": "readers.json R2 pass"
+  },
+  {
+   "field": "calibration.absolute_scales",
+   "old": null,
+   "new": true,
+   "evidence": "160/160 SEM images carry a native pixel size"
+  },
+  {
+   "field": "sem.image_count",
+   "old": null,
+   "new": 160,
+   "evidence": "join.csv SEM roles"
+  },
+  {
+   "field": "sem.images_per_condition",
+   "old": null,
+   "new": 5,
+   "evidence": "median over VED_J_mm3 levels {'36.667': 5, '25.556': 5, '22.917': 5, '173.333': 5, '75.000': 5, '106.667': 5, '32.099': 5, '73.333': 5, '53.333': 5, '95.833': 5, '43.750': 5, '31.293': 5, '40.351': 5, '86.667': 5, '306.667': 5, '140.000': 5, '56.790': 5, '20.000': 10, '22.807': 5, '40.000': 5, '19.753': 5, '240.000': 5, '54.167': 5, '24.490': 5, '25.926': 5, '31.579': 5, '44.444': 5, '153.333': 5, '33.333': 5, '70.000': 5, '120.000': 5}"
+  },
+  {
+   "field": "sem.native_metadata",
+   "old": false,
+   "new": true,
+   "evidence": "160/160 native"
+  },
+  {
+   "field": "sem.magnification_fixed",
+   "old": null,
+   "new": false,
+   "evidence": "magleak independent"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "pass",
+   "R3": "pass",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "check",
+   "R7": "check",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 5,
+   "R11": "check",
+   "R12": "pass"
+  },
+  "families": {
+   "T1": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T2": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T5": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T6": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T7": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R7",
+     "R9 fit law validated on real data"
+    ]
+   ]
+  },
+  "report": "\n## AlSi10Mg laser powder bed fusion, 60 power-speed-hatch sets: SEM cell images, EBSD images, raw stress-strain curves, Vickers, Archimedes and XCT porosity tables (Zenodo 10008435; descriptor Data in Brief 2024 doi:10.1016/j.dib.2024.110130; research paper doi:10.1016/j.addma.2023.103804)\nState: prospective, filled 2026-10-06 from repository metadata (DataCite, Zenodo record pages) and the open descriptor full text read through Undermind; nothing downloaded or measured. descriptor_paper true means an open-access descriptor exists, not yet on the build host. SEM images sit in a .pptx and a zip whose inner format is unverified; open the zip listing before any pilot. Sister Ti-6Al-4V set already carded (venue_luo23_ti64_lpbf.json); this card does not supersede it. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 pass, R4 pass, R5 check, R6 check, R7 check, R8 check, R9 pass, R10 5, R11 check, R12 pass\n  note R3: no claim ladder on the host: expect only the claims the builder extracts itself\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5, R6 |\n| T3 | check | R5, R6, R8 |\n| T4 | check | R5 |\n| T5 | check | R5, R6, R11 |\n| T6 | check | R5, R6, R11 |\n| T7 | check | R5, R6, R7, R9 fit law validated on real data |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3, T5, T6, T7\nCheck, in this order: R11; R5; R8; R6; R7; R9 fit law validated on real data\n"
+ },
+ "written": "2026-10-07T01:17:55-05:00"
+}
