@@ -11,7 +11,7 @@
   - The two-step T7 band is 11.2 % of its key.
   - The literature Hall-Petch span is unverified.
   - 25 v4.0 items are carried over unchanged.
-- **Quote:** COST_QUOTE_v42.md (B0f on claude-sonnet-5.5, k = 3: about $28 expected, $40 cap; option 2 adds nano A0 and B0). Not approved, and nothing launched.
+- **Quote (revised, nano only):** COST_QUOTE_v42.md, option A both sources ($2.44, cap $4) or option B Allende only ($0.40, cap $1). Not approved.
 
 # v4 status (2026-10-06)
 

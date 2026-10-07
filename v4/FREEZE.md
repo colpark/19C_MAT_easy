@@ -448,3 +448,9 @@ reason: v4.2 report, quote, status (stop for David)
 - `V42_REPORT.md` 0e56723efd6c8deb54899e9d8e8a3762c31bc2cdf9472df519b5f1cdac54b375
 - `COST_QUOTE_v42.md` 852bd00430fe7e0ab600cc2caa451f5b592f8ee68f795aaf8f569526363eb6c8
 - `STATUS.md` 2f1210e2c567c13acda54f7a056f5ad4dd99c3c305aeb22005c076d3ee3eb2eb
+
+## R5b (2026-10-07T08:49:13-05:00)
+
+reason: COST_QUOTE_v42.md revised: gpt-5-nano on every arm (David)
+
+- `COST_QUOTE_v42.md` f77d4818dece62929944b81bfcc8d90315003380a50b980a4814cc177d49d3cf
