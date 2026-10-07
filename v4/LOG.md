@@ -123,3 +123,5 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - Q1c approved by David; allende/audit_q1c.py run: 9 calls, openai/gpt-5.6-sol, $0.0158. B12d tag fix. Allende 6 items (sha256 c5ce36c1...; two runs identical before the tag fix); oracle A0 6/6, B0 6/6.
 - Q2-v4-nano-eval quote written in COST_QUOTE.md from v3.3 Part B result.json actuals (per-arm means, p99, max). Variants Q2-lite and Q2-k1. Not run.
 - David discarded Track A (lessons kept). Q2 re-quoted for CrFeNi + Allende only: option A (A0+B0, k=3) 366 trials, $0.86 expected, $2.65 worst, cap $1.50; option B (+R0all) 549 trials, $1.32, $4.85, cap $2.50. Not run.
+- Q2-v4-nano-eval-A approved by David; partB/run_q2.sh frozen (sha256 eac7f7bb...), launched 2026-10-06T19:40:06-05:00.
+- Q2 done 2026-10-06T20:37: 366 trials, $0.768 (job result.json cost_usd), 0 network/key flags. partB/analyze_q2.py -> RESULTS_Q2.md, partB/results_q2.json.

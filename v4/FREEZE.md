@@ -260,3 +260,16 @@ reason: Q1c audit script written (not run; waits for quote approval)
 reason: generate_v2: audit tag names Q1c for full-sentence claims
 
 - `allende/generate_v2.py` aa9872a4cb68640471588e8adfc037f733650dcb4163b083da984c4e27365731
+
+## Q2run (2026-10-06T19:40:01-05:00)
+
+reason: Q2 runner (approved quote Q2-v4-nano-eval-A), frozen before launch
+
+- `partB/run_q2.sh` eac7f7bb5351247d9a753a5c3e226ff9b514fd896141dbd6fab47e9d81cfaca7
+- `partB/audit_runs.sh` 79818ab6ebbc846a3b53d20e999c5028d7dc8eb014148122cbbab04aeca0fcc6
+
+## Q2an (2026-10-06T20:37:31-05:00)
+
+reason: Q2 analysis script
+
+- `partB/analyze_q2.py` fa3777a6fa83cb83be4c612326a977c71aa2c209f56c9a1ab2220c7ed8c17e54

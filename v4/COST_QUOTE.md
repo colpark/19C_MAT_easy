@@ -145,6 +145,7 @@ Hard cap **$2.50**.
 
 **Runner:** `v4/partB/run_q2.sh` with the batch cap check, written and frozen before launch, with its hash logged.
 - **Quote id to approve: Q2-v4-nano-eval-A** (A0 and B0) **or Q2-v4-nano-eval-B** (adds R0all).
+- **Option A approved by David 2026-10-06 and run:** 366 trials, actual $0.768 (expected $0.86, cap $1.50). Per trial: CrFeNi A0 $0.0027, B0 $0.0015; Allende A0 $0.0026, B0 $0.0017. Results in RESULTS_Q2.md.
 
 ## Planned (not yet quoted)
 - **Q2:** quoted above (Q2-v4-nano-eval).
