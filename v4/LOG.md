@@ -125,3 +125,4 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - David discarded Track A (lessons kept). Q2 re-quoted for CrFeNi + Allende only: option A (A0+B0, k=3) 366 trials, $0.86 expected, $2.65 worst, cap $1.50; option B (+R0all) 549 trials, $1.32, $4.85, cap $2.50. Not run.
 - Q2-v4-nano-eval-A approved by David; partB/run_q2.sh frozen (sha256 eac7f7bb...), launched 2026-10-06T19:40:06-05:00.
 - Q2 done 2026-10-06T20:37: 366 trials, $0.768 (job result.json cost_usd), 0 network/key flags. partB/analyze_q2.py -> RESULTS_Q2.md, partB/results_q2.json.
+- Q1e quote written (Allende regions_v3 covariance-z repair + CrFeNi boundary-spacing re-audit; 9 calls, $0.03 expected, cap $0.50). Not run. Law-class prompt question raised to David.
