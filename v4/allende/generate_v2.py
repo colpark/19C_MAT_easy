@@ -297,7 +297,7 @@ def build():
         for it in items:
             w = why(it)
             if w: log.setdefault('q1b_drop', []).append({'family': it['family'], 'ref': str(it['provenance'].get('read') or (it['provenance'].get('claim') or {}).get('sid') or it['provenance'].get('pair') or ''), 'why': w})
-            else: kept.append(dict(it, tags=dict(it['tags'], audit_pending=False, audit=it['tags'].get('audit') or 'Q1b-v4-reaudit-allende-v2 passed')))
+            else: kept.append(dict(it, tags=dict(it['tags'], audit_pending=False, audit=it['tags'].get('audit') or ('Q1b-v4-reaudit-allende-v2 + Q1c-v4-reaudit-allende-claims passed' if it['family'] == 't4' and it['provenance']['claim'].get('span') else 'Q1b-v4-reaudit-allende-v2 passed'))))
         items[:] = kept
     # B10c: T4 class balance (v3.2 F2 trim: while a class exceeds 38 %, drop the last item of that class from the claim source holding most of it)
     # and T5 textbook-prior trim (drop prior-solvable items, last first, while the prior shortcut beats 1/3 + 10 points (B10d: at any n))

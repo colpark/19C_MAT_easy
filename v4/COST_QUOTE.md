@@ -77,6 +77,7 @@ undecided (Cr z = 4.1). Script: allende/audit_q1c.py (frozen B12c), with the sam
 - Worst case: 9 calls at 2,000 input and 4,000 output tokens = $0.40. Hard cap $0.50.
 - If every audit agrees: T4 gains D1, D2 and M3 (contradicted), D3, D3b and D4 (consistent), and A4 and I1 (cannot tell). The B12b balance trim then keeps 2/2/2, for about 9 Allende items.
 - **Quote id to approve: Q1c-v4-reaudit-allende-claims.**
+- **Approved by David 2026-10-06 and run:** 9 calls, actual $0.0158 (expected $0.03, cap $0.50). Applied restrictively (B12/B12d).
 
 ## Planned (not yet quoted)
 - **Q2:** v4.0 evaluation with gpt-5-nano. Arms: A0, B0, B1, R0 and R0all on the 248 v3 items; A0, B0, T-code and T-FM on the raw-array items; k >= 3 where claims are made.

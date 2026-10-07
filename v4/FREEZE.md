@@ -254,3 +254,9 @@ reason: Q1c audit script written (not run; waits for quote approval)
 
 - `allende/audit_q1c.py` ded6399bca8a29b9108ce2b8ee0f4b6e4e0f76f419fe505305865fd720d6fa42
 - `allende/audit_q1b_prompts.py` a712af09567aa53715add0ab40a27e1125ac713a47494cc19b221d94357469db
+
+## B12d (2026-10-06T19:30:18-05:00)
+
+reason: generate_v2: audit tag names Q1c for full-sentence claims
+
+- `allende/generate_v2.py` aa9872a4cb68640471588e8adfc037f733650dcb4163b083da984c4e27365731
