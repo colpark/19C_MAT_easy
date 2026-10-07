@@ -60,20 +60,32 @@ def read(two_theta, intensity, cfg):
     widths = peak_widths(rs, idx, rel_height=0.5)[0] * step if idx.size else []
     fw_max = cfg.get('max_fwhm_deg', 3.0)
     peaks, humps = [], []
-    for i, w0 in zip(idx, widths):
+    for k_, (i, w0) in enumerate(zip(idx, widths)):
         half = max(cfg['window_deg'] / 2, 2.5 * min(w0, fw_max))
         m = (x > x[i] - half) & (x < x[i] + half)
         if m.sum() < 8:
             continue
         xs, ys = x[m], r[m]
-        p0 = [x[i], float(np.clip(w0, 2.5 * step, fw_max * 0.99)), max(rs[i], sig), 0.5, 0.0, 0.0]
-        lb = [x[i] - half, 2 * step, 0, 0, -np.inf, -np.inf]
-        ub = [x[i] + half, fw_max, np.inf, 1, np.inf, np.inf]
+        # H4 (dev evidence, P1): every other detected candidate inside the window is fitted jointly (one pseudo-Voigt each, shared linear
+        # baseline), so a weak peak next to a strong one is not pulled onto it and then lost in the dedup step.
+        nb = [j for j in range(len(idx)) if j != k_ and abs(x[idx[j]] - x[i]) < half]
+        comps = [(i, w0)] + [(idx[j], widths[j]) for j in nb]
+        p0, lb, ub = [0.0, 0.0], [-np.inf, -np.inf], [np.inf, np.inf]
+        for ii, ww in comps:
+            p0 += [x[ii], float(np.clip(ww, 2.5 * step, fw_max * 0.99)), max(rs[ii], sig), 0.5]
+            lb += [x[ii] - half, 2 * step, 0, 0]; ub += [x[ii] + half, fw_max, np.inf, 1]
+        def model(xx, *q):
+            out = q[0] + q[1] * (xx - xx.mean())
+            for c in range(len(comps)):
+                out = out + pvoigt(xx, q[2 + 4 * c], q[3 + 4 * c], q[4 + 4 * c], q[5 + 4 * c], 0.0, 0.0)
+            return out
         try:
-            p, cov = curve_fit(pvoigt, xs, ys, p0=p0, bounds=(lb, ub), maxfev=4000)
+            q, covq = curve_fit(model, xs, ys, p0=p0, bounds=(lb, ub), maxfev=8000)
         except (RuntimeError, ValueError):
             continue
-        err = np.sqrt(np.clip(np.diag(cov), 0, None)) if np.all(np.isfinite(cov)) else np.full(6, np.nan)
+        p = np.array([q[2], q[3], q[4], q[5], q[0], q[1]])
+        errq = np.sqrt(np.clip(np.diag(covq), 0, None)) if np.all(np.isfinite(covq)) else np.full(len(q), np.nan)
+        err = np.array([errq[2], errq[3], errq[4], errq[5], errq[0], errq[1]])
         x0, fw, h, eta = p[:4]
         if not (xs[0] < x0 < xs[-1]) or h < cfg['min_snr'] * sig:
             continue

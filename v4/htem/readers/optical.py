@@ -92,8 +92,43 @@ def tauc_direct(E, alpha, cfg, n_boot=200, seed=11, e_top=None):
             'E_window': [float(E[sel[0]]), float(E[sel[-1]])], 'E_top': e_top, 'alpha_top_cm': a_top, 'E_last_unsaturated': float(E[-1])}
 
 
+def edge_model(E, lnA, eg, eu):
+    """Direct allowed edge A sqrt(E - Eg) / E above Eg, joined continuously to an Urbach tail below (the synth.py form)."""
+    A = np.exp(lnA); above = np.clip(E - eg, 0, None)
+    join = A * np.sqrt(eu / 2) / eg
+    return np.where(E > eg + eu / 2, A * np.sqrt(above) / E, join * np.exp((E - eg - eu / 2) / eu))
+
+
+def model_fit(E, alpha, cfg, e_top=None):
+    """H4 (second iteration, dev evidence P1): least squares on log(alpha) over the unsaturated range above alpha_fit_floor_cm, free
+    A, Eg, Eu. Censored when Eg is within edge_margin_ev of the last unsaturated energy or the fit does not converge."""
+    from scipy.optimize import least_squares
+    m = np.isfinite(alpha) & (alpha > cfg.get('alpha_fit_floor_cm', 3e3)); E, a = E[m], alpha[m]
+    if E.size < cfg['min_points']:
+        return {'Eg': None, 'censored': True, 'reason': 'too few points'}
+    e_last = float(E.max())
+    best = None
+    for eg0 in np.linspace(E.min() + 0.1, e_last + 0.3, 12):
+        for eu0 in (0.05, 0.2, 0.5):
+            p0 = [np.log(max(a.max(), 1e3) * 2), eg0, eu0]
+            try:
+                r = least_squares(lambda q: np.log(edge_model(E, *q)) - np.log(a), p0, bounds=([5, 0.5, 0.01], [20, 6.0, 1.5]), max_nfev=2000)
+            except Exception:
+                continue
+            if best is None or r.cost < best.cost:
+                best = r
+    if best is None:
+        return {'Eg': None, 'censored': True, 'reason': 'fit failed'}
+    lnA, eg, eu = best.x
+    cens = bool(eg > e_last - cfg['edge_margin_ev'])
+    return {'Eg': float(eg), 'Eu_ev': float(eu), 'A_cm': float(np.exp(lnA)), 'censored': cens, 'E_last_unsaturated': e_last,
+            'rms_log': float(np.sqrt(np.mean(best.fun ** 2))), 'n_fit': int(E.size), 'method': 'edge_model'}
+
+
 def read(op, thickness_um, cfg):
     ab = absorption(op, thickness_um, cfg.get('alpha_floor_cm', 0.0), cfg.get('t_min', 0.02))
     if ab is None:
         return {'Eg': None, 'censored': True, 'reason': 'no T and R pair or no thickness'}
+    if cfg.get('method', 'tauc') == 'edge_model':
+        return model_fit(ab['E'], ab['alpha'], cfg, e_top=float(np.max(ab['E'])))
     return tauc_direct(ab['E'], ab['alpha'], cfg, e_top=float(np.max(ab['E'])))

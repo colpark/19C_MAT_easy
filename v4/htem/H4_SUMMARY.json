@@ -1,0 +1,55 @@
+{
+ "readers": {
+  "S4hx (XRD)": {
+   "synthetic_P1": {
+    "dev": "0.968 within 0.02 deg (after joint fitting)",
+    "fresh_base_506567": "1.00 within 0.02 deg, FWHM err 0.5 %, amorphous 10/10"
+   },
+   "synthetic_P2": {
+    "fresh_base_794097": "1.00, broad 0.967"
+   },
+   "heldout_real": "no database peak column (peak_count only, A); replicate route: P1 median |dpeak| 0.060 deg (kit) / 0.150 deg strongest-peak pairing vs fit err 0.005; P2 0.069 vs 0.004",
+   "status": "validated (synthetic) with replicate-reported reproducibility; peak-position keys need tolerances >= replicate spread"
+  },
+  "S4hf (four-point probe)": {
+   "synthetic": "max |Rs err| 0.13 % (fresh)",
+   "heldout_real_P1": "Spearman 0.99999998 vs fpm_sheet_resistance (A), n 372: CIRCULAR (same I-V points, same pi/ln2 factor)",
+   "replicates_P1": "median |dlog10 Rs| 0.21 (87 pairs, r2 > 0.99)",
+   "fit_quality": "377/396 fits r2 > 0.99",
+   "P2": "no electrical data",
+   "status": "passes the pre-registered gate; independent evidence = replicate route only"
+  },
+  "optical": {
+   "P1": "FAIL on dev seeds (VH-E05): broad tails; held-out vs opt_direct_bandgap Spearman 0.75",
+   "P2": "not testable (VH-E06): dev library NIR-only; held-out Spearman 0.56",
+   "status": "no Eg keys"
+  }
+ },
+ "heldout_raw": {
+  "P1": {
+   "Eg": {
+    "n": 460,
+    "bias_eV": -0.2650685271451527,
+    "sd_eV": 0.16435665066648775,
+    "spearman": 0.7471422137757915,
+    "pass": false
+   },
+   "Rs": {
+    "n": 372,
+    "median_ratio": 0.9998989128212853,
+    "log_sd": 9.768205562661892e-05,
+    "spearman": 0.9999998834464263,
+    "pass": true
+   }
+  },
+  "P2": {
+   "Eg": {
+    "n": 207,
+    "bias_eV": -0.10368916337059231,
+    "sd_eV": 0.4438145243817732,
+    "spearman": 0.558745733222641,
+    "pass": false
+   }
+  }
+ }
+}
