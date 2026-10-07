@@ -131,3 +131,4 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - Q2b quote written (nano on the repaired sets with design fixes: neutral names, distractor pair panels, crossing claims, margin spread; 480 trials, $1.14 expected, cap $2.50). Not run.
 - David approved Q2b with k = 2 (Q2b-k2): 320 trials, $0.76 expected, cap $2.50.
 - Q2b-k2 launched 2026-10-06T21:50:17-05:00; run_q2b.sh sha256 ac5ab78b3c701b2f...; items CrFeNi 5a42f952..., Allende 385f7985...
+- Q2b-k2 done 22:37: 320 trials, $0.701, 0 audit flags. analyze_q2b.py (Q2banb fix: neutral-name panel-opening check) -> RESULTS_Q2b.md, partB/results_q2b.json.

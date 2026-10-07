@@ -336,3 +336,9 @@ reason: run_q2b.sh (Q2b-k2), frozen before launch
 reason: analyze_q2b.py
 
 - `partB/analyze_q2b.py` 3b5e530b081c330e663387b178eb3e950e64dad748ac4282e3bfc4ff4dceb408
+
+## Q2banb (2026-10-06T22:37:47-05:00)
+
+reason: analyze_q2b: panel-opening check on neutral names; header
+
+- `partB/analyze_q2b.py` 875d99d0ac2c46a6d745b16e8ed36b2d08d506bba6f41bfbee5c2ae0ef6040d3
