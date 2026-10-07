@@ -1,0 +1,142 @@
+{
+ "name": "Carbonation and frost resistance of CEM I and CEM III/B concretes (w/c 0.40, 0.50, 0.60, with and without air entrainment; standard curing, calcium nitrate solution, demineralized water; carbonated and uncarbonated): stitched BSE-SEM montages at a fixed 84.31 nm/px with the raw MAPS 3.5 tile project, raw LTDSC heat flow (thermoporometry, ice mass), compressive strength, CF/CIF liquid uptake, scaling and ultrasonic RDME. Data: refodat doi:10.71758/refodat.91 (Unbehau, Kleiner, Kind, Mueller, Dehn, Ludwig 2026, DFG 505859222). Descriptor: not linked in DataCite",
+ "state": "prospective, filled 2026-10-06 (track other_) from DataCite https://api.datacite.org/dois/10.71758/refodat.91; nothing downloaded or measured. BSE covers only four CEM III/B specimens (w/c 0.40 and 0.60, carbonated and uncarbonated, IDs 21C, 21H, 25C, 25H); LTDSC runs on hardened paste, so the BSE-to-LTDSC specimen join needs a check. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)",
+ "access": {
+  "raw_downloadable": true,
+  "license": "CC BY 4.0"
+ },
+ "readers": {
+  "all_formats": true,
+  "notes": "15 files, 1038.68 MB: .xlsx and .csv (pandas, openpyxl), .zip and .7z (py7zr), .svg, stitched .tif (tifffile); RAW_Maps_project_21H-25H-21C-25C.7z holds unstitched Thermo Fisher MAPS 3.5 tiles (tile TIFF tags readable with tifffile; the MAPS project file itself needs a check)"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": null,
+  "claim_ladder": null
+ },
+ "calibration": {
+  "absolute_scales": true,
+  "offset_free_quantities": true,
+  "notes": "BSE: Helios G4 UX, 10 kV, 0.1 nA, BSE detector, 84.31 nm/px for all four montages (about 1209 to 1259 x 323 um each). LTDSC delivered as raw heat flow with baseline corrections (cycles A and B). Strength per DIN EN 12390-3; frost per DIN TR 15177 and DIN CEN/TS 12390-9 with raw mass and ultrasonic transit data"
+ },
+ "observables": [
+  {
+   "name": "capillary porosity and pore size: BSE image porosity (pores above about 0.2 um) and LTDSC freezable water by Gibbs-Thomson thermoporometry",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "Two instruments with partly overlapping pore-size windows; join specimens first"
+  },
+  {
+   "name": "compressive strength",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "Raw and calculated values"
+  },
+  {
+   "name": "frost scaling (mass loss) and liquid uptake",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "Raw masses and calculated values"
+  },
+  {
+   "name": "relative dynamic modulus of elasticity (ultrasonic transit time)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "Raw USV and calculated RDME"
+  },
+  {
+   "name": "phase contrast in BSE (unhydrated clinker and slag, carbonated zones)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": null
+  }
+ ],
+ "design": {
+  "entities": null,
+  "series": [
+   {
+    "factor": "carbonation state (carbonated, uncarbonated) x w/c (0.40, 0.60) on CEM III/B BSE montages",
+    "levels": 4,
+    "shared_entities": true
+   },
+   {
+    "factor": "cement type (CEM I, CEM III/B) x w/c (0.40, 0.50, 0.60) x air entrainment for strength, frost and LTDSC",
+    "levels": 12,
+    "shared_entities": null
+   },
+   {
+    "factor": "exposure liquid (standard, calcium nitrate solution, demineralized water)",
+    "levels": 3,
+    "shared_entities": null
+   }
+  ],
+  "match_classes": 4,
+  "cross_modal_identity": null,
+  "separability_ratio": null,
+  "sampling": "systematic",
+  "m_observables_per_entity": 5
+ },
+ "laws": [
+  {
+   "name": "Gibbs-Thomson melting-point depression for pore size from LTDSC (Brun et al. constants)",
+   "class": "independent",
+   "params": 0,
+   "levels": 4,
+   "validated": null
+  },
+  {
+   "name": "Porosity agreement between BSE image analysis and LTDSC freezable water in the overlapping pore-size window",
+   "class": "agreement",
+   "params": 0,
+   "levels": 4,
+   "validated": null
+  },
+  {
+   "name": "Abrams strength against w/c per cement type (2 parameters, three w/c levels)",
+   "class": "fit",
+   "params": 2,
+   "levels": 3,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 3,
+  "textbook_neutral": null
+ },
+ "claims": {
+  "source": null,
+  "count": null
+ },
+ "sem": {
+  "modes": [
+   "BSE"
+  ],
+  "image_count": 64,
+  "images_per_condition": 32,
+  "native_metadata": true,
+  "magnification_fixed": true,
+  "field_selection": "montage",
+  "co_registered": [],
+  "same_specimen": [
+   "LTDSC (paste, join to check)",
+   "compressive strength",
+   "frost scaling",
+   "RDME"
+  ],
+  "annotations_in_deposit": null,
+  "formats": [
+   ".tif",
+   ".7z (MAPS 3.5 raw tiles)"
+  ],
+  "magnification_leak": false
+ }
+}

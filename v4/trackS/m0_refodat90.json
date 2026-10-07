@@ -1,0 +1,143 @@
+{
+ "dataset": "refodat90",
+ "pilot": "S3",
+ "decision": "GO WITH CHECKS",
+ "stop": [],
+ "checks": [
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 14,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "pass",
+  "sem_images": 176,
+  "sem_native_fraction": 1.0,
+  "second_modalities": {
+   "eds_map": 14,
+   "indent": 14
+  },
+  "sem_modalities": [
+   "BSE"
+  ],
+  "sem_images_per_level": {},
+  "magleak": "constant",
+  "pilots": [],
+  "inventory": {
+   "files": 3166,
+   "images": 2806,
+   "pixel_size_sources": {
+    "none": 2481,
+    "imagej": 2,
+    "fei": 323
+   },
+   "n_distinct_pixel_sizes": 3,
+   "detectors": {
+    "CBS": 323
+   },
+   "kv": [
+    10.0
+   ]
+  }
+ },
+ "card_changes": [
+  {
+   "field": "access.raw_downloadable",
+   "old": null,
+   "new": true,
+   "evidence": "14 files on host, 0 failures, 0 planned files missing, unresolved parts [], manual check {'files': 14, 'expected_files': 14, 'bytes': 7361710114, 'expected_bytes_approx': 7020670000, 'count_ok': True, 'size_ok': True, 'note': 'the repository publishes no per-file checksum: sha256 here is the first record'}"
+  },
+  {
+   "field": "access.license",
+   "old": "CC BY 4.0 (DataCite rightsList)",
+   "new": "CC BY 4.0",
+   "evidence": "registry (repository record)"
+  },
+  {
+   "field": "sem.image_count",
+   "old": null,
+   "new": 176,
+   "evidence": "join.csv SEM roles"
+  },
+  {
+   "field": "sem.native_metadata",
+   "old": null,
+   "new": true,
+   "evidence": "176/176 native"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "pass",
+   "R3": "check",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "check",
+   "R7": "pass",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 5,
+   "R11": "check",
+   "R12": "check"
+  },
+  "families": {
+   "T1": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T2": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "check",
+    [
+     "R5",
+     "R12"
+    ]
+   ],
+   "T5": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T6": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T7": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R9 fit law validated on real data",
+     "levels (params + 4) >= 7 (unknown)"
+    ]
+   ]
+  },
+  "report": "\n## CEM I mortar interfacial transition zone (ITZ) on one ArBIB-milled surface: stitched SEM-BSE montage (Helios G4 UX, 47104 x 18232 px at 84.31 nm/px), EDX 12-class phase map, uXRF, light and confocal microscopy and a 65 x 20 Berkovich nanoindentation grid, all aligned in QGIS. Data: refodat doi:10.71758/refodat.90 (Kleiner and Li 2026, DFG project 500729359). Descriptor: none found\nState: prospective, filled 2026-10-06 (track other_) from repository metadata; nothing downloaded or measured. Source: DataCite https://api.datacite.org/dois/10.71758/refodat.90. The refodat landing page returned a security check, so the file list was not seen. Single specimen: the only series is spatial (distance from the aggregate across the ITZ) plus phase classes. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 check, R4 pass, R5 check, R6 check, R7 pass, R8 check, R9 pass, R10 5, R11 check, R12 check\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5, R6 |\n| T3 | check | R5, R6, R8 |\n| T4 | check | R5, R12 |\n| T5 | check | R5, R6, R11 |\n| T6 | check | R5, R6, R11 |\n| T7 | check | R5, R6, R9 fit law validated on real data, levels (params + 4) >= 7 (unknown) |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3, T5, T6, T7\nCheck, in this order: R12; R11; levels (params + 4) >= 7 (unknown); R5; R8; R6; R9 fit law validated on real data\n"
+ },
+ "written": "2026-10-07T09:23:38-05:00"
+}

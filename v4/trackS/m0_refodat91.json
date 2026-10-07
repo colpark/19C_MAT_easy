@@ -1,0 +1,148 @@
+{
+ "dataset": "refodat91",
+ "pilot": "S3",
+ "decision": "GO WITH CHECKS",
+ "stop": [],
+ "checks": [
+  "separability pilot pending (needs a validated, frozen reader)"
+ ],
+ "evidence": {
+  "files": 15,
+  "failed_files": [],
+  "planned_missing": [],
+  "unresolved_parts": [],
+  "R2": "pass",
+  "sem_images": 64,
+  "sem_native_fraction": 1.0,
+  "second_modalities": {
+   "curve": 339
+  },
+  "sem_modalities": [
+   "BSE"
+  ],
+  "sem_images_per_level": {
+   "0.6": 32,
+   "0.4": 32
+  },
+  "magleak": "constant",
+  "pilots": [],
+  "inventory": {
+   "files": 1193,
+   "images": 760,
+   "pixel_size_sources": {
+    "imagej": 4,
+    "none": 692,
+    "fei": 64
+   },
+   "n_distinct_pixel_sizes": 1,
+   "detectors": {
+    "ABS": 64
+   },
+   "kv": [
+    10.0
+   ]
+  }
+ },
+ "card_changes": [
+  {
+   "field": "access.raw_downloadable",
+   "old": null,
+   "new": true,
+   "evidence": "15 files on host, 0 failures, 0 planned files missing, unresolved parts [], manual check {'files': 15, 'expected_files': 15, 'bytes': 1089139004, 'expected_bytes_approx': 1038680000, 'count_ok': True, 'size_ok': True, 'note': 'the repository publishes no per-file checksum: sha256 here is the first record'}"
+  },
+  {
+   "field": "access.license",
+   "old": "CC BY 4.0 (DataCite rightsList)",
+   "new": "CC BY 4.0",
+   "evidence": "registry (repository record)"
+  },
+  {
+   "field": "sem.image_count",
+   "old": 4,
+   "new": 64,
+   "evidence": "join.csv SEM roles"
+  },
+  {
+   "field": "sem.images_per_condition",
+   "old": 1,
+   "new": 32,
+   "evidence": "median over w_c levels {'0.6': 32, '0.4': 32}"
+  },
+  {
+   "field": "sem.native_metadata",
+   "old": null,
+   "new": true,
+   "evidence": "64/64 native"
+  }
+ ],
+ "scorer": {
+  "requirements": {
+   "R1": "pass",
+   "R2": "pass",
+   "R3": "check",
+   "R4": "pass",
+   "R5": "check",
+   "R6": "check",
+   "R7": "pass",
+   "R8": "check",
+   "R9": "pass",
+   "R10": 5,
+   "R11": "check",
+   "R12": "check"
+  },
+  "families": {
+   "T1": [
+    "check",
+    [
+     "R5"
+    ]
+   ],
+   "T2": [
+    "check",
+    [
+     "R5",
+     "R6"
+    ]
+   ],
+   "T3": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R8"
+    ]
+   ],
+   "T4": [
+    "check",
+    [
+     "R5",
+     "R12"
+    ]
+   ],
+   "T5": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T6": [
+    "check",
+    [
+     "R5",
+     "R6",
+     "R11"
+    ]
+   ],
+   "T7": [
+    "fail",
+    [
+     "levels (params + 4) >= 6 (has 3)"
+    ]
+   ]
+  },
+  "report": "\n## Carbonation and frost resistance of CEM I and CEM III/B concretes (w/c 0.40, 0.50, 0.60, with and without air entrainment; standard curing, calcium nitrate solution, demineralized water; carbonated and uncarbonated): stitched BSE-SEM montages at a fixed 84.31 nm/px with the raw MAPS 3.5 tile project, raw LTDSC heat flow (thermoporometry, ice mass), compressive strength, CF/CIF liquid uptake, scaling and ultrasonic RDME. Data: refodat doi:10.71758/refodat.91 (Unbehau, Kleiner, Kind, Mueller, Dehn, Ludwig 2026, DFG 505859222). Descriptor: not linked in DataCite\nState: prospective, filled 2026-10-06 (track other_) from DataCite https://api.datacite.org/dois/10.71758/refodat.91; nothing downloaded or measured. BSE covers only four CEM III/B specimens (w/c 0.40 and 0.60, carbonated and uncarbonated, IDs 21C, 21H, 25C, 25H); LTDSC runs on hardened paste, so the BSE-to-LTDSC specimen join needs a check. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)\nRequirements: R1 pass, R2 pass, R3 check, R4 pass, R5 check, R6 check, R7 pass, R8 check, R9 pass, R10 5, R11 check, R12 check\n| Family | Status | Reasons |\n|---|---|---|\n| T1 | check | R5 |\n| T2 | check | R5, R6 |\n| T3 | check | R5, R6, R8 |\n| T4 | check | R5, R12 |\n| T5 | check | R5, R6, R11 |\n| T6 | check | R5, R6, R11 |\n| T7 | fail | levels (params + 4) >= 6 (has 3) |\nInference families open: 0 of 5 (none)  possible after checks: T2, T3, T5, T6\nCheck, in this order: R12; R11; R5; R8; R6\n"
+ },
+ "written": "2026-10-07T09:23:38-05:00"
+}

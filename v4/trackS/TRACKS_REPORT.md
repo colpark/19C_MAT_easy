@@ -16,7 +16,8 @@ No paid call, no keys, no items. Hosts: host A (spark-112b), host A node 2 (spar
 | stinville2022 | S2 | NO-GO | none | Parked by David; every series observable is A (K2 provenance stop). |
 | anjaria2025 | S2 | GO WITH CHECKS | T1-T4 check | Deferred by David (needs a DIC reader). |
 | sa508_ebw | reserve | SA508_PENDING | | Throttled retry on host B. |
-| refodat90/91 | S3 | waiting | | Browser downloads not on the host. |
+| refodat90 | S3 (BSE tiles) | **GO WITH CHECKS** | pilot pending | Browser download (14 files, 7.36 GB = DataCite 7020.67 MiB). 176 raw BSE tiles, all FEI-tagged at 84.31 nm (magleak constant). One mortar surface: the only series is spatial (ITZ distance), so R6 needs a frozen reader and spatial bins. |
+| refodat91 | S3 (BSE tiles + LTDSC, strength, frost) | **GO WITH CHECKS** | pilot pending | Browser download (15 files, 1.09 GB). 64 raw BSE tiles (16 per specimen, 84.31 nm, constant). 2 x 2 design (w/c 0.40/0.60 x carbonated/uncarbonated, CEM III/B, M38/M44), one specimen per condition: tiles are spatial units (optimistic). T7 fails (3 levels < params + 4). |
 
 ## B-60: AlSi10Mg on all 60 sets (David, 2026-10-07)
 - Join rules S2j-alsi-60: sets 1-60, series ordered by VED (J/mm3), frozen before sets 33-60 were computed. UTS for sets 1-32 was already seen; the order comes from design records only.
@@ -32,6 +33,15 @@ No paid call, no keys, no items. Hosts: host A (spark-112b), host A node 2 (spar
   - R6 still needs every adjacent pair separated.
   - SEM covers sets 1-32 only, so no SE observable reaches sets 33-60.
 - Host files (not in git): curves_alsi60.json, pilot_alsi60_uts.csv, curves_alsi60_vs_authors.json, pilot_alsi60_uts_separability.json.
+
+## D: refodat (browser downloads by David, 2026-10-07)
+- **Intake.** The downloads were refodat derivate zips. Their member counts and sizes match DataCite: 14 files at 7,361,710,114 B and 15 files at 1,089,139,004 B. They were extracted flat into trackS_manual/extract with CRC checks and registered with `fetch_s.py manual --move`. The archives inside were unpacked by `inventory_s.py extract` (path-traversal guarded). No file was executed.
+- **R2.** pass on both (.tif, .tiff, .png, .jpg, .bmp, .spd, .csv, .xlsx).
+- **Join (V4-E26).** The prospective rules over-matched, so they were rewritten against the files. Raw MAPS tiles are now the only SEM role: refodat90 176, refodat91 64. For refodat91 the w/c and carbonation map comes from the DataCite SEM table.
+- **Magleak.** One native pixel size (84.31 nm) on every SEM tile of both datasets.
+- **M0.** Both GO WITH CHECKS; the separability pilot is pending, since no validated reader exists yet.
+  - refodat90 has no design series: one specimen, spatial ITZ bins only.
+  - refodat91 has one specimen per condition, so its tiles are optimistic units. The LTDSC paste specimens need their own join to the concrete mixes.
 
 ## K: kit fixes (frozen K2; tests/test_k2.py 24/24, tests/test_kit.py 53/53)
 1. **fetch_s.py:**

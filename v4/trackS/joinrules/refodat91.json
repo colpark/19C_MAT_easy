@@ -1,21 +1,30 @@
 {
  "dataset": "refodat91",
- "_todo": "Fill maps.specimen with mix (M38 or M44), w/c and carbonation state for 21C, 21H, 25C and 25H from the record description, and the LTDSC paste specimens that join each mix. SEM covers only these four CEM III/B specimens.",
  "rules": [
   {
-   "name": "MAPS raw tiles",
-   "path_regex": "RAW_Maps_project[^/]*/.*?(?P<specimen>2[15][CH])[^/]*/.*LayersData.*\\.tiff?$",
+   "name": "MAPS raw tiles (LayersData/Carbo specimens/<ID>/Tile_*)",
+   "path_regex": "LayersData/[^/]*/(?P<specimen>2[15][CH])/Tile_[^/]*\\.tiff?$",
    "role": "sem_montage_tile"
   },
   {
-   "name": "MAPS images (other)",
-   "path_regex": "RAW_Maps_project.*?(?P<specimen>2[15][CH]).*\\.tiff?$",
-   "role": "sem_montage_tile"
+   "name": "MAPS stitched pyramid renders (derived)",
+   "path_regex": "\\(stitched\\)/",
+   "role": "tile_layout"
+  },
+  {
+   "name": "author-stitched montages (raw tiles are the SEM role)",
+   "path_regex": "files/Layer-(?P<specimen>2[15][CH])-stitched\\.tif$",
+   "role": "other"
   },
   {
    "name": "MAPS project files",
    "path_regex": "RAW_Maps_project",
    "role": "tile_layout"
+  },
+  {
+   "name": "archives (members extracted and matched separately)",
+   "path_regex": "^files/.*\\.(zip|7z)$",
+   "role": "metadata"
   },
   {
    "name": "LTDSC",
@@ -35,16 +44,39 @@
  ],
  "maps": {
   "specimen": {
-   "21C": {},
-   "21H": {},
-   "25C": {},
-   "25H": {}
+   "21C": {
+    "cement": "CEM III/B",
+    "mix": "M38",
+    "w_c": 0.4,
+    "carbonation": "carbonated"
+   },
+   "21H": {
+    "cement": "CEM III/B",
+    "mix": "M38",
+    "w_c": 0.4,
+    "carbonation": "uncarbonated"
+   },
+   "25C": {
+    "cement": "CEM III/B",
+    "mix": "M44",
+    "w_c": 0.6,
+    "carbonation": "carbonated"
+   },
+   "25H": {
+    "cement": "CEM III/B",
+    "mix": "M44",
+    "w_c": 0.6,
+    "carbonation": "uncarbonated"
+   }
   }
  },
  "condition_fields": [
-  "specimen"
+  "w_c",
+  "carbonation"
  ],
  "order": {},
  "unit_field": "specimen",
- "unit_type": "tile"
+ "unit_type": "tile",
+ "_source_maps": "DataCite 10.71758/refodat.91 description (SEM table: specimen name in paper vs raw data; mix labels M38 = CEM III/0.40, M44 = CEM III/0.60), fetched 2026-10-07",
+ "_desk_2026-10-07": "Prospective MAPS rule took the specimen from the archive name (all 737 images -> 21H); rewritten: raw tiles per specimen folder (64, FEI-tagged), pyramid renders as layout."
 }

@@ -1,0 +1,127 @@
+{
+ "name": "CEM I mortar interfacial transition zone (ITZ) on one ArBIB-milled surface: stitched SEM-BSE montage (Helios G4 UX, 47104 x 18232 px at 84.31 nm/px), EDX 12-class phase map, uXRF, light and confocal microscopy and a 65 x 20 Berkovich nanoindentation grid, all aligned in QGIS. Data: refodat doi:10.71758/refodat.90 (Kleiner and Li 2026, DFG project 500729359). Descriptor: none found",
+ "state": "prospective, filled 2026-10-06 (track other_) from repository metadata; nothing downloaded or measured. Source: DataCite https://api.datacite.org/dois/10.71758/refodat.90. The refodat landing page returned a security check, so the file list was not seen. Single specimen: the only series is spatial (distance from the aggregate across the ITZ) plus phase classes. | verified desk fields 2026-10-07 from downloaded files (m0_s.py)",
+ "access": {
+  "raw_downloadable": true,
+  "license": "CC BY 4.0"
+ },
+ "readers": {
+  "all_formats": true,
+  "notes": "DataCite formats .tif, .csv, .pdf, .7z (14 files, 7020.67 MB): tifffile (BigTIFF for BSE_High-Res.tif), pandas, py7zr; QGIS alignment packages Full-alignment.7z and NI-EDX-alignment.7z (QGIS); Python Jupyter notebooks for evaluation. Contents of the .7z archives unverified"
+ },
+ "inputs_on_host": {
+  "descriptor_paper": null,
+  "claim_ladder": null
+ },
+ "calibration": {
+  "absolute_scales": true,
+  "offset_free_quantities": true,
+  "notes": "Pixel sizes per modality in DataCite: BSE 84.3099 nm/px (3971.3 x 1537.1 um), EDX 288.722 nm/px (1024 x 704 px, 295.7 x 203.3 um), light microscopy 852.778 nm/px, confocal (Keyence VK-X3050) 1372.7 nm/px, uXRF 1148 x 388 px (variable). ArBIB milling 72 h at 6 kV, 2 mA. Nanoindentation tip area function and frame compliance calibration unverified"
+ },
+ "observables": [
+  {
+   "name": "phase area fractions (pores, clinker, portlandite, C-S-H, AFm/AFt and others) from BSE gray levels",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "Second route: the EDX 12-class phase map on the same aligned region; it ships with the deposit and serves validation only"
+  },
+  {
+   "name": "indentation modulus and hardness per indent (Hysitron TS 77 Select, Berkovich)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": "Position 2 used: 65 x 20 indents over 100 x 325 um (DataCite gives the spacing as 5.0 'nm', which must mean um); position 1 provided but unused; raw load-displacement curves unverified"
+  },
+  {
+   "name": "elemental distributions (EDX and uXRF)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 2,
+   "notes": "Two instruments on the same surface"
+  },
+  {
+   "name": "surface topography (confocal) and optical texture (light microscopy)",
+   "level": "M",
+   "validated_synthetic": null,
+   "validated_real": null,
+   "routes": 1,
+   "notes": null
+  }
+ ],
+ "design": {
+  "entities": 1,
+  "series": [
+   {
+    "factor": "distance from the aggregate surface across the ITZ (spatial bins on one specimen)",
+    "levels": null,
+    "shared_entities": true
+   }
+  ],
+  "match_classes": 12,
+  "cross_modal_identity": true,
+  "separability_ratio": null,
+  "sampling": "systematic",
+  "m_observables_per_entity": 5
+ },
+ "laws": [
+  {
+   "name": "BSE backscatter coefficient against mean atomic number computed from EDX composition (Reuter or Castaing eta(Z), literature constants)",
+   "class": "independent",
+   "params": 0,
+   "levels": 12,
+   "validated": null
+  },
+  {
+   "name": "Homogenized modulus from EDX phase fractions and literature phase moduli (Mori-Tanaka or rule of mixtures) against the nanoindentation grid",
+   "class": "independent",
+   "params": 0,
+   "levels": null,
+   "validated": null
+  },
+  {
+   "name": "ITZ gradient: porosity or indentation modulus against distance from the aggregate (exponential approach to bulk paste, 3 parameters)",
+   "class": "fit",
+   "params": 3,
+   "levels": null,
+   "validated": null
+  }
+ ],
+ "mechanisms": {
+  "competing": 3,
+  "textbook_neutral": null
+ },
+ "claims": {
+  "source": null,
+  "count": null
+ },
+ "sem": {
+  "modes": [
+   "BSE"
+  ],
+  "image_count": 176,
+  "images_per_condition": null,
+  "native_metadata": true,
+  "magnification_fixed": true,
+  "field_selection": "montage",
+  "co_registered": [
+   "EDX phase map",
+   "uXRF",
+   "nanoindentation grid",
+   "light microscopy",
+   "confocal laser microscopy"
+  ],
+  "same_specimen": [],
+  "annotations_in_deposit": "EDX 12-class phase classification map (validation only)",
+  "formats": [
+   ".tif",
+   ".csv",
+   ".7z",
+   ".pdf"
+  ],
+  "magnification_leak": false
+ }
+}
