@@ -122,3 +122,4 @@ Track A fixes come from the skill's v3.3 Part B lessons instead.
 - B12/B12b/B12c: physics_v2 CLAIMS rebuilt from full sentences (aax3009.txt), generate_v2 D3/D3b/D4/M1 decisions, balance floor, audit_q1c.py written. Allende still 3 items (rebuilt claims pending Q1c). Q1c quote written, not run.
 - Q1c approved by David; allende/audit_q1c.py run: 9 calls, openai/gpt-5.6-sol, $0.0158. B12d tag fix. Allende 6 items (sha256 c5ce36c1...; two runs identical before the tag fix); oracle A0 6/6, B0 6/6.
 - Q2-v4-nano-eval quote written in COST_QUOTE.md from v3.3 Part B result.json actuals (per-arm means, p99, max). Variants Q2-lite and Q2-k1. Not run.
+- David discarded Track A (lessons kept). Q2 re-quoted for CrFeNi + Allende only: option A (A0+B0, k=3) 366 trials, $0.86 expected, $2.65 worst, cap $1.50; option B (+R0all) 549 trials, $1.32, $4.85, cap $2.50. Not run.

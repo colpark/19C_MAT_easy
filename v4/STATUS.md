@@ -2,7 +2,10 @@
 
 Spend: $0.1601 total. Q1c-v4-reaudit-allende-claims $0.0158 (9 calls). Q1d-v4-audit-crfeni $0.0432 (12 calls). Q1-v4-audit-allende $0.0429 (11 calls); Q1b-v4-reaudit-allende-v2 $0.0582 (29 calls, approved 2026-10-06, quote $0.12, cap $1.50).
 
-## Track A: carry v3 into v4.0 (v4/v3)
+## Track A: DISCARDED by David (2026-10-06)
+Track A items are not part of v4.0 and not evaluated. The v3 code, arms and oracle results stay in v4/v3 for reference. What carries forward are its lessons: k >= 3, B0 as a floor, the all-cells readings arm for the perception gap, trajectory-based answer detection, and its token and cost basis for quotes.
+
+### Former Track A record: carry v3 into v4.0 (v4/v3)
 - **Fixes (F11a):**
   - the T5 question names the compared conditions (duplicate P6 T5 pair);
   - uniqueness gate;
