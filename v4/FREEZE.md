@@ -454,3 +454,15 @@ reason: v4.2 report, quote, status (stop for David)
 reason: COST_QUOTE_v42.md revised: gpt-5-nano on every arm (David)
 
 - `COST_QUOTE_v42.md` f77d4818dece62929944b81bfcc8d90315003380a50b980a4814cc177d49d3cf
+
+## R6run (2026-10-07T08:52:05-05:00)
+
+reason: partB/run_v42.sh (COST_QUOTE_v42 option A approved by David 2026-10-07: nano, A0/B0/B0f, k=3, cap $4), frozen before launch
+
+- `partB/run_v42.sh` 4fe502a6d4df1b106b440938ceed66b45972602e434aa8c38f965c7617a08e09
+
+## R6an (2026-10-07T11:54:58-05:00)
+
+reason: partB/results_v42.py (analysis of the v4.2 nano run), frozen before running
+
+- `partB/results_v42.py` 5f6896d4ffa6476a58accff203b1be900cf434d7068292d9012a954a73af3546
