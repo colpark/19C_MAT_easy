@@ -110,6 +110,17 @@ def composition(s, cations_only=True):
     return {e: v / tot for e, v in vals.items()} if tot > 0 else None
 
 
+def anion_fraction(s):
+    """Round 2 (HTEM_ROUND2_RULES 2): XRF fractions of the anions the record lists as bare-element entries, normalized over those anions
+    only (e.g. Se and Te for Mn-Se-Te-Zn). None when the record lists no anion or the composition is ambiguous."""
+    c = composition(s, cations_only=False)
+    if not c:
+        return None
+    an = {e: v for e, v in c.items() if e in ANIONS}
+    tot = sum(an.values())
+    return {e: v / tot for e, v in an.items()} if tot > 0 else None
+
+
 def fpm(s):
     v, i = _arr(s.get('fpm_voltage_volts')), _arr(s.get('fpm_current_amps'))
     if v is None or i is None or v.size != i.size or v.size < 2:

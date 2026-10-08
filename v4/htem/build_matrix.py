@@ -19,7 +19,7 @@ HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
 import htem_api as API
 import sample_io as SIO
 import census as CEN
-from readers import xrd as RX, optical as RO, fpm as RF
+from readers import xrd as RX, optical as RO, fpm as RF, edge as RE
 
 R = API.CFG['readers']
 
@@ -32,19 +32,24 @@ def row_for(lib, s, freeze):
     xr = RX.read(x['two_theta'], x['intensity'], R['xrd']) if x else None
     ob = RO.read(op, t, R['optical']) if op else None
     fp = RF.read(SIO.fpm(s), t, R['fpm']) if SIO.fpm(s) else None
+    ed = RE.read(op, t, R['optical']) if op else None   # round 2: E04, E_U, edge width (readers S4ho2, S4hu)
     rk = CEN.recipe_key(lib, API.CFG['census']['temp_round_c'])
     return {'entity': f"{lib['id']}:{s.get('position')}", 'library': lib['id'], 'sample': s.get('id'), 'position': s.get('position'),
             'xyz_mm': SIO.xyz(s), 'system': SIO.system_key(lib.get('elements')), 'recipe': list(rk),
             'D': {'temp_c': rk[1], 'target_powers': [list(p) if isinstance(p, tuple) else p for p in rk[2]],
                   'gas_flows': [list(g) if isinstance(g, tuple) else g for g in rk[3]], 'pressure_mtorr': rk[4], 'time_min': rk[5],
                   'substrate': rk[6]},
-            'M': {'cation_frac': comp, 'thickness_um': t},
+            'M': {'cation_frac': comp, 'anion_frac': SIO.anion_fraction(s), 'thickness_um': t},
             'derived': {'freeze': freeze,
                         'xrd_peaks': None if xr is None else xr['peaks'], 'xrd_noise': None if xr is None else xr['noise'],
                         'Eg_eV': None if ob is None else ob.get('Eg'), 'Eg_err': None if ob is None else ob.get('Eg_err'),
                         'Eg_censored': None if ob is None else ob.get('censored'),
                         'Rs_ohm_sq': None if fp is None else fp.get('Rs_ohm_sq'), 'Rs_r2': None if fp is None else fp.get('linear_r2'),
-                        'resistivity_ohm_cm': None if fp is None else fp.get('resistivity_ohm_cm')},
+                        'resistivity_ohm_cm': None if fp is None else fp.get('resistivity_ohm_cm'),
+                        'E04_eV': None if ed is None else ed['E04'], 'E04_censored': None if ed is None else ed['E04_censored'],
+                        'E04_dthick': None if ed is None else ed['E04_dthick'], 'E_U_eV': None if ed is None else ed['E_U'],
+                        'E_U_dthick_rel': None if ed is None else ed['E_U_dthick_rel'], 'edge_width_eV': None if ed is None else ed['edge_width'],
+                        'run_E': None if ed is None else ed['run_E']},
             'A': SIO.a_level(s), 'modalities': SIO.summary(s)}
 
 
@@ -67,6 +72,11 @@ def heldout(rows):
         a, b = np.array(pairs).T
         out['Rs'] = {'n': len(pairs), 'median_ratio': float(np.median(a / b)), 'log_sd': float(np.std(np.log10(a / b))),
                      'spearman': float(spearmanr(a, b).correlation)}
+    pairs = [(r['derived'].get('E04_eV'), r['A'].get('opt_direct_bandgap')) for r in rows
+             if _fin(r['derived'].get('E04_eV')) and _fin(r['A'].get('opt_direct_bandgap'))]
+    if len(pairs) >= 5:   # round 2: different quantities, rank gate only; bias reported
+        a, b = np.array(pairs).T
+        out['E04'] = {'n': len(pairs), 'bias_eV': float(np.median(a - b)), 'sd_eV': float(np.std(a - b)), 'spearman': float(spearmanr(a, b).correlation)}
     g = API.CFG['gates']['heldout_spearman']
     for k in out:
         out[k]['pass'] = bool(out[k]['spearman'] >= g)
@@ -108,6 +118,10 @@ def replicates(rows, tol=0.02):
                         u = math.hypot(da['Eg_err'] or 0, db['Eg_err'] or 0)
                         rec['dEg'] = da['Eg_eV'] - db['Eg_eV']
                         rec['dEg_over_u'] = None if u == 0 else abs(rec['dEg']) / u
+                    if _fin(da.get('E04_eV')) and _fin(db.get('E04_eV')):
+                        rec['dE04'] = da['E04_eV'] - db['E04_eV']
+                    if _fin(da.get('E_U_eV')) and _fin(db.get('E_U_eV')):
+                        rec['dEU_rel'] = abs(da['E_U_eV'] - db['E_U_eV']) / ((da['E_U_eV'] + db['E_U_eV']) / 2)
                     if da['xrd_peaks'] and db['xrd_peaks']:
                         pa = max(da['xrd_peaks'], key=lambda p: p['height'])
                         pb = min(db['xrd_peaks'], key=lambda p: abs(p['center'] - pa['center']))
@@ -115,7 +129,9 @@ def replicates(rows, tol=0.02):
                     out.append(rec)
     eg = [abs(r['dEg']) for r in out if 'dEg' in r]
     pk = [abs(r['dpeak_deg']) for r in out if 'dpeak_deg' in r and abs(r['dpeak_deg']) < 0.5]
+    e4 = [abs(r['dE04']) for r in out if 'dE04' in r]; eu = [r['dEU_rel'] for r in out if 'dEU_rel' in r]
     return {'pairs': len(out), 'median_abs_dEg_eV': float(np.median(eg)) if eg else None,
+            'n_dE04': len(e4), 'median_abs_dE04_eV': float(np.median(e4)) if e4 else None, 'n_dEU': len(eu), 'median_rel_dEU': float(np.median(eu)) if eu else None,
             'median_abs_dpeak_deg': float(np.median(pk)) if pk else None, 'rows': out}
 
 
@@ -150,7 +166,7 @@ def main(argv):
     json.dump(rep, open(os.path.join(out, 'replicates.json'), 'w'), indent=1, default=float)
     json.dump(skipped, open(os.path.join(out, 'skipped.json'), 'w'), indent=1)
     print(json.dumps({'cells': len(rows), 'heldout': h, 'replicate_pairs': rep['pairs'], 'median_abs_dEg_eV': rep['median_abs_dEg_eV'],
-                      'median_abs_dpeak_deg': rep['median_abs_dpeak_deg'], 'skipped': len(skipped),
+                      'median_abs_dpeak_deg': rep['median_abs_dpeak_deg'], 'median_abs_dE04_eV': rep['median_abs_dE04_eV'], 'median_rel_dEU': rep['median_rel_dEU'], 'skipped': len(skipped),
                       'requests': c.n_requests}, indent=1))
     return 0
 

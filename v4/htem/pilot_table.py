@@ -8,7 +8,7 @@ Units:
   --unit position   one unit per film position (spatial units: pass --unit-type field to separability_s.py, which flags the result as
                     optimistic)
 Observables: Eg (eV, non-censored only), peak (strongest XRD peak center inside --peak-window lo hi, deg), logRs (log10 ohm/sq).
-usage: pilot_table.py --tag <name> --obs Eg|peak|logRs --cation Zn --bin 0.05 --temp 230 [--unit library|position] [--peak-window 30 36]
+usage: pilot_table.py --tag <name> --obs Eg|peak|logRs|E04|EU (--cation Zn | --frac cation|anion --element El) --bin 0.05 --temp 230 [--unit library|position] [--peak-window 30 36]
 """
 import argparse, csv, json, math, os, sys
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -24,27 +24,38 @@ def value(r, obs, win):
     if obs == 'peak':
         ps = [p for p in (d['xrd_peaks'] or []) if win[0] <= p['center'] <= win[1]]
         return max(ps, key=lambda p: p['height'])['center'] if ps else None
+    if obs == 'E04':   # round 2 (S4ho2): uncensored only
+        return d.get('E04_eV')
+    if obs == 'EU':    # round 2 (S4hu)
+        return d.get('E_U_eV')
     raise ValueError(obs)
 
 
 def main(argv):
     ap = argparse.ArgumentParser()
     ap.add_argument('--tag', required=True)
-    ap.add_argument('--obs', required=True, choices=['Eg', 'peak', 'logRs'])
-    ap.add_argument('--cation', required=True)
+    ap.add_argument('--obs', required=True, choices=['Eg', 'peak', 'logRs', 'E04', 'EU'])
+    ap.add_argument('--cation', help='round-1 alias for --frac cation --element <El>')
+    ap.add_argument('--frac', choices=['cation', 'anion'], default='cation', help='round 2: bin on cation_frac or anion_frac')
+    ap.add_argument('--element')
     ap.add_argument('--bin', type=float, required=True)
     ap.add_argument('--temp', type=int, required=True, help='rounded substrate temperature (census temp_round_c)')
     ap.add_argument('--unit', default='library', choices=['library', 'position'])
     ap.add_argument('--peak-window', nargs=2, type=float, default=[19.0, 52.0])
     a = ap.parse_args(argv)
+    if a.cation and not a.element:
+        a.element = a.cation
+    if not a.element:
+        ap.error('--element (or --cation) is required')
+    fk = 'cation_frac' if a.frac == 'cation' else 'anion_frac'
     src = os.path.join(API.HOST, 'matrix', a.tag, 'cells.jsonl')
-    out = os.path.join(API.HOST, 'matrix', a.tag, f'pilot_{a.obs}_{a.cation}_T{a.temp}_{a.unit}.csv')
+    out = os.path.join(API.HOST, 'matrix', a.tag, (f'pilot_{a.obs}_{a.element}_T{a.temp}_{a.unit}.csv' if a.frac == 'cation' else f'pilot_{a.obs}_anion{a.element}_T{a.temp}_{a.unit}.csv'))
     rows = []
     for line in open(src):
         r = json.loads(line)
         if r['D']['temp_c'] != a.temp:
             continue
-        cf = (r['M']['cation_frac'] or {}).get(a.cation)
+        cf = (r['M'].get(fk) or {}).get(a.element)
         v = value(r, a.obs, a.peak_window)
         if cf is None or v is None:
             continue
