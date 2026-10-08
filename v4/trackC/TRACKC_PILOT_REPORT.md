@@ -1,16 +1,17 @@
 # Track C pilot report (v4.4, DiscoveryQA computed tier)
 
-Branch `v4.4/2026-10-07` (from 97285f3d). Skills: discoveryqa-task-builder v0.2 (governing; v0.1 at start, rev1 bundle 16:56) and panelbench-task-builder v1.6. No paid model call was made. Every key is level S and answers a question about the outcome of the named computation, never about physical reality (I2c). Track C items are never pooled with measured items (I2t).
+Branch `v4.4/2026-10-07` (from 97285f3d). Skills: discoveryqa-task-builder v0.2 (governing; v0.1 at start, rev1 bundle 16:56) and panelbench-task-builder v1.6. One paid call batch has run: Q-C1 (card audit, $0.130, 2026-10-08). Every key is level S and answers a question about the outcome of the named computation, never about physical reality (I2c). Track C items are never pooled with measured items (I2t).
 
-## Summary
+## Summary (refreshed 2026-10-08, C8r)
 
-- **Items:** 157 gated items, all level S, internal only. JARVIS has Arbitrate 127 and T3 18 (Tc from an alpha2F panel). Li-ion has Arbitrate 5, T1 3, T3 3 and T7 1.
-- **Gates:** every hard gate passes, and three regenerations (host B twice, host A at nice 19) give identical hashes.
-- **Oracle:** the Harbor oracle scores 1.0 on 628 of 628 trials.
-- **Go criteria: not met.** Only 2 families reach 10 facts against 3 required, and Arrhenius agrees with the printed barriers for 4 of 9 materials.
-- **Families not built:** Fate, Route and Escalate cannot be built from these deposits (sections 3, 6), and Outcome class is a rule gap. Two decisions are open for David: the cross-tier audit items (VC-E08) and a 2-stage JARVIS Fate (VC-E19).
-- **Spend:** none. Nothing paid has run; see `../COST_QUOTE_trackC.md`.
+- **Card audit (Q-C1, C1a):** run as packaged, 30 calls on openai/gpt-5.6-sol, **$0.130** against $0.11 expected and a $1.00 cap. The restrictive reading changed two keyed readings: J6 dynamic stability is an outcome class (all 127 JARVIS Arbitrate items dropped), and tracer_D is a fit law (the 3 Li-ion T1 items dropped). VC-E35 records this as a rule gap for David: the J6 criterion is stated, so the A3 drop may be broader than its reason.
+- **C7g (Arbitrate guessing check):** every prior rule, the composition classifier, the cascade and a depth-3 tree must sit at chance + 5 or below (0.55). Li-ion Arbitrate lost 1 item (the tree scored 0.80). On the pre-audit set the check would have kept 86 of 127 JARVIS Arbitrate facts (diagnostic only).
+- **Items:** 26 gated items, all level S, internal only. JARVIS T3 18; Li-ion Arbitrate 4, T3 3, T7 1.
+- **Gates:** every hard gate passes, including C7g. Three regenerations (host B twice, host A) give identical hashes. Harbor oracle 1.0 on 104 of 104 trials (A0, B0f, B2, R0).
+- **Go criteria: not met.** Only 1 family reaches 10 facts (JARVIS T3), against 3 required.
+- **Spend:** $0.130 (Q-C1). The nano quote in `../COST_QUOTE_trackC.md` (C8r) is not approved and has not run.
 
+The C6 state (157 items) is kept in sections 7 to 9 for comparison; each table shows the C1a and C7g columns.
 
 ## 1. Deposits and source cards (C0)
 
@@ -31,7 +32,12 @@ MANIFEST_trackC.json: 26 files, all md5 values match the record metadata.
 
 ## 2. Pipeline cards and rule gaps (C1)
 
-`CARD_liion.json` (from arXiv 2601.03151v1 only, frozen C1pre before any archive import) holds 15 stages and 4 laws. `CARD_jarvis.json` (from arXiv 2205.00060v2, frozen C1pre_jarvis before any figshare value) holds 7 stages and 4 laws. The blind second-family audit (`AUDIT_PACKET_C1.md`, 30 calls) is quoted as Q-C1 and has not run, so both cards are builder-frozen.
+`CARD_liion.json` (from arXiv 2601.03151v1 only, frozen C1pre before any archive import) holds 15 stages and 4 laws. `CARD_jarvis.json` (from arXiv 2205.00060v2, frozen C1pre_jarvis before any figshare value) holds 7 stages and 4 laws. The blind second-family audit (`AUDIT_PACKET_C1.md`, 30 calls, quote Q-C1) ran on 2026-10-08 (audit_c1.py, frozen C1a_rule before the first call; outputs in `audit_c1/`). Results against the cards:
+- **Agree on the keyed thresholds:** S8 (>= 1 mS/cm), J1 (> 300 K), J2 (> 1 states/eV/Nelect), J3 (<= 5 atoms), J5 (>= 5 K) and S6 (> 1 eV) agree on comparator, threshold and unit. mu* = 0.09 (JL3) and the Haven ratio 1 (L2) agree.
+- **Restrictive changes (rules A3, A4):** J6 decision type static -> outcome_class, so JARVIS Arbitrate is template only; tracer_D law class -> fit, so Li-ion T1 is not built (T1 needs a non-fit law).
+- **Annotations (A1, no reading change):** new rule gaps on Li-ion S0, S1, S2, S6r and S7 and JARVIS J0 and J4 (the auditor's "missing" text kept in the card). Other comparator or type differences fall on stages that key no item (S0-S5, S9-S12, J0, J4).
+- **Law classes:** nernst_einstein independent (card definition), mcmillan_allen_dynes agreement (card independent), debye independent (card definition): annotations, since T3 accepts any non-fit class.
+- Cards refrozen as C1a. No C2 or C3 script reads the changed fields: C2 outputs keep their hashes (freeze check C2 PASS).
 
 | Rule gap | Frozen reading |
 |---|---|
@@ -114,19 +120,21 @@ The Li-ion dev evidence rests on 2 materials (the dev split holds 6 materials, a
 | JARVIS | J1, J2, J3 | static | 0 | 1,058 each | reconciliation fails / no field / ambiguous |
 | JARVIS | J4 | escalation | 0 | 1,058 | every material escalated |
 | JARVIS | J5 | static | 612 | 446 | Tc route agreement and not near 5 K |
-| JARVIS | J6 | static | 1,058 | 0 | deposited label |
+| JARVIS | J6 | static (C6) -> outcome_class (C1a) | 1,058 (C6) -> 0 (C1a) | 0 -> 1,058 | deposited label; Q-C1 reads J6 as an outcome class, never keyed (A3) |
 
 ## 7. Items, facts and gate attrition (C5, C6)
 
-| Source / family | Generated | After prior gate | After composition gate | Final items / facts | Reportable (>= 10 facts) |
-|---|---|---|---|---|---|
-| JARVIS Arbitrate (DFPT stability vs MLIP demonstrators) | 157 | 157 | 127 | 127 / 127 | yes |
-| JARVIS T3 (Tc from alpha2F, eq. 7, mu* 0.09) | 60 | 20 | 18 | 18 / 18 | yes |
-| Li-ion Arbitrate (FPMD 1000 K vs MLIPs at 1 mS/cm) | 5 | 5 | 5 | 5 / 5 | no |
-| Li-ion T1 (D from an FPMD MSD panel) | 6 | 5 | 3 | 3 / 3 | no |
-| Li-ion T3 (sigma by Nernst-Einstein, H = 1 stated) | 6 | 5 | 3 | 3 / 3 | no |
-| Li-ion T7 (Arrhenius 1000/750/600 K, predict 500 K) | 1 | 1 | 1 | 1 / 1 | no |
-| **Total** | **235** | | | **157 / 157** | |
+| Source / family | Generated (C6) | After prior gate | After composition gate | C6 final items / facts | After C1a (Q-C1) | After C7g | Reportable (>= 10 facts) |
+|---|---|---|---|---|---|---|---|
+| JARVIS Arbitrate (DFPT stability vs MLIP demonstrators) | 157 | 157 | 127 | 127 / 127 | 0 (J6 outcome class) | 0 | no (shortfall) |
+| JARVIS T3 (Tc from alpha2F, eq. 7, mu* 0.09) | 60 | 20 | 18 | 18 / 18 | 18 | 18 | yes |
+| Li-ion Arbitrate (FPMD 1000 K vs MLIPs at 1 mS/cm) | 5 | 5 | 5 | 5 / 5 | 5 | 4 | no |
+| Li-ion T1 (D from an FPMD MSD panel) | 6 | 5 | 3 | 3 / 3 | 0 (tracer_D fit) | 0 | no |
+| Li-ion T3 (sigma by Nernst-Einstein, H = 1 stated) | 6 | 5 | 3 | 3 / 3 | 3 | 3 | no |
+| Li-ion T7 (Arrhenius 1000/750/600 K, predict 500 K) | 1 | 1 | 1 | 1 / 1 | 1 | 1 | no |
+| **Total** | **235** | | | **157 / 157** | **27** | **26 / 26** | |
+
+The 27 items that survive C1a are byte-identical to their C6 versions (paths normalised); C1a added none.
 
 **Prior rules (frozen C5prior), scored per rule row:**
 - JARVIS T3: the typical-magnitude rule solved 42 of 60 and was trimmed to the limit.
@@ -141,6 +149,23 @@ The Li-ion dev evidence rests on 2 materials (the dev split holds 6 materials, a
 - Margin: Li-ion Arbitrate items within tau_D of the gate are tagged near_threshold. JARVIS T3 keeps only Tc above its tolerance.
 - Typed answers and neutral panel and structure names throughout. No answer-encoding names, no PNG text chunks, and CIFs carry no names or comments.
 
+**C7g Arbitrate guessing check (frozen C7g, C7g2; PRIOR_RULES_trackC.md):** limit 0.55 for every rule and the combined tree.
+
+| Set | Rule | Before | After |
+|---|---|---|---|
+| Li-ion Arbitrate (final set) | prior mlip_softening / composition | 0.00 / 0.20 | 0.00 / 0.25 |
+| | composition classifier (train split) | 0.60 | 0.00 |
+| | tree, depth 3 (train split) | 0.80 | 0.00 |
+| | cascade | 0.00 | 0.00 |
+| | items, class A / B | 5, 3 / 2 | 4, 2 / 2 (trimmed DQA-LIION-ARBITRATE-003) |
+| JARVIS Arbitrate (C6 set, diagnostic only, C7G_DIAG_c6set.json) | prior symmetry / odd_tm | 0.520 / 0.551 | 0.500 / 0.535 |
+| | composition classifier | 0.591 | 0.512 |
+| | tree, depth 3 | 0.583 | 0.535 |
+| | cascade | 0.504 | 0.547 |
+| | items, class A / B | 127, 64 / 63 | 86, 43 / 43 |
+
+Fuzz after C1a: the cm^2/s format holds one item, so two more wrong-answer cases per numeric item keep it at 21 cases (VC-E32). All hard gates pass on the final set: C7g, leaks, split, stem, fuzz, uniqueness, contamination and oracle.
+
 **Cascade baseline (no LLM, scored):**
 - JARVIS Arbitrate: 0.504 against a limit of 0.60.
 - Li-ion Arbitrate: 0.00 against 0.60.
@@ -151,7 +176,7 @@ Items the cascade solves are tagged cascade_solvable and reported apart.
 
 | # | Criterion | Result |
 |---|---|---|
-| 1 | At least 3 families reach >= 10 distinct facts across the two sources | **Not met.** Only 2 do (JARVIS Arbitrate 127, JARVIS T3 18); Li-ion families have 1 to 5 facts |
+| 1 | At least 3 families reach >= 10 distinct facts across the two sources | **Not met.** C6: 2 (JARVIS Arbitrate 127, JARVIS T3 18). After C1a and C7g: 1 (JARVIS T3 18); Li-ion families have 1 to 4 facts |
 | 2 | Every keyed observable passed synthetic validation and its second-route check | **Not met in full.** D, sigma and Tc pass both; Arrhenius passes synthetic validation, but its real-data barrier agreement is 4 of 9 printed Ea (the T7 item sits on a resolved held-out cell) |
 | 3 | Every stage count reconciles within 2 %, or each mismatch carries a class | **Met.** Every mismatch is classed (RECONCILE_*.md) |
 | 4 | At least one clean demonstrator passes validation on each stage a Fate, Arbitrate or Route item uses | **Met** (MACE and Orb pass on J6 and on the Li-ion 1000 K gate, though the Li-ion evidence is n = 2) |
@@ -160,6 +185,10 @@ Items the cascade solves are tagged cascade_solvable and reported apart.
 Decision: **no go** for scaling Track C on these two sources as they stand.
 
 ## 9. Export and oracle (C7)
+
+**C8r final set (det_runC7_1/c7, host B):** A0, B0f, B2 and R0 with 26 tasks each; Harbor oracle (harbor 0.23.0, -n 6, nice 10) reward 1.0 on 104 of 104 trials. Hashes are identical on det_runC7_1 and det_runC7_2 (host B) and det_runC7_A (host A): items c38b8b5b..., gates 9954db19..., panels 777b8fa8..., tasks c8ce9b3a....
+
+The C6 export below is kept for the record.
 
 - **Arms (Harbor layout, `v4_host/trackC/det_run1/c7`):** A0, B0f (composition only, forced), B2 (database id only) and R0 (clean demonstrator outputs table), with 157 tasks each.
 - **T-FM:** `TFM_tool_spec.json` is written, not launched.
@@ -178,3 +207,20 @@ Decision: **no go** for scaling Track C on these two sources as they stand.
 | C2DB (2D materials, staged stability and property workflow) | Fate (thermodynamic, dynamic stability and gap gates with rejects), Arbitrate, Escalate (the workflow escalates on stability) | Workflow provenance is queryable per material (CR4 many). The JARVIS 2D held-out set doubles as a transfer test |
 
 Lessons for the selection rule: prefer deposits that keep rejects with their deciding values at three or more stages. Check that the parent database version matches the paper before relying on parent recounts. Check that escalation panels exist for non-escalated materials. Budget MLIP MD by cell size and GPU throughput before promising a temperature ladder.
+
+## 11. Open rule gaps, contamination and the B2 probe (C8)
+
+**Open rule gaps (for David).**
+- **VC-E35, J6 as an outcome class:** the Q-C1 restrictive reading removed all 127 JARVIS Arbitrate items. Rule A3 drops an outcome-class reading because the frozen rules never key an outcome class, but that reason (an unstated class criterion, as for Li-ion S12) does not hold for J6: the auditor itself reads the criterion as stated (no imaginary modes). Restoring JARVIS Arbitrate needs a ruling on A3 and a refreeze. Under C7g it would keep 86 facts.
+- **VC-E08, cross-tier audit items:** open since C0. Items pairing a Track C computed outcome with a measured value would mix tiers (I2t), so none are built.
+- **Outcome class (Li-ion S12):** the fast versus high-T-only criterion is unstated, so the family is not built. Q-C1 confirms the gap.
+- **J1 recount (VC-E17):** theta_D > 300 K recounts at +45 %, so J1 stays template only, and JARVIS Fate stays unbuilt (VC-E19). The auditor agreed with the J1 reading, so the gap sits in the deposit or parent version, not in the text.
+- **tracer_D as a fit law (A4):** Li-ion T1 is gone. Li-ion T3 still asks for D read off the same MSD panel before the Nernst-Einstein step; its own law (L2) passed.
+
+**Contamination.**
+- No 8-word shingle overlap with the v4.2 sets (gate clean).
+- JARVIS Tc and stability sit in the public JARVIS-DFT parent and the figshare deposit (2022), so recall is plausible for JARVIS T3.
+- The Li-ion deposits date from 2026 and their structures derive from ICSD/MPDS (internal only).
+- PET-MAD (1c-13) is leaky and serves only as a reference route.
+
+**B2 recall probe.** Exported (tasks-B2, oracle 26/26) and not run. It is the optional strong line of the C8r quote (Sonnet 5.5, k = 1, $3.47 expected, $5.00 cap), not approved.

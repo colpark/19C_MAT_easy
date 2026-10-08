@@ -675,3 +675,11 @@ reason: C7g Arbitrate guessing check (PRIOR_RULES_trackC.md section C7g; gates_c
 reason: gates_c.py report fix (VC-E33): an inline comment had commented out the 'removed' field of the C7g report; rules with no hit (cascade) now reported at 0. No change to scoring or trimming
 
 - `trackC/gates_c.py` a128f04499f5972c9ca03f91bbc452822c69a5468b872996dd8bb731c5d09da8
+
+## C8r (2026-10-08T10:00:54-05:00)
+
+reason: Track C close-out report and C8r quote (not approved)
+
+- `trackC/TRACKC_PILOT_REPORT.md` b2eccce0584e58269edbcde78af5378060590c1904d90fc6377d76186183a917
+- `COST_QUOTE_trackC.md` 58bd3f1daa3a02e3b92a482bcf3ff901d388eba7205da0ae2e951b332a10259e
+- `STATUS.md` b8afa550278f74472579790b354002f78283f6951e05f58a6720ed45ec969b39

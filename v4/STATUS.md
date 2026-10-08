@@ -1,4 +1,11 @@
-# v4.4 Track C: DiscoveryQA pilot (branch v4.4/2026-10-07; stopped for David)
+# v4.4 Track C: DiscoveryQA pilot (branch v4.4/2026-10-07; close-out 2026-10-08, stopped for David)
+
+- **Q-C1 card audit run:** 30 Sol calls, $0.130 of a $1.00 cap. The restrictive application dropped JARVIS Arbitrate (J6 read as outcome class, 127 items) and Li-ion T1 (tracer_D a fit law, 3 items). VC-E35: rule gap for David on A3.
+- **C7g:** every Arbitrate rule plus a depth-3 tree at chance + 5 or below. Li-ion Arbitrate 5 -> 4. Diagnostic on the pre-audit set: JARVIS Arbitrate 127 -> 86.
+- **Items now:** 26 (JARVIS T3 18; Li-ion Arbitrate 4, T3 3, T7 1). All hard gates pass. Identical hashes on 3 runs over 2 hosts. Oracle 104/104.
+- **Go: not met** (1 family at 10 facts or more). Report `trackC/TRACKC_PILOT_REPORT.md` (C8r). Nano quote C8r (A0 + B0f, k = 3, $0.65 expected, $1.50 cap; optional Sonnet B2 $3.47, $5 cap): not approved, not run.
+
+## Earlier state (C6/C7, 2026-10-07)
 
 - **Items:** 157 gated level-S items (internal). JARVIS: Arbitrate 127, T3 18. Li-ion: Arbitrate 5, T1 3, T3 3, T7 1. All hard gates pass. Determinism is identical on host B (x2) and host A (nice 19).
 - **Go: not met.** Only 2 families reach 10 facts against 3 required, and Arrhenius real-data agreement is 4/9. Report: `trackC/TRACKC_PILOT_REPORT.md`.
