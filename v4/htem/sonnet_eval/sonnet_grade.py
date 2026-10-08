@@ -5,7 +5,7 @@ H = os.path.expanduser('~/Documents/harbor/v4_host/htem'); SB = sys.argv[1]; OUT
 items = {}
 for r in ('P1r2', 'P2r2'):
     for l in open(f'{V4}/htem/items/{r}/items.jsonl'): i = json.loads(l); items[i['id']] = i
-M = json.load(open(f'{H}/sonnet_eval/mapping.json')); rows = []
+M = json.load(open(f'{H}/sonnet_eval/' + (sys.argv[3] if len(sys.argv) > 3 else '') + 'mapping.json')); rows = []
 for m in M:
     if not os.path.isdir(f"{SB}/{m['batch']}"): continue
     i = items[m['id']]; p = f"{SB}/{m['batch']}/{m['q']}/answer.md"
