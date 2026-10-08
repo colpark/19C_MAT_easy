@@ -637,3 +637,41 @@ reason: pilot report, cost quote, status; stop for David
 - `COST_QUOTE_trackC.md` adff004f8df7ef37a71cbf401fbd3aa96918452e4d726493ab02ad72831c606e
 - `STATUS.md` 42bc9a688e62af1ca5f7d512e8bbf6e99342fca112e63628d51b5c2db412fbb9
 - `trackC/README.md` 7a9a9cc7875e61c9d70fafc32f2f583236aea6f8124c597a1b0229b2ce20b000
+
+## C1a_rule (2026-10-08T09:42:50-05:00)
+
+reason: Q-C1 runner audit_c1.py with the pre-registered comparison and restrictive application rules (A1-A4), frozen before the first audit call; packet sha check against FREEZE C1; live price checked 2026-10-08 09:40 CDT: openai/gpt-5.6-sol 2.00/10.00 per M (matches the quote)
+
+- `trackC/audit_c1.py` 7a3ab47f627a42931eee14034551b4e9236d5a27ba423612a20c59b6484607c6
+
+## C1a_rule2 (2026-10-08T09:47:14-05:00)
+
+reason: audit_c1.py compare: constant regex bug (VC-E31: 'formula' matched mu and the JSON \u00b5 escape supplied digits 00); bug fix only, no rule change; comparison rerun offline on the same answers
+
+- `trackC/audit_c1.py` 408663d6ace28dc6d938018ef0fb3dc5f44a26da119ecb1a978c8a78bd3407a9
+
+## C1a (2026-10-08T09:48:42-05:00)
+
+reason: Q-C1 card audit applied (audit_c1/answers.json, compare.json; spend $0.13003 of quote $0.11, cap $1.00): A1 rule gaps added (Li-ion S0 S1 S2 S6r S7; JARVIS J0 J4, annotations); A3 J6 decision_type static -> outcome_class (JARVIS Arbitrate dropped); A4 L1 tracer_D law_class fit (Li-ion T1 dropped). Cards refrozen; decisions.py and generate_c.py read them; before regenerating C4-C6
+
+- `trackC/CARD_liion.json` 8387e93bc24b25ad9acde80b15b8e214788da00989c5cdf4affec2f68186b522
+- `trackC/CARD_jarvis.json` 9e716f12f31628012f4b2af44d71daa5482c950fbc06f6ccbb786ee873419350
+- `trackC/apply_c1a.py` 07a018ad0d10da6c29293fc321a57ff4c96564c91ec398bef77eb1faa14d656d
+- `trackC/decisions.py` 3635eb4ec744ef44a780889b6712166e225bb3cf97d0bee68f7c8304592e0519
+- `trackC/generate_c.py` 710267f77ec905ee5e504f34d86a395f77ea763398c4dfbf1001e379281ba710
+- `trackC/audit_c1/answers.json` 901eb577e9ba489d50af498118288a10aaf3329c7005df4d5699562f889c179c
+- `trackC/audit_c1/compare.json` 0e027b9679e48f598f4d14cb523ebfde99158aef4285c5f7c07e4982cce33815
+
+## C7g (2026-10-08T09:50:44-05:00)
+
+reason: C7g Arbitrate guessing check (PRIOR_RULES_trackC.md section C7g; gates_c.gate_arbitrate_c7: every prior row, composition classifier, cascade and a depth-3 tree at chance + 5 = 0.55, decorrelating class-matched trim by item-id hash, <= 2 per material and family); fuzz +2 wrong answers per numeric item (VC-E32); c7g_diag.py diagnostic on the C6 set; frozen before any rerun
+
+- `trackC/gates_c.py` e6e679bbd5fb7f5dc5b0da92b9c5bb7a8bd81c84c5c5f3f90532e32fb4b75c29
+- `trackC/PRIOR_RULES_trackC.md` fa0be83c5cef31f26805126d29d71a41ae4162381708b17a78ff6763c83049c7
+- `trackC/c7g_diag.py` 6058c1f7b34c88c3913e58d3c1c88a030ff918d72c9ddedd90dbb54372c36018
+
+## C7g2 (2026-10-08T09:51:57-05:00)
+
+reason: gates_c.py report fix (VC-E33): an inline comment had commented out the 'removed' field of the C7g report; rules with no hit (cascade) now reported at 0. No change to scoring or trimming
+
+- `trackC/gates_c.py` a128f04499f5972c9ca03f91bbc452822c69a5468b872996dd8bb731c5d09da8

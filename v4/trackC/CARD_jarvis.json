@@ -10,8 +10,29 @@
  "written_before_deposit_values": true,
  "stages": [
   {
-   "rule_gap": null,
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "rule_gap": {
+    "what": "Q-C1 auditor: The text reports database counts but does not explicitly state a screening rule. It is ambiguous whether DOS availability is the inclusion criterion and whether the 17,419-material elastic-tensor subset affects this stage.",
+    "frozen_reading": "the C1 reading (D2)",
+    "source": "C1a"
+   },
+   "audit": {
+    "q_c1_call": 20,
+    "agree": {
+     "comparator": false,
+     "threshold": false,
+     "unit": false,
+     "decision_type": true,
+     "rule_stated": false
+    },
+    "auditor": {
+     "comparator": "class",
+     "threshold": "electronic DOS available",
+     "unit": "materials",
+     "decision_type": "static",
+     "rule_fully_stated": false,
+     "missing": "The text reports database counts but does not explicitly state a screening rule. It is ambiguous whether DOS availability is the inclusion criterion and whether the 17,419-material elastic-tensor subset affects this stage."
+    }
+   },
    "cost": 0.0,
    "cost_unit": "phonon_mode_units",
    "count_source": "Fig. 1 arrow \"55723\"; text p3 (17419 with elastic tensors)",
@@ -34,7 +55,24 @@
     "what": "the database field holding theta_D is not named; materials without an elastic tensor cannot pass",
     "frozen_reading": "theta_D recomputed from JARVIS-DFT elastic data with eq. 2 in C2 (parent rebuild) and compared to any deposited Debye field"
    },
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "audit": {
+    "q_c1_call": 21,
+    "agree": {
+     "comparator": true,
+     "threshold": true,
+     "unit": true,
+     "decision_type": true,
+     "rule_stated": true
+    },
+    "auditor": {
+     "comparator": ">",
+     "threshold": 300,
+     "unit": "K",
+     "decision_type": "static",
+     "rule_fully_stated": true,
+     "missing": "Nothing essential to the threshold rule; the method used to determine θD is not stated in the quoted text."
+    }
+   },
    "cost": 0.0,
    "cost_unit": "phonon_mode_units",
    "count_source": "text p3 and Fig. 1 \"5618\"",
@@ -57,7 +95,24 @@
     "what": "smearing/energy window for N(0) unstated",
     "frozen_reading": "not recomputed unless jarvis-tools exposes the DOS at E_F; else the stage is template only"
    },
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "audit": {
+    "q_c1_call": 22,
+    "agree": {
+     "comparator": true,
+     "threshold": true,
+     "unit": true,
+     "decision_type": true,
+     "rule_stated": true
+    },
+    "auditor": {
+     "comparator": ">",
+     "threshold": 1,
+     "unit": "states/eV/Nelect",
+     "decision_type": "static",
+     "rule_fully_stated": true,
+     "missing": "none"
+    }
+   },
    "cost": 0.0,
    "cost_unit": "phonon_mode_units",
    "count_source": "text p3 and Fig. 1 \"1736\"",
@@ -80,7 +135,24 @@
     "what": "\"As of now\" means 1058 may be a subset of the materials passing J1-J3; the cell basis (primitive or conventional) is unstated",
     "frozen_reading": "atoms as deposited (sites in the JARVIS atoms record) <= 5; parent materials passing J1-J3 but absent from the 1058 are logged as \"not run\", never as rejects"
    },
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "audit": {
+    "q_c1_call": 23,
+    "agree": {
+     "comparator": true,
+     "threshold": true,
+     "unit": true,
+     "decision_type": true,
+     "rule_stated": true
+    },
+    "auditor": {
+     "comparator": "<=",
+     "threshold": 5,
+     "unit": "atoms",
+     "decision_type": "static",
+     "rule_fully_stated": false,
+     "missing": "The text does not specify whether the atom count is per formula unit, primitive cell, conventional cell, or another representation. The 1058 count follows a joint statement of three criteria, so its attribution specifically to the natoms gate is ambiguous."
+    }
+   },
    "cost": 0.0,
    "cost_unit": "phonon_mode_units",
    "count_source": "text p8 and Fig. 1 \"1058\" (the atoms gate is not drawn in Fig. 1)",
@@ -99,8 +171,29 @@
    "stated_count": 1058
   },
   {
-   "rule_gap": null,
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "rule_gap": {
+    "what": "Q-C1 auditor: The stage is not explicitly named in the quote; mapping it to epc relies on the supplied stage order. The exact q-point grid used, k-point grid values and convergence criterion are unstated. The quote gives a broadening of 0.05 Rydberg (approximately 0.68 eV) but does not state a screening/pass-fail rule or explain how the count of 1058 results from this setting.",
+    "frozen_reading": "the C1 reading (D2)",
+    "source": "C1a"
+   },
+   "audit": {
+    "q_c1_call": 24,
+    "agree": {
+     "comparator": false,
+     "threshold": false,
+     "unit": false,
+     "decision_type": false,
+     "rule_stated": false
+    },
+    "auditor": {
+     "comparator": ">=",
+     "threshold": "2 × 2 × 2",
+     "unit": "q-point grid",
+     "decision_type": "engine",
+     "rule_fully_stated": false,
+     "missing": "The stage is not explicitly named in the quote; mapping it to epc relies on the supplied stage order. The exact q-point grid used, k-point grid values and convergence criterion are unstated. The quote gives a broadening of 0.05 Rydberg (approximately 0.68 eV) but does not state a screening/pass-fail rule or explain how the count of 1058 results from this setting."
+    }
+   },
    "cost": "3 * n_atoms",
    "cost_unit": "phonon_mode_units",
    "count_source": "text p8",
@@ -123,7 +216,24 @@
     "what": "abstract and Fig. 1 say \">= 5 K\", Sec 2.1 says \"> 5 K\"",
     "frozen_reading": ">= 5 K; items with Tc within rounding of 5 K (|Tc - 5| < 0.05 K at the deposit precision, widened to the second-route tolerance in C2) reported apart"
    },
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "audit": {
+    "q_c1_call": 25,
+    "agree": {
+     "comparator": true,
+     "threshold": true,
+     "unit": true,
+     "decision_type": true,
+     "rule_stated": true
+    },
+    "auditor": {
+     "comparator": "unstated",
+     "threshold": 5,
+     "unit": "K",
+     "decision_type": "static",
+     "rule_fully_stated": false,
+     "missing": "The exact comparator is ambiguous: the abstract and Fig. 1 state TC >= 5 K, while Sec. 2.1 states TC > 5 K. The treatment of materials with TC exactly equal to 5 K is therefore unstated."
+    }
+   },
    "cost": 0.0,
    "cost_unit": "phonon_mode_units",
    "count_source": "Fig. 1 arrow \"283\" after \"TC ≥ 5 K\"",
@@ -146,7 +256,24 @@
     "what": "tolerance for \"imaginary\" unstated; gate order differs between Fig. 1 (Tc then stability: 1058 -> 283 -> 105) and the text (626 stable of 1058, 105 of those with Tc)",
     "frozen_reading": "stability = the deposited \"stability\" field; a material failing BOTH J5 and J6 has an order-dependent eliminating gate and is never a Fate key (restrictive reading); Fate keys only materials failing exactly one"
    },
-   "audit": "pending (AUDIT_PACKET_C1.md, quote Q-C1)",
+   "audit": {
+    "q_c1_call": 26,
+    "agree": {
+     "comparator": true,
+     "threshold": true,
+     "unit": true,
+     "decision_type": false,
+     "rule_stated": true
+    },
+    "auditor": {
+     "comparator": "==",
+     "threshold": 0,
+     "unit": "phonon modes",
+     "decision_type": "outcome_class",
+     "rule_fully_stated": true,
+     "missing": "The post-stage count is contradictory: Fig. 1 reports 105, whereas the text reports 626 of 1058. No numerical tolerance or convention for identifying imaginary modes is stated."
+    }
+   },
    "cost": 0.0,
    "cost_unit": "phonon_mode_units",
    "count_source": "Fig. 1 arrow \"105\"; text: 626 of 1058 stable",
@@ -160,9 +287,11 @@
    "unit": null,
    "method": "DFPT phonons on the q-grid",
    "level_of_theory": "DFT-PBEsol (DFPT)",
-   "decision_type": "static",
+   "decision_type": "outcome_class",
    "verbatim_span": "As of now, we have applied J-Scr to 1058 materials. Out of these, only 626 of them are dynamically stable (i.e. no imaginary phonon modes)",
-   "stated_count": 105
+   "stated_count": 105,
+   "decision_type_C1": "static",
+   "c1a_effect": "decision_type static -> outcome_class (restrictive, A3): template only, its items dropped"
   }
  ],
  "derived_laws": [
@@ -170,13 +299,77 @@
    "id": "JL1",
    "name": "lambda",
    "law": "lambda = 2 int alpha2F(w)/w dw (eq. 6)",
-   "source": "Sec 3.2 p15"
+   "source": "Sec 3.2 p15",
+   "audit": {
+    "q_c1_call": 27,
+    "card_class": "definition",
+    "auditor_class": "definition",
+    "class_agree": true,
+    "constant_disagree": null,
+    "auditor": {
+     "law_class": "definition",
+     "inputs": [
+      "alpha2F(w)",
+      "w"
+     ],
+     "target": "lambda",
+     "constants_with_source": [
+      {
+       "constant": 2,
+       "source": "Explicit prefactor in Eq. 6"
+      }
+     ],
+     "stated_assumptions": [],
+     "missing": [
+      "Integration limits",
+      "Definition of alpha2F(w)",
+      "Definition and domain of w",
+      "Units or normalization conventions",
+      "Conditions for convergence of the integral"
+     ]
+    }
+   },
+   "law_class": "definition"
   },
   {
    "id": "JL2",
    "name": "omega_log",
    "law": "omega_log = exp[(2/lambda) int dw alpha2F(w)/w ln w] (eq. 8)",
-   "source": "Sec 3.2 p15"
+   "source": "Sec 3.2 p15",
+   "audit": {
+    "q_c1_call": 28,
+    "card_class": "definition",
+    "auditor_class": "definition",
+    "class_agree": true,
+    "constant_disagree": null,
+    "auditor": {
+     "law_class": "definition",
+     "inputs": [
+      "lambda",
+      "alpha2F(w)",
+      "w"
+     ],
+     "target": "omega_log",
+     "constants_with_source": [
+      {
+       "constant": 2,
+       "source": "Explicit prefactor in Eq. 8"
+      },
+      {
+       "constant": "e",
+       "source": "Implied by the exponential function exp in Eq. 8"
+      }
+     ],
+     "stated_assumptions": [],
+     "missing": [
+      "Integration limits",
+      "Definitions and units of lambda, alpha2F(w), w, and omega_log",
+      "Reference scale or units convention needed for ln(w)",
+      "Conditions ensuring lambda is nonzero and the integral converges"
+     ]
+    }
+   },
+   "law_class": "definition"
   },
   {
    "id": "JL3",
@@ -185,13 +378,81 @@
    "mustar": 0.09,
    "span": "the TC from the McMillan-Allen-Dynes formula, using µ∗ = 0.09, from our J-Scr workflow has an excellent agreement",
    "source": "Sec 2.1 p6",
-   "note": "eq. 7 has no f1 f2 factors: allen_dynes.tc_mcmillan_ad (not the full Allen-Dynes form)"
+   "note": "eq. 7 has no f1 f2 factors: allen_dynes.tc_mcmillan_ad (not the full Allen-Dynes form)",
+   "audit": {
+    "q_c1_call": 29,
+    "card_class": "independent",
+    "auditor_class": "agreement",
+    "class_agree": false,
+    "constant_disagree": false,
+    "auditor": {
+     "law_class": "agreement",
+     "inputs": [
+      "µ* = 0.09",
+      "unspecified outputs or parameters from the J-Scr workflow"
+     ],
+     "target": "TC",
+     "constants_with_source": {
+      "µ*": {
+       "value": 0.09,
+       "source": "Quoted text, Sec. 2.1 p. 6"
+      }
+     },
+     "stated_assumptions": [
+      "TC is obtained using the McMillan-Allen-Dynes formula.",
+      "µ* is fixed at 0.09."
+     ],
+     "missing": [
+      "The explicit McMillan-Allen-Dynes formula",
+      "Definitions and values of all other formula inputs",
+      "The quantity or dataset with which TC has excellent agreement",
+      "A numerical agreement metric or uncertainty",
+      "The numerical value and units of TC",
+      "Details of the J-Scr workflow"
+     ]
+    }
+   },
+   "law_class": "independent"
   },
   {
    "id": "JL4",
    "name": "debye",
    "law": "theta_D = h/kB (3 n NA rho / (4 pi M))^(1/3) v_m (eq. 2)",
-   "source": "Sec 3.1 p14"
+   "source": "Sec 3.1 p14",
+   "audit": {
+    "q_c1_call": 30,
+    "card_class": "definition",
+    "auditor_class": "independent",
+    "class_agree": false,
+    "constant_disagree": null,
+    "auditor": {
+     "law_class": "independent",
+     "inputs": [
+      "n",
+      "rho",
+      "M",
+      "v_m"
+     ],
+     "target": "theta_D",
+     "constants_with_source": {
+      "h": "Appears in Sec. 3.1, p. 14, eq. 2; value and provenance not stated.",
+      "kB": "Appears in Sec. 3.1, p. 14, eq. 2; value and provenance not stated.",
+      "NA": "Appears in Sec. 3.1, p. 14, eq. 2; value and provenance not stated.",
+      "pi": "Appears in Sec. 3.1, p. 14, eq. 2; value and numerical convention not stated.",
+      "numeric_factors": "3 and 4, as written in eq. 2."
+     },
+     "stated_assumptions": [],
+     "missing": [
+      "Definitions of all symbols",
+      "Units for the target and inputs",
+      "Numerical values or authoritative sources for h, kB, and NA",
+      "Meaning or method of obtaining v_m",
+      "Domain of applicability",
+      "Uncertainty or error treatment"
+     ]
+    }
+   },
+   "law_class": "definition"
   }
  ],
  "cost_units": {
@@ -229,5 +490,13 @@
    "what": "1736 -> 1058 mixes the <= 5 atoms gate with \"as of now\" incompleteness",
    "class": "missing records"
   }
- ]
+ ],
+ "audit_C1a": {
+  "quote": "Q-C1",
+  "model": "openai/gpt-5.6-sol",
+  "temperature": 0,
+  "calls": 11,
+  "spent_usd_total": 0.13003,
+  "rules": "audit_c1.py A1-A4 (frozen C1a_rule, C1a_rule2)"
+ }
 }

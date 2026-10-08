@@ -68,7 +68,10 @@ def main():
         add(mid, 'jarvis', 'J5', 'static', bool(m['route_agree_Tc'] and not s['J5']['near_threshold']),
             'Tc >= 5 K (frozen reading); keyable when the alpha2F route agrees and Tc is not within tau of 5 K',
             'pass' if s['J5']['pass'] else 'fail', s['J5']['Tc_dep'])
-        add(mid, 'jarvis', 'J6', 'static', True, 'deposited stability label (frozen reading)',
+        j6t = next(x for x in cj['stages'] if x['id'] == 'J6')['decision_type']   # C1a: outcome_class after Q-C1 (A3)
+        add(mid, 'jarvis', 'J6', j6t, j6t == 'static',
+            'deposited stability label (frozen reading)' if j6t == 'static' else
+            'C1a (Q-C1, A3): auditor reads J6 as an outcome class; the frozen rules never key an outcome class (template)',
             'pass' if s['J6']['pass'] else 'fail', s['J6']['stability'])
     with open(os.path.join(out, 'decisions.jsonl'), 'w') as f:
         for r in rows:

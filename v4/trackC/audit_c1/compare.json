@@ -1,0 +1,1129 @@
+{
+ "spent_usd": 0.1300266,
+ "rows": [
+  {
+   "n": 1,
+   "card": "CARD_liion",
+   "id": "S0",
+   "name": "sources",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": "in",
+    "threshold": "COD, ICSD, or MPDS",
+    "unit": "structures",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The exact repository query, access date or database version, precise definition of lithium-containing, and treatment of duplicates, malformed CIFs, or import failures are unstated."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": false,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 2,
+   "card": "CARD_liion",
+   "id": "S1",
+   "name": "clean",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": "unstated",
+    "threshold": "unstated",
+    "unit": "CIF files",
+    "decision_type": "engine",
+    "rule_fully_stated": false,
+    "missing": "The text does not state the specific usability criteria, rejection conditions, or COD-tools settings used to classify 22,842 CIFs as clean and 7,387 as unusable."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": false,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 3,
+   "card": "CARD_liion",
+   "id": "S2",
+   "name": "occupancy",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "retain integer occupancy; remove partial occupancy",
+    "unit": "none",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The exact method and any numerical tolerance used to determine whether stoichiometry aligns with atomic positions are unstated. The quoted text does not clarify separate handling of the 'Li only partial occupancy' category."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 4,
+   "card": "CARD_liion",
+   "id": "S3",
+   "name": "unicity",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "equivalent structures are eliminated; unique structures are retained",
+    "unit": "crystal structures",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The structure-matcher settings, tolerances, and exact CMPZ equivalence criteria are unstated. The duplicate count is also inconsistent: Fig. 3 gives 6,959, while the text gives 5,200; the reported retained count is 5,239."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": true,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 5,
+   "card": "CARD_liion",
+   "id": "S4",
+   "name": "composition",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "exclude structures containing hydrogen, noble gases, 3d-transition elements, or elements heavier than polonium; require anions from a specific selection within the pnictogen, chalcogen, and halogen families",
+    "unit": "structure",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The specific permitted anions from the pnictogen, chalcogen, and halogen families are not listed. The text also does not state how anions are identified. The reported post-stage count is 1550 structures, but it is an outcome rather than a decision threshold."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 6,
+   "card": "CARD_liion",
+   "id": "S5",
+   "name": "atomic_distance",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "bond lengths typically associated with organic molecules, such as double bonds with O or triple bonds with N",
+    "unit": "unstated",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "No numerical bond-distance cutoffs, units, atom-pair-specific ranges, precise definition of compatibility with inorganic materials, or explicit inclusion/exclusion logic are stated. The reported post-stage count is 1499 but does not resolve the rule."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 7,
+   "card": "CARD_liion",
+   "id": "S6",
+   "name": "electronic",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": ">",
+    "threshold": 1,
+    "unit": "eV",
+    "decision_type": "static",
+    "rule_fully_stated": true,
+    "missing": "The handling of the 39 failed electronic-structure calculations is not explicitly stated, although they are not included among the 982 electronic insulators."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 8,
+   "card": "CARD_liion",
+   "id": "S6r",
+   "name": "scf_rerun",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "failed to converge",
+    "unit": "calculations",
+    "decision_type": "recovery",
+    "rule_fully_stated": false,
+    "missing": "The convergence criterion and numerical threshold are unstated. The text specifies rerunning 251 failed calculations with the non-linear conjugate gradient method in SIRIUS-enabled Quantum ESPRESSO, but does not state the rerun settings or the post-rerun decision rule."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 9,
+   "card": "CARD_liion",
+   "id": "S7",
+   "name": "pinball_selfconsistency",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": ">",
+    "threshold": 0.95,
+    "unit": "dimensionless",
+    "decision_type": "recovery",
+    "rule_fully_stated": false,
+    "missing": "The maximum number of additional self-consistent pinball MD iterations, the precise calculation of r2, and the final failure or stopping rule are unstated."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": false,
+    "decision_type": false,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 10,
+   "card": "CARD_liion",
+   "id": "S7d",
+   "name": "pinball_drift",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "unstated",
+    "threshold": "unstated",
+    "unit": "unstated",
+    "decision_type": "engine",
+    "rule_fully_stated": false,
+    "missing": "The text reports that 63 structures failed due to drift and that 851 remained, but does not state how drift was measured, its unit, the acceptable threshold, or the explicit comparator defining failure."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": false,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 11,
+   "card": "CARD_liion",
+   "id": "S8",
+   "name": "pinball_conductivity",
+   "card_gap": true,
+   "keyed": "liion Arbitrate",
+   "auditor": {
+    "comparator": "unstated",
+    "threshold": 1,
+    "unit": "mS/cm",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The text does not specify whether potential fast ionic conductors must have conductivity > or >= 1 mS/cm, so treatment of values exactly at the threshold is ambiguous."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 12,
+   "card": "CARD_liion",
+   "id": "S9",
+   "name": "novelty",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "known Li-ion conductor",
+    "unit": "none",
+    "decision_type": "literature",
+    "rule_fully_stated": false,
+    "missing": "The text does not state how a material was determined to be known, which literature sources or matching criteria were used, or how structural duplicates and identity were assessed."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 13,
+   "card": "CARD_liion",
+   "id": "S10",
+   "name": "fpmd_1000K",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "does not exhibit Li-ion diffusion",
+    "unit": "none",
+    "decision_type": "outcome_class",
+    "rule_fully_stated": false,
+    "missing": "The text does not state a quantitative diffusivity threshold, an operational criterion for determining whether diffusion is exhibited, or whether the 18 materials are retained or rejected. The relationship between this classification and the temperature_ladder stage is not explicit in the quoted text and is inferred only from the supplied stage order."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 14,
+   "card": "CARD_liion",
+   "id": "S11",
+   "name": "temperature_ladder",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "fast ionic conductor; 750 K for 125 ps, 600 K for 150 ps, and 500 K for 180 ps",
+    "unit": "K and ps",
+    "decision_type": "refinement",
+    "rule_fully_stated": false,
+    "missing": "The criterion used to classify a structure as a fast ionic conductor is unstated."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": false,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 15,
+   "card": "CARD_liion",
+   "id": "S12",
+   "name": "fpmd_outcome_class",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "no_diffusion, high_T_only, or fast; high_T_only is described as significant diffusion at 1000 K but not the same behavior at lower temperatures",
+    "unit": "unstated",
+    "decision_type": "outcome_class",
+    "rule_fully_stated": false,
+    "missing": "No quantitative definition of significant diffusion or fast ionic conduction is given; the lower temperatures and meaning of 'same behaviour' are unstated; criteria for the no_diffusion and fast classes are not fully specified; and the stated classes account for 52 of 55 structures, leaving 3 outcomes unexplained."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": false,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 16,
+   "card": "CARD_liion",
+   "name": "tracer_D",
+   "family": "T1",
+   "card_class": "definition",
+   "auditor_class": "fit",
+   "class_agree": false,
+   "family_invalid": true,
+   "constant_disagree": null,
+   "auditor": {
+    "law_class": "fit",
+    "inputs": [
+     "mean square displacement MSD(t)",
+     "time t"
+    ],
+    "target": "diffusion coefficient",
+    "constants_with_source": [],
+    "stated_assumptions": [
+     "MSD(t) is treated as linear in time for the regression."
+    ],
+    "missing": [
+     "Exact equation relating the regression slope to the diffusion coefficient",
+     "Any proportionality factor or constants",
+     "Regression time interval",
+     "Treatment of the intercept",
+     "Units",
+     "Dimensionality or geometry",
+     "Uncertainty or error-estimation procedure"
+    ]
+   }
+  },
+  {
+   "n": 17,
+   "card": "CARD_liion",
+   "name": "nernst_einstein",
+   "family": "T3",
+   "card_class": "definition",
+   "auditor_class": "independent",
+   "class_agree": false,
+   "family_invalid": false,
+   "constant_disagree": false,
+   "auditor": {
+    "law_class": "independent",
+    "inputs": [
+     "Dilute-limit condition"
+    ],
+    "target": "The unnamed quantity referred to as \"it\"",
+    "constants_with_source": [
+     {
+      "value": 1,
+      "source": "Assumed by the authors in the dilute limit"
+     }
+    ],
+    "stated_assumptions": [
+     "The unnamed quantity is set to 1 in the dilute limit.",
+     "In practice, the quantity is often less than 1.",
+     "A value below 1 implies that correlated motion can enhance conductivity."
+    ],
+    "missing": [
+     "Name and definition of the target quantity",
+     "Equation relating the quantity to conductivity",
+     "Units or confirmation that the quantity is dimensionless",
+     "Definition or quantitative criterion for the dilute limit",
+     "Inputs needed to calculate the quantity outside the dilute limit",
+     "Source or evidence for the claim that it is often less than 1",
+     "Uncertainty, range, or fitted value for practical cases"
+    ]
+   }
+  },
+  {
+   "n": 18,
+   "card": "CARD_liion",
+   "name": "arrhenius",
+   "family": "T7",
+   "card_class": "fit",
+   "auditor_class": "fit",
+   "class_agree": true,
+   "family_invalid": false,
+   "constant_disagree": null,
+   "auditor": {
+    "law_class": "fit",
+    "inputs": [
+     "Arrhenius behaviour data for the structures"
+    ],
+    "target": [
+     "activation barrier",
+     "error in the activation barrier"
+    ],
+    "constants_with_source": [],
+    "stated_assumptions": [
+     "The Arrhenius behaviour can be represented by a linear fit.",
+     "The error is obtained using Bayesian propagation."
+    ],
+    "missing": [
+     "Explicit fitting equation",
+     "Definition of the fitted variables",
+     "Numerical fit parameters",
+     "Units",
+     "Temperature or data range",
+     "Details of the Bayesian propagation",
+     "Prior distributions",
+     "Measurement uncertainties",
+     "Numerical activation barrier and error"
+    ]
+   }
+  },
+  {
+   "n": 19,
+   "card": "CARD_liion",
+   "name": "room_temperature_extrapolation",
+   "family": null,
+   "card_class": "fit",
+   "auditor_class": "fit",
+   "class_agree": true,
+   "family_invalid": false,
+   "constant_disagree": null,
+   "auditor": {
+    "law_class": "fit",
+    "inputs": [],
+    "target": "an unspecified estimation",
+    "constants_with_source": [],
+    "stated_assumptions": [
+     "The estimation is based on extrapolation of an Arrhenius plot.",
+     "A change of slope is possible."
+    ],
+    "missing": [
+     "The quantity being estimated",
+     "The Arrhenius equation or fitted relationship",
+     "Input variables and their values",
+     "Fit parameters or constants",
+     "The data range used for the fit",
+     "The extrapolation range",
+     "How a possible slope change is handled"
+    ]
+   }
+  },
+  {
+   "n": 20,
+   "card": "CARD_jarvis",
+   "id": "J0",
+   "name": "sources",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": "class",
+    "threshold": "electronic DOS available",
+    "unit": "materials",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The text reports database counts but does not explicitly state a screening rule. It is ambiguous whether DOS availability is the inclusion criterion and whether the 17,419-material elastic-tensor subset affects this stage."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": true,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 21,
+   "card": "CARD_jarvis",
+   "id": "J1",
+   "name": "debye",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": ">",
+    "threshold": 300,
+    "unit": "K",
+    "decision_type": "static",
+    "rule_fully_stated": true,
+    "missing": "Nothing essential to the threshold rule; the method used to determine \u03b8D is not stated in the quoted text."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 22,
+   "card": "CARD_jarvis",
+   "id": "J2",
+   "name": "dos_fermi",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": ">",
+    "threshold": 1,
+    "unit": "states/eV/Nelect",
+    "decision_type": "static",
+    "rule_fully_stated": true,
+    "missing": "none"
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 23,
+   "card": "CARD_jarvis",
+   "id": "J3",
+   "name": "natoms",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "<=",
+    "threshold": 5,
+    "unit": "atoms",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The text does not specify whether the atom count is per formula unit, primitive cell, conventional cell, or another representation. The 1058 count follows a joint statement of three criteria, so its attribution specifically to the natoms gate is ambiguous."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 24,
+   "card": "CARD_jarvis",
+   "id": "J4",
+   "name": "epc",
+   "card_gap": false,
+   "keyed": null,
+   "auditor": {
+    "comparator": ">=",
+    "threshold": "2 \u00d7 2 \u00d7 2",
+    "unit": "q-point grid",
+    "decision_type": "engine",
+    "rule_fully_stated": false,
+    "missing": "The stage is not explicitly named in the quote; mapping it to epc relies on the supplied stage order. The exact q-point grid used, k-point grid values and convergence criterion are unstated. The quote gives a broadening of 0.05 Rydberg (approximately 0.68 eV) but does not state a screening/pass-fail rule or explain how the count of 1058 results from this setting."
+   },
+   "agree": {
+    "comparator": false,
+    "threshold": false,
+    "unit": false,
+    "decision_type": false,
+    "rule_stated": false
+   }
+  },
+  {
+   "n": 25,
+   "card": "CARD_jarvis",
+   "id": "J5",
+   "name": "tc",
+   "card_gap": true,
+   "keyed": null,
+   "auditor": {
+    "comparator": "unstated",
+    "threshold": 5,
+    "unit": "K",
+    "decision_type": "static",
+    "rule_fully_stated": false,
+    "missing": "The exact comparator is ambiguous: the abstract and Fig. 1 state TC >= 5 K, while Sec. 2.1 states TC > 5 K. The treatment of materials with TC exactly equal to 5 K is therefore unstated."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": true,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 26,
+   "card": "CARD_jarvis",
+   "id": "J6",
+   "name": "dynamic_stability",
+   "card_gap": true,
+   "keyed": "jarvis Arbitrate",
+   "auditor": {
+    "comparator": "==",
+    "threshold": 0,
+    "unit": "phonon modes",
+    "decision_type": "outcome_class",
+    "rule_fully_stated": true,
+    "missing": "The post-stage count is contradictory: Fig. 1 reports 105, whereas the text reports 626 of 1058. No numerical tolerance or convention for identifying imaginary modes is stated."
+   },
+   "agree": {
+    "comparator": true,
+    "threshold": true,
+    "unit": true,
+    "decision_type": false,
+    "rule_stated": true
+   }
+  },
+  {
+   "n": 27,
+   "card": "CARD_jarvis",
+   "name": "lambda",
+   "family": "T3",
+   "card_class": "definition",
+   "auditor_class": "definition",
+   "class_agree": true,
+   "family_invalid": false,
+   "constant_disagree": null,
+   "auditor": {
+    "law_class": "definition",
+    "inputs": [
+     "alpha2F(w)",
+     "w"
+    ],
+    "target": "lambda",
+    "constants_with_source": [
+     {
+      "constant": 2,
+      "source": "Explicit prefactor in Eq. 6"
+     }
+    ],
+    "stated_assumptions": [],
+    "missing": [
+     "Integration limits",
+     "Definition of alpha2F(w)",
+     "Definition and domain of w",
+     "Units or normalization conventions",
+     "Conditions for convergence of the integral"
+    ]
+   }
+  },
+  {
+   "n": 28,
+   "card": "CARD_jarvis",
+   "name": "omega_log",
+   "family": "T3",
+   "card_class": "definition",
+   "auditor_class": "definition",
+   "class_agree": true,
+   "family_invalid": false,
+   "constant_disagree": null,
+   "auditor": {
+    "law_class": "definition",
+    "inputs": [
+     "lambda",
+     "alpha2F(w)",
+     "w"
+    ],
+    "target": "omega_log",
+    "constants_with_source": [
+     {
+      "constant": 2,
+      "source": "Explicit prefactor in Eq. 8"
+     },
+     {
+      "constant": "e",
+      "source": "Implied by the exponential function exp in Eq. 8"
+     }
+    ],
+    "stated_assumptions": [],
+    "missing": [
+     "Integration limits",
+     "Definitions and units of lambda, alpha2F(w), w, and omega_log",
+     "Reference scale or units convention needed for ln(w)",
+     "Conditions ensuring lambda is nonzero and the integral converges"
+    ]
+   }
+  },
+  {
+   "n": 29,
+   "card": "CARD_jarvis",
+   "name": "mcmillan_allen_dynes",
+   "family": "T3",
+   "card_class": "independent",
+   "auditor_class": "agreement",
+   "class_agree": false,
+   "family_invalid": false,
+   "constant_disagree": false,
+   "auditor": {
+    "law_class": "agreement",
+    "inputs": [
+     "\u00b5* = 0.09",
+     "unspecified outputs or parameters from the J-Scr workflow"
+    ],
+    "target": "TC",
+    "constants_with_source": {
+     "\u00b5*": {
+      "value": 0.09,
+      "source": "Quoted text, Sec. 2.1 p. 6"
+     }
+    },
+    "stated_assumptions": [
+     "TC is obtained using the McMillan-Allen-Dynes formula.",
+     "\u00b5* is fixed at 0.09."
+    ],
+    "missing": [
+     "The explicit McMillan-Allen-Dynes formula",
+     "Definitions and values of all other formula inputs",
+     "The quantity or dataset with which TC has excellent agreement",
+     "A numerical agreement metric or uncertainty",
+     "The numerical value and units of TC",
+     "Details of the J-Scr workflow"
+    ]
+   }
+  },
+  {
+   "n": 30,
+   "card": "CARD_jarvis",
+   "name": "debye",
+   "family": null,
+   "card_class": "definition",
+   "auditor_class": "independent",
+   "class_agree": false,
+   "family_invalid": false,
+   "constant_disagree": null,
+   "auditor": {
+    "law_class": "independent",
+    "inputs": [
+     "n",
+     "rho",
+     "M",
+     "v_m"
+    ],
+    "target": "theta_D",
+    "constants_with_source": {
+     "h": "Appears in Sec. 3.1, p. 14, eq. 2; value and provenance not stated.",
+     "kB": "Appears in Sec. 3.1, p. 14, eq. 2; value and provenance not stated.",
+     "NA": "Appears in Sec. 3.1, p. 14, eq. 2; value and provenance not stated.",
+     "pi": "Appears in Sec. 3.1, p. 14, eq. 2; value and numerical convention not stated.",
+     "numeric_factors": "3 and 4, as written in eq. 2."
+    },
+    "stated_assumptions": [],
+    "missing": [
+     "Definitions of all symbols",
+     "Units for the target and inputs",
+     "Numerical values or authoritative sources for h, kB, and NA",
+     "Meaning or method of obtaining v_m",
+     "Domain of applicability",
+     "Uncertainty or error treatment"
+    ]
+   }
+  }
+ ],
+ "apply": [
+  {
+   "rule": "A1",
+   "stage": "S0",
+   "effect": "annotation",
+   "missing": "The exact repository query, access date or database version, precise definition of lithium-containing, and treatment of duplicates, malformed CIFs, or import failures are unstated."
+  },
+  {
+   "rule": "A2",
+   "stage": "S0",
+   "effect": "annotation",
+   "card": {
+    "comparator": "in",
+    "threshold": "COD, ICSD, MPDS",
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "in",
+    "threshold": "COD, ICSD, or MPDS",
+    "unit": "structures"
+   }
+  },
+  {
+   "rule": "A1",
+   "stage": "S1",
+   "effect": "annotation",
+   "missing": "The text does not state the specific usability criteria, rejection conditions, or COD-tools settings used to classify 22,842 CIFs as clean and 7,387 as unusable."
+  },
+  {
+   "rule": "A2",
+   "stage": "S1",
+   "effect": "annotation",
+   "card": {
+    "comparator": "==",
+    "threshold": "parseable",
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "unstated",
+    "threshold": "unstated",
+    "unit": "CIF files"
+   }
+  },
+  {
+   "rule": "A3",
+   "stage": "S1",
+   "effect": "annotation",
+   "card": "static",
+   "auditor": "engine"
+  },
+  {
+   "rule": "A1",
+   "stage": "S2",
+   "effect": "annotation",
+   "missing": "The exact method and any numerical tolerance used to determine whether stoichiometry aligns with atomic positions are unstated. The quoted text does not clarify separate handling of the 'Li only partial occupancy' category."
+  },
+  {
+   "rule": "A2",
+   "stage": "S2",
+   "effect": "annotation",
+   "card": {
+    "comparator": "==",
+    "threshold": true,
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "retain integer occupancy; remove partial occupancy",
+    "unit": "none"
+   }
+  },
+  {
+   "rule": "A2",
+   "stage": "S3",
+   "effect": "annotation",
+   "card": {
+    "comparator": "==",
+    "threshold": "unique",
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "equivalent structures are eliminated; unique structures are retained",
+    "unit": "crystal structures"
+   }
+  },
+  {
+   "rule": "A2",
+   "stage": "S4",
+   "effect": "annotation",
+   "card": {
+    "comparator": "excludes/requires",
+    "threshold": {
+     "exclude": [
+      "H",
+      "noble gases (He Ne Ar Kr Xe Rn)",
+      "3d transition elements (Sc-Zn)",
+      "elements heavier than Po (Z > 84)"
+     ],
+     "require": "anions from the pnictogen, chalcogen and halogen families (\"a specific selection\")"
+    },
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "exclude structures containing hydrogen, noble gases, 3d-transition elements, or elements heavier than polonium; require anions from a specific selection within the pnictogen, chalcogen, and halogen families",
+    "unit": "structure"
+   }
+  },
+  {
+   "rule": "A2",
+   "stage": "S5",
+   "effect": "annotation",
+   "card": {
+    "comparator": "absent",
+    "threshold": "bond lengths \"typically associated with organic molecules such as double bond with O or triple bond with N\"",
+    "unit": "\u00c5"
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "bond lengths typically associated with organic molecules, such as double bonds with O or triple bonds with N",
+    "unit": "unstated"
+   }
+  },
+  {
+   "rule": "A1",
+   "stage": "S6r",
+   "effect": "annotation",
+   "missing": "The convergence criterion and numerical threshold are unstated. The text specifies rerunning 251 failed calculations with the non-linear conjugate gradient method in SIRIUS-enabled Quantum ESPRESSO, but does not state the rerun settings or the post-rerun decision rule."
+  },
+  {
+   "rule": "A2",
+   "stage": "S6r",
+   "effect": "annotation",
+   "card": {
+    "comparator": "==",
+    "threshold": "converged",
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "failed to converge",
+    "unit": "calculations"
+   }
+  },
+  {
+   "rule": "A1",
+   "stage": "S7",
+   "effect": "annotation",
+   "missing": "The maximum number of additional self-consistent pinball MD iterations, the precise calculation of r2, and the final failure or stopping rule are unstated."
+  },
+  {
+   "rule": "A2",
+   "stage": "S7",
+   "effect": "annotation",
+   "card": {
+    "comparator": ">",
+    "threshold": 0.95,
+    "unit": null
+   },
+   "auditor": {
+    "comparator": ">",
+    "threshold": 0.95,
+    "unit": "dimensionless"
+   }
+  },
+  {
+   "rule": "A3",
+   "stage": "S7",
+   "effect": "annotation",
+   "card": "refinement",
+   "auditor": "recovery"
+  },
+  {
+   "rule": "A3",
+   "stage": "S7d",
+   "effect": "annotation",
+   "card": "recovery",
+   "auditor": "engine"
+  },
+  {
+   "rule": "A2",
+   "stage": "S9",
+   "effect": "annotation",
+   "card": {
+    "comparator": "==",
+    "threshold": false,
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "known Li-ion conductor",
+    "unit": "none"
+   }
+  },
+  {
+   "rule": "A2",
+   "stage": "S10",
+   "effect": "annotation",
+   "card": {
+    "comparator": ">",
+    "threshold": 1e-09,
+    "unit": "cm^2/s"
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "does not exhibit Li-ion diffusion",
+    "unit": "none"
+   }
+  },
+  {
+   "rule": "A2",
+   "stage": "S11",
+   "effect": "annotation",
+   "card": {
+    "comparator": "==",
+    "threshold": true,
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "fast ionic conductor; 750 K for 125 ps, 600 K for 150 ps, and 500 K for 180 ps",
+    "unit": "K and ps"
+   }
+  },
+  {
+   "rule": "A3",
+   "stage": "S11",
+   "effect": "annotation",
+   "card": "escalation",
+   "auditor": "refinement"
+  },
+  {
+   "rule": "A2",
+   "stage": "S12",
+   "effect": "annotation",
+   "card": {
+    "comparator": "class",
+    "threshold": {
+     "fast": "diffusion resolved at low T, activation barrier estimated (Table 3)",
+     "high_T_only": "significant diffusion at 1000 K but not at lower temperatures (Table 2)",
+     "no_diffusion": "S10 fails (Table 1)"
+    },
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "no_diffusion, high_T_only, or fast; high_T_only is described as significant diffusion at 1000 K but not the same behavior at lower temperatures",
+    "unit": "unstated"
+   }
+  },
+  {
+   "rule": "A4",
+   "law": "tracer_D",
+   "effect": "drop items",
+   "family": "T1",
+   "auditor_class": "fit",
+   "constant_disagree": null
+  },
+  {
+   "rule": "A4",
+   "law": "nernst_einstein",
+   "effect": "annotation",
+   "card_class": "definition",
+   "auditor_class": "independent"
+  },
+  {
+   "rule": "A1",
+   "stage": "J0",
+   "effect": "annotation",
+   "missing": "The text reports database counts but does not explicitly state a screening rule. It is ambiguous whether DOS availability is the inclusion criterion and whether the 17,419-material elastic-tensor subset affects this stage."
+  },
+  {
+   "rule": "A2",
+   "stage": "J0",
+   "effect": "annotation",
+   "card": {
+    "comparator": "in",
+    "threshold": "JARVIS-DFT v08.18.2021",
+    "unit": null
+   },
+   "auditor": {
+    "comparator": "class",
+    "threshold": "electronic DOS available",
+    "unit": "materials"
+   }
+  },
+  {
+   "rule": "A1",
+   "stage": "J4",
+   "effect": "annotation",
+   "missing": "The stage is not explicitly named in the quote; mapping it to epc relies on the supplied stage order. The exact q-point grid used, k-point grid values and convergence criterion are unstated. The quote gives a broadening of 0.05 Rydberg (approximately 0.68 eV) but does not state a screening/pass-fail rule or explain how the count of 1058 results from this setting."
+  },
+  {
+   "rule": "A2",
+   "stage": "J4",
+   "effect": "annotation",
+   "card": {
+    "comparator": "computed",
+    "threshold": null,
+    "unit": null
+   },
+   "auditor": {
+    "comparator": ">=",
+    "threshold": "2 \u00d7 2 \u00d7 2",
+    "unit": "q-point grid"
+   }
+  },
+  {
+   "rule": "A3",
+   "stage": "J4",
+   "effect": "annotation",
+   "card": "escalation",
+   "auditor": "engine"
+  },
+  {
+   "rule": "A3",
+   "stage": "J6",
+   "effect": "drop items",
+   "card": "static",
+   "auditor": "outcome_class"
+  },
+  {
+   "rule": "A4",
+   "law": "mcmillan_allen_dynes",
+   "effect": "annotation",
+   "card_class": "independent",
+   "auditor_class": "agreement"
+  },
+  {
+   "rule": "A4",
+   "law": "debye",
+   "effect": "annotation",
+   "card_class": "definition",
+   "auditor_class": "independent"
+  }
+ ]
+}
