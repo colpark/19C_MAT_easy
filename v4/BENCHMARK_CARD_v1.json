@@ -98,8 +98,7 @@
    "items": 42,
    "facts": 42,
    "reportable": true,
-   "t3_agreement_items": 0,
-   "superseded_by": "P2r2"
+   "t3_agreement_items": 0
   },
   {
    "source": "HTEM P2 (Mn-Se-Te-Zn)",
@@ -109,46 +108,15 @@
    "items": 40,
    "facts": 40,
    "reportable": true,
-   "t3_agreement_items": 0,
-   "superseded_by": "P2r2"
-  },
-  {
-   "source": "HTEM P2r2 (Mn-Se-Te-Zn)",
-   "tier": "database",
-   "family": "t1",
-   "class": "reading",
-   "items": 38,
-   "facts": 38,
-   "reportable": true,
    "t3_agreement_items": 0
   },
   {
-   "source": "HTEM P2r2 (Mn-Se-Te-Zn)",
-   "tier": "database",
-   "family": "t2",
-   "class": "inference",
-   "items": 10,
-   "facts": 10,
-   "reportable": true,
-   "t3_agreement_items": 0
-  },
-  {
-   "source": "HTEM P2r2 (Mn-Se-Te-Zn)",
-   "tier": "database",
-   "family": "t3",
-   "class": "inference",
-   "items": 24,
-   "facts": 24,
-   "reportable": true,
-   "t3_agreement_items": 0
-  },
-  {
-   "source": "HTEM P2r2 (Mn-Se-Te-Zn)",
-   "tier": "database",
-   "family": "t4",
-   "class": "reading",
-   "items": 40,
-   "facts": 40,
+   "source": "Track C jarvis",
+   "tier": "computed",
+   "family": "Arbitrate",
+   "class": "decision",
+   "items": 127,
+   "facts": 127,
    "reportable": true,
    "t3_agreement_items": 0
   },
@@ -167,8 +135,18 @@
    "tier": "computed",
    "family": "Arbitrate",
    "class": "decision",
-   "items": 4,
-   "facts": 4,
+   "items": 5,
+   "facts": 5,
+   "reportable": false,
+   "t3_agreement_items": 0
+  },
+  {
+   "source": "Track C liion",
+   "tier": "computed",
+   "family": "T1",
+   "class": "reading",
+   "items": 3,
+   "facts": 3,
    "reportable": false,
    "t3_agreement_items": 0
   },
@@ -211,29 +189,11 @@
    "items": 71,
    "facts": 53
   },
-  "HTEM P1": {
-   "ref": "origin/v4.3/2026-10-07",
-   "sha": "cd74674e",
-   "items": 83,
-   "facts": 83
-  },
-  "HTEM P2": {
-   "ref": "origin/v4.3/2026-10-07",
-   "sha": "cd74674e",
-   "items": 82,
-   "facts": 82
-  },
-  "HTEM P2r2": {
-   "ref": "origin/v4.3/2026-10-07",
-   "sha": "cd74674e",
-   "items": 112,
-   "facts": 112
-  },
   "HTEM": {
    "ref": "origin/v4.3/2026-10-07",
-   "sha": "cd74674e",
-   "items": 277,
-   "facts": 199
+   "sha": "4236d092",
+   "items": 165,
+   "facts": 165
   },
   "HTEM H8": {
    "ref": "c211c3f7",
@@ -243,9 +203,9 @@
   },
   "Track C": {
    "ref": "origin/v4.4/2026-10-07",
-   "sha": "707bfd98",
-   "items": 26,
-   "facts": 26
+   "sha": "c6ca28e1",
+   "items": 157,
+   "facts": 157
   },
   "v4.2 eval": {
    "trials": 639,
@@ -835,25 +795,25 @@
    "decision_facts": 0
   },
   "database": {
-   "facts": 199,
-   "inference_facts": 34,
-   "inference_share": 0.1708542713567839,
-   "inference_facts_excl_t3_agreement": 34,
-   "reportable_inference_families": 2,
+   "facts": 165,
+   "inference_facts": 0,
+   "inference_share": 0.0,
+   "inference_facts_excl_t3_agreement": 0,
+   "reportable_inference_families": 0,
    "decision_facts": 0
   },
   "computed": {
-   "facts": 26,
+   "facts": 157,
    "inference_facts": 22,
-   "inference_share": 0.8461538461538461,
+   "inference_share": 0.14012738853503184,
    "inference_facts_excl_t3_agreement": 22,
    "reportable_inference_families": 1,
-   "decision_facts": 4
+   "decision_facts": 132
   },
   "measured (raw deposit + database)": {
-   "facts": 252,
-   "inference_facts": 44,
-   "inference_share": 0.1746031746031746
+   "facts": 218,
+   "inference_facts": 10,
+   "inference_share": 0.045871559633027525
   }
  },
  "tests": [
@@ -864,21 +824,9 @@
    "match": true
   },
   {
-   "name": "HTEM H9 P1 + P2 facts (v4.3 report 165)",
+   "name": "HTEM current facts (prompt expects ~178; H9 regeneration, VB-E02)",
    "got": 165,
-   "expected": 165,
-   "match": true
-  },
-  {
-   "name": "HTEM P2r2 facts (HTEM_ROUND2_REPORT 112)",
-   "got": 112,
-   "expected": 112,
-   "match": true
-  },
-  {
-   "name": "HTEM database distinct facts P1 u P2 u P2r2 vs sum of reports 165 + 112 (VB-E03)",
-   "got": 199,
-   "expected": 277,
+   "expected": 178,
    "match": false
   },
   {
@@ -888,11 +836,11 @@
    "match": true
   },
   {
-   "name": "Track C facts (v4.4 report: C6 157, final after C1a and C7g 26)",
-   "got": 26,
-   "expected": 26,
+   "name": "Track C facts",
+   "got": 157,
+   "expected": 157,
    "match": true
   }
  ],
- "label": "v2"
+ "label": "v1"
 }

@@ -6,7 +6,12 @@
   - computed (Track C) 157, of which 14.0 % are inference (JARVIS T3 reportable) and 132 are decision facts.
 - Measured items alone are 4.6 % inference, and computed items are never pooled with them.
 - **Checks:** fact counts match v4.2, Track C and HTEM H8. HTEM H9 165 differs from about 178 for a known reason (VB-E02). The base ref differs from the prompt (VB-E01).
-- Version 2 follows after parts 1 and 2 push.
+- **Version 2** (v4.3 cd74674e, v4.4 707bfd98):
+  - raw deposit 53, 18.9 % inference (unchanged);
+  - database 199 distinct, 17.1 % inference, with 2 reportable inference families (P2r2 T3 24, T2 10);
+  - computed 26, 84.6 % inference, of which JARVIS T3 is reportable; Arbitrate is gone (VC-E35);
+  - measured inference share is 4.6 % → 17.5 %.
+  - Checks: VB-E03 (distinct union 199 against the summed reports' 277) and VB-E04 (Track C 157 → 26).
 
 # v4.4 Track C: DiscoveryQA pilot (branch v4.4/2026-10-07; stopped for David)
 
