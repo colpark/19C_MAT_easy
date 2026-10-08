@@ -12,6 +12,13 @@
   - computed 26, 84.6 % inference, of which JARVIS T3 is reportable; Arbitrate is gone (VC-E35);
   - measured inference share is 4.6 % → 17.5 %.
   - Checks: VB-E03 (distinct union 199 against the summed reports' 277) and VB-E04 (Track C 157 → 26).
+- **Version 3** (v4.3 20b365e2, H10 sets P1r2 73 + P2r2 105; Track C unchanged at 707bfd98):
+  - raw deposit 53, 18.9 % inference;
+  - database 178, 19.1 % inference, with 2 reportable inference families;
+  - computed 26, 84.6 % inference, with 1 reportable inference family;
+  - measured inference share 19.0 %.
+  - Nano H10 (k = 2): P2r2 T3 A0 81 % against B0f 44 % (a constant guess at chance); T2 45 % against chance 17 %.
+  - Spend to date $7.03. Ledger: VB-E05 and VB-E06.
 
 # v4.4 Track C: DiscoveryQA pilot (branch v4.4/2026-10-07; stopped for David)
 

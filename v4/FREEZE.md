@@ -659,3 +659,13 @@ reason: benchmark card v2: benchmark_card.py (P2r2 role, distinct-union tier tot
 - `BENCHMARK_CARD.md` 5aa2e237d869469c6dccc8c774343f56977c47a400ed64098ea14c624937b578
 - `BENCHMARK_CARD.json` e86c77fda343a552d9114f4c96da420f3902346760c180d7d3c6c52524218a7d
 - `BENCHMARK_CARD_v1.json` d9e561497a04e9f5aaac94e4a641f5d113b099ff17d0fdcdebdb654ad9b0fbcf
+
+## B3 (2026-10-08T13:27:07-05:00)
+
+reason: benchmark card v3: HTEM H10 active sets (P1r2, P2r2), superseded rows, nano H10 eval columns, spend fix (VB-E06); refs v4.3 20b365e2, Track C 707bfd98
+
+- `benchmark_card.py` 09b492e894369032d4b16da2a06c208805cd24ea4fab389e72bc007ce225eac7
+- `BENCHMARK_CARD.md` a4f743859cd1fea19a747271aa5bd24dcf075f0dd6fb0792edf77ca2e9384854
+- `BENCHMARK_CARD.json` eb7d10907153fc6804474a3299c5055fb1cc4620808a6dadf32c497c2e5c5e3a
+- `BENCHMARK_CARD_v2.json` e86c77fda343a552d9114f4c96da420f3902346760c180d7d3c6c52524218a7d
+- `BENCHMARK_CARD_v2.md` 5aa2e237d869469c6dccc8c774343f56977c47a400ed64098ea14c624937b578
