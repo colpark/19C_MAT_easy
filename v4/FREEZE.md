@@ -914,3 +914,11 @@ reason: MC0 desk checks and kit merge (d4076e52)
 
 - `htem/DESK_htem_mc.md` 7f28393fd95fda304db07ac91bc016408ba636bfd44f29a355e958135178f008
 - `htem/mc/desk_mc.py` 1630885aa074e7df550805d07a60073f8e96114a4b08a2b07a93286af7f1264d
+
+## MC1 (2026-10-08T15:14:39-05:00)
+
+reason: HTEM_MC_RULES.md (families MC1-MC7, trap/doubt trim, reward, gates, go criteria) and MC_SPLITS.json (I12, before any trace or export)
+
+- `htem/HTEM_MC_RULES.md` 45ec91748b8f0fa0e83e7f6a04845f1c2db00722f640d4ae49051de22082e58e
+- `htem/MC_SPLITS.json` e8c64ac90b1a2ad64926077aee085eb9483a6940da9a00817fb9a40e90407b64
+- `htem/mc/splits_mc.py` e2ca5f659f8012d17b6112f451eacd79694bbb48e18db408ebe7fad5ba0e62e8
