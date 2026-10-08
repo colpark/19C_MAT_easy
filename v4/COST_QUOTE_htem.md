@@ -1,3 +1,22 @@
+## Revision R1 (2026-10-07): APPROVED by David: "k=1 instead. nano run only. go ahead"
+
+This revision replaces options 1 and 2 above.
+
+**Scope.** openai/gpt-5-nano on A0, B0 and B0f, k = 1, both pilot sets. Same prices, token bases and worst-case basis as above. There is no strong-model line.
+
+| Role | Arm | Model | Items | k | Calls | Expected $ | Worst $ |
+|---|---|---|---|---|---|---|---|
+| P1 | A0 | openai/gpt-5-nano | 110 | 1 | 110 | 0.54 | 7.10 |
+| P1 | B0 | openai/gpt-5-nano | 110 | 1 | 110 | 0.34 | 7.10 |
+| P1 | B0f | openai/gpt-5-nano | 110 | 1 | 110 | 0.39 | 7.10 |
+| P2 | A0 | openai/gpt-5-nano | 113 | 1 | 113 | 0.55 | 7.29 |
+| P2 | B0 | openai/gpt-5-nano | 113 | 1 | 113 | 0.35 | 7.29 |
+| P2 | B0f | openai/gpt-5-nano | 113 | 1 | 113 | 0.40 | 7.29 |
+
+**Total.** 669 calls; expected $2.56 without a cache discount (v4.2 came in at 0.55 of its expectation); worst case $43.18; **hard cap $4.00**, enforced by run_htem.sh before every batch.
+
+**Statistics caveat.** With k = 1 there is no replicate agreement. Per-item flips of about 20 % (v0.2) make item-level claims weak, so the report gives family-level accuracy with Wilson intervals only.
+
 # COST_QUOTE_htem (v4.3 Track H, skill I11): nano evaluation of the HTEM pilot items
 
 Not approved. Nothing runs until David approves an option in writing, and a change of model, scope or k needs a new quote.

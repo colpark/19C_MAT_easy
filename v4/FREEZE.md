@@ -652,3 +652,24 @@ reason: pilot report, quote, status; stop for David
 - `htem/HTEM_PILOT_REPORT.md` f041359d7d0adbcfc3dee12e607006538f7547170dd5f773451055470dedf4e0
 - `COST_QUOTE_htem.md` b2458d3d3bdecfab3f69674bdb41a448c921d824f4ee68a6a17528da94b4ed6b
 - `STATUS.md` 6b1fe15acf9dde3d255678af745a8debe4750ccb79a5a51a22ceb5d9be32e719
+
+## H8run (2026-10-07T20:47:52-05:00)
+
+reason: COST_QUOTE_htem revision R1 (approved by David: nano, k=1, A0/B0/B0f, cap $4) and htem/run_htem.sh, frozen before launch
+
+- `COST_QUOTE_htem.md` 8458ab7c829ab214a9c5f7d6d6172b41e612d6fcc6c9aa9ba8e39a0e7ba60a38
+- `htem/run_htem.sh` 3bfc09c97753f93724eb37b8468021e52081ed610f2e294f44e286975d569268
+
+## H8an (2026-10-07T20:49:03-05:00)
+
+reason: htem/results_htem.py (analysis of the HTEM nano run), frozen before reading any trial
+
+- `htem/results_htem.py` 3fddd9fc499369f42c90ea348be2abbcd5c2bc1569bd3a1aec6aed2d4aec0b19
+
+## H8 (2026-10-07T22:48:29-05:00)
+
+reason: HTEM nano results (R1 run) and report section
+
+- `htem/RESULTS_htem.md` b9beba902d33ce9d4bf63d0f87dc62dd606752bd98701cc65151a49bcbda9fb2
+- `htem/results_htem.json` 05f90973afdc00b22b51f94af6c13758e4f4226147f064245c4e80e82a883398
+- `htem/HTEM_PILOT_REPORT.md` 20928998341c2258bc6c358807cbd0180108e4f0452495551e2e012e613ba25f
