@@ -637,3 +637,16 @@ reason: pilot report, cost quote, status; stop for David
 - `COST_QUOTE_trackC.md` adff004f8df7ef37a71cbf401fbd3aa96918452e4d726493ab02ad72831c606e
 - `STATUS.md` 42bc9a688e62af1ca5f7d512e8bbf6e99342fca112e63628d51b5c2db412fbb9
 - `trackC/README.md` 7a9a9cc7875e61c9d70fafc32f2f583236aea6f8124c597a1b0229b2ce20b000
+
+## B1 (2026-10-08T09:42:19-05:00)
+
+reason: benchmark card v1 (Part 3): benchmark_card.py as used for v1 (frozen after the v1 run; counting code only, no keys); refs v4.2 97285f3d, v4.3 4236d092 (H8 c211c3f7), v4.4 c6ca28e1, v4.1 98dd8bac
+
+- `benchmark_card.py` 5f904121c8627cca4537ec4995a1ea6885478d53cafde728e6b75bf17251153e
+
+## B1out (2026-10-08T09:42:19-05:00)
+
+reason: benchmark card v1 outputs
+
+- `BENCHMARK_CARD.md` 782ee9906a09d0a175b9dd46b340c7b80e364b543d0446ec2d0e327794e9ba47
+- `BENCHMARK_CARD.json` d9e561497a04e9f5aaac94e4a641f5d113b099ff17d0fdcdebdb654ad9b0fbcf
