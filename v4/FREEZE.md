@@ -584,3 +584,21 @@ reason: PRIOR_RULES_trackC.md (prior gate, typical-magnitude rules, composition-
 
 - `trackC/PRIOR_RULES_trackC.md` 24e9f5571e22cc861cb22759787395c88efe09cfda935bde3da600ab67252d91
 - `trackC/decisions.py` af51987fc865e6930b0d7ba79ee7e13568bc3a8cc03a2a842342fd2cee1bdc58
+
+## C3 (2026-10-08T10:51:49+00:00)
+
+reason: demonstrators: registry, leak statuses, run outputs merged, dev validation (fm_errors.json), R0 table; 1000 K pass complete, ladder shortfall (VC-E26)
+
+- `trackC/demonstrators.py` 05525841f60e4d5202309e251e36347576399dee52dca8a9bbc21ac8adb2096e
+- `trackC/fm_registry.json` e7a7715a103dfdf4cc96370ceeec58fc862e31e42aa4f19e1786a5853a80ffc6
+- `trackC/fm_errors.json` 08eaf5ffc1ff6d89d98b8c1878596e12d435df93a455ab2d99e837cde5e7ac2e
+- `trackC/fm_outputs_table.json` 644e589a6c466b27974bc3ba4cd300a8a69bcee2fa47bb6b1f224f78188c633b
+- `trackC/SPLITS.json` 264f777bdb152b52c68750b41b9681fbc95696462eead8b1f9af7549d909fc86
+
+## C4 (2026-10-08T10:51:49+00:00)
+
+reason: decision mining: decisions.jsonl, counts per decision type
+
+- `trackC/decisions.py` af51987fc865e6930b0d7ba79ee7e13568bc3a8cc03a2a842342fd2cee1bdc58
+- `trackC/decisions.jsonl` 1c77c6ce04fb34ca521b23428d9c706a36dfc0b89f999abb5ea494c51df1b7d2
+- `trackC/DECISIONS_counts.json` 594af1ce35132bde945fd10939847bf438613d4005f4c10140025904220d1fd8
