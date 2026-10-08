@@ -1,3 +1,25 @@
+# v4.4 Track C: DiscoveryQA pilot (branch v4.4/2026-10-07; stopped for David)
+
+- **Items:** 157 gated level-S items (internal). JARVIS: Arbitrate 127, T3 18. Li-ion: Arbitrate 5, T1 3, T3 3, T7 1. All hard gates pass. Determinism is identical on host B (x2) and host A (nice 19).
+- **Go: not met.** Only 2 families reach 10 facts against 3 required, and Arrhenius real-data agreement is 4/9. Report: `trackC/TRACKC_PILOT_REPORT.md`.
+- **Not built:** Fate and Route (JARVIS keys rejects at 2 stages only; the Li-ion deposit keeps no rejects before S10), Escalate (no deposited 1000 K panel for non-escalated materials), Outcome class (rule gap).
+- **Bridges (Addendum B):** 0 exact and 0 family matches of the 66 deposited funnel structures to OBELiX and Liverpool. 22 KNOWN_77 formulas have experimental records.
+- **Demonstrators:** MACE-MPA-0 and Orb v3 are clean and pass dev validation. MatterSim is unknown (reference). The fine-tuned PET-MAD is leaky. The C3 MD ladder is a shortfall (only 1000 K complete).
+- **Quote (nothing run):** `COST_QUOTE_trackC.md`.
+
+| Line | Expected | Cap |
+|---|---|---|
+| Q-C1 audit | $0.11 | $1 |
+| Q-B2 probe (sonnet-5.5, k = 1) | $20.97 | $25 |
+| Q-NANO (A0, B0f, R0, k = 3) | $5.43 | $8 |
+| optional strong B0f | $20.97 | $25 |
+| optional T-FM | $2.87 | $5 |
+
+- **Open for David:**
+  - VC-E08: cross-tier audit items (report only, or T4 tagged A).
+  - VC-E19: 2-stage JARVIS Fate (J5 vs J6).
+  - Quote approvals.
+
 # v4.2 rework under skill v1.4 (branch v4.2/2026-10-07; stopped for David)
 - **Base:** v4.0 as evaluated in Q2b, CrFeNi 5a42f952... and Allende 385f7985.... The 3008ecce and 8c6f78b3 hashes further down are the earlier Q1e set (V42-E01).
 - **R1:** gates_v42.py holds the v1.4 gates (prior gate, stem scan, distinct facts, t3_agreement, g4) with tests (10/10). PRIOR_RULES.md; grade_v42.py fixes V42-E02.
