@@ -944,3 +944,9 @@ reason: S4mc4 reader: smoothed extrema (k = 9, dev seeds 0-199: the absorption c
 reason: VM-E03, census scope = fully cached libraries (David: "yes go"); before the census run
 
 - `htem/mc/census_mc.py` d3c24632f3faade238ead27fc15745e92c84a30e47b64b4df327969f7b188f4d
+
+## MV0 (2026-10-08T19:43:19-05:00)
+
+reason: MC v2 rules (prompt v4.5 MC v2, approved by David 2026-10-08) frozen before any census key
+
+- `htem/HTEM_MC2_RULES.md` 57c3b458af6400e824ab97d8222002605541e2ce9530acde4b4008795e73a4f3
