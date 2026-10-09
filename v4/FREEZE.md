@@ -986,3 +986,25 @@ reason: S4mc6 v2 classes and the VG gate script (fresh base 915300, N 200 per cl
 reason: S4mc6 v2 real gate PASS (synthetic 1.00 per class, replicate 0.970 over 233 positions); result frozen before F1
 
 - `htem/VG_S4MC6.json` 1d8ee6d99b593ef5ea2440cc77a314f1529f97fedd55edde71227ec6090f1a8e
+- `htem/mc2/fetch_f1.py` f03dcf968a4d0de094ed366995260f5be15de2a5fa2350b150ad1f5e01decd10  (F1 fetch script, frozen before the fetch)
+- `htem/mc2/co1_mc2.py` 7b13b1c8a8f7c93905064e3f103d38915347326611d3c4be9a8f6560d58b74d5  (CO1 script, frozen before the COD fetch)
+- `htem/mc2/co1_mc2.py` ac72143f650723fc1667176c59f25c4070abd47255f03f6791ac796dca3248b2  (VM-E06 refreeze, before sticks)
+
+## CO1 (2026-10-08T20:37:06-05:00)
+
+reason: COD reference phases under the MV1c section 5 rule (891 COD requests; 697 kept, 678 with sticks, 19 CIF parse failures dropped; 321 L4 pairs)
+
+- `htem/REF_PHASES_mc21.json` 9fc907740555107ffbcfcbe20ed47275c10b52bb0e14b23539acbef5da7b4572
+- `$HTEM_HOST/refs/sticks_mc21.json` c198bab78dd0e3cc61d12d175552ce5feac5dff285d73faabf0de56810b830d0 (host only)
+
+## MV1d code (2026-10-08T20:37:06-05:00)
+
+reason: census by skill group (a, b, c), smoke-tested on dev libraries only, frozen before reading F1 keys
+
+- `htem/mc2/census_mc21.py` 968ff36c6e60fb186cb7f910bdd5ad7eea8d550d35d06e059098622bf3ec8a0b
+
+## F1 (2026-10-08T21:26:33-05:00)
+
+reason: F1 fetch complete (87 libraries, 3,841 requests, 0 errors); manifest frozen
+
+- `htem/mc21/manifests/f1_manifest.json` 72b90d50dbbf852b8c1c5ad4d4c150cf3396df789ed12e6fdef14cf7ca01cbcf
