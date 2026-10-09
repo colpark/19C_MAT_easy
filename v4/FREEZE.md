@@ -1190,3 +1190,10 @@ Reason: MV4b of the MC v2.4 prompt; build_a2 manifest 0574517e; k = 1; results n
 - `htem/mc2/mv4b_report.py` 979631290136e862b2e0e697ab873fcfa387bee1e64fe9a1d5fdebe4aa627e59
 - `htem/mc2/MV4b_REPORT.md` 9a2c1f2d36ffc361c99d07ea724d3ab1e95a481d0f2479c3f1cb03efe8d3c83f
 - `htem/mc2/MV4b_REPORT.json` 0e6f9a8f9bb11354473a1dccf8facd0685c4f5008f4e99f820edb0de0528f439
+
+## MV5b (v2.4 SFT traces and RL manifest), 2026-10-09T13:32-05:00, host A spark-112b
+Reason: MV5b of the MC v2.4 prompt (L8 v2.4 and L7r; L4 v2.4 not built). Two runs byte-identical (VM-E15).
+- `htem/mc2/sft_mc24.py` 1bc1dea31967de339a6f6ebfb3e87be4590c141c5c78ed66e45aaa2d1b0ca0e2
+- `htem/mv5b/MV5b_SUMMARY.json` 639a8467ef98f65de2eaf4af70cd748e85bf0edd5318977b3292004af0e27f1f
+- `htem/mv5b/RL_MANIFEST_mc24.jsonl` 7a9647bb29b939f94ee349a7dbbd706438d995f04750e48524dbf0048fb15d53
+- `htem/mv5b/SFT_TRACES_mc24.jsonl` 291b089f404abd62539672e8bf32fc35fb102cbebdd0c9ce6e44c814a2b8d3e1
