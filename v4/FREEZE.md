@@ -967,3 +967,9 @@ reason: MC v2 census code and the dev-only L3 energy table, frozen before the ce
 reason: VM-E04 (comp_var with a given cation); no census output existed
 
 - `htem/mc2/keys_mc2.py` 69fead6e8966a45f6acf10eb81afd39129241805d6779c3903d6b1db77319432
+
+## MV1c (2026-10-08T20:09:18-05:00)
+
+reason: MC v2.1 amendments (David 2026-10-08: binomial cheap-rule gate, L8 list, S4mc6 v2 classes with dev I_floor 5e-8 A, robustness, group go, CO1 rule), frozen before the S4mc6 gate and any fetch
+
+- `htem/HTEM_MC2_RULES_v21.md` a2bbf0fd98d5bd89ab6a172819765d219a3e62833b70ab9881f65498e74bf767
