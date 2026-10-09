@@ -83,7 +83,7 @@ def sticks():
             S = Structure.from_file(os.path.join(C1.OUT, f"{ph['cod_id']}.cif")); pat = calc.get_pattern(S, two_theta_range=(19.0, 52.0))
         except Exception as e:
             bad.append({'cod': ph['cod_id'], 'why': f'parse: {type(e).__name__}'}); continue
-        comp = S.composition.reduced_composition; els = sorted(str(e) for e in comp.elements)
+        comp = S.composition.reduced_composition; els = sorted({getattr(e, 'element', e).symbol for e in comp.elements})   # VM-E10: no oxidation state
         try: cb = len(Composition(ph['formula']).oxi_state_guesses()) > 0
         except Exception: cb = False
         st[ph['cod_id']] = S; L = S.lattice

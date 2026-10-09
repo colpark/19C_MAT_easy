@@ -1060,3 +1060,11 @@ reason: v2.2 census (c reproduces MV1d; e GO: optical + structural, electrical d
 - `htem/MC22_CENSUS.md` 2d7fe28851013ec7c3229f505433993591462321b69370145ff6c041279f8045
 - `htem/MC22_DIAG_ELEMENTAL.json` cba05c113b14c14b24cb9fd19e7743b4b7a538c4dbe2fece142e02afa4c4b26c
 - `htem/MC22_DIAG_ELEMENTAL.md` ba5636fc4c2432395394a84fa1ff14aec2d189740628ad305faeac8ba8c64e07
+
+## MV1g (2026-10-09T08:24:12-05:00)
+
+reason: MC v2.3 final scope rules (David 2026-10-09): L8 + L4 scored, L7r (post-hoc, no fresh data), L3/L1 probes, L4 anion-free ground-state rule (post-hoc, monotone tightening); VM-E10 fix (element symbols without oxidation state) and sticks rebuilt from cached CIFs (0 COD requests). DISCLOSURE: L7r and the L4 elemental rule are post-hoc changes on seen data; no fresh HTEM data remains.
+
+- `htem/HTEM_MC2_RULES_v23.md` 57ca60a3d4d86d379f6634d4ade07b7bf1c80225df140cdbcca47fe766f4d26f
+- `htem/mc2/co2_mc2.py` 72dd75a5adb8c54c12a8d6e97c6c0f08f53cd492f41ae9bccc799529c4b0f5aa (VM-E10)
+- `$HTEM_HOST/refs/sticks_mc22.json` 0835787ed05887b52e9440967f6aa114d856c9fc606205dfcc196f4ea92309de (rebuilt; previous 5920bab6 kept as sticks_mc22_vme10_before.json, not in git)
