@@ -1021,3 +1021,25 @@ reason: MC v2.2 amendments (David 2026-10-08 23:00): validity grid, L8 depth tag
 
 - `htem/HTEM_MC2_RULES_v22.md` 42117d59bf7e67cd4c6a83f0aa96573f5923261863712c1fad9ddbbcc890b7db
 - `htem/mc2/fetch_f2.py` f6773f1b6ccfbd16841eca0948e1fe4c85c0b3f54dd79545d60463e76c0a8016
+- `htem/mc2/co2_mc2.py` 6f0eaf55f9d58fdb7fd2e7dcd613c9b24f3439b558a4885ace6a159d9601460d  (CO2 rule code, frozen before the CO2 fetch and before any peak is read against new sticks)
+
+## MV1f code (2026-10-08T22:27:13-05:00)
+
+reason: v2.2 census (c, d, e), smoke-tested on dev libraries only; frozen before reading any F2 key
+
+- `htem/mc2/census_mc22.py` d3bc5cfdc6249ee4fb4f9580a5f518286f04be7a3aacd61d5e95160702ccec7c
+
+## MV1e-D1 (2026-10-08T23:10:12-05:00)
+
+reason: diagnostic addendum (David 2026-10-08: elemental-phase list, no key changes; CO2 budget separate, <= 1,000 COD requests), frozen before it runs
+
+- `htem/HTEM_MC2_RULES_v22_diag.md` 3c6092e73d75222cb1d9f58e359fe4b1cd923e50e6431bd5ecd640ec3d4c9c7b
+- `htem/mc2/diag_elemental.py` a81a23b3d2c42a9ec2f643f47ad6b8d10ba9a3fd6537af5eb975d6e721275e58
+
+## F2 (2026-10-09T01:12:27-05:00)
+
+reason: F2 fetch complete (218 libraries, 9,345 requests, cap 11,000, 0 errors); 8 libraries have API-skipped samples and stay out of the fully cached scope; manifests frozen (hashes only, no data)
+
+- `htem/mc22/manifests/f2_list.json` 56e33682982ad5d9300517039280d5b98f99608cc0bc4e87a631b8be566f1e3d
+- `htem/mc22/manifests/f2_manifest.json` 0f53c9222573ad0530616934376feabc9d657542fa47f4bd78ec62cb3265e014
+- `htem/mc22/manifests/f2_progress.log` 9ebbca9ffd959fbe27d3af6306c107216854978959c0d28f58723a7bed0b94db
