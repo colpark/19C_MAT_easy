@@ -1164,3 +1164,10 @@ reason: MC v2.3 report and benchmark card v4 (v3 unchanged + MC section). Disclo
 Reason: David's MC v2.4 decision. Post hoc on seen data (follows the v2.3 MV4 results); no fresh HTEM data remains.
 - `htem/HTEM_MC2_RULES_v24.md` 3441ccd750da6e14054c85d0fc60c57a59d4f0c794398bb8b7ecbb2efec77fa0
 - `htem/mv5/MV5_SUMMARY.json` 5beb1e930ee3d849b49762e2d53db1800a500165124f04087dbed5f86d4780b2 (status field added: superseded, not for training; no other change)
+
+## MV1k (L4 v2.4 census, L8 v2.4 keys), 2026-10-09T12:48-05:00, host A spark-112b
+Reason: HTEM_MC2_RULES_v24 sections 2-3 on the 483 non-dev libraries; code hash logged before the run (de66cba0). Post hoc on seen data. sticks_mc24.json stays on the host (not pushed).
+- `htem/mc2/census_mc24.py` de66cba082c06ed216710d42a4a5103f51e5af03cb67304afee57f166e4264db
+- `htem/MC24_L4_CENSUS.json` 5668aa9a4295fa1ee2b1b30812ffe444ebe49d4126013ee921a0b2fcb189a9bc
+- `htem/MC24_L4_CENSUS.md` 563678753c10b56dbb8ce54abdf84c6f164413614db271dfa57176ea0e4de0fe
+- `$HTEM_HOST/refs/sticks_mc24.json` 0609f51f0aae03c2c6d37bc96a476337b246b87e520b074d2b6dda6b6d0e2180
