@@ -20,6 +20,8 @@ def comp_var(P, cation=None):
     """Composition variable x (rules 1): the cation with the largest range over the positions; None for single-cation libraries."""
     comps = [p['comp'] for p in P if p['comp']]
     if not comps: return None, None
+    if cation is not None:   # VM-E04: a given (pooled) cation applies even where this library alone has one cation
+        return cation, [p['comp'].get(cation, 0.0) if p['comp'] else None for p in P]
     cats = sorted({e for c in comps for e in c})
     if len(cats) < 2: return None, None
     if cation is None:
@@ -186,6 +188,7 @@ def l5(Ph, Pc, cation):
     vh = [i for i, p in enumerate(Ph) if _rs(p)[0] and p['d']]; vc = [i for i, p in enumerate(Pc) if _rs(p)[0] and p['d']]
     if len(vh) < 10 or len(vc) < 10: return None
     rho = lambda P, i: _rs(P[i])[0] * P[i]['d']
+    if cation and (xh is None or xc is None): return None   # VM-E04: a library without XRF composition cannot be matched
     if cation:
         s = max(comp_step(Ph, xh) or 0, comp_step(Pc, xc) or 0)
         cand = sorted((abs(xh[i] - xc[j]), i, j) for i in vh if xh[i] is not None for j in vc if xc[j] is not None)

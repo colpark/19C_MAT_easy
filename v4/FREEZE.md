@@ -961,3 +961,9 @@ reason: MC v2 census code and the dev-only L3 energy table, frozen before the ce
 - `htem/mc2/energy_mc2.py` 9a3380293c01f4dde738709310760a5d693eadd7321515eb5ea0576046176294
 - `htem/mc2/eligibility_mc2.py` 714492ab3583622443624052612e202764b583a94f1b15f679879451b1fb81c8
 - `htem/MC2_ENERGY.json` 409bbdd2f161d2483406ec08affaf95cf1465f13f80e1fe0833f020844c0b962
+
+## MV1b (2026-10-08T19:47:14-05:00)
+
+reason: VM-E04 (comp_var with a given cation); no census output existed
+
+- `htem/mc2/keys_mc2.py` 69fead6e8966a45f6acf10eb81afd39129241805d6779c3903d6b1db77319432
