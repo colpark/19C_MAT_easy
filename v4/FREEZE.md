@@ -1051,3 +1051,12 @@ reason: CO2 fetch complete (22 new systems, 65 searches, 172 new phases; about 2
 - `htem/REF_PHASES_mc22_new.json` 9cc5f62469c97b9064189894b8c394d87b8e1a8f5c4b4358ae1d2f89a43e56ed
 - `$HTEM_HOST/refs/sticks_mc22.json` 5920bab6f066aeabb66ba0674ef8d22cec57d1e3ec62087f3356addeb6a8d800 (not in git, data)
 - `htem/mc22/manifests/co2_log.json` dcd82396a4452e4bf7acf949b025b134052fb0b2a1a623c74bd4c30a4a2678e4
+
+## MV1f (2026-10-09T01:58:06-05:00)
+
+reason: v2.2 census (c reproduces MV1d; e GO: optical + structural, electrical does not build) and the MV1e-D1 diagnostic output
+
+- `htem/MC22_CENSUS.json` 8d708579c0924ce59ccbf73102d7ceb3d0e5e0d3571ea358ade700cb2074ea43
+- `htem/MC22_CENSUS.md` 2d7fe28851013ec7c3229f505433993591462321b69370145ff6c041279f8045
+- `htem/MC22_DIAG_ELEMENTAL.json` cba05c113b14c14b24cb9fd19e7743b4b7a538c4dbe2fece142e02afa4c4b26c
+- `htem/MC22_DIAG_ELEMENTAL.md` ba5636fc4c2432395394a84fa1ff14aec2d189740628ad305faeac8ba8c64e07
