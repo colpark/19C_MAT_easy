@@ -1008,3 +1008,9 @@ reason: census by skill group (a, b, c), smoke-tested on dev libraries only, fro
 reason: F1 fetch complete (87 libraries, 3,841 requests, 0 errors); manifest frozen
 
 - `htem/mc21/manifests/f1_manifest.json` 72b90d50dbbf852b8c1c5ad4d4c150cf3396df789ed12e6fdef14cf7ca01cbcf
+
+## MV1d (2026-10-08T21:37:15-05:00)
+
+reason: census by skill group complete; (a) reproduces MV1b byte for byte; (c) GO with structural held (VM-E07)
+
+- `htem/MC21_CENSUS.json` 9e40cf5f3968af4d909e626fbdad46807ff5aebe3f51bda85ee79884fdfc26f7

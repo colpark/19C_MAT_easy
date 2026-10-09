@@ -1,3 +1,14 @@
+# v4.5 MC v2.1: validity gate, F1/CO1, group census (stopped for David)
+- **VG (S4mc6 v2) passes.** Replicate agreement 0.970 over 233 positions. 826 fault or beyond-range positions still list a finite database Rs.
+- **Fetches:** F1 87 libraries (3,841 requests, 0 errors); CO1 891 COD requests.
+- **MV1d:** (a) reproduces MV1b exactly; (b) old rules on the enlarged scope are NO-GO; **(c) v2.1 rules are GO.**
+  - Groups: electrical L2+L7 82, optical L3+L8 60, structural L4+L6 64.
+  - 206 critical items, 34 in test.
+- **VM-E07, a rule gap:** structural keys rest on chemically implausible COD phases, so that group is held.
+- **Without the structural group the round still meets go:** 142 critical items, 23 in test, 4 types.
+- **Report:** `htem/HTEM_MC21_REPORT.md`.
+- **Open for David:** proceed to MV2-MV6 with the electrical and optical groups (recommended), amend CO1, or F2 (218 libraries, about 9,600 requests, about 3.5 h).
+
 # v4.5 MC v2: library-level tasks L1-L8 (stopped for David)
 - **Outcome: NO-GO at the census (MV1b).** Only L7 (valid Rs readings audit) builds: 39 critical items over 20 systems, 9 of them in test. The round needs 3 types, 60 critical items and 15 in test. Report: `htem/HTEM_MC2_REPORT.md`.
 - **The rest:**
