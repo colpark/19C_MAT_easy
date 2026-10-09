@@ -973,3 +973,16 @@ reason: VM-E04 (comp_var with a given cation); no census output existed
 reason: MC v2.1 amendments (David 2026-10-08: binomial cheap-rule gate, L8 list, S4mc6 v2 classes with dev I_floor 5e-8 A, robustness, group go, CO1 rule), frozen before the S4mc6 gate and any fetch
 
 - `htem/HTEM_MC2_RULES_v21.md` a2bbf0fd98d5bd89ab6a172819765d219a3e62833b70ab9881f65498e74bf767
+
+## VG code (2026-10-08T20:10:06-05:00)
+
+reason: S4mc6 v2 classes and the VG gate script (fresh base 915300, N 200 per class), frozen before running
+
+- `htem/mc2/iv_classes.py` 4303712b92a19da980dcf6811d966c8a8a4f903d388c492c274d95ada2eed771
+- `htem/mc2/vg_mc2.py` 3652b200272e0025b002a5934a0276a4c6d71d2a229b209405fdc79165898ab0  (VM-E05 refreeze)
+
+## VG (2026-10-08T20:11:08-05:00)
+
+reason: S4mc6 v2 real gate PASS (synthetic 1.00 per class, replicate 0.970 over 233 positions); result frozen before F1
+
+- `htem/VG_S4MC6.json` 1d8ee6d99b593ef5ea2440cc77a314f1529f97fedd55edde71227ec6090f1a8e

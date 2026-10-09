@@ -1,0 +1,59 @@
+{
+ "fresh_base": 915300,
+ "n_per_class": 200,
+ "libraries": 260,
+ "positions_with_iv": 2564,
+ "classes": {
+  "valid": 1339,
+  "non-ohmic": 57,
+  "fault": 911,
+  "beyond range": 257
+ },
+ "fault_why": {
+  "polarity": 86,
+  "erratic": 498,
+  "degenerate": 157,
+  "points<4": 170
+ },
+ "synthetic": {
+  "recovery": {
+   "valid": 1.0,
+   "beyond range": 1.0,
+   "non-ohmic": 1.0,
+   "fault": 1.0
+  },
+  "false_fault": 0.0,
+  "pass": true
+ },
+ "replicate": {
+  "matched_positions": 233,
+  "groups": 5,
+  "agree_valid": 0.9699570815450643,
+  "agree_4class": 0.9699570815450643,
+  "confusion": {
+   "fault|fault": 25,
+   "fault|valid": 5,
+   "valid|valid": 201,
+   "valid|fault": 2
+  },
+  "by_split_of_first": {
+   "test": 71,
+   "dev": 37,
+   "train": 125
+  },
+  "status": "pass"
+ },
+ "flip_share": {
+  "0.995": 0.0031201248049922,
+  "0.99": 0.0039001560062402497
+ },
+ "db": {
+  "spearman_valid": 0.9999999697940831,
+  "n_valid_with_db": 1317,
+  "trap_db_finite": {
+   "fault": 602,
+   "beyond range": 224
+  }
+ },
+ "VG": "pass"
+}
