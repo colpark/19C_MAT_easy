@@ -1043,3 +1043,11 @@ reason: F2 fetch complete (218 libraries, 9,345 requests, cap 11,000, 0 errors);
 - `htem/mc22/manifests/f2_list.json` 56e33682982ad5d9300517039280d5b98f99608cc0bc4e87a631b8be566f1e3d
 - `htem/mc22/manifests/f2_manifest.json` 0f53c9222573ad0530616934376feabc9d657542fa47f4bd78ec62cb3265e014
 - `htem/mc22/manifests/f2_progress.log` 9ebbca9ffd959fbe27d3af6306c107216854978959c0d28f58723a7bed0b94db
+
+## CO2 (2026-10-09T01:30:06-05:00)
+
+reason: CO2 fetch complete (22 new systems, 65 searches, 172 new phases; about 240 COD requests in all runs plus retries, own budget 1,000); sticks over CO1 + CO2 phases: 847 phases, 484 L4 pairs, 22 CIF parse failures dropped, 487 charge balanced
+
+- `htem/REF_PHASES_mc22_new.json` 9cc5f62469c97b9064189894b8c394d87b8e1a8f5c4b4358ae1d2f89a43e56ed
+- `$HTEM_HOST/refs/sticks_mc22.json` 5920bab6f066aeabb66ba0674ef8d22cec57d1e3ec62087f3356addeb6a8d800 (not in git, data)
+- `htem/mc22/manifests/co2_log.json` dcd82396a4452e4bf7acf949b025b134052fb0b2a1a623c74bd4c30a4a2678e4
