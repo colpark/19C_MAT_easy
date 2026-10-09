@@ -950,3 +950,14 @@ reason: VM-E03, census scope = fully cached libraries (David: "yes go"); before 
 reason: MC v2 rules (prompt v4.5 MC v2, approved by David 2026-10-08) frozen before any census key
 
 - `htem/HTEM_MC2_RULES.md` 57c3b458af6400e824ab97d8222002605541e2ce9530acde4b4008795e73a4f3
+
+## MV1 (2026-10-08T19:46:40-05:00)
+
+reason: MC v2 census code and the dev-only L3 energy table, frozen before the census reads any non-dev library (smoke test on dev libraries only)
+
+- `htem/mc2/common_mc2.py` 711d39226cbc3fddba2f0702bc80f4f817e92b1c2f910cbf92b72e220de672c0
+- `htem/mc2/keys_mc2.py` ee009f1d4d864f62102c222e87633f1452f282f0a8cc0459fcf1e7e3db41d213
+- `htem/mc2/census_mc2.py` 47c1caf0fe158003668f2ed05012b0306453e49037f70f3e877e4e726e604b3e
+- `htem/mc2/energy_mc2.py` 9a3380293c01f4dde738709310760a5d693eadd7321515eb5ea0576046176294
+- `htem/mc2/eligibility_mc2.py` 714492ab3583622443624052612e202764b583a94f1b15f679879451b1fb81c8
+- `htem/MC2_ENERGY.json` 409bbdd2f161d2483406ec08affaf95cf1465f13f80e1fe0833f020844c0b962
