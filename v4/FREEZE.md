@@ -1182,3 +1182,11 @@ Manifest 0574517e065ac694160666c99e8762a8ec4156733af72a4f9453d4889b0170bb (host 
 - `htem/mc2/mc24_tools/README.md` d5ea5eecf47300c5e718645ce35745984c424db060cf31fba6a62a05221b3d91
 - `htem/MV3b_GATES.json` 00203cf58cea12a17bc8a8a2d6ae5ed6b1bb2f782e8ad6ce646ffe4ed21e3e00
 - `htem/MV3b_GATES.md` 0312d6b01c69393914a597f52896fe9a2dead44f0f6f2ae7f5bfcb128e9a8ed2
+
+## MV4b (Sonnet sandbox results, v2.4), 2026-10-09T13:30-05:00, host A spark-112b
+Reason: MV4b of the MC v2.4 prompt; build_a2 manifest 0574517e; k = 1; results never change items (I6).
+- `htem/MV4b_results.json` 5ac950d1acc04dd5bc77e42fa4c5f17c583aa4264a914719cf5ebd9f0e64e485
+- `htem/audit_mv4b.json` 6e7bd3d86a924fd624b8cbadb0976bbcdc828471410007efcde98c24780a9888
+- `htem/mc2/mv4b_report.py` 979631290136e862b2e0e697ab873fcfa387bee1e64fe9a1d5fdebe4aa627e59
+- `htem/mc2/MV4b_REPORT.md` 9a2c1f2d36ffc361c99d07ea724d3ab1e95a481d0f2479c3f1cb03efe8d3c83f
+- `htem/mc2/MV4b_REPORT.json` 0e6f9a8f9bb11354473a1dccf8facd0685c4f5008f4e99f820edb0de0528f439
