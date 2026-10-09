@@ -24,6 +24,7 @@ CLASSES = {'MC1': ['consistent', 'contradicted', CT], 'MC2': ['A', 'B', CT], 'MC
 def positions(lid):
     lib = C.cached('library', lid)
     if not lib: return None, []
+    if any(not C.cached('sample', sid) for sid in lib.get('sample_ids') or []): return None, []   # VM-E03: census scope = fully cached libraries only
     out = []
     for sid in lib.get('sample_ids') or []:
         s = C.cached('sample', sid)

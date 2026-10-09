@@ -938,3 +938,9 @@ reason: S4mc4 reader: smoothed extrema (k = 9, dev seeds 0-199: the absorption c
 - `htem/mc/mc_keys.py` 3e0ee69b7d37cb5aefcc512633c94ccfcbb288a8b8fc9e311ba077711d484f9b
 - `htem/mc/census_mc.py` 0cff6240cda15ef69e8a73d619e84a0ab4a9e683763f1ffafdaf02faee282fa3
 - `htem/mc/validate_mc.py` a4a6020f468193f7319c9a612600a5621b3f8b72e6531a7ba760f1c7fc9acf16
+
+## MC2code3 (2026-10-08T19:17:18-05:00)
+
+reason: VM-E03, census scope = fully cached libraries (David: "yes go"); before the census run
+
+- `htem/mc/census_mc.py` d3c24632f3faade238ead27fc15745e92c84a30e47b64b4df327969f7b188f4d
