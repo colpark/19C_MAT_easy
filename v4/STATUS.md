@@ -1,3 +1,12 @@
+# v4.5 MC v2.2: F2, CO2, MV1f done; MV2 held on rule gap VM-E09 (stopped for David)
+
+- **Pushed:** F2 (dad611de), CO2 (48bce098), MV1f (09294750). F2 218 libraries, 9,345 requests, 0 errors; CO2 about 240 COD requests (VM-E08 outages, recovered).
+- **MV1f (e), 556 libraries:** GO on optical (L3 24, L8 87 critical) + structural (L4 34, L6 18; F2-confirmed); 163 critical, 30 test. Electrical does not build (27-point grid: L7 C2 0.41, L2 5 critical). (c) reproduces MV1d byte for byte.
+- **MV1e-D1 diagnostic:** MC22_DIAG_ELEMENTAL.md (3,568 unexplained strong peaks match excluded elemental phases, 134 libraries; no key change).
+- **MV2 (VM-E09, rule gap, dev smoke only):** S4mc3 real gate fails on dev (transparent region 0.60, 0.76 for max T >= 0.8; replicate 0.44), and it conflicts with L8, which counts T + R > 1 violations. The L6 synthetic gate (3-20 %) conflicts with the frozen L6 flag (>= 5 % height, SNR >= 6, match >= 0.5): dev recovery 0.48. Gates not frozen and not run on evaluation libraries.
+- **Options for David:** (a) run the MV2 gates as written: likely L3, L8 and L6 drop, round NO-GO (structural L4 only); (b) amend: gate S4mc3 for L3 only (L8 keys do not use the balance as a reading, they count its violations), and restate the L6 gate within the frozen detector's limits (for example 10-20 %, or report a detection limit), frozen before running on evaluation libraries; (c) drop L6 and keep L4 for structural; (d) stop the round here.
+- **Audit:** the 2026-10-09 audit (AU0-AU9) runs in a separate host B session, not here.
+
 # v4.5 MC v2.1: validity gate, F1/CO1, group census (stopped for David)
 - **VG (S4mc6 v2) passes.** Replicate agreement 0.970 over 233 positions. 826 fault or beyond-range positions still list a finite database Rs.
 - **Fetches:** F1 87 libraries (3,841 requests, 0 errors); CO1 891 COD requests.
