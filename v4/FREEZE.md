@@ -1014,3 +1014,10 @@ reason: F1 fetch complete (87 libraries, 3,841 requests, 0 errors); manifest fro
 reason: census by skill group complete; (a) reproduces MV1b byte for byte; (c) GO with structural held (VM-E07)
 
 - `htem/MC21_CENSUS.json` 9e40cf5f3968af4d909e626fbdad46807ff5aebe3f51bda85ee79884fdfc26f7
+
+## MV1e (2026-10-08T22:10:25-05:00)
+
+reason: MC v2.2 amendments (David 2026-10-08 23:00): validity grid, L8 depth tags, D1 tool rule, intention pairs and probes, CO2 chemistry rule; frozen before F2
+
+- `htem/HTEM_MC2_RULES_v22.md` 42117d59bf7e67cd4c6a83f0aa96573f5923261863712c1fad9ddbbcc890b7db
+- `htem/mc2/fetch_f2.py` f6773f1b6ccfbd16841eca0948e1fe4c85c0b3f54dd79545d60463e76c0a8016
