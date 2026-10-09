@@ -1068,3 +1068,16 @@ reason: MC v2.3 final scope rules (David 2026-10-09): L8 + L4 scored, L7r (post-
 - `htem/HTEM_MC2_RULES_v23.md` 57ca60a3d4d86d379f6634d4ade07b7bf1c80225df140cdbcca47fe766f4d26f
 - `htem/mc2/co2_mc2.py` 72dd75a5adb8c54c12a8d6e97c6c0f08f53cd492f41ae9bccc799529c4b0f5aa (VM-E10)
 - `$HTEM_HOST/refs/sticks_mc22.json` 0835787ed05887b52e9440967f6aa114d856c9fc606205dfcc196f4ea92309de (rebuilt; previous 5920bab6 kept as sticks_mc22_vme10_before.json, not in git)
+
+## MV1h code (2026-10-09T08:27:30-05:00)
+
+reason: v2.3 census code (L8 v22, L4 v22 + section 3 on fixed sticks, L7r, probes), smoke-tested on dev libraries only; frozen before the run on the 556 non-dev libraries
+
+- `htem/mc2/census_mc23.py` cf6b51a0114330b8e7fde017e8b63e8c6121c9008866b19731e6cbc4217f18bc
+
+## MV1h (2026-10-09T08:38:44-05:00)
+
+reason: v2.3 census on the frozen scope: L8 87, L4 62, L7r 31 critical, all includable; release label "3 types, one without fresh confirmation". DISCLOSURE: L7r and the L4 section 3 rule are post-hoc on seen data; L4 also moved with the VM-E10 fix (critical 34 -> 62, 18 kept).
+
+- `htem/MC23_CENSUS.json` cfa2811aa226ee38c908a4d6ac1676aadb50fcb97f94bba6d39e5357bcfadf25
+- `htem/MC23_CENSUS.md` a98bb368dee00a417f698afe9595ce2832e046f1bbe0c616ca0400a35ba260e4
