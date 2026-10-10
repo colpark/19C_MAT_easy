@@ -119,6 +119,14 @@ SMOKE = {0: dict(name='smoke', kind='loud', claim='This powder is silicon rather
 # Nn, bgn the same for the neutron protocol (counts per point at the strongest peak, background counts per point).
 TUNE = {s: dict(L=100.0, N=1000.0, bg=20.0, Nn=1000.0, bgn=50.0) for s in SCEN}
 TUNE[0] = dict(L=100.0, N=500.0, bg=20.0, Nn=500.0, bgn=50.0)
+# V5-1 tuning results (scenarios/TUNING.md, sweeps 1 to 3 in scenarios/tuning_runs/)
+TUNE[3].update(N=50.0, L=60.0)
+TUNE[5].update(N=30.0, L=30.0)
+TUNE[6].update(N=30.0)
+TUNE[7].update(N=4.0, L=1000.0, bg=2.0)
+TUNE[8].update(N=100.0)
+TUNE[9].update(N=600.0)
+TUNE[10].update(N=80.0)
 
 WORLDS = sorted(w for s, d in SCEN.items() for w in d['worlds'])
 SCEN.update(SMOKE)

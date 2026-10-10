@@ -141,7 +141,7 @@ def find_peaks(m, counts, max_peaks=80):
     bg = uniform_filter1d(bg, size=min(len(y), w))
     ys = uniform_filter1d(y, 3) if len(y) > 5 else y
     noise = np.sqrt(np.maximum(bg, 1.0))
-    idx, prop = _fp(ys - bg, prominence=3 * float(np.median(noise)), distance=max(1, int(0.03 / m.step)))
+    idx, prop = _fp(ys - bg, prominence=5 * float(np.median(noise)), distance=max(1, int(0.03 / m.step)))
     if len(idx) == 0: return dict(measurement_points=len(y), peaks=[])
     wd = peak_widths(ys - bg, idx, rel_height=0.5)[0] * m.step
     order = np.argsort(prop['prominences'])[::-1][:max_peaks]
@@ -155,7 +155,7 @@ def find_peaks(m, counts, max_peaks=80):
         out.append(dict(two_theta=round(float(x[i] + off * m.step), 4), height_above_background=round(float(y[i] - bg[i]), 1),
                         background=round(float(bg[i]), 1), fwhm_deg=round(float(wd[j]), 4)))
     return dict(measurement_points=len(y), n_peaks=len(out), peaks=out,
-                note='peak search on 3-point smoothed counts, background = smoothed rolling 20th percentile, prominence >= 3 sqrt(background)')
+                note='peak search on 3-point smoothed counts, background = smoothed rolling 20th percentile, prominence >= 5 sqrt(background)')
 
 
 def fit(scen, ms, ys, spec):
