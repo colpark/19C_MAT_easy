@@ -106,28 +106,52 @@ def _unpack(theta, branch):
     return s, z, math.exp(lL), u
 
 
-def fit_branch(meas, y, w, branch, L0, starts=None, s_range=S_RANGE, z_range=Z_RANGE, L_rel=L_REL, iters=60, L_bounds=None):
-    """min over (s, z, L, u) of weighted SSR with linear params projected. Returns (chi2, theta dict, coef)."""
+def fit_branch(meas, y, w, branch, L0, starts=None, s_range=S_RANGE, z_range=Z_RANGE, L_rel=L_REL, iters=200, L_bounds=None, n_sobol=256, n_refine=8):
+    """min over (s, z, L, u) of weighted SSR with linear params projected (V5-E7: thorough global search).
+    Search in unit-cube coordinates: a scrambled Sobol sample (seeded, n_sobol points) plus the given starts, the best n_refine distinct
+    points refined by L-BFGS-B, the best result polished by Powell. Returns (chi2, theta dict)."""
+    from scipy.stats import qmc
     y = np.concatenate([np.asarray(v) for v in y]) if isinstance(y, (list, tuple)) else y
     has_x = any(m.radiation == 'xray' for m in meas)
     Lb = L_bounds or (L0 * (1 - L_rel), L0 * (1 + L_rel))
-    lo = [s_range[0] if has_x else 0, z_range[0] if has_x else 0, math.log(Lb[0])] + list(branch.lo)
-    hi = [s_range[1] if has_x else 0, z_range[1] if has_x else 0, math.log(Lb[1])] + list(branch.hi)
-    bounds = list(zip(lo, hi))
+    lo = np.array([s_range[0] if has_x else 0, z_range[0] if has_x else 0, math.log(Lb[0])] + list(branch.lo), float)
+    hi = np.array([s_range[1] if has_x else 0, z_range[1] if has_x else 0, math.log(Lb[1])] + list(branch.hi), float)
+    span = np.where(hi > lo, hi - lo, 0.0)
+    free = span > 0
+    to_theta = lambda q: lo + np.clip(q, 0, 1) * span
 
-    def f(theta):
-        s, z, L, u = _unpack(theta, branch)
+    def f(q):
+        s, z, L, u = _unpack(to_theta(q), branch)
         Xd, _, _ = _design(meas, branch.groups(u), s, z, L)
         return _lin_solve(Xd, y, w)[0]
 
-    if starts is None: starts = default_starts(branch, L0, has_x)
-    best = (np.inf, None)
-    # coarse: evaluate starts, refine the best three
-    vals = sorted(((f(np.clip(t0, lo, hi)), tuple(np.clip(t0, lo, hi))) for t0 in starts), key=lambda v: v[0])
-    for v0, t0 in vals[:3]:
-        r = minimize(f, np.array(t0), method='L-BFGS-B', bounds=bounds, options=dict(maxiter=iters, eps=_eps(branch, has_x)))
-        if r.fun < best[0]: best = (r.fun, r.x)
-    s, z, L, u = _unpack(best[1], branch)
+    d = len(lo)
+    pts = [np.full(d, 0.5)]
+    if n_sobol:
+        sob = qmc.Sobol(d, scramble=True, seed=12345).random(n_sobol); pts += list(sob)
+    for t0 in (starts if starts is not None else default_starts(branch, L0, has_x)):
+        pts.append(np.where(free, (np.clip(t0, lo, hi) - lo) / np.where(free, span, 1), 0.5))
+    for k in range(d):                                   # faces of side parameters (thresholds sit on bounds)
+        if k >= 3 and free[k]:
+            for e in (0.0, 1.0): q = np.full(d, 0.5); q[k] = e; pts.append(q)
+    vals = sorted(((f(q), tuple(q)) for q in pts), key=lambda v: v[0])
+    chosen = []
+    for v, q in vals:
+        q = np.array(q)
+        if all(np.abs(q - c)[free].max(initial=0) > 0.05 for c in chosen): chosen.append(q)
+        if len(chosen) >= n_refine: break
+    bounds = [(0, 1) if fr else (0.5, 0.5) for fr in free]
+    best = (vals[0][0], np.array(vals[0][1]))
+    for q0 in chosen:
+        r = minimize(f, q0, method='L-BFGS-B', bounds=bounds, options=dict(maxiter=iters, eps=1e-5))
+        if r.fun < best[0]: best = (r.fun, np.clip(r.x, 0, 1))
+    for _ in range(12):                                  # polish until no gain (flat s-z valleys, V5-E7)
+        prev = best[0]
+        for meth, opt in (('Powell', dict(maxiter=4000, xtol=1e-7, ftol=1e-12)), ('L-BFGS-B', dict(maxiter=iters, eps=1e-6))):
+            r = minimize(f, best[1], method=meth, bounds=bounds, options=opt)
+            if r.fun < best[0]: best = (r.fun, np.clip(r.x, 0, 1))
+        if prev - best[0] <= 1e-6 * max(1.0, prev): break
+    s, z, L, u = _unpack(to_theta(best[1]), branch)
     Xd, insts, ng = _design(meas, branch.groups(u), s, z, L)
     chi2, coef = _lin_solve(Xd, y, w)
     return chi2, dict(disp_mm=s, zero_deg=z, L_nm=L, u=list(map(float, u)), insts=insts, coef=coef.tolist(), ng=ng)
