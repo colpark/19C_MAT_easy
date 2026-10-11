@@ -32,3 +32,17 @@ one, minus 1, for every relaxed hypothesis that corresponds to a truth structure
 - MACE places 8 of 9 structures within 1.8 %, the placebo none within 5.9 %.
 - The KVO3 main phase collapsed by 14.5 % under MACE from the prototype the planner built (A = K, B = V, Pnma seed), so the main-phase hypothesis was outside the +-5 % refinement range.
 - At scenario 42's count rate m0 cannot refine either polymorph; MACE's R3c lattice (+1.7 %) sits outside the +-1 % reading range and its tilt pattern differs, so the FM planner read the R3c world as Pnma.
+
+Replacement round (round 2; ~/v5_state_2r_gate2):
+
+| scenario | structure | placebo | MACE-MP-0 |
+|---|---|---|---|
+| 42 | SrOsO3 cubic perovskite | +35.07 % | +0.11 % |
+| 42 | SrOsO3 Pnma perovskite | +35.50 % | +0.06 % |
+| 43 | MnPbO3 P4mm perovskite (main) | +28.26 % | -0.22 % |
+| 43 | PbO2 rutile (impurity) | +25.58 % | +0.06 % |
+| 43 | MnO2 rutile (impurity) | +33.11 % | -0.02 % |
+| 45 | CoMg B2 | +7.07 % | +0.14 % |
+| 41, 44 | as round 1 | | |
+
+In round 2 every MACE structure is within 0.9 % of the DFT truth (most within 0.2 %); the placebo is 7 to 36 % off.
