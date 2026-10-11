@@ -52,7 +52,7 @@ def hypotheses(tok, scen):
     if scen == 12:
         f = d['composition']; el = [e.symbol for e in Composition(f).elements]; Bs = [e for e in el if e != 'O']
         sites = ab_sites(el)
-        pT, sT = relaxed(tok, 'tetragonal perovskite', sites, dict(c_over_a=d['threshold']))
+        pT, sT = relaxed(tok, 'tetragonal perovskite', sites, dict(c_over_a=d['threshold'], dz_B=0.02, dz_X=0.02))   # polar seed (P4mm, not P4/mmm)
         pC, _ = relaxed(tok, 'cubic perovskite', sites)
         return [ls(lambda u: [[(pT, {}, 1.0)]])], [ls(lambda u: [[(pC, {}, 1.0)]])]
     if scen == 13:
@@ -69,7 +69,8 @@ def hypotheses(tok, scen):
         p1, s1 = relaxed(tok, 'B2', dict(A=X, B=o1)); p2, s2 = relaxed(tok, 'B2', dict(A=X, B=o2))
         a1, a2 = s1.lattice.a, s2.lattice.a
         pal = S2.register_b2_alloy(f'plan:{tok[:8]}:alloy', X, o1, o2, a1, a2)
-        return [ls(lambda u: [[(pal, {'x': 0.5}, 1.0)]])], [ls(lambda u: [[(p1, {}, 1.0)], [(p2, {}, 1.0)]])]
+        m1 = Composition(f'{X}{o1}').weight; m2 = Composition(f'{X}{o2}').weight    # mass balance: equimolar mixture
+        return [ls(lambda u: [[(pal, {'x': 0.5}, 1.0)]])], [ls(lambda u: [[(p1, {}, m1 / (m1 + m2)), (p2, {}, m2 / (m1 + m2))]])]
     if scen == 15:
         f = d['composition']; c = Composition(f).get_el_amt_dict(); A_ = max(c, key=c.get); B_ = min(c, key=c.get)
         pO, sO = relaxed(tok, 'L1_2', dict(A=A_, B=B_), dict(S=1.0))
@@ -128,8 +129,10 @@ def plan_for(scen, claim, other, L_est, A_nom, procs=16):
     def pseudo(side, which):
         br = side[0]; u = (br.lo if which == 'lo' else br.hi).copy(); u[-1] = 1.0
         return br.groups(u)
-    if scen == 13: gc, go = pseudo(claim, 'hi'), pseudo(other, 'lo')
-    elif scen == 15: gc, go = pseudo(claim, 'lo'), pseudo(other, 'hi')
+    def at(side, u0):
+        return side[0].groups(np.array(list(u0) + [1.0]))
+    if scen == 13: gc, go = at(claim, [0.0]), at(other, [0.01])          # impurity absent vs 1 % (inside each side, V5-E11)
+    elif scen == 15: gc, go = at(claim, [0.65]), at(other, [0.0])        # mid claim side vs disordered
     else: gc, go = pseudo(claim, 'lo'), pseudo(other, 'lo')
     _CTX.update(gc=gc, go=go, claim=claim, other=other, L=L_est, A=A_nom, bg=SC.TUNE[scen]['bg'])
     cands = _cands(scen, gc, go, L_est)

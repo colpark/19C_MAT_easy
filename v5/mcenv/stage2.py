@@ -160,9 +160,21 @@ def placebo_relax(st):
 
 
 # ---------------------------------------------------------------- scenarios
+def pick_candidates():
+    """the chosen candidate per scenario, or (env V5_S2_PICK='S2-B:1,S2-D:2') the n-th passing candidate of that scenario's frozen
+    candidate list in SELECTION.json (gate replacements, prompt 6.5; no rule change)."""
+    d = json.load(open(SEL)); sel = dict(d['chosen'])
+    for item in filter(None, os.environ.get('V5_S2_PICK', '').split(',')):
+        key, n = item.split(':'); n = int(n); c = d['candidates'][key]
+        lst = c if isinstance(c, list) else c['first']
+        lst = [x for x in lst if x.get('passes', True)]
+        sel[key] = lst[n]
+    return sel
+
+
 def setup():
     """register stage 2 phases and return the stage 2 scenario dict (same schema as scenarios.SCEN)."""
-    sel = json.load(open(SEL))['chosen']; S2 = {}
+    sel = pick_candidates(); S2 = {}
     # S2-A loud: two DFT polymorphs
     a = sel['S2-A']; f = a['formula']
     pA = register_structure(f'{f} {a["protos"][0]}', wbm(a['ids'][0])); pB = register_structure(f'{f} {a["protos"][1]}', wbm(a['ids'][1]))
