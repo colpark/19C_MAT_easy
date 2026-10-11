@@ -24,6 +24,18 @@ def main():
     worlds = {}; W = SC.WORLDS
     if os.environ.get('V5_STAGE') == '1b':                 # stage 1b (V5_SPEC C.1): worlds 201-228, files in stage1b/
         from . import stage1b as _B; _B.install(); W = _B.worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage1b')
+    if os.environ.get('V5_STAGE') == '2s':                 # stage 2s (V5_SPEC E.1): worlds 461-470, files in stage2s/
+        from . import stage2s as _T; _T.install(cost=False); W = _T.worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage2s')
+    if os.environ.get('V5_STAGE') == '3':                  # stage 3 (V5_SPEC F.1): clean and fault worlds 501-558, files in stage3/
+        from . import stage3 as _F; _F.install(); W = _F.clean_worlds() + _F.fault_worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage3')
+    for w in (W if os.environ.get('V5_STAGE') in ('2s', '3') else []):     # every table D can touch (truth and both sides at their bounds)
+        s = SC.WORLD_SCEN[w]
+        for side in ('claim_side', 'other_side'):
+            for b in SC.SCEN[s][side]:
+                for u in ((b.lo, b.hi) if b.dim else ([],)):
+                    for g in b.groups(u):
+                        for n, p, wt in g:
+                            for rad in ('xray', 'neutron'): P.peak_table(n, p, rad)
     for w in W:
         tr = SP.world_truth(w); s = SC.WORLD_SCEN[w]
         br = lambda side: [dict(label=b.label, lo=b.lo.tolist(), hi=b.hi.tolist(), groups_at_lo=b.groups(b.lo), groups_at_hi=b.groups(b.hi))

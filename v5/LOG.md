@@ -13,3 +13,4 @@
 
 ## v5.2 (2026-10-11)
 - V5-12 spec amendment: V5_SPEC.md sha256 bde3669da19da2c8. Node B2 check: `ssh aid1@192.168.100.11` from host B once at 21:06:17Z, connect timeout (rc 255); `ip route | grep -c 192.168.100` = 0.
+- V5-13a: stage 2s sweeps on host B, node A2 and host A (stage2s/tuning_runs/); determinism manifests v5 75193edd0cb3834a and stage 1b 991fef25f9f190d0 unchanged after the seed_scen and polish hooks (host A).

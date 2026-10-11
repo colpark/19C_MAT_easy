@@ -137,7 +137,7 @@ STAGE1 = sorted(s for s in SCEN if s != 0)
 def hidden(world):
     """hidden nuisances of a world: shared by twins (seeded by scenario), overrides per world (scenario 7 world 14)."""
     s = WORLD_SCEN[world]; d = SCEN[s]; w = d['worlds'][world]
-    r = np.random.default_rng(int(hashlib.sha256(f'v5-world|{s}'.encode()).hexdigest()[:16], 16))
+    r = np.random.default_rng(int(hashlib.sha256(f'v5-world|{d.get("seed_scen", s)}'.encode()).hexdigest()[:16], 16))   # stage 3: seed_scen (F.1)
     disp, zero = r.uniform(-0.05, 0.05), r.uniform(-0.01, 0.01)
     t = TUNE[s]
     # stage 1b hold worlds (V5_SPEC C.5) change one nuisance of the claim-true twin: disp_add, zero_deg, L_factor, bg_factor

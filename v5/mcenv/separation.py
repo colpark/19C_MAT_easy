@@ -107,7 +107,7 @@ def _unpack(theta, branch):
     return s, z, math.exp(lL), u
 
 
-def fit_branch(meas, y, w, branch, L0, starts=None, s_range=S_RANGE, z_range=Z_RANGE, L_rel=L_REL, iters=200, L_bounds=None, n_sobol=256, n_refine=8):
+def fit_branch(meas, y, w, branch, L0, starts=None, s_range=S_RANGE, z_range=Z_RANGE, L_rel=L_REL, iters=200, L_bounds=None, n_sobol=256, n_refine=8, polish=True):
     """min over (s, z, L, u) of weighted SSR with linear params projected (V5-E7: thorough global search).
     Search in unit-cube coordinates: a scrambled Sobol sample (seeded, n_sobol points) plus the given starts, the best n_refine distinct
     points refined by L-BFGS-B, the best result polished by Powell. Returns (chi2, theta dict)."""
@@ -146,7 +146,7 @@ def fit_branch(meas, y, w, branch, L0, starts=None, s_range=S_RANGE, z_range=Z_R
     for q0 in chosen:
         r = minimize(f, q0, method='L-BFGS-B', bounds=bounds, options=dict(maxiter=iters, eps=1e-5))
         if r.fun < best[0]: best = (r.fun, np.clip(r.x, 0, 1))
-    for _ in range(12):                                  # polish until no gain (flat s-z valleys, V5-E7)
+    for _ in range(12 if polish else 0):                 # polish until no gain (flat s-z valleys, V5-E7); polish=False: stage 2s plan ranking only
         prev = best[0]
         for meth, opt in (('Powell', dict(maxiter=4000, xtol=1e-7, ftol=1e-12)), ('L-BFGS-B', dict(maxiter=iters, eps=1e-6))):
             r = minimize(f, best[1], method=meth, bounds=bounds, options=opt)
