@@ -13,3 +13,4 @@
 - 2026-10-11 V5-2 checks: shadow D first run 32/298 disagree (reference under-minimised, V5-E7); minimiser fixed; 298/298 agree. Oracle plans, constraints (all pass), oracle agent and all 630 scripted episodes recomputed/regraded: every agent fails exactly where predicted. Determinism manifest 75193edd0cb3834a on host A, node A2, host B.
 - 2026-10-11 Qwen: David approved the Qwen3-8B download (revision b968826d, 16 GB, host B, sha256 in validation/Qwen3-8B.sha256); vLLM 0.30 copied from host A; harness smoke-tested on world 0 (passes). Then David: drop Qwen from stages 1 and 2, run it once right before training as the baseline (X14). vLLM and server B stopped.
 - 2026-10-11 V5-2 frozen (FREEZE.md). Next: V5-3 Claude runs (Sonnet active/instructed k5, blind/passive k3, Haiku active k3, Opus active k1 = 420 episodes).
+- 2026-10-11 V5-3 launched: 420 Claude episodes (runs/stage1/run_stage1.sh, detached), server code ce2ce45f3d381846 = frozen.
