@@ -237,9 +237,9 @@ def _fit_side(meas, y, side, L0):
     best = np.inf
     for br in side:
         w = 1.0 / np.maximum(y, 1.0)
-        c, th = SP.fit_branch(meas, y, w, br, L0, L_bounds=(5.0, 3000.0), n_sobol=64, n_refine=4)
+        c, th = SP.fit_branch(meas, y, w, br, L0, n_sobol=64, n_refine=4)            # size within +-30 % of the planner's estimate, as in planning (V5-E16)
         mu = SP._model(meas, br, th); w = 1.0 / np.maximum(mu, 1.0)
-        c, th = SP.fit_branch(meas, y, w, br, L0, L_bounds=(5.0, 3000.0), n_sobol=64, n_refine=4)
+        c, th = SP.fit_branch(meas, y, w, br, L0, n_sobol=64, n_refine=4)
         best = min(best, c)
     return best
 

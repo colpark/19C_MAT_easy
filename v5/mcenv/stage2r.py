@@ -33,6 +33,13 @@ def register_b2_order(name, A, B, a):
     return name
 
 
+# gate replacement round (D.7, one round under the frozen rule): next passing candidate for the failing quiet shapes 42, 43, 45
+ROUND2_PICK = {42: 2, 43: 1, 45: 1}
+ROUND2_TUNE = {42: dict(N=10.0), 43: dict(N=80.0), 45: dict(N=60.0)}
+if os.environ.get('V5_S2R_ROUND') == '2':
+    PICK.update(ROUND2_PICK); [TUNE2R[s].update(v) for s, v in ROUND2_TUNE.items()]
+
+
 def _picks():
     d = json.load(open(SEL))['candidates']; pk = dict(PICK)
     for item in filter(None, os.environ.get('V5_S2R_PICK', '').split(',')):
