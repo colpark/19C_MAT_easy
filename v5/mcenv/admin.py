@@ -33,6 +33,7 @@ def main():
     b = sub.add_parser('newbatch'); b.add_argument('file')
     q = sub.add_parser('newplan'); q.add_argument('--arms', required=True); q.add_argument('--model', required=True)
     q.add_argument('--ks', required=True); q.add_argument('--batch', required=True); q.add_argument('--worlds', default='')
+    rp = sub.add_parser('replace'); rp.add_argument('--prefixes', required=True); rp.add_argument('--reason', required=True)
     a = ap.parse_args()
     if a.cmd == 'new': print(_register([dict(world=a.world, arm=a.arm, k=a.k, model=a.model, batch=a.batch)])[0])
     elif a.cmd == 'newbatch': print('\n'.join(_register(json.load(open(a.file)))))
@@ -44,6 +45,16 @@ def main():
         random.Random(f'v5-order|{a.batch}').shuffle(items)
         for it, t in zip(items, _register(items)):
             print(json.dumps(dict(token=t, arm=it['arm'], model=it['model'], k=it['k'], scen=SC.WORLD_SCEN[it['world']], batch=a.batch)))
+    elif a.cmd == 'replace':
+        # void episodes (by token prefix) and register fresh tokens for the same world, arm, k, model, batch; prints runner plan lines
+        p = os.path.join(S.TRUTH, 'episodes.json'); reg = json.load(open(p))
+        olds = [t for t in reg if any(t.startswith(x) for x in a.prefixes.split(','))]
+        items = []
+        for t in olds:
+            reg[t]['void'] = a.reason; items.append({k: reg[t][k] for k in ('world', 'arm', 'k', 'model', 'batch')})
+        tmp = p + '.tmp'; json.dump(reg, open(tmp, 'w')); os.chmod(tmp, 0o600); os.replace(tmp, p)
+        for it, t, old in zip(items, _register(items), olds):
+            print(json.dumps(dict(token=t, arm=it['arm'], model=it['model'], k=it['k'], scen=SC.WORLD_SCEN[it['world']], batch=it['batch'], replaces=old[:12])))
     else: ap.print_help()
 
 

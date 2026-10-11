@@ -216,11 +216,16 @@ def setup():
     return S2
 
 
+# stage 2 tunables (stage2/TUNING2.md; sweeps s2a to s2d in scenarios/tuning_runs/)
+TUNE2 = {11: dict(), 12: dict(N=32.0, L=60.0, bg=5.0), 13: dict(), 14: dict(N=10.0, L=30.0), 15: dict(N=400.0)}
+
+
 def install(tune=None):
     """add stage 2 scenarios to scenarios.SCEN/TUNE/WORLD_SCEN (worlds 101-110, scenarios 11-15)."""
     S2 = setup()
     SC.SCEN.update(S2)
-    for s in S2: SC.TUNE.setdefault(s, dict(L=100.0, N=1000.0, bg=20.0, Nn=1000.0, bgn=50.0))
+    for s in S2:
+        SC.TUNE.setdefault(s, dict(L=100.0, N=1000.0, bg=20.0, Nn=1000.0, bgn=50.0)); SC.TUNE[s].update(TUNE2.get(s, {}))
     if tune: [SC.TUNE[s].update(v) for s, v in tune.items()]
     SC.WORLD_SCEN.update({w: s for s, d in S2.items() for w in d['worlds']})
     return S2

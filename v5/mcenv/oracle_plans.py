@@ -18,11 +18,19 @@ def in_default_range(m):
     return m.radiation == 'xray' and not m.si_standard and m.start >= 10 - 1e-9 and m.start + m.step * (m.n - 1) <= 70 + 1e-6
 
 
+STAGE = int(os.environ.get('V5_STAGE', '1'))
+if STAGE == 2:
+    from . import stage2 as _S2
+    _S2.install()
+    QUIET = (12, 13, 14, 15)
+LOUD = (1, 2) if STAGE == 1 else (11,)
+
+
 def main():
     out = sys.argv[1]; os.makedirs(out, exist_ok=True)
     res, plans, shadow = {}, {}, {}
     with Pool(int(os.environ.get('V5_PROCS', '18'))) as pool:
-        for w in SC.WORLDS:
+        for w in (SC.WORLDS if STAGE == 1 else sorted(w for w in SC.WORLD_SCEN if w >= 101)):
             t0 = time.time()
             rows = PG.scan_world(w, pairs=True, pool=pool)
             ch = PG.cheapest(rows); ch9 = PG.cheapest(rows, 9.0)
@@ -56,10 +64,10 @@ def check(res):
     add = lambda cid, w, ok, what: C.append(dict(id=cid, world=w, pass_=bool(ok), what=what))
     for w, r in res.items():
         s = r['scen']
-        if s in (1, 2): add('C1', w, r['D_m0'] >= 25, f"D(m0) = {r['D_m0']} >= 25")
+        if s in LOUD: add('C1', w, r['D_m0'] >= 25, f"D(m0) = {r['D_m0']} >= 25")
         if s in QUIET:
             add('C2a', w, r['D_m0'] < 9, f"D(m0) = {r['D_m0']} < 9")
-            if s != 6:
+            if s not in (6,):
                 c = r['cheapest25']; add('C2b', w, c is not None and c['cost'] <= 90, f"cheapest D >= 25 plan costs {c and c['cost']} <= 90 min")
         if s == 9: add('C3', w, r['best']['D'] < 9, f"best affordable D = {r['best']['D']} < 9")
         if s == 6:
