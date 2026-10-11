@@ -29,7 +29,7 @@ def window_meas(lo, hi, step, t, optics, std):
 
 def peak_groups(scen):
     """centres of X-ray peak groups (within 0.5 deg) ranked by twin difference on a fine reference scan."""
-    ws = SC.twins(scen)
+    ws = [w for w in SC.twins(scen) if not SC.SCEN[scen]['worlds'][w].get('added_hold')]    # stage 1b: windows from the claim twins only (V5-E14)
     trs = [world_truth(w) for w in ws]
     x = P.grid(5.0, 0.01, 14501)
     ref = Meas('xray', 5.0, 0.01, 14501, 1.0, 'high_resolution', False)

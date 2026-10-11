@@ -20,12 +20,15 @@ def lattice_rule(name):
 
 
 def main():
-    worlds = {}
-    for w in SC.WORLDS:
+    global OUT
+    worlds = {}; W = SC.WORLDS
+    if os.environ.get('V5_STAGE') == '1b':                 # stage 1b (V5_SPEC C.1): worlds 201-228, files in stage1b/
+        from . import stage1b as _B; _B.install(); W = _B.worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage1b')
+    for w in W:
         tr = SP.world_truth(w); s = SC.WORLD_SCEN[w]
         br = lambda side: [dict(label=b.label, lo=b.lo.tolist(), hi=b.hi.tolist(), groups_at_lo=b.groups(b.lo), groups_at_hi=b.groups(b.hi))
                            for b in side]
-        worlds[w] = dict(scenario=s, holds=SC.SCEN[s]['worlds'][w]['holds'], truth_groups=tr['groups'], disp_mm=tr['disp_mm'],
+        worlds[w] = dict(scenario=s, holds=SC.SCEN[s]['worlds'][w]['holds'], hold=SC.SCEN[s]['worlds'][w].get('hold'), truth_groups=tr['groups'], disp_mm=tr['disp_mm'],
                          zero_deg=tr['zero_deg'], L_nm=tr['L_nm'], A_xray=tr['A'], A_neutron=tr['An'], b0=tr['b0'], b1=tr['b1'],
                          bn0=tr['bn0'], bn1=tr['bn1'], other_side=br(SC.other_side(w)))
     json.dump(dict(worlds=worlds, note='other_side: the branches D minimises over; a branch with lo == hi == [] is fixed; '

@@ -5,6 +5,9 @@ The registry (state/truth/episodes.json, mode 700) is the only place where token
 import argparse, fcntl, json, os, secrets, sys, time
 from . import server as S
 from . import scenarios as SC
+if os.environ.get('V5_STAGE') == '1b':
+    from . import stage1b as _S1B
+    _S1B.install()
 
 
 def _register(items):

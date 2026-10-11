@@ -31,9 +31,11 @@ def library(scen):
     return out
 
 
-def manual_text(scen):
-    t = open(MANUAL_FILE).read()
+def manual_text(scen, arm=None):
     d = SC.SCEN[scen]
+    t = open(d.get('manual_file', MANUAL_FILE)).read()
+    if arm == 'unstated':                    # stage 1b unstated arm (V5_SPEC C.6): no grading rule, no alternatives line
+        t = t[:t.index('## Grading rule')].rstrip() + '\n'
     alt = ('Claim side: ' + '; '.join(b.label for b in d['claim_side']) + '. Other side: ' + '; '.join(b.label for b in d['other_side']) + '.')
     return t.replace('{N}', f"{SC.TUNE[scen]['N']:.0f}").replace('{NN}', f"{SC.TUNE[scen]['Nn']:.0f}").replace('{ALTERNATIVES}', alt)
 

@@ -28,6 +28,6 @@ def blind_text(scen):
 def task_text(arm, scen=None):
     if arm == 'blind': return blind_text(scen)
     if arm == 'passive': return PASSIVE
-    if arm == 'active': return ACTIVE
+    if arm in ('active', 'unstated'): return ACTIVE
     if arm == 'instructed': return ACTIVE + ' ' + INSTRUCTION
     raise ValueError(arm)

@@ -54,10 +54,11 @@ def world_truth(world):
     ref_world = SC.twins(s)[0]                      # scale calibrated on the first twin, shared by twins
     ref = d['worlds'][ref_world]['phases']
     x = DEFAULT.x
-    sig = sum(P.signal(x, g, 'xray', 'standard', h['L_nm'], 0.0, 0.0) for g in ref)     # nominal geometry: scale shared by twins
+    Lref = SC.hidden(ref_world)['L_nm']             # the claim-true twin's size: a hold world shares its scale (V5_SPEC C.1)
+    sig = sum(P.signal(x, g, 'xray', 'standard', Lref, 0.0, 0.0) for g in ref)     # nominal geometry: scale shared by twins
     A = h['N'] / (DEFAULT.t * sig.max())
     xn = NEUTRON.x
-    sign = sum(P.signal(xn, g, 'neutron', 'neutron', h['L_nm']) for g in ref)
+    sign = sum(P.signal(xn, g, 'neutron', 'neutron', Lref) for g in ref)
     An = h['Nn'] / (NEUTRON.t * sign.max())
     return dict(world=world, scen=s, groups=groups, A=A, An=An, b0=h['bg'], b1=BG_SLOPE * h['bg'], bn0=h['bgn'] / NEUTRON.t,
                 bn1=BG_SLOPE * h['bgn'] / NEUTRON.t, disp_mm=h['disp_mm'], zero_deg=h['zero_deg'], L_nm=h['L_nm'])

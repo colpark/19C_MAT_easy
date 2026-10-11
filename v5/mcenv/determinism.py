@@ -10,7 +10,10 @@ from .server import noise_rng
 
 def main():
     plans = json.load(open(sys.argv[1])); out = {}
-    for w in SC.WORLDS:
+    W = SC.WORLDS
+    if os.environ.get('V5_STAGE') == '1b':
+        from . import stage1b as _B; _B.install(); W = _B.worlds()
+    for w in W:
         tr = SP.world_truth(w); ms = [SP.DEFAULT] + [SP.meas_from(d) for d in (plans.get(str(w)) or [])]
         for k in range(1, 6):
             h = hashlib.sha256()
