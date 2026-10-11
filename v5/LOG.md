@@ -10,3 +10,6 @@
 ## v5.1 (2026-10-11)
 - V5-7 spec amendment: V5_SPEC.md sha256 b89f0fe23252663b. Node B2 check: `ssh aid1@192.168.100.11` from host B x3, 12:09:16Z to 12:09:36Z, connect timeout; `ip route | grep -c 192.168.100` = 0.
 - V5-8: code 77db375a13b955f0; stage 1b determinism 991fef25f9f190d0; shadow D stage1b/validation/shadow_d_1b.py 390/390; FM service started on node A2 for the D.4 orientation (4 relaxations).
+
+## v5.2 (2026-10-11)
+- V5-12 spec amendment: V5_SPEC.md sha256 bde3669da19da2c8. Node B2 check: `ssh aid1@192.168.100.11` from host B once at 21:06:17Z, connect timeout (rc 255); `ip route | grep -c 192.168.100` = 0.
