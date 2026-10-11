@@ -1,0 +1,239 @@
+{
+ "cells": {
+  "opus|fm": {
+   "n": 10,
+   "quiet_pair_resolution": {
+    "k": 4,
+    "n": 4,
+    "rate": 1.0,
+    "wilson": [
+     0.5101,
+     1.0
+    ]
+   },
+   "per_scenario": {
+    "41": "1/1",
+    "42": "1/1",
+    "43": "1/1",
+    "44": "1/1",
+    "45": "1/1"
+   },
+   "wrong_conclusion": {
+    "k": 0,
+    "n": 10
+   },
+   "correct": {
+    "k": 10,
+    "n": 10
+   },
+   "cost_mean": 72.1,
+   "energy_as_verdict": {
+    "refuted_claim_true_41_44": 0,
+    "n_claim_true_41_44": 2
+   }
+  },
+  "opus|placebo": {
+   "n": 10,
+   "quiet_pair_resolution": {
+    "k": 4,
+    "n": 4,
+    "rate": 1.0,
+    "wilson": [
+     0.5101,
+     1.0
+    ]
+   },
+   "per_scenario": {
+    "41": "1/1",
+    "42": "1/1",
+    "43": "1/1",
+    "44": "1/1",
+    "45": "1/1"
+   },
+   "wrong_conclusion": {
+    "k": 0,
+    "n": 10
+   },
+   "correct": {
+    "k": 10,
+    "n": 10
+   },
+   "cost_mean": 89.0,
+   "energy_as_verdict": {
+    "refuted_claim_true_41_44": 0,
+    "n_claim_true_41_44": 2
+   }
+  },
+  "sonnet|blindfm": {
+   "n": 50,
+   "quiet_pair_resolution": {
+    "k": 0,
+    "n": 20,
+    "rate": 0.0,
+    "wilson": [
+     0.0,
+     0.1611
+    ]
+   },
+   "per_scenario": {
+    "41": "0/5",
+    "42": "0/5",
+    "43": "0/5",
+    "44": "0/5",
+    "45": "0/5"
+   },
+   "wrong_conclusion": {
+    "k": 1,
+    "n": 50
+   },
+   "correct": {
+    "k": 49,
+    "n": 50
+   },
+   "cost_mean": 0.0,
+   "energy_as_verdict": {
+    "refuted_claim_true_41_44": 0,
+    "n_claim_true_41_44": 10
+   }
+  },
+  "sonnet|ceiling": {
+   "n": 50,
+   "quiet_pair_resolution": {
+    "k": 18,
+    "n": 20,
+    "rate": 0.9,
+    "wilson": [
+     0.699,
+     0.9721
+    ]
+   },
+   "per_scenario": {
+    "41": "5/5",
+    "42": "5/5",
+    "43": "5/5",
+    "44": "4/5",
+    "45": "4/5"
+   },
+   "wrong_conclusion": {
+    "k": 0,
+    "n": 50
+   },
+   "correct": {
+    "k": 50,
+    "n": 50
+   },
+   "cost_mean": 77.9,
+   "energy_as_verdict": {
+    "refuted_claim_true_41_44": 0,
+    "n_claim_true_41_44": 10
+   }
+  },
+  "sonnet|fm": {
+   "n": 50,
+   "quiet_pair_resolution": {
+    "k": 15,
+    "n": 20,
+    "rate": 0.75,
+    "wilson": [
+     0.5313,
+     0.8881
+    ]
+   },
+   "per_scenario": {
+    "41": "5/5",
+    "42": "5/5",
+    "43": "3/5",
+    "44": "3/5",
+    "45": "4/5"
+   },
+   "wrong_conclusion": {
+    "k": 1,
+    "n": 50
+   },
+   "correct": {
+    "k": 48,
+    "n": 50
+   },
+   "cost_mean": 79.6,
+   "energy_as_verdict": {
+    "refuted_claim_true_41_44": 0,
+    "n_claim_true_41_44": 10
+   }
+  },
+  "sonnet|placebo": {
+   "n": 50,
+   "quiet_pair_resolution": {
+    "k": 11,
+    "n": 20,
+    "rate": 0.55,
+    "wilson": [
+     0.3421,
+     0.7418
+    ]
+   },
+   "per_scenario": {
+    "41": "5/5",
+    "42": "5/5",
+    "43": "2/5",
+    "44": "2/5",
+    "45": "2/5"
+   },
+   "wrong_conclusion": {
+    "k": 2,
+    "n": 50
+   },
+   "correct": {
+    "k": 46,
+    "n": 50
+   },
+   "cost_mean": 75.2,
+   "energy_as_verdict": {
+    "refuted_claim_true_41_44": 0,
+    "n_claim_true_41_44": 10
+   }
+  }
+ },
+ "gate_S2": {
+  "opus": {
+   "n_pairs": 4,
+   "fm_minus_placebo": 0.0,
+   "ci95": [
+    0.0,
+    0.0
+   ],
+   "mcnemar": {
+    "n": 4,
+    "a_only": 0,
+    "b_only": 0,
+    "p": 1.0
+   },
+   "wrong_fm_minus_placebo": 0,
+   "S2": false
+  },
+  "sonnet": {
+   "n_pairs": 20,
+   "fm_minus_placebo": 0.2,
+   "ci95": [
+    0.0,
+    0.4
+   ],
+   "mcnemar": {
+    "n": 20,
+    "a_only": 5,
+    "b_only": 1,
+    "p": 0.21875
+   },
+   "wrong_fm_minus_placebo": -1,
+   "gap_closed": 0.5714,
+   "ceiling": 0.9,
+   "blindfm": {
+    "pair_resolution": "0/25",
+    "correct": "49/50",
+    "determinate": 1,
+    "truth_match": "1/50"
+   },
+   "S2": false
+  }
+ },
+ "rule": "FM - placebo >= 15 points of quiet pair resolution with the 95 % interval above zero, and blind plus FM at chance"
+}
