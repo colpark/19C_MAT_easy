@@ -173,6 +173,7 @@ def _shift(m, g):
 
 
 def replan(trs, al, pre, cands, budget):
+    T.FAST[0] = True
     """cheapest further measurement (bisection on time) among the candidates, counting the measurements in hand; [] if the data in hand
     already give planning D >= 40 against both targets; None if nothing affordable."""
     T._W.clear(); T._W.update(trs=trs, alts=al, pre=list(pre))
@@ -265,7 +266,9 @@ def initial_plan(tok, scen):
     """planning episode (not graded): hypotheses, then the c_dec search within B; returns plan, the 30 cheapest single configs for
     re-planning, and metadata."""
     H = hypotheses(tok, scen); trs, al, pcpo = targets(H, scen)
+    T.FAST[0] = True                         # rank plans with the light minimiser, then the chosen plan at full precision (as tune2s)
     best, rows = T.search(trs, al, wins(H, scen, pcpo), budget=SC.SCEN[scen]['budget'], wmid=wmid(scen))
+    best = T.final(best, trs, al, budget=SC.SCEN[scen]['budget'])
     sing = sorted([r for r in rows if len(r[2]) == 1], key=lambda r: r[0])[:30]
     return (None if best is None else [m.key() for m in best[2]]), [r[2][0].key() for r in sing], \
         dict(cost=best and round(best[0], 3), D=best and best[1], ls=H['ls'], energy=H['energy'])

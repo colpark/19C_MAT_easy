@@ -10,6 +10,10 @@ if os.environ.get('V5_STAGE') == '1b':
     _S1B.install()
 if os.environ.get('V5_STAGE') == '2r':
     from . import server2r as _S2RS          # stage 2r scenarios and arms (placebo, fm, ceiling, blindfm)
+if os.environ.get('V5_STAGE') == '2s':
+    from . import server2s as _S2SS          # stage 2s scenarios 46-50 (V5_SPEC E)
+if os.environ.get('V5_STAGE') == '3':
+    from . import server3 as _S3S            # stage 3 scenarios 51-60, arms active and validity (V5_SPEC F)
 
 
 def _register(items):
