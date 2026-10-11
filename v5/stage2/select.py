@@ -35,7 +35,7 @@ def charge_ok(formula):
 
 def main():
     zp = sys.argv[1]; z = zipfile.ZipFile(zp)
-    C = {r['id']: r for r in map(json.loads, open(os.path.join(HERE, 'wbm_census.jsonl')))}
+    C = {r['id']: r for r in map(json.loads, open(os.path.join(HERE, '..', 'data', 'stage2', 'wbm_census.jsonl')))}
     H = json.load(open(os.path.join(HERE, 'prototype_hits.json')))
     proto_of = defaultdict(list)
     for p, ids in H.items():

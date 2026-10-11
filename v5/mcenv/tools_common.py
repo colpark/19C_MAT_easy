@@ -81,12 +81,17 @@ def parse_measure(a):
     return SP.Meas('xray', round(start, 6), round(step, 6), n, t, _optics(a), _bool(a.get('si_standard', False)))
 
 
-def _phases(spec, scen):
+def _phases(spec, scen, resolver=None):
+    """phases by library name (stage 1) or, with a resolver (stage 2), by structure_id of a built or relaxed structure."""
     ph = spec.get('phases')
     if not ph or not isinstance(ph, list): raise ToolError('spec.phases must be a list of {"name": ..., "weight": ..., parameters}')
     lib = SC.SCEN[scen]['library']; out = []
     for e in ph:
-        if not isinstance(e, dict) or e.get('name') not in lib: raise ToolError(f'unknown phase {e!r}; library: {lib}')
+        if isinstance(e, dict) and resolver is not None and 'structure_id' in e:
+            name = resolver(str(e['structure_id']))
+            e = dict(e, name=name)
+        elif not isinstance(e, dict) or e.get('name') not in lib or resolver is not None:
+            raise ToolError(f'unknown phase {e!r}; ' + ('give "structure_id" of a structure you built or relaxed' if resolver else f'library: {lib}'))
         P_ = P.PHASES[e['name']]
         params = {}
         for k in P_.defaults:
@@ -109,10 +114,10 @@ def _check_params(p):
         if not lo <= v <= hi: raise ToolError(f'{k} must be within [{lo}, {hi}]')
 
 
-def simulate(tr, a):
+def simulate(tr, a, resolver=None):
     """noise-free expected counts per step at this lab's nominal count-rate scale (shared by twins), no noise."""
     scen = tr['scen']; spec = a.get('spec', a)
-    phases = _phases(spec, scen)
+    phases = _phases(spec, scen, resolver)
     rad = 'neutron' if str(spec.get('radiation', 'xray')).lower().startswith('neutron') else 'xray'
     if rad == 'neutron':
         m = SP.NEUTRON; x = m.x
@@ -158,8 +163,8 @@ def find_peaks(m, counts, max_peaks=80):
                 note='peak search on 3-point smoothed counts, background = smoothed rolling 20th percentile, prominence >= 5 sqrt(background)')
 
 
-def fit(scen, ms, ys, spec):
-    phases = _phases(spec, scen)
+def fit(scen, ms, ys, spec, resolver=None):
+    phases = _phases(spec, scen, resolver)
     br = SC.fixed(phases)
     y = np.concatenate([np.asarray(v, float) for v in ys])
     L0 = float(spec.get('size_nm', 100.0))

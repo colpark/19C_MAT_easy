@@ -35,6 +35,8 @@ def report(scen, over, procs=18, pairs=True):
 
 if __name__ == '__main__':
     scen = int(sys.argv[1]); over = {}
+    if scen >= 11:
+        from . import stage2; stage2.install()
     for a in sys.argv[2:]:
         k, v = a.split('='); over[k] = float(v)
     print(json.dumps(report(scen, over), indent=1))
