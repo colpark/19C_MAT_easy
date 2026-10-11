@@ -116,6 +116,8 @@ def main():
     a = ap.parse_args()
     setup_root(); os.makedirs(a.outdir, exist_ok=True)
     eps = [json.loads(l) for l in open(a.plan) if l.strip()]
+    if any(41 <= e['scen'] <= 45 for e in eps):         # blind plus FM task text carries the stage 2r claim (V5_S2R_ROUND=2)
+        from . import stage2r; stage2r.install()
     donep = os.path.join(a.outdir, 'episodes.jsonl')
     done = {json.loads(l)['token'] for l in open(donep)} if os.path.exists(donep) else set()
     todo = [e for e in eps if e['token'] not in done]

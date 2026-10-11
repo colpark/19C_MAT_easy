@@ -8,6 +8,8 @@ from . import scenarios as SC
 if os.environ.get('V5_STAGE') == '1b':
     from . import stage1b as _S1B
     _S1B.install()
+if os.environ.get('V5_STAGE') == '2r':
+    from . import server2r as _S2RS          # stage 2r scenarios and arms (placebo, fm, ceiling, blindfm)
 
 
 def _register(items):

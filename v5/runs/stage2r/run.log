@@ -1,0 +1,95 @@
+220 episodes to run (0 done)
+11:27:34 547961ce v5-sonnet-fm k1 calls=5 answered=True void=False 11s
+11:27:35 76173169 v5-sonnet-ceiling k4 calls=5 answered=True void=False 12s
+11:27:35 b95cf163 v5-sonnet-ceiling k5 calls=5 answered=True void=False 12s
+11:27:35 ade8ac89 v5-sonnet-fm k5 calls=5 answered=True void=False 10s
+11:27:43 314946c3 v5-sonnet-placebo k4 calls=5 answered=True void=False 10s
+Traceback (most recent call last):
+  File "<frozen runpy>", line 198, in _run_module_as_main
+  File "<frozen runpy>", line 88, in _run_code
+  File "/home/aid1/Documents/harbor/v5/v5/mcenv/run_claude.py", line 132, in <module>
+    main()
+  File "/home/aid1/Documents/harbor/v5/v5/mcenv/run_claude.py", line 124, in main
+    for rec in ex.map(lambda e: run_one(e, a.outdir), todo):
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 619, in result_iterator
+    yield _result_or_cancel(fs.pop())
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 317, in _result_or_cancel
+    return fut.result(timeout)
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 449, in result
+    return self.__get_result()
+           ^^^^^^^^^^^^^^^^^^^
+  File "/usr/lib/python3.12/concurrent/futures/_base.py", line 401, in __get_result
+    raise self._exception
+  File "/usr/lib/python3.12/concurrent/futures/thread.py", line 58, in run
+    result = self.fn(*self.args, **self.kwargs)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v5/v5/mcenv/run_claude.py", line 124, in <lambda>
+    for rec in ex.map(lambda e: run_one(e, a.outdir), todo):
+                                ^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v5/v5/mcenv/run_claude.py", line 80, in run_one
+    cmd = ['claude', '-p', tasks.task_text(ep['arm'], ep['scen']), '--agent', agent, '--mcp-config', cfg, '--strict-mcp-config',
+                           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v5/v5/mcenv/tasks.py", line 43, in task_text
+    if arm == 'blindfm': return blindfm_text(scen)
+                                ^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v5/v5/mcenv/tasks.py", line 35, in blindfm_text
+    d = SC.SCEN[scen]
+        ~~~~~~~^^^^^^
+KeyError: 43
+215 episodes to run (5 done)
+11:33:24 7c31f023 v5-sonnet-blindfm k5 calls=1 answered=True void=False 7s
+11:33:26 f7dab9c4 v5-sonnet-placebo k2 calls=3 answered=False void=False 8s
+11:33:26 1e22a1a1 v5-sonnet-ceiling k5 calls=3 answered=False void=False 7s
+11:33:26 165a64e6 v5-sonnet-placebo k4 calls=4 answered=True void=False 9s
+11:33:31 d604e942 v5-sonnet-fm k4 calls=3 answered=False void=False 7s
+11:33:35 ad6fdfed v5-sonnet-ceiling k5 calls=5 answered=True void=False 10s
+11:33:36 714b6e7b v5-sonnet-placebo k5 calls=5 answered=True void=False 11s
+11:33:37 9f683632 v5-sonnet-fm k5 calls=5 answered=True void=False 10s
+11:33:41 d76c0346 v5-sonnet-fm k1 calls=5 answered=True void=False 10s
+11:33:44 d15b300f v5-sonnet-fm k5 calls=5 answered=True void=False 9s
+11:33:46 df61fb44 v5-sonnet-placebo k5 calls=5 answered=True void=False 10s
+11:33:47 4368253f v5-sonnet-fm k4 calls=5 answered=True void=False 11s
+11:33:54 27596243 v5-sonnet-ceiling k5 calls=5 answered=True void=False 14s
+11:33:55 00f5850b v5-sonnet-placebo k1 calls=5 answered=True void=False 10s
+11:33:55 b617b8da v5-sonnet-blindfm k1 calls=1 answered=True void=False 9s
+11:33:56 6b27d763 v5-sonnet-blindfm k3 calls=1 answered=True void=False 8s
+11:34:06 d8cfb487 v5-sonnet-ceiling k1 calls=5 answered=True void=False 12s
+11:34:06 8738760b v5-sonnet-fm k4 calls=5 answered=True void=False 9s
+11:34:08 538bb2cb v5-sonnet-ceiling k3 calls=5 answered=True void=False 13s
+11:34:08 d3ef6a18 v5-sonnet-blindfm k5 calls=1 answered=True void=False 10s
+11:34:12 fb069bfe v5-sonnet-blindfm k3 calls=1 answered=True void=False 9s
+11:34:15 131278aa v5-sonnet-ceiling k5 calls=5 answered=True void=False 10s
+11:34:25 936f58e0 v5-opus-fm k1 calls=7 answered=True void=False 19s
+11:34:25 20c969fc v5-sonnet-fm k1 calls=5 answered=True void=False 9s
+11:34:25 73ea02f9 v5-sonnet-placebo k3 calls=5 answered=True void=False 11s
+11:34:25 8f62e9df v5-sonnet-placebo k1 calls=5 answered=True void=False 9s
+11:34:42 1d5429d3 v5-opus-placebo k1 calls=8 answered=True void=False 25s
+11:34:42 73f82f22 v5-sonnet-fm k5 calls=5 answered=True void=False 11s
+11:34:42 83834156 v5-sonnet-fm k5 calls=5 answered=True void=False 10s
+11:34:44 3fe1f887 v5-opus-placebo k1 calls=7 answered=True void=False 19s
+11:34:44 e2c3f802 v5-sonnet-blindfm k4 calls=1 answered=True void=False 6s
+11:34:48 d2fd6ad2 v5-sonnet-ceiling k3 calls=5 answered=True void=False 13s
+11:34:51 e41f993a v5-sonnet-placebo k2 calls=5 answered=True void=False 10s
+11:34:53 c4439a1d v5-sonnet-fm k3 calls=5 answered=True void=False 11s
+11:34:54 0e8114e2 v5-sonnet-fm k3 calls=5 answered=True void=False 10s
+220 episodes to run (40 done)
+11:38:06 d4f16326 v5-sonnet-ceiling k5 calls=11 answered=True void=False 33s
+11:38:09 0376be9b v5-sonnet-ceiling k3 calls=13 answered=True void=False 36s
+11:38:09 32d7518e v5-sonnet-fm k3 calls=12 answered=True void=False 33s
+11:38:10 f09e98f3 v5-sonnet-placebo k5 calls=18 answered=True void=False 38s
+11:38:11 d612d5e2 v5-sonnet-blindfm k3 calls=1 answered=True void=False 6s
+11:39:11 293190e4 v5-sonnet-ceiling k5 calls=20 answered=True void=False 65s
+11:39:11 48ea55a2 v5-sonnet-blindfm k5 calls=1 answered=True void=False 9s
+11:39:11 79981e02 v5-sonnet-ceiling k4 calls=13 answered=True void=False 42s
+11:39:40 182a726f v5-sonnet-placebo k5 calls=26 answered=True void=False 89s
+11:39:40 5082712d v5-sonnet-ceiling k5 calls=13 answered=True void=False 55s
+11:39:49 2d3e56c1 v5-sonnet-ceiling k2 calls=17 answered=True void=False 56s
+11:41:01 c8a9e4ce v5-sonnet-placebo k1 calls=35 answered=True void=False 111s
+11:41:01 e3f79175 v5-opus-placebo k1 calls=23 answered=True void=False 63s
+11:41:01 4f1d4db7 v5-sonnet-fm k4 calls=16 answered=True void=False 38s
+11:41:01 cb7c2f63 v5-sonnet-placebo k5 calls=18 answered=True void=False 39s
+11:41:07 2dc0caa2 v5-sonnet-fm k5 calls=18 answered=True void=False 50s
+11:41:07 fd10de67 v5-sonnet-ceiling k5 calls=16 answered=True void=False 44s
+11:41:16 432d2004 v5-sonnet-fm k4 calls=19 answered=True void=False 48s

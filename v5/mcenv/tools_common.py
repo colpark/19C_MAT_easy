@@ -26,6 +26,7 @@ PARAM_DOC = {
 def library(scen):
     out = []
     for n in SC.SCEN[scen]['library']:
+        if n not in P.PHASES: out.append(dict(name=n)); continue          # stage 2 prototypes (server2 replaces the library; V5-E17)
         ph = P.PHASES[n]
         out.append(dict(name=n, parameters={k: dict(default=v, meaning=PARAM_DOC.get(k, '')) for k, v in ph.defaults.items()}))
     return out
