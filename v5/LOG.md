@@ -6,3 +6,6 @@
 - Claude Code 2.1.296. Spend $0.
 - 2026-10-11 Qwen/Qwen3-8B (David approved): huggingface_hub snapshot_download on host B, revision b968826d9c46dd6066d109eabc6255188de91218, 16 GB, sha256 per file in validation/Qwen3-8B.sha256. vLLM 0.30.0 (torch 2.13.0+cu130) copied from host A ~/.venv-vllm.
 - 2026-10-11 WBM relaxed structures (approved fetch, once): figshare article 22715158 file 48169600 `2024-08-04-wbm-relaxed-atoms.extxyz.zip`, 99,522,982 bytes, md5 4726643ac0dfbab69a4284454c891e68 (matches figshare computed_md5), sha256 7660992d648927e9aeac4eedf3b3c74622feea1160c946d9f0090d47e38e3daa, at data/stage2/ (not in git). figshare.com/ndownloader answers curl with an AWS WAF challenge (202, empty body); ndownloader.figshare.com from the API's download_url works. pip install matbench-discovery 1.3.1 into ~/v5env (additions only; frozen packages unchanged); importing matbench_discovery.data attempts a download (blocked, 0-byte file removed).
+
+## v5.1 (2026-10-11)
+- V5-7 spec amendment: V5_SPEC.md sha256 b89f0fe23252663b. Node B2 check: `ssh aid1@192.168.100.11` from host B x3, 12:09:16Z to 12:09:36Z, connect timeout; `ip route | grep -c 192.168.100` = 0.
