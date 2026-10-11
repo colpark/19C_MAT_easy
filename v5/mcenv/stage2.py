@@ -232,12 +232,19 @@ def setup():
 TUNE2 = {11: dict(), 12: dict(N=32.0, L=60.0, bg=5.0), 13: dict(), 14: dict(N=10.0, L=30.0), 15: dict(N=400.0)}
 
 
+# tunables of replacement candidates (gate replacement round, stage2/TUNING2.md), keyed by V5_S2_PICK entries
+TUNE2_PICK = {'S2-B:1': dict(N=10.0, L=30.0, bg=5.0), 'S2-C:1': dict(N=450.0), 'S2-D:1': dict(), 'S2-E:1': dict(N=500.0)}
+_PICK_SCEN = {'S2-A': 11, 'S2-B': 12, 'S2-C': 13, 'S2-D': 14, 'S2-E': 15}
+
+
 def install(tune=None):
     """add stage 2 scenarios to scenarios.SCEN/TUNE/WORLD_SCEN (worlds 101-110, scenarios 11-15)."""
     S2 = setup()
     SC.SCEN.update(S2)
     for s in S2:
         SC.TUNE.setdefault(s, dict(L=100.0, N=1000.0, bg=20.0, Nn=1000.0, bgn=50.0)); SC.TUNE[s].update(TUNE2.get(s, {}))
+    for item in filter(None, os.environ.get('V5_S2_PICK', '').split(',')):
+        SC.TUNE[_PICK_SCEN[item.split(':')[0]]].update(TUNE2_PICK.get(item, {}))
     if tune: [SC.TUNE[s].update(v) for s, v in tune.items()]
     SC.WORLD_SCEN.update({w: s for s, d in S2.items() for w in d['worlds']})
     return S2
