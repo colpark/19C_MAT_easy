@@ -14,6 +14,8 @@ if os.environ.get('V5_STAGE') == '2s':
     from . import server2s as _S2SS          # stage 2s scenarios 46-50 (V5_SPEC E)
 if os.environ.get('V5_STAGE') == '3':
     from . import server3 as _S3S            # stage 3 scenarios 51-60, arms active and validity (V5_SPEC F)
+if os.environ.get('V5_STAGE') == '4':
+    from . import server4 as _S4S            # stage 4 scenarios 61-68 and the seven stage 4 arms (V5_SPEC I)
 
 
 def _register(items):
