@@ -1,5 +1,7 @@
 # Stage 2s gate (V5_SPEC E.5, E.6; X43)
 
+Round 1 (frozen V5-13a): 47 = SrOsO3 cubic / Pnma (N 10, B 66). Precondition: stage2s/validation/pre2; gate: stage2s/validation/gate_r1.
+
 Scripted agents played through the stage 2s server code path (node A2; FM service MACE-MP-0 at 8771), k = 1 to 5; graded from logs. Cells: pairs resolved (both worlds get their key's truth verdict) / decisive pairs (both worlds D >= 25).
 
 | agent | 46 | 47 | 48 | 49 | 50 |
