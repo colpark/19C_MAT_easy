@@ -14,3 +14,5 @@
 ## v5.2 (2026-10-11)
 - V5-12 spec amendment: V5_SPEC.md sha256 bde3669da19da2c8. Node B2 check: `ssh aid1@192.168.100.11` from host B once at 21:06:17Z, connect timeout (rc 255); `ip route | grep -c 192.168.100` = 0.
 - V5-13a: stage 2s sweeps on host B, node A2 and host A (stage2s/tuning_runs/); determinism manifests v5 75193edd0cb3834a and stage 1b 991fef25f9f190d0 unchanged after the seed_scen and polish hooks (host A).
+- 2026-10-12T05:10:29Z Qwen baseline: stage 3 runner started beside the stage 1b runner (16 sequences on vLLM); the wrapper script stopped first so that no episode runs twice.
+- 2026-10-12T05:16:00Z V5-17: both Qwen runners done (84 + 84); graded on host B with baseline/grade_qwen.sh (frozen graders); 11 LLM-timeout episodes voided in primary (V5-E21); analyze_stage1b and analyze_stage3 run on host A (stage 3 hold reference: Qwen's own stage 1b episodes).
