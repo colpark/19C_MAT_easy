@@ -28,7 +28,9 @@ def main():
         from . import stage2s as _T; _T.install(cost=False); W = _T.worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage2s')
     if os.environ.get('V5_STAGE') == '3':                  # stage 3 (V5_SPEC F.1): clean and fault worlds 501-558, files in stage3/
         from . import stage3 as _F; _F.install(); W = _F.clean_worlds() + _F.fault_worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage3')
-    for w in (W if os.environ.get('V5_STAGE') in ('2s', '3') else []):     # every table D can touch (truth and both sides at their bounds)
+    if os.environ.get('V5_STAGE') == '4':                  # stage 4 (V5_SPEC I.3): worlds 601-616, files in stage4/
+        from . import stage4 as _G; _G.install(); W = _G.worlds(); OUT = os.path.join(os.path.dirname(OUT), 'stage4')
+    for w in (W if os.environ.get('V5_STAGE') in ('2s', '3', '4') else []):     # every table D can touch (truth and both sides at their bounds)
         s = SC.WORLD_SCEN[w]
         for side in ('claim_side', 'other_side'):
             for b in SC.SCEN[s][side]:

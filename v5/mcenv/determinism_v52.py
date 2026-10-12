@@ -3,6 +3,8 @@
   python -m mcenv.determinism_v52 3 OUT.json      stage 3: m0 plus the stage 1b oracle plan of the mirrored world, with the fault applied
                                                   as the server does (F1 clipping included), counts per k, D over valid measurements and
                                                   the data key's delta
+  python -m mcenv.determinism_v52 4 OUT.json      stage 4 (V5_SPEC I.13): m0 plus the world's oracle plan, counts per k, D and D(m0),
+                                                  and the energy-table hash
 Run on host A, node A2 and host B; manifests must be identical."""
 import hashlib, json, os, platform, sys
 for _v in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
@@ -27,6 +29,20 @@ def main():
                 for idx, m in enumerate(ms): h.update(noise_rng(s, k, idx).poisson(SP.mu_truth(tr, m)).astype(np.int64).tobytes())
                 out[f'{w}|{k}'] = h.hexdigest()[:16]
             out[f'{w}|D'] = f'{SP.separation(w, ms, tr):.6g}'
+    elif mode == '4':
+        from . import stage4 as G
+        G.install()
+        P4 = json.load(open(os.path.join(ROOT, 'stage4', 'validation', 'oracle_plans.json')))
+        for w in G.worlds():
+            s = SC.WORLD_SCEN[w]; tr = SP.world_truth(w)
+            ms = [SP.DEFAULT] + [SP.meas_from(d) for d in P4.get(str(w), [])]
+            for k in range(1, 6):
+                h = hashlib.sha256()
+                for idx, m in enumerate(ms): h.update(noise_rng(s, k, idx).poisson(SP.mu_truth(tr, m)).astype(np.int64).tobytes())
+                out[f'{w}|{k}'] = h.hexdigest()[:16]
+            out[f'{w}|D'] = f'{SP.separation(w, ms, tr):.6g}'
+            out[f'{w}|D_m0'] = f'{SP.separation(w, [SP.DEFAULT], tr):.6g}'
+        out['energy_tables'] = hashlib.sha256(open(os.path.join(ROOT, 'stage4', 'ENERGY_TABLES.json'), 'rb').read()).hexdigest()[:16]
     else:
         from . import stage3 as F
         F.install()
