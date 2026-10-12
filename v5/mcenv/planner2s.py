@@ -98,9 +98,9 @@ def families(H):
 def refine_keys(H): return {'poly': ['c', 'o'], 'trace': ['m'], 'order': ['o']}[H['kind']]
 
 
-def groups_at(H, k, g):
+def groups_at(H, k, g, S=1.0):
     ph, ls = H['ph'], H['ls']
-    if H['kind'] == 'order': return [[(ph[k], {'S': 1.0, 'lattice_scale': ls[k] * g}, 1.0)]]
+    if H['kind'] == 'order': return [[(ph[k], {'S': S, 'lattice_scale': ls[k] * g}, 1.0)]]
     if H['kind'] == 'trace': return [[(ph['m'], {'lattice_scale': ls['m'] * g}, 1.0)]]
     return [[(ph[k], {'lattice_scale': ls[k] * g}, 1.0)]]
 
@@ -123,6 +123,13 @@ def refine(H, ms, y, wide=False):
         new[k] = f * float(g)
     if H['kind'] == 'poly' and abs(new['c'] - new['o']) > CONSIST * max(new['c'], new['o']) and not wide:
         new = {k: 1.0 for k in new}
+    if H['kind'] == 'order' and not wide:
+        # the two order pseudo-truths (S 0.7 and 0) must agree: with S = 1 alone a window without fundamentals is "improved" by moving
+        # the superlattice peak out of it (V5-E20)
+        f0 = new['o']
+        g7, _, _ = PR.refine(ms, y, lambda gg: groups_at(H, 'o', gg, S_ORD), H['L'])
+        g0, _, _ = PR.refine(ms, y, lambda gg: groups_at(H, 'o', gg, 0.0), H['L'])
+        new['o'] = float(np.mean([f0, g7, g0])) if max(f0, g7, g0) - min(f0, g7, g0) <= CONSIST else 1.0
     for k, v in new.items(): H['ls'][k] *= v
     H.setdefault('refined', []).append({k: round(v, 5) for k, v in new.items()})
     return H
@@ -281,7 +288,8 @@ def main():
     survey = {}
     if agent == 'survey':
         C = json.load(open(os.environ['V5_2S_CONSTRAINTS']))['scen']
-        survey = {int(s): r['c_loc']['meas'] for s, r in C.items()}
+        # no localizing survey within 20 s per step (c_loc infinite): the widest affordable 10-70 deg scan (capped at the budget in play)
+        survey = {int(s): (r['c_loc']['meas'] if r.get('c_loc') else dict(SP.DEFAULT.key(), t=20.0)) for s, r in C.items()}
     pp = out + '.plans.json'; plans = json.load(open(pp)) if os.path.exists(pp) else {}
     if agent == 'first':
         for s in scens:

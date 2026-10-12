@@ -21,6 +21,13 @@ CONTROL = 46
 TUNE2S = {46: dict(), 47: dict(N=10.0), 48: dict(N=200.0), 49: dict(N=330.0), 50: dict(N=300.0)}  # stage2s/TUNING.md
 BUDGET2S = {46: 30.0, 47: 66.0, 48: 20.0, 49: 61.0, 50: 29.0}                                    # E.4: ceil(1.2 c_dec); 46: max(round(1.25 c_dec), 30)
 WIDTHS2S = {s: (2.0, 4.0, 6.0) for s in range(46, 51)}
+# gate replacement round (E.6, one round under the frozen stage 2r rule): 47 takes the next passing quiet-polymorph candidate, ScMnO3
+ROUND2 = os.environ.get('V5_S2S_ROUND') == '2'
+ROUND2_PICK = {42: 3}                                       # stage 2r candidate index (mirror of 47)
+ROUND2_TUNE = {47: dict(N=5.0)}
+ROUND2_BUDGET = {47: 25.0}
+if ROUND2:
+    [TUNE2S[s].update(v) for s, v in ROUND2_TUNE.items()]; BUDGET2S.update(ROUND2_BUDGET)
 
 
 def cost_min(n_points, t_step): return n_points * t_step / 60.0 + OVERHEAD
@@ -28,6 +35,7 @@ def cost_min(n_points, t_step): return n_points * t_step / 60.0 + OVERHEAD
 
 def _round2_setup():
     saved = dict(S2R.PICK); S2R.PICK.update(S2R.ROUND2_PICK)
+    if ROUND2: S2R.PICK.update(ROUND2_PICK)
     try: return S2R.setup()
     finally: S2R.PICK.clear(); S2R.PICK.update(saved)
 
