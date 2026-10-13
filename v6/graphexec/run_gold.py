@@ -7,7 +7,8 @@ import graphexec as G
 import adapters_mcenv as AD
 
 ROOT6 = os.path.join(HERE, '..')
-KEYS = {1011: 'SUPPORTED', 1012: 'REFUTED'}
+SCEN = int(os.environ.get('V6_SCEN', '101'))          # V6-7: the count-sweep scenarios share the twins' keys (world - 10 * scen)
+KEYS = {SCEN * 10 + 1: 'SUPPORTED', SCEN * 10 + 2: 'REFUTED'}
 
 
 def env(batch='v6-3-gold'):
@@ -15,7 +16,8 @@ def env(batch='v6-3-gold'):
 
 
 def task(e, world, k=1):
-    return AD.make_task(e, world, 'v6-gold', k, 'R', key=KEYS.get(world if world in KEYS else (1011 if world in (1013, 1014, 1015) else 1012)))
+    off = world - SCEN * 10
+    return AD.make_task(e, world, 'v6-gold', k, 'R', key='SUPPORTED' if off in (1, 3, 4, 5) else 'REFUTED')
 
 
 if __name__ == '__main__':
@@ -23,9 +25,10 @@ if __name__ == '__main__':
     g = G.Graph.load(os.path.join(ROOT6, 'spec', 'graph_R.json'))
     import jsonschema
     schema = json.load(open(os.path.join(ROOT6, 'spec', 'trace_schema.json')))
-    for w, name in ((1011, 'gold_A.json'), (1012, 'gold_B.json')):
+    sfx = '' if SCEN == 101 else f'_N{SCEN}'
+    for w, name in ((SCEN * 10 + 1, f'gold_A{sfx}.json'), (SCEN * 10 + 2, f'gold_B{sfx}.json')):
         log = G.Executor(g, AD.ADAPTERS, source='gold').run(task(e, w))
         jsonschema.validate(log, schema)
         json.dump(log, open(os.path.join(out, name), 'w'), indent=1)
         print(name, log['verdict'], 'key', log['key'], 'cost', log['cost_min'], [(s['node'], s['status'], s.get('accepted')) for s in log['steps']], flush=True)
-    json.dump(e.tokens, open(os.path.join(out, 'gold_tokens.json'), 'w'), indent=1)
+    json.dump(e.tokens, open(os.path.join(out, f'gold_tokens{sfx}.json'), 'w'), indent=1)

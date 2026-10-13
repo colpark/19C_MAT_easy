@@ -10,19 +10,21 @@ import adapters_mcenv as AD
 import run_gold as RG
 
 ROOT6 = os.path.join(HERE, '..')
-HOLDS = [('hold_displacement_+0.10mm', 'A', 1013), ('hold_zero_+0.005deg', 'A', 1014), ('hold_size_x1.2', 'A', 1015),
-         ('hold_displacement_+0.10mm', 'B', 1016), ('hold_zero_+0.005deg', 'B', 1017), ('hold_size_x1.2', 'B', 1018)]
+S0 = RG.SCEN * 10
+HOLDS = [('hold_displacement_+0.10mm', 'A', S0 + 3), ('hold_zero_+0.005deg', 'A', S0 + 4), ('hold_size_x1.2', 'A', S0 + 5),
+         ('hold_displacement_+0.10mm', 'B', S0 + 6), ('hold_zero_+0.005deg', 'B', S0 + 7), ('hold_size_x1.2', 'B', S0 + 8)]
 
 
 if __name__ == '__main__':
     out = sys.argv[1]; os.makedirs(os.path.join(out, 'logs'), exist_ok=True)
     e = RG.env('v6-4-validate'); g = G.Graph.load(os.path.join(ROOT6, 'spec', 'graph_R.json'))
-    twins = {'A': RG.task(e, 1011), 'B': RG.task(e, 1012)}
+    twins = {'A': RG.task(e, S0 + 1), 'B': RG.task(e, S0 + 2)}
     holds = [(lab, tw, RG.task(e, w)) for lab, tw, w in HOLDS]
     sel = json.load(open(os.path.join(ROOT6, 'exemplar', 'fastpath', 'targeted.jsonl')).readlines()[-1]) if False else None
     ext = dict(panel_fails=True, blindfm_pairs_resolved=0, source='exemplar/SELECTION.md (bar 2: panel wrong on both twins; bar 5: twins of one formula)')
     rend = {}
-    for tw, name in (('A', 'gold_A'), ('B', 'gold_B')):
+    sfx = '' if RG.SCEN == 101 else f'_N{RG.SCEN}'
+    for tw, name in (('A', f'gold_A{sfx}'), ('B', f'gold_B{sfx}')):
         p = os.path.join(ROOT6, 'exemplar', 'render', f'{name}.md')
         if os.path.exists(p): rend[name] = (open(p).read(), [json.load(open(os.path.join(ROOT6, 'exemplar', f'{name}.json')))])
     res = G.validate(g, G.Executor(g, AD.ADAPTERS, source='gold'), twins, holds=holds, external=ext, rendered=rend or None)

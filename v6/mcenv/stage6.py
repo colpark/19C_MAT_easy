@@ -16,6 +16,8 @@ MANUAL = os.path.join(ROOT, 'exemplar', 'MANUAL.md')
 SCEN = 101
 HOLDS = {1013: ('A', dict(disp_add=0.10)), 1014: ('A', dict(zero_add=0.005)), 1015: ('A', dict(L_factor=1.2)),
          1016: ('B', dict(disp_add=0.10)), 1017: ('B', dict(zero_add=0.005)), 1018: ('B', dict(L_factor=1.2))}
+# V6-7 count sweep (V6-X9): the same exemplar at other X-ray count rates; nuisances and noise share scenario 101's key (seed_scen)
+COUNT_SCENS = {102: dict(N=4.1, holds=True), 103: dict(N=3.0, holds=True), 104: dict(N=30.0, holds=False)}      # 103 hold worlds added after the N 4.1 necessity failure (V6-X10)
 
 
 def structures(ids):
@@ -46,12 +48,20 @@ def setup():
     for w, (tw, nu) in HOLDS.items():
         base = worlds[1011 if tw == 'A' else 1012]
         worlds[w] = dict(base, added_hold=True, hold=f'{tw}: ' + ', '.join(f'{k} {v}' for k, v in nu.items()), **nu)
-    return {SCEN: dict(name=f'v6-101 R {f}', kind='quiet', claim_type='R', stage='6', composition=f,
+    base = dict(name=f'v6-101 R {f}', kind='quiet', claim_type='R', stage='6', composition=f,
                        claim=f'The crystalline phase in this sample is the lowest-energy polymorph of {f}.',
                        description=(f'{f} powder from a new synthesis route, single crystalline phase. The library lists every known {f} polymorph '
                                     f'(two; the candidates for this sample\'s phase) and two other phases of the {system} system, with their structures.'),
                        library=sorted(names.values()), polymorphs=polys, names_by_id=names, ids=[W['a'], W['b']],
-                       worlds=worlds, claim_side=[br[na]], other_side=[br[nb]], manual_file=MANUAL, N=float(W['N']))}
+                       worlds=worlds, claim_side=[br[na]], other_side=[br[nb]], manual_file=MANUAL, N=float(W['N']))
+    out = {SCEN: base}
+    for s, c in COUNT_SCENS.items():
+        ws = {}
+        for w, d in worlds.items():
+            if d.get('added_hold') and not c['holds']: continue
+            ws[s * 10 + (w - SCEN * 10)] = dict(d)
+        out[s] = dict(base, name=f'v6-{s} R {f} N {c["N"]}', worlds=ws, N=c['N'], seed_scen=SCEN, kind='quiet' if c['N'] < 4.11 else 'not quiet')
+    return out
 
 
 def install():
