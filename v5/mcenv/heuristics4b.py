@@ -168,6 +168,9 @@ class Data:
             c = Composition(e['composition']); self.MPby[c.reduced_formula].append(mid); self.MPanon[c.anonymized_formula].append(mid)
         self._zip = zipfile.ZipFile(os.path.join(ROOT, 'data', 'stage2', '2024-08-04-wbm-relaxed-atoms.extxyz.zip'))
         self._mpkeys = {}; self._wbmkey = {}
+        kp = os.path.join(ROOT, 'data', 'stage4b', 'wbm_keys.json')          # precomputed J.6 keys of every WBM entry (V5-E29)
+        if os.path.exists(kp): self._wbmkey = json.load(open(kp))
+        self.W['anon'] = [Composition(f).anonymized_formula for f in self.W.formula]
 
     def wbm_structure(self, mid):
         from mcenv import stage2 as S2
@@ -211,8 +214,8 @@ class Data:
         """G rule 2: share of WBM entries with this prototype key (other formulas) whose PBE gap exceeds 0.5 eV; scans by anonymous
         formula through the WBM wyckoff labels' anonymous part first, then keys the structures (cached)."""
         anon = key.split('|')[0]
-        rows = [r for r in self.W.itertuples(index=False) if r.rf != exclude_formula and Composition(r.formula).anonymized_formula == anon]
-        hits = [float(r.bandgap_pbe) > 0.5 for r in rows if self.wbm_key(r.material_id) == key]
+        rows = self.W[(self.W.anon == anon) & (self.W.rf != exclude_formula)]
+        hits = [float(g) > 0.5 for mid, g in zip(rows.material_id, rows.bandgap_pbe) if self._wbmkey.get(mid) == key]
         return None if not hits else (sum(hits) / len(hits) > 0.5)
 
 

@@ -10,7 +10,7 @@ import os, sys
 for _v in ('OPENBLAS_NUM_THREADS', 'OMP_NUM_THREADS', 'MKL_NUM_THREADS'): os.environ.setdefault(_v, '1')
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, os.path.join(HERE, '..'))
 import hashlib, itertools, json, math, time
-from multiprocessing import Pool
+from multiprocessing import Pool, get_context
 from pymatgen.core import Composition
 from mcenv import scenarios as SC
 from mcenv import stage2 as S2
@@ -116,7 +116,7 @@ def dm0_max(c, N):
 
 def ident(c, want):
     """loud: min D(m0) >= 25 in both worlds at N 1000. quiet: N on the log grid 1000 / 1.15^i, the largest with max D(m0) < 9 in both
-    worlds and the cheapest decisive plan costing 54 to 108 min in both."""
+    worlds, both cheapest decisive plans at most 108 min and the more expensive one at least 54 min (X60)."""
     if want == 'loud':
         d = dm0_max(c, 1000.0)
         return dict(ok=all(mn >= 25 for mx, mn in d), N=1000.0, D_m0=[[round(mx, 2), round(mn, 2)] for mx, mn in d])
@@ -129,13 +129,13 @@ def ident(c, want):
         return dict(ok=False, reason='no N with max D(m0) < 9')
     tried = []
     for j in range(40):
-        with Pool(18, initializer=register, initargs=(c, N)) as pool:
+        with get_context('spawn').Pool(12, initializer=register, initargs=(c, N)) as pool:      # spawn: no copy of the panel data (V5-E28)
             rows = {w: PG.scan_world(w, pairs=True, max_cost=180.0, pool=pool) for w in (TMP * 10 + 1, TMP * 10 + 2)}
         ch = {w: PG.cheapest(r) for w, r in rows.items()}
         costs = [None if x is None else round(x[0], 2) for x in ch.values()]
         tried.append(dict(N=N, costs=costs, D_m0=[[round(a, 2), round(b, 2)] for a, b in dm0_max(c, N)]))
         if any(x is None for x in costs) or max(costs) > COST_HI: return dict(ok=False, reason='cheapest decisive plan above 108 min', tried=tried)
-        if min(costs) >= COST_LO:
+        if max(costs) >= COST_LO:                          # X60: the window applies to the scenario's more expensive twin; both <= 108
             return dict(ok=True, N=N, tried=tried, plans={str(w): dict(cost=round(x[0], 2), D=round(x[1], 2), plan=[m.key() for m in x[2]]) for w, x in ch.items()})
         N = round(N / 1.15, 5)
     return dict(ok=False, reason='no N in the cost window', tried=tried)
@@ -143,31 +143,44 @@ def ident(c, want):
 
 def main():
     P = json.load(open(POOL)); C = candidates(P)
-    log = dict(rule='V5_SPEC J.5', n_candidates={t: len(v) for t, v in C.items()}, evaluated=[], chosen=[])
-    print(log['n_candidates'], flush=True)
+    cont = '--continue-noquota' in sys.argv          # X61: fill the remaining slots without the composition quota, keeping what was chosen
     D = H.Data(); used = set(stage4_pairs()); chosen = []; formulas = set()
     slots = list(SLOTS); n4 = nmag = 0
+    if cont:
+        log = json.load(open(OUT)); chosen = log.pop('chosen'); slots = [tuple(x) for x in log.pop('slots_left')]
+        log['continuation_noquota'] = dict(after=len(log['evaluated']), rule='X61: composition quota infeasible; remaining slots filled in hash order under every other rule')
+        for c in chosen: formulas.add(c['formula']); used |= epairs(c['formula'])
+        done = {e['rank'] for e in log['evaluated']}
+    else:
+        log = dict(rule='V5_SPEC J.5', n_candidates={t: len(v) for t, v in C.items()}, evaluated=[], chosen=[]); done = set()
+    print(log['n_candidates'], flush=True)
     for typ in ('R', 'H', 'G'):
         my = [s for s in slots if s[0] == typ]
         for c in C[typ]:
             if not [s for s in slots if s[0] == typ]: break
+            if cont and c['rank'] in done and not any(e['rank'] == c['rank'] and e.get('reason') == 'quota feasibility' for e in log['evaluated']): continue
             rec = dict(type=typ, formula=c['formula'], ids=[c['a']['id'], c['b']['id']], rank=c['rank'], n_elements=c['n_elements'], magnetic=c['magnetic'])
             log['evaluated'].append(rec)
             if c['formula'] in formulas or epairs(c['formula']) & used: rec['reason'] = 'diversity'; continue
             left = len(slots); is4 = c['n_elements'] >= 4; ism = c['magnetic']
-            if max(0, NEED4 - n4 - is4) > left - 1 or max(0, NEEDMAG - nmag - ism) > left - 1: rec['reason'] = 'quota feasibility'; continue
+            if not cont and (max(0, NEED4 - n4 - is4) > left - 1 or max(0, NEEDMAG - nmag - ism) > left - 1): rec['reason'] = 'quota feasibility'; continue
             t0 = time.time()
             try: kg = knowledge_gap(D, c)
             except Exception as e: rec['reason'] = f'panel error {type(e).__name__}: {str(e)[:100]}'; continue
             rec['knowledge_gap'] = kg
-            if not kg['passes']: rec['reason'] = 'knowledge gap (panel, analog or novelty)'; continue
+            if not kg['passes']:
+                rec['reason'] = 'knowledge gap (panel, analog or novelty)'
+                if len(log['evaluated']) % 10 == 0: json.dump(dict(log, chosen=chosen, slots_left=slots), open(OUT, 'w'), indent=1, default=str)
+                continue
             take = None
             for want in ('quiet', 'loud'):
                 if (typ, want) not in slots: continue
                 r = ident(c, want); rec[f'ident_{want}'] = r
                 if r['ok']: take = want; break
             rec['sec'] = round(time.time() - t0)
-            if not take: rec['reason'] = 'identification (no quiet or loud slot it meets)'; continue
+            if not take:
+                rec['reason'] = 'identification (no quiet or loud slot it meets)'
+                json.dump(dict(log, chosen=chosen, slots_left=slots), open(OUT, 'w'), indent=1, default=str); continue
             slots.remove((typ, take)); rec['taken'] = take; chosen.append(rec); formulas.add(c['formula']); used |= epairs(c['formula'])
             n4 += is4; nmag += ism
             print(typ, take, c['formula'], c['a']['id'], c['b']['id'], 'N', rec[f'ident_{take}'].get('N'), flush=True)
