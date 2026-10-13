@@ -518,9 +518,13 @@ def validate(graph: Graph, executor: Executor, twins: Dict[str, dict], holds: Li
 
     ext = external or {}
     if ext:
-        frac = ext['llm_probe_resolved'] / max(1, ext['llm_probe_pairs'])
-        ok = ext['panel_fails'] and ext['blindfm_pairs_resolved'] == 0 and frac <= ext.get('probe_max_fraction', 1 / 3)
-        rows.append(_row('non-bypass', ok, dict(ext, probe_fraction=round(frac, 3))))
+        ok = bool(ext['panel_fails']) and ext['blindfm_pairs_resolved'] == 0
+        det = dict(ext)
+        if 'llm_probe_pairs' in ext:   # optional since amendment A (V6-X2): the LLM probe is an agent-test measurement
+            frac = ext['llm_probe_resolved'] / max(1, ext['llm_probe_pairs'])
+            ok = ok and frac <= ext.get('probe_max_fraction', 1 / 3)
+            det['probe_fraction'] = round(frac, 3)
+        rows.append(_row('non-bypass', ok, det))
     else:
         rows.append(_row('non-bypass', False, 'no external evidence given'))
 

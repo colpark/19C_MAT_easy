@@ -116,6 +116,13 @@ def main():
     except ImportError:
         print('jsonschema not installed, trace schema check skipped')
 
+    global EXT
+    full = EXT
+    EXT = {'panel_fails': True, 'blindfm_pairs_resolved': 0}
+    assert suite(gR, ADAPT_R, text=good)['pass'], 'non-bypass without the LLM probe (amendment A)'
+    print('amendment A: non-bypass passes on panel and blind FM alone')
+    EXT = full
+
     resH = suite(gH, ADAPT_H, 'H', text='S2 gave a hull distance of 0.005 eV/atom for P1, inside 0.05.')
     assert resH['pass'], G.validation_table(resH)
     print('H exemplar suite: PASS')
