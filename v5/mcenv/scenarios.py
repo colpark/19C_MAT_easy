@@ -148,6 +148,7 @@ def hidden(world):
 
 def other_side(world):
     s = WORLD_SCEN[world]; d = SCEN[s]
+    if d['worlds'][world].get('other_branches') is not None: return d['worlds'][world]['other_branches']     # stage 4b (J.8): every other polymorph
     return d['other_side'] if d['worlds'][world]['holds'] else d['claim_side']
 
 

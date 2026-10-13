@@ -22,3 +22,4 @@
 - 2026-10-12T14:37:45Z V5-23 FM dev split on node A2 (~/v5s4, MACE venv, mcenv.fm_service.relax, 500/500 converged runs, no failures); selection and tuning on host A; library structures from data/stage2 WBM zip and MP entries.
 - 2026-10-12T14:42:55Z host B node 2 reachability (the one check of the v5.3 prompt): from host B 14:42:24Z, ssh -o ConnectTimeout=10 aid1@192.168.100.11 exit 255; ip route has no 192.168.100.x entry. No stage 4 work there.
 - 2026-10-12T16:50:04Z V5-25: Claude grading on node A2 (working copy ~/v5s4 with the corrected attribution, state ~/v5_state_4_runs); Qwen finished 96/96 (1 harness timeout), graded on host B (~/v5s4, state ~/v5_state_Q4).
+- 2026-10-13T04:45:21Z V5-26: pool on host A (stage4b/pool4b.py; 56,874 formulas after V5-E27), dev FM on node A2 (~/v5s4b, 3 GPU shards, then 29 new), gaps in ~/v5gap; placement deviation from the compute table (census and dev errors on host A rather than host B): the data already lived on host A.
