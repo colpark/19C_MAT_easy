@@ -1,2 +1,3 @@
 # v6 log
 - 2026-10-13T11:51:08Z V6-0: branch v6/2026-10-13 from 654e970b (v5 head after parking stage 4b); mcenv copied from v5 at that commit; kit v6_kit.zip sha256 0314a8b2... unzipped; graphexec/test_graphexec.py: ALL TESTS PASSED; graphexec check graph_R and graph_H: schema ok.
+- 2026-10-13T14:03:57Z V6-1 reproduction against a fresh instance of the frozen stage 4 code (~/v5srv_4, code e4d445377c61a8be) on node A2:8777, state ~/v6_state_s4repro; v6 server ~/v6srv on node A2:8776, state ~/v6_state.
