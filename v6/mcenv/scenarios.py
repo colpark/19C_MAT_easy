@@ -141,7 +141,7 @@ def hidden(world):
     disp, zero = r.uniform(-0.05, 0.05), r.uniform(-0.01, 0.01)
     t = TUNE[s]
     # stage 1b hold worlds (V5_SPEC C.5) change one nuisance of the claim-true twin: disp_add, zero_deg, L_factor, bg_factor
-    disp = w.get('disp_mm', disp + w.get('disp_add', 0.0)); zero = w.get('zero_deg', zero)
+    disp = w.get('disp_mm', disp + w.get('disp_add', 0.0)); zero = w.get('zero_deg', zero + w.get('zero_add', 0.0))     # zero_add: v6 hold worlds
     L = t['L'] * w.get('L_factor', 1.0); bgf = w.get('bg_factor', 1.0)
     return dict(disp_mm=disp, zero_deg=zero, L_nm=L, N=t['N'], bg=t['bg'] * bgf, Nn=t['Nn'], bgn=t['bgn'] * bgf)
 

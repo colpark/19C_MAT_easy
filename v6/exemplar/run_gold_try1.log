@@ -1,0 +1,20 @@
+Traceback (most recent call last):
+  File "/home/aid1/Documents/harbor/v6/v6/graphexec/run_gold.py", line 27, in <module>
+    log = G.Executor(g, AD.ADAPTERS, source='gold').run(task(e, w))
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/graphexec/graphexec.py", line 284, in run
+    out, cost, calls = self._call(node, inputs, task, ctx)
+                       ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/graphexec/graphexec.py", line 257, in _call
+    res = self.adapters[m](node, inputs, task, ctx)
+          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/graphexec/adapters_mcenv.py", line 183, in instrument
+    r, rec = _call(task, ctx, 'measure', dict(start=p['start'], stop=p['stop'], step=p['step'], time_per_step=p['time_per_step'],
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/graphexec/adapters_mcenv.py", line 64, in _call
+    tok = _token(task, ctx); res = task['env'].call(tok, tool, args)
+                                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/graphexec/adapters_mcenv.py", line 52, in call
+    if not out.get('ok'): raise RuntimeError(f'{tool}: {out.get("error")}')
+                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+RuntimeError: measure: 2901 points requested; at most 2000 per measurement. Narrow the range or use a coarser step. Nothing was charged.

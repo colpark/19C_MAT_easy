@@ -168,8 +168,8 @@ def simulator(node, inp, task, ctx):
     if best_plan is None:
         return dict(outputs=dict(window=None, plan=[], predicted_D=None, predicted_cost_min=0.0), cost_min=0.0, calls=calls)
     c, d, p = best_plan
-    plan = [dict(start=m.start, stop=round(m.start + m.step * (m.n - 1), 4), step=m.step, time_per_step=m.t, optics=m.optics,
-                 si_standard=m.si_standard) for m in p]
+    plan = [dict(radiation=m.radiation, start=m.start, stop=round(m.start + m.step * (m.n - 1), 4), step=m.step, time_per_step=m.t,
+                 optics=m.optics, si_standard=m.si_standard) for m in p]
     win = [min(x['start'] for x in plan), max(x['stop'] for x in plan)]
     calls.append(dict(call_id=None, tool='plan search (local forward model)', args=dict(n_candidates=len(uniq)),
                       result=dict(plan=plan, predicted_D=round(d, 3), cost_min=round(c, 3))))
@@ -180,8 +180,10 @@ def simulator(node, inp, task, ctx):
 def instrument(node, inp, task, ctx):
     ids, calls, cost = [], [], 0.0
     for p in inp['plan'] or []:
-        r, rec = _call(task, ctx, 'measure', dict(start=p['start'], stop=p['stop'], step=p['step'], time_per_step=p['time_per_step'],
-                                                  optics=p.get('optics', 'standard'), si_standard=p.get('si_standard', False)))
+        if p.get('radiation') == 'neutron': args = dict(radiation='neutron')
+        else: args = dict(start=p['start'], stop=p['stop'], step=p['step'], time_per_step=p['time_per_step'], optics=p.get('optics', 'standard'),
+                          si_standard=p.get('si_standard', False))
+        r, rec = _call(task, ctx, 'measure', args)
         ids.append(r['id']); cost += r['cost_minutes']
         calls.append(dict(rec, result=dict(id=r['id'], cost_minutes=r['cost_minutes']), result_digest=_digest(r['counts'])))
     return dict(outputs=dict(measurements=ids, cost_min=round(cost, 3)), cost_min=cost, calls=calls)
