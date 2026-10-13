@@ -27,7 +27,12 @@ ARM_TOOLS = {
     'active-dftpriced': {'status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'energy_dft', 'answer'},
     'blind-noprior': {'status', 'simulate', 'peaks', 'run_python', 'answer'},
     'blind-fm': {'status', 'simulate', 'peaks', 'run_python', 'energy', 'hull', 'answer'},
+    # v6 (V6_SPEC 4): the answer tool takes the structured fields of v6/spec/answer_schema.json
+    'v6-active-noprior': {'status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'answer'},
+    'v6-active-fm': {'status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'energy', 'hull', 'answer'},
+    'v6-active-fm-flip': {'status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'energy', 'hull', 'answer'},
 }[ARM]
+V6 = ARM.startswith('v6-')
 STAGE2 = ARM in ('placebo', 'fm', 'ceiling', 'blindfm')
 STAGE = os.environ.get('MCENV_STAGE', '')                # '2s': stage 2s descriptions (10-min overhead, lattice refinement in fit)
 DOC_2S = {
@@ -81,6 +86,7 @@ def _call(tool, args):
 def tool(name):
     def deco(f):
         if STAGE == '2s' and name in DOC_2S: f.__doc__ = DOC_2S[name]
+        if name == 'answer' and V6: return f                      # v6 arms register answer_v6 instead
         return mcp.tool(name=name)(f) if name in ARM_TOOLS else f
     return deco
 
@@ -151,6 +157,19 @@ def hull(structure_name: str) -> str:
 def energy_dft(structure_name: str) -> str:
     """DFT formation energy per atom and energy above the convex hull (eV/atom), with decomposition products, of a library structure (exact). Costs 120 minutes of budget per call."""
     return _call('energy_dft', dict(structure_name=structure_name))
+
+
+def answer_v6(verdict: str, region: str, rationale: str, identified_phase: str, property_values: list[dict], decision_rule: str,
+              identification_evidence: dict | None = None, uncertainty_note: str | None = None) -> str:
+    """Final answer; ends the episode. verdict: SUPPORTED, REFUTED or CANNOT_TELL. region: the 2theta interval in degrees that decided identification, as "lo-hi", or empty. rationale: one paragraph. identified_phase: the library structure name you identified, or "unknown". property_values: every property value the verdict used, a list of {"structure_name", "quantity" (formation_energy_eV_per_atom, energy_above_hull_eV_per_atom or band_gap_eV), "value" (number or null), "source" (fm, dft, own_knowledge or none)}. decision_rule: one sentence, how the identified phase and the values give the verdict. identification_evidence (optional): {"measurement_ids": [...], "delta_chi2": number}. uncertainty_note (optional): where the verdict is weakest."""
+    a = dict(verdict=verdict, region=region, rationale=rationale, identified_phase=identified_phase, property_values=property_values,
+             decision_rule=decision_rule)
+    if identification_evidence is not None: a['identification_evidence'] = identification_evidence
+    if uncertainty_note is not None: a['uncertainty_note'] = uncertainty_note
+    return _call('answer', a)
+
+
+if V6 and 'answer' in ARM_TOOLS: mcp.tool(name='answer')(answer_v6)
 
 
 @tool('answer')
