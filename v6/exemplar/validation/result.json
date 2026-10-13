@@ -1,0 +1,139 @@
+{
+ "graph_id": "R_relative_stability_v1",
+ "rows": [
+  {
+   "test": "correctness",
+   "pass": true,
+   "detail": {
+    "A": [
+     "SUPPORTED",
+     "SUPPORTED"
+    ],
+    "B": [
+     "REFUTED",
+     "REFUTED"
+    ]
+   }
+  },
+  {
+   "test": "necessity S1a",
+   "pass": true,
+   "detail": {
+    "A": "CANNOT_TELL",
+    "B": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b",
+   "pass": true,
+   "detail": {
+    "A": "CANNOT_TELL",
+    "B": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c",
+   "pass": true,
+   "detail": {
+    "A": "CANNOT_TELL",
+    "B": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S2+S2x",
+   "pass": true,
+   "detail": {
+    "A": "CANNOT_TELL",
+    "B": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "measurement twin",
+   "pass": true,
+   "detail": {
+    "phases": [
+     "ScPPd2 (Immm)",
+     "ScPPd2 (Fm-3m)"
+    ],
+    "verdicts": [
+     "SUPPORTED",
+     "REFUTED"
+    ]
+   }
+  },
+  {
+   "test": "prior twin",
+   "pass": true,
+   "detail": {
+    "A": [
+     "SUPPORTED",
+     "REFUTED"
+    ],
+    "B": [
+     "REFUTED",
+     "SUPPORTED"
+    ]
+   }
+  },
+  {
+   "test": "hold",
+   "pass": true,
+   "detail": {
+    "hold_displacement_+0.10mm_A": "SUPPORTED",
+    "hold_zero_+0.005deg_A": "SUPPORTED",
+    "hold_size_x1.2_A": "SUPPORTED",
+    "hold_displacement_+0.10mm_B": "REFUTED",
+    "hold_zero_+0.005deg_B": "REFUTED",
+    "hold_size_x1.2_B": "REFUTED"
+   }
+  },
+  {
+   "test": "escalation",
+   "pass": true,
+   "detail": {
+    "A": {
+     "escalated": true,
+     "verdict": "CANNOT_TELL",
+     "cost_min": 180.0
+    },
+    "B": {
+     "escalated": true,
+     "verdict": "CANNOT_TELL",
+     "cost_min": 180.0
+    }
+   }
+  },
+  {
+   "test": "sufficiency",
+   "pass": true,
+   "detail": {
+    "A": {
+     "margin": 0.2182,
+     "cost_min": 120.0
+    },
+    "B": {
+     "margin": 0.2182,
+     "cost_min": 120.0
+    }
+   }
+  },
+  {
+   "test": "non-bypass",
+   "pass": true,
+   "detail": {
+    "panel_fails": true,
+    "blindfm_pairs_resolved": 0,
+    "source": "exemplar/SELECTION.md (bar 2: panel wrong on both twins; bar 5: twins of one formula)"
+   }
+  },
+  {
+   "test": "faithfulness",
+   "pass": true,
+   "detail": {
+    "gold_A": [],
+    "gold_B": []
+   }
+  }
+ ],
+ "pass_": true
+}
