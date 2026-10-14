@@ -1,0 +1,15 @@
+416 frame
+bisection done 1714 s
+Traceback (most recent call last):
+  File "/home/aid1/Documents/harbor/v6/v6/bench/select_b1.py", line 103, in <module>
+    main()
+  File "/home/aid1/Documents/harbor/v6/v6/bench/select_b1.py", line 85, in main
+    idn = ident(m, N); rec['ident'] = idn
+          ^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/bench/select_b1.py", line 56, in ident
+    ch = {w: PG.cheapest(PG.scan_world(w, pairs=True, max_cost=180.0, pool=pool)) for w in (TMP * 10 + 1, TMP * 10 + 2)}
+                         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "/home/aid1/Documents/harbor/v6/v6/bench/../mcenv/plangrid.py", line 111, in scan_world
+    scen = SC.WORLD_SCEN[world]
+           ~~~~~~~~~~~~~^^^^^^^
+KeyError: 9871
