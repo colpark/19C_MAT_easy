@@ -88,7 +88,7 @@ def sign_test(gaps):
 
 def main():
     W, fmc, C = load(); out_p = sys.argv[1]
-    G = [g for p in sys.argv[2:] for g in json.load(open(p)) if not g.get('void')]
+    G = [g for p in sys.argv[2:] for g in json.load(open(p)) if not g.get('void') and not g.get('not_started')]
     strata = {s: w['stratum'] for s, w in W.items()}
     names = {s: [w['names_by_id'][i] for i in w['polymorph_ids']] for s, w in W.items()}
     for g in G:
