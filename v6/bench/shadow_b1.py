@@ -38,7 +38,7 @@ def export():
                          other_side=br(SC.other_side(w)))
     json.dump(dict(worlds=worlds, note='other_side: the branches D minimises over; every B1 branch is fixed (lo == hi == []): one other polymorph'),
               open(os.path.join(OUT, 'WORLDS.json'), 'w'), indent=1, default=float)
-    names = {n for w in worlds.values() for g in w['truth_groups'] for n, _, _ in g} | \
+    names = {'Si standard'} | {n for w in worlds.values() for g in w['truth_groups'] for n, _, _ in g} | \
             {n for w in worlds.values() for b in w['other_side'] for g in b['groups_at_lo'] for n, _, _ in g}
     tabs = {}
     for (name, ikey, rad), (hk, I) in sorted(P._tables().items(), key=lambda kv: str(kv[0])):
