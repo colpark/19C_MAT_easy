@@ -177,33 +177,39 @@ def simulator(node, inp, task, ctx):
     return dict(outputs=dict(window=win, plan=plan, predicted_D=round(d, 3), predicted_cost_min=round(c, 3)), cost_min=0.0, calls=calls)
 
 
-# ---------------------------------------------------------------- B1 planner v2 (V6-X16): worst case over displacement and zero offset
-GRID_SCEN = 991
+# ---------------------------------------------------------------- B1 planner v3 (V6-X16, V6-X18): worst case over size, displacement, zero offset
+GRID_SCEN = 991                                  # 991, 992, 993: one agent scenario per hypothesized size
 DISP_GRID = (-0.20, 0.0, 0.20)
 ZERO_GRID = (-0.01, 0.0, 0.01)
+SIZE_GRID = (50.0, 100.0, 200.0)
 TARGET_FACTOR_V2 = 2.0
 _PLAN_MEMO = {}
 
 
 def agent_grid(task, nuis):
-    """the agent-side model of planner v2: scenario 990 holds each library polymorph at displacement 0 and zero offset 0 (the nominal
-    worlds, used for the window list and the screen); scenario 991 holds each polymorph at every displacement in DISP_GRID and every
-    zero offset in ZERO_GRID (the worst-case worlds). Size, background and count rate are the agent's estimates; the other side of each
-    world is every other polymorph, nuisances free in the grader's box (separation.separation, the grader's D)."""
+    """the agent-side model of planner v3. Count scale: the lab's one scale, read from simulate (nuis['N_by_size'][L]: simulate's peak
+    counts of the first library polymorph on the free default scan at size L, nominal geometry, no background), so every hypothesis is
+    calibrated on the same stated scale. Scenario 990 holds each library polymorph at size 100 nm, displacement 0, zero offset 0 (the
+    nominal worlds: window list and screen); scenarios 991-993 hold each polymorph at every size in SIZE_GRID, displacement in DISP_GRID
+    and zero offset in ZERO_GRID (the worst-case worlds). Background from the agent's fit; the other side of each world is every other
+    polymorph, nuisances free in the grader's box (separation.separation, the grader's D)."""
     from mcenv import scenarios as SC
-    wm = agent_model(task, dict(nuis, displacement_mm=0.0, zero_deg=0.0))
-    names = polymorphs(task); reg = {n: f'v6agent {n}' for n in names}
+    names = polymorphs(task)
+    wm = agent_model(dict(task, N_stated=nuis['N_by_size'][100.0]), dict(nuis, displacement_mm=0.0, zero_deg=0.0, size_nm=100.0))
+    reg = {n: f'v6agent {n}' for n in names}
     br = {n: SC.fixed([(reg[n], {}, 1.0)], label=n) for n in names}
-    worlds, gm = {}, {}
-    for i, n in enumerate(names):
-        for j, (dd, zz) in enumerate((dd, zz) for dd in DISP_GRID for zz in ZERO_GRID):
-            w = 9910 + 10 * i + j
-            worlds[w] = dict(holds=(i == 0), phases=[[(reg[n], {}, 1.0)]], other_branches=[br[o] for o in names if o != n], disp_mm=dd, zero_deg=zz)
-            gm[w] = (n, dd, zz)
-    SC.SCEN[GRID_SCEN] = dict(name='v6 agent grid', kind='agent', claim='', description='', library=list(reg.values()), worlds=worlds,
-                              claim_side=[br[names[0]]], other_side=[br[names[1]]], seed_scen=AGENT_SCEN)
-    SC.TUNE[GRID_SCEN] = dict(SC.TUNE[AGENT_SCEN])
-    SC.WORLD_SCEN.update({w: GRID_SCEN for w in worlds})
+    gm = {}
+    for zi, L in enumerate(SIZE_GRID):
+        sc = GRID_SCEN + zi; worlds = {}
+        for i, n in enumerate(names):
+            for j, (dd, zz) in enumerate((dd, zz) for dd in DISP_GRID for zz in ZERO_GRID):
+                w = 9100 + 100 * zi + 10 * i + j
+                worlds[w] = dict(holds=(i == 0), phases=[[(reg[n], {}, 1.0)]], other_branches=[br[o] for o in names if o != n], disp_mm=dd, zero_deg=zz)
+                gm[w] = (n, L, dd, zz)
+        SC.SCEN[sc] = dict(name=f'v6 agent grid L{L:.0f}', kind='agent', claim='', description='', library=list(reg.values()), worlds=worlds,
+                           claim_side=[br[names[0]]], other_side=[br[names[1]]], seed_scen=AGENT_SCEN)
+        SC.TUNE[sc] = dict(SC.TUNE[AGENT_SCEN], L=L, N=nuis['N_by_size'][L])
+        SC.WORLD_SCEN.update({w: sc for w in worlds})
     return wm, gm
 
 
@@ -291,9 +297,24 @@ def plan_v2(task, nuis, prior, budget, target, accept, procs):
                 n_screen_pass=len(ok), tried=len(tried), reaches_target=d >= target)
 
 
+def stated_scale(task, ctx, calls):
+    """the lab's count scale as the agent reads it (V6-X17): simulate's peak counts of the first library polymorph on the free default
+    scan (10-70 deg, step 0.04, 0.5 s, standard optics, no background, nominal geometry) at each size in SIZE_GRID."""
+    if getattr(ctx, 'n_by_size', None) is None:
+        n0 = polymorphs(task)[0]; out = {}
+        for L in SIZE_GRID:
+            r, rec = _call(task, ctx, 'simulate', dict(spec=dict(phases=[dict(name=n0, weight=1.0)], radiation='xray', start=10, stop=70, step=0.04,
+                                                                  time_per_step=0.5, optics='standard', size_nm=L)))
+            out[L] = float(max(r['expected_counts'])); calls.append(dict(rec, result=dict(peak_counts=round(out[L], 4))))
+        ctx.n_by_size = out
+    return ctx.n_by_size
+
+
 def simulator_v2(node, inp, task, ctx):
-    """S1a (and kit B's S1d) with planner v2: nuisance estimates (size, background) from the best polymorph fit to the data so far;
-    displacement and zero offset are not trusted, the worst case over DISP_GRID x ZERO_GRID carries the margin; target 2 x D_accept."""
+    """S1a (and kit B's S1d) with planner v3: background from the best polymorph fit to the data so far; the count scale from simulate;
+    size, displacement and zero offset not trusted, the worst case over SIZE_GRID x DISP_GRID x ZERO_GRID carries the margin; target
+    2 x D_accept. S1d: when S1c's observed D fell short of S1a's prediction, the model is rescaled by observed / predicted (clipped to
+    [0.05, 1]) before re-planning: a candidate counts as reaching the target when rescale x worst-case D >= target (V6-X18)."""
     calls = [m0_digest(task, ctx)]
     ids = ['m0'] + list(inp.get('measurements') or [])
     fits = {}
@@ -301,21 +322,29 @@ def simulator_v2(node, inp, task, ctx):
         r, rec = _call(task, ctx, 'fit', dict(measurement_ids=ids, spec=dict(phases=[dict(name=n, weight=1.0)], size_nm=100)))
         fits[n] = r; calls.append(dict(rec, result=dict(chi2=r['chi2'])))
     best = min(fits, key=lambda n: fits[n]['chi2']); f = fits[best]['fitted']
-    nuis = dict(displacement_mm=f['displacement_mm'], zero_deg=f['zero_deg'], size_nm=f['size_nm'], background_cps=f['xray']['background_cps'])
+    nbs = stated_scale(task, ctx, calls)
+    nuis = dict(background_cps=f['xray']['background_cps'], N_by_size=nbs)
     st, rec = _call(task, ctx, 'status', {}); calls.append(dict(rec, args={}, result=dict(budget_left_minutes=st['budget_left_minutes'])))
     prior = _status_meas(st); budget = float(st['budget_left_minutes'])
-    target = TARGET_FACTOR_V2 * ctx.const['D_accept']
-    key = (getattr(ctx, 'm0_digest', None), json.dumps([m.key() for m in prior]), round(budget, 3), json.dumps(nuis, sort_keys=True), node['id'] != 'S1a')
+    target = TARGET_FACTOR_V2 * ctx.const['D_accept']; rescale = 1.0
+    if node['id'] != 'S1a':
+        pred, obs = getattr(ctx, 's1a_predicted', None), getattr(ctx, 's1c_observed', None)
+        if pred and obs is not None and obs < pred: rescale = min(1.0, max(0.05, obs / pred))
+    key = (getattr(ctx, 'm0_digest', None), json.dumps([m.key() for m in prior]), round(budget, 3), json.dumps(nuis, sort_keys=True), round(rescale, 6))
     memo = key in _PLAN_MEMO
-    if not memo: _PLAN_MEMO[key] = plan_v2(task, nuis, prior, budget, target, ctx.const['D_accept'], int(os.environ.get('V6_PROCS', '12')))
-    r = _PLAN_MEMO[key]
+    if not memo: _PLAN_MEMO[key] = plan_v2(task, nuis, prior, budget, target / rescale, ctx.const['D_accept'], int(os.environ.get('V6_PROCS', '12')))
+    r = dict(_PLAN_MEMO[key])
+    for k in ('predicted_D', 'base_D', 'nominal_D'):
+        if r.get(k) is not None: r[k + '_model'] = r[k]; r[k] = round(r[k] * rescale, 3)
     plan = [dict(radiation=m.radiation, start=m.start, stop=round(m.start + m.step * (m.n - 1), 4), step=m.step, time_per_step=m.t,
                  optics=m.optics, si_standard=m.si_standard) for m in r['plan']]
-    calls.append(dict(call_id=None, tool='plan search v2 (local forward model, worst case over displacement and zero offset)',
-                      args=dict(prior=len(prior), budget_left=budget, target=target, disp_grid=DISP_GRID, zero_grid=ZERO_GRID, memo=memo),
+    calls.append(dict(call_id=None, tool='plan search v3 (local forward model, worst case over size, displacement and zero offset)',
+                      args=dict(prior=len(prior), budget_left=budget, target=target, rescale=round(rescale, 4), size_grid=SIZE_GRID, disp_grid=DISP_GRID,
+                                zero_grid=ZERO_GRID, memo=memo),
                       result={k: v for k, v in r.items() if k != 'plan'} | dict(plan=plan)))
     win = [min(x['start'] for x in plan), max(x['stop'] for x in plan)] if plan else None
     pd = r['predicted_D'] if (plan or r.get('data_suffice')) else None
+    if node['id'] == 'S1a': ctx.s1a_predicted = pd
     return dict(outputs=dict(window=win, plan=plan, predicted_D=pd, predicted_cost_min=r['cost']), cost_min=0.0, calls=calls)
 
 
@@ -338,8 +367,9 @@ def fit(node, inp, task, ctx):
     for n in polymorphs(task):
         r, rec = _call(task, ctx, 'fit', dict(measurement_ids=ids, spec=dict(phases=[dict(name=n, weight=1.0)], size_nm=100)))
         chi[n] = r['chi2']; calls.append(dict(rec, result=dict(chi2=r['chi2'], n_points=r.get('n_points'))))
-    order = sorted(chi, key=chi.get)
-    return dict(outputs=dict(phase=order[0], runner_up=order[1], D=round(chi[order[1]] - chi[order[0]], 3)), cost_min=0.0, calls=calls)
+    order = sorted(chi, key=chi.get); D = round(chi[order[1]] - chi[order[0]], 3)
+    if node['id'] == 'S1c': ctx.s1c_observed = D                       # V6-X18: S1d's rescale
+    return dict(outputs=dict(phase=order[0], runner_up=order[1], D=D), cost_min=0.0, calls=calls)
 
 
 def fm(node, inp, task, ctx):
