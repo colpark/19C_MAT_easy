@@ -86,6 +86,9 @@ class Graph:
                     raise GraphError(f'{nid}: input from unknown node {src}')
                 if field not in self._outputs(src):
                     raise GraphError(f'{nid}: node {src} has no output {field}')
+            fb = n.get('fallback_for')
+            if fb and fb not in self.nodes:
+                raise GraphError(f'{nid}: fallback_for unknown node {fb}')
             t = n.get('trigger')
             if t and t['node'] not in self.nodes:
                 raise GraphError(f'{nid}: trigger on unknown node {t["node"]}')
@@ -320,13 +323,38 @@ def out_of(log: dict, nid: str, field: str):
     return step_of(log, nid).get('outputs', {}).get(field)
 
 
+def final_phase(log: dict, graph: 'Graph'):
+    """The phase the run finally identified: the re-identification node's when it ran and was accepted, else the
+    identification node's (kit B)."""
+    rid = graph.roles.get('reidentify')
+    if rid:
+        s = step_of(log, rid)
+        if s.get('status') == 'ran' and s.get('accepted'):
+            return s['outputs'].get('phase')
+    return out_of(log, graph.roles['identify'], 'phase')
+
+
 # ----------------------------------------------------------------------------------------------------------------
 # Rules
 # ----------------------------------------------------------------------------------------------------------------
+def _identified(inp, ctx, params):
+    """The identified phase. params['identify'] is a node id (input 'phase'), or a list of 'node:input' entries tried in
+    order (kit B: the remeasure path S1f first, then S1c); an entry counts only if its node ran and was accepted."""
+    idn = params.get('identify', 'S1c')
+    entries = [f'{idn}:phase'] if isinstance(idn, str) else list(idn)
+    for e in entries:
+        node, _, name = e.partition(':')
+        if ctx.ran.get(node) and ctx.accepted.get(node) and inp.get(name) is not None:
+            return inp[name]
+    return None
+
+
 def rule_R_lowest_match(inp, ctx, params):
-    idn, pri, esc = params.get('identify', 'S1c'), params.get('prior', 'S2'), params.get('escalation', 'S2x')
-    if not ctx.accepted.get(idn) or inp.get('phase') is None:
+    pri, esc = params.get('prior', 'S2'), params.get('escalation', 'S2x')
+    phase = _identified(inp, ctx, params)
+    if phase is None:
         return {'verdict': 'CANNOT_TELL', 'reason': 'identification not decisive'}
+    inp = dict(inp, phase=phase)
     if ctx.ran.get(esc) and inp.get('lowest_dft') is not None:
         low, src = inp['lowest_dft'], 'DFT'
     elif ctx.accepted.get(pri) and inp.get('lowest') is not None:
@@ -338,10 +366,12 @@ def rule_R_lowest_match(inp, ctx, params):
 
 
 def rule_H_within_threshold(inp, ctx, params):
-    idn, pri, esc = params.get('identify', 'S1c'), params.get('prior', 'S2'), params.get('escalation', 'S2x')
+    pri, esc = params.get('prior', 'S2'), params.get('escalation', 'S2x')
     thr = ctx.const['threshold']
-    if not ctx.accepted.get(idn) or inp.get('phase') is None:
+    phase = _identified(inp, ctx, params)
+    if phase is None:
         return {'verdict': 'CANNOT_TELL', 'reason': 'identification not decisive'}
+    inp = dict(inp, phase=phase)
     if ctx.ran.get(esc) and inp.get('hull_distance_dft') is not None:
         h, src = inp['hull_distance_dft'], 'DFT'
     elif ctx.accepted.get(pri) and inp.get('hull_distance') is not None:
@@ -472,7 +502,8 @@ def validate(graph: Graph, executor: Executor, twins: Dict[str, dict], holds: Li
 
     for nid in graph.spec['necessity_nodes']:
         # a subgoal's fallback serves the same subgoal, so ablating a node also ablates the nodes it triggers
-        group = [nid] + [m for m in graph.order if graph.nodes[m].get('trigger', {}).get('node') == nid]
+        group = [nid] + [m for m in graph.order if m != nid and (graph.nodes[m].get('trigger', {}).get('node') == nid
+                                                                  or graph.nodes[m].get('fallback_for') == nid)]
         name = '+'.join(group)
         res = {k: executor.run(t, {'kind': 'ablate', 'nodes': group, 'label': f'ablate_{name}'}) for k, t in twins.items()}
         logs.update({f'ablate_{name}_{k}': v for k, v in res.items()})
@@ -480,7 +511,7 @@ def validate(graph: Graph, executor: Executor, twins: Dict[str, dict], holds: Li
                          {k: r['verdict'] for k, r in res.items()}))
 
     ks = sorted(twins)
-    pa, pb = (out_of(base[k], idn, 'phase') for k in ks[:2])
+    pa, pb = (final_phase(base[k], graph) for k in ks[:2])
     va, vb = (base[k]['verdict'] for k in ks[:2])
     rows.append(_row('measurement twin', pa != pb and va != vb and va in DETERMINATE and vb in DETERMINATE,
                      {'phases': [pa, pb], 'verdicts': [va, vb]}))
@@ -496,8 +527,8 @@ def validate(graph: Graph, executor: Executor, twins: Dict[str, dict], holds: Li
     for label, k, t in holds:
         r = executor.run(t, {'kind': 'hold', 'label': label})
         logs[f'{label}_{k}'] = r
-        same = (r['verdict'] == base[k]['verdict'] and out_of(r, idn, 'phase') == out_of(base[k], idn, 'phase')
-                and [s.get('accepted') for s in r['steps']] == [s.get('accepted') for s in base[k]['steps']])
+        # kit B: a nuisance may trigger the remeasure path; the conclusion and the final identification must not move
+        same = r['verdict'] == base[k]['verdict'] and final_phase(r, graph) == final_phase(base[k], graph)
         hold_ok &= same
         hold_detail[f'{label}_{k}'] = r['verdict']
     rows.append(_row('hold', hold_ok and len(holds) > 0, hold_detail or 'no hold worlds given'))

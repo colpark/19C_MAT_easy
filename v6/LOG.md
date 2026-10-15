@@ -5,3 +5,4 @@
 - 2026-10-14T09:02:36Z host B node 2: ssh -o ConnectTimeout=10 aid1@192.168.100.11 from host B exit 255; no 192.168.100.x route on host B. No B1 work there.
 - 2026-10-14T15:14:10Z B1 V6-8: select_b1.py rerun after V6-E3 completed; all 416 frame pairs evaluated; panel computed on 208; every take's cheapest decisive plan is X-ray.
 - 2026-10-14T20:38:20Z V6-9: gold harness started 15:35Z on host A (5 workers x 4 procs) after V6-E4; 221-230 moved to node A2 (V6-X14) with placeholder rows locally so host A skips them; node A2 rows, gold and logs copied back at this push.
+- 2026-10-15T02:50:44Z V6-9 amendment: try-1 workers stopped (V6-E5 logs a pattern kill in the stop command that matched only its own shell); kit B sha256 8c3cfe8e90b7d1fd verified per file; B1 server restarted with planner v2 (code 6e6532ade514b1cc, PID 1139846); smoke 215 219 227 211 on host A, 222 201 206 on node A2 (copied back to runs/bench/v6_9_smoke).

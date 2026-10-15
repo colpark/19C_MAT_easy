@@ -20,9 +20,10 @@ FM_H = {'P1': 0.005, 'P2': 0.150}
 DFT_H = {'P1': -0.017, 'P2': 0.134}
 
 
-def task(world, key, claim_type='R', quiet=True, disp=0.0):
+def task(world, key, claim_type='R', quiet=True, disp=0.0, needs_two=False):
     return {'task_id': f'toy-{claim_type}-{world}-{disp}', 'world': world, 'library': LIB, 'm0': 'm0', 'key': key,
-            'claim': 'toy claim', '_truth': {'phase': 'P1' if world == 'A' else 'P2', 'quiet': quiet, 'disp': disp}}
+            'claim': 'toy claim', '_truth': {'phase': 'P1' if world == 'A' else 'P2', 'quiet': quiet, 'disp': disp,
+                                             'needs_two': needs_two}}
 
 
 def sim(node, inp, t, ctx):
@@ -32,15 +33,20 @@ def sim(node, inp, t, ctx):
 
 
 def instrument(node, inp, t, ctx):
-    ids = [f'm{i + 1}' for i, _ in enumerate(inp['plan'])]
+    ids = [f"{node['id']}_m{i + 1}" for i, _ in enumerate(inp['plan'])]
     return dict(outputs={'measurements': ids, 'cost_min': 21.75 * len(ids)}, cost_min=21.75 * len(ids),
                 calls=[{'tool': 'measure', 'args': p} for p in inp['plan']])
 
 
 def fit(node, inp, t, ctx):
     tr = t['_truth']
-    targeted = len(inp['measurements']) > 0
-    D = 3.1 if (tr['quiet'] and not targeted) else 40.2
+    n = len(inp['measurements']) + len(inp.get('measurements2') or [])
+    if not tr['quiet']:
+        D = 40.2
+    elif tr.get('needs_two'):
+        D = 3.1 if n == 0 else (12.4 if n == 1 else 40.2)
+    else:
+        D = 3.1 if n == 0 else 40.2
     other = 'P2' if tr['phase'] == 'P1' else 'P1'
     return dict(outputs={'phase': tr['phase'], 'runner_up': other, 'D': D}, cost_min=0.0, calls=[{'tool': 'fit'}])
 
@@ -155,6 +161,29 @@ def main():
         raise AssertionError('cycle not detected')
     except G.GraphError as e:
         print('negative 4, cycle detected:', e)
+
+    # kit B: the remeasure path (graph_R_v2)
+    g2 = G.Graph.load(os.path.join(SPEC, 'graph_R_v2.json'))
+    msg = g2.check_schema()
+    assert msg is None or 'skipped' in msg, msg
+    ex2 = G.Executor(g2, ADAPT_R)
+    tw = {'A': task('A', 'SUPPORTED', needs_two=True), 'B': task('B', 'REFUTED', needs_two=True)}
+    hd = [('hold_displacement', 'A', task('A', 'SUPPORTED', disp=0.1, needs_two=False)),
+          ('hold_displacement', 'B', task('B', 'REFUTED', disp=0.1, needs_two=True))]
+    lg = G.validate(g2, ex2, tw, hd, EXT)
+    txt = 'S1c gave D 12.4 against 25, so S1d planned again and S1f reached D 40.2 against 25. S2 put P1 lowest at -0.336.'
+    res2 = G.validate(g2, ex2, tw, hd, EXT, {'A': (txt, list(lg['logs'].values()))})
+    assert res2['pass'], G.validation_table(res2)
+    base = res2['logs']['base_A']
+    assert [G.step_of(base, n)['status'] for n in ('S1d', 'S1e', 'S1f')] == ['ran', 'ran', 'ran'], 'remeasure ran'
+    assert G.final_phase(base, g2) == 'P1'
+    one = G.Executor(g2, ADAPT_R).run(task('A', 'SUPPORTED'))
+    assert [G.step_of(one, n)['status'] for n in ('S1d', 'S1e', 'S1f')] == ['skipped'] * 3, 'remeasure skipped when S1c decides'
+    print('kit B, remeasure path: suite PASS, S1d to S1f run only when S1c falls short')
+    print(G.validation_table(res2))
+    v1 = rows(G.validate(gR, G.Executor(gR, ADAPT_R), tw, hd, EXT, {'A': (good, [])}))
+    assert not v1['correctness'], v1
+    print('negative 5, the v1 graph without the remeasure path answers CANNOT_TELL where one measurement falls short')
 
     print()
     print(gR.mermaid())

@@ -127,6 +127,7 @@ def _pool_init(task, nuis):
 
 
 def simulator(node, inp, task, ctx):
+    if task.get('planner') == 'v2': return simulator_v2(node, inp, task, ctx)
     from mcenv import separation as SP
     from mcenv import plangrid as PG
     calls = [m0_digest(task, ctx)]
@@ -176,6 +177,148 @@ def simulator(node, inp, task, ctx):
     return dict(outputs=dict(window=win, plan=plan, predicted_D=round(d, 3), predicted_cost_min=round(c, 3)), cost_min=0.0, calls=calls)
 
 
+# ---------------------------------------------------------------- B1 planner v2 (V6-X16): worst case over displacement and zero offset
+GRID_SCEN = 991
+DISP_GRID = (-0.20, 0.0, 0.20)
+ZERO_GRID = (-0.01, 0.0, 0.01)
+TARGET_FACTOR_V2 = 2.0
+_PLAN_MEMO = {}
+
+
+def agent_grid(task, nuis):
+    """the agent-side model of planner v2: scenario 990 holds each library polymorph at displacement 0 and zero offset 0 (the nominal
+    worlds, used for the window list and the screen); scenario 991 holds each polymorph at every displacement in DISP_GRID and every
+    zero offset in ZERO_GRID (the worst-case worlds). Size, background and count rate are the agent's estimates; the other side of each
+    world is every other polymorph, nuisances free in the grader's box (separation.separation, the grader's D)."""
+    from mcenv import scenarios as SC
+    wm = agent_model(task, dict(nuis, displacement_mm=0.0, zero_deg=0.0))
+    names = polymorphs(task); reg = {n: f'v6agent {n}' for n in names}
+    br = {n: SC.fixed([(reg[n], {}, 1.0)], label=n) for n in names}
+    worlds, gm = {}, {}
+    for i, n in enumerate(names):
+        for j, (dd, zz) in enumerate((dd, zz) for dd in DISP_GRID for zz in ZERO_GRID):
+            w = 9910 + 10 * i + j
+            worlds[w] = dict(holds=(i == 0), phases=[[(reg[n], {}, 1.0)]], other_branches=[br[o] for o in names if o != n], disp_mm=dd, zero_deg=zz)
+            gm[w] = (n, dd, zz)
+    SC.SCEN[GRID_SCEN] = dict(name='v6 agent grid', kind='agent', claim='', description='', library=list(reg.values()), worlds=worlds,
+                              claim_side=[br[names[0]]], other_side=[br[names[1]]], seed_scen=AGENT_SCEN)
+    SC.TUNE[GRID_SCEN] = dict(SC.TUNE[AGENT_SCEN])
+    SC.WORLD_SCEN.update({w: GRID_SCEN for w in worlds})
+    return wm, gm
+
+
+def _grid_init(task, nuis): agent_grid(task, nuis)
+
+
+def _sep(w, ms):
+    from mcenv import separation as SP
+    return float(SP.separation(w, list(ms)))
+
+
+def worst_case(pool, gm, meas_lists):
+    """min over the grid worlds of the grader's D, per measurement list."""
+    ws = sorted(gm); jobs = [(w, ml) for ml in meas_lists for w in ws]
+    ds = pool.starmap(_sep, jobs, chunksize=1); n = len(ws)
+    return [min(ds[i * n:(i + 1) * n]) for i in range(len(meas_lists))]
+
+
+def _status_meas(st):
+    from mcenv import separation as SP
+    out = []
+    for r in st['measurements']:
+        sp = r['spec']
+        out.append(SP.NEUTRON if sp.get('radiation') == 'neutron' else
+                   SP.Meas('xray', float(sp['start']), float(sp['step']), int(sp['n']), float(sp['time_per_step']), sp.get('optics', 'standard'), bool(sp.get('si_standard', False))))
+    return out
+
+
+def plan_v2(task, nuis, prior, budget, target, accept, procs):
+    """the cheapest single measurement (X-ray window, X-ray with the Si internal standard, or the neutron pattern) whose worst-case
+    predicted D, prior measurements included, reaches target; the Si standard's preparation is charged once (not again if a prior
+    measurement used it). Screen on the nominal worlds (each config at its largest affordable time, then the shortest time whose nominal
+    D reaches target), then the worst case in cost order, batch by batch; if nothing reaches target, the most separating candidate of the
+    screen's top 24 by nominal D."""
+    from mcenv import separation as SP
+    from mcenv import plangrid as PG
+    from multiprocessing import get_context
+    std_done = any(m.si_standard for m in prior)
+    cost = lambda m: m.cost + (PG.STD_PREP if m.si_standard and not std_done else 0.0)
+    with get_context('spawn').Pool(procs, initializer=_grid_init, initargs=(task, nuis)) as pool:
+        wm, gm = agent_grid(task, nuis); nom = sorted(wm)
+        base = worst_case(pool, gm, [tuple(prior)])[0]
+        if base >= target: return dict(plan=[], predicted_D=round(base, 3), cost=0.0, base_D=round(base, 3), data_suffice=True)
+        groups = []                                                   # per config: affordable measurements in increasing time
+        for lo, hi, step, opt, std in PG.configs(AGENT_SCEN):
+            ms = [m for m in (PG.window_meas(lo, hi, step, t, opt, std) for t in PG.TIMES) if m is not None and cost(m) <= budget]
+            if ms: groups.append(ms)
+        if cost(SP.NEUTRON) <= budget: groups.append([SP.NEUTRON])
+        k = len(nom); nomD = {}
+
+        def ev(ms_list):                                              # nominal D (min over polymorphs), D monotone in time
+            todo = [m for m in ms_list if m not in nomD]
+            ds = pool.starmap(_sep, [(w, tuple(prior) + (m,)) for m in todo for w in nom], chunksize=4)
+            for i, m in enumerate(todo): nomD[m] = min(ds[i * k:(i + 1) * k])
+        ev([g[-1] for g in groups])
+        state = [[-1, len(g) - 1] for g in groups if nomD[g[-1]] >= target]
+        live = [g for g in groups if nomD[g[-1]] >= target]
+        while any(b - a > 1 for a, b in state):                       # bisection rounds, all configs in parallel
+            mids = [(gi, (a + b) // 2) for gi, (a, b) in enumerate(state) if b - a > 1]
+            ev([live[gi][mi] for gi, mi in mids])
+            for gi, mi in mids:
+                if nomD[live[gi][mi]] >= target: state[gi][1] = mi
+                else: state[gi][0] = mi
+        cands = [m for g in groups for m in g]
+        ok = sorted([(cost(m), m.n, ci) for gi, g in enumerate(live) for m in g[state[gi][1]:] for ci in [cands.index(m)]])
+        nomD = {cands.index(m): v for m, v in nomD.items()}
+        for _, _, i in ok: nomD.setdefault(i, target)
+        best = None; tried = []
+        for b0 in range(0, len(ok), 6):
+            batch = ok[b0:b0 + 6]
+            wc = worst_case(pool, gm, [tuple(prior) + (cands[i],) for _, _, i in batch])
+            tried += [(cands[i], c, nomD[i], d) for (c, _, i), d in zip(batch, wc)]
+            hit = [(c, n, i, d) for (c, n, i), d in zip(batch, wc) if d >= target]
+            if hit: best = min(hit); break
+        if best is None:
+            top = sorted(nomD, key=lambda i: -nomD[i])[:24]
+            wc = worst_case(pool, gm, [tuple(prior) + (cands[i],) for i in top]) if top else []
+            tried += [(cands[i], cost(cands[i]), nomD[i], d) for i, d in zip(top, wc)]
+            pick = [(d, -cost(cands[i]), i) for i, d in zip(top, wc) if d > base]
+            if pick:
+                d, _, i = max(pick); best = (cost(cands[i]), cands[i].n, i, d)
+    if best is None: return dict(plan=[], predicted_D=round(base, 3), cost=0.0, base_D=round(base, 3), n_candidates=len(cands), n_screen_pass=len(ok), tried=len(tried))
+    c, _, i, d = best; m = cands[i]
+    return dict(plan=[m], predicted_D=round(d, 3), cost=round(c, 3), base_D=round(base, 3), nominal_D=round(nomD[i], 3), n_candidates=len(cands),
+                n_screen_pass=len(ok), tried=len(tried), reaches_target=d >= target)
+
+
+def simulator_v2(node, inp, task, ctx):
+    """S1a (and kit B's S1d) with planner v2: nuisance estimates (size, background) from the best polymorph fit to the data so far;
+    displacement and zero offset are not trusted, the worst case over DISP_GRID x ZERO_GRID carries the margin; target 2 x D_accept."""
+    calls = [m0_digest(task, ctx)]
+    ids = ['m0'] + list(inp.get('measurements') or [])
+    fits = {}
+    for n in polymorphs(task):
+        r, rec = _call(task, ctx, 'fit', dict(measurement_ids=ids, spec=dict(phases=[dict(name=n, weight=1.0)], size_nm=100)))
+        fits[n] = r; calls.append(dict(rec, result=dict(chi2=r['chi2'])))
+    best = min(fits, key=lambda n: fits[n]['chi2']); f = fits[best]['fitted']
+    nuis = dict(displacement_mm=f['displacement_mm'], zero_deg=f['zero_deg'], size_nm=f['size_nm'], background_cps=f['xray']['background_cps'])
+    st, rec = _call(task, ctx, 'status', {}); calls.append(dict(rec, args={}, result=dict(budget_left_minutes=st['budget_left_minutes'])))
+    prior = _status_meas(st); budget = float(st['budget_left_minutes'])
+    target = TARGET_FACTOR_V2 * ctx.const['D_accept']
+    key = (getattr(ctx, 'm0_digest', None), json.dumps([m.key() for m in prior]), round(budget, 3), json.dumps(nuis, sort_keys=True), node['id'] != 'S1a')
+    memo = key in _PLAN_MEMO
+    if not memo: _PLAN_MEMO[key] = plan_v2(task, nuis, prior, budget, target, ctx.const['D_accept'], int(os.environ.get('V6_PROCS', '12')))
+    r = _PLAN_MEMO[key]
+    plan = [dict(radiation=m.radiation, start=m.start, stop=round(m.start + m.step * (m.n - 1), 4), step=m.step, time_per_step=m.t,
+                 optics=m.optics, si_standard=m.si_standard) for m in r['plan']]
+    calls.append(dict(call_id=None, tool='plan search v2 (local forward model, worst case over displacement and zero offset)',
+                      args=dict(prior=len(prior), budget_left=budget, target=target, disp_grid=DISP_GRID, zero_grid=ZERO_GRID, memo=memo),
+                      result={k: v for k, v in r.items() if k != 'plan'} | dict(plan=plan)))
+    win = [min(x['start'] for x in plan), max(x['stop'] for x in plan)] if plan else None
+    pd = r['predicted_D'] if (plan or r.get('data_suffice')) else None
+    return dict(outputs=dict(window=win, plan=plan, predicted_D=pd, predicted_cost_min=r['cost']), cost_min=0.0, calls=calls)
+
+
 # ---------------------------------------------------------------- S1b, S1c, S2, S2x through the server's tools
 def instrument(node, inp, task, ctx):
     ids, calls, cost = [], [], 0.0
@@ -190,7 +333,7 @@ def instrument(node, inp, task, ctx):
 
 
 def fit(node, inp, task, ctx):
-    ids = ['m0'] + list(inp.get('measurements') or [])
+    ids = ['m0'] + list(inp.get('measurements') or []) + list(inp.get('measurements2') or [])      # kit B: S1f fits both rounds
     chi, calls = {}, [m0_digest(task, ctx)]
     for n in polymorphs(task):
         r, rec = _call(task, ctx, 'fit', dict(measurement_ids=ids, spec=dict(phases=[dict(name=n, weight=1.0)], size_nm=100)))
