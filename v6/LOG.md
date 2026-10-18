@@ -8,3 +8,4 @@
 - 2026-10-15T02:50:44Z V6-9 amendment: try-1 workers stopped (V6-E5 logs a pattern kill in the stop command that matched only its own shell); kit B sha256 8c3cfe8e90b7d1fd verified per file; B1 server restarted with planner v2 (code 6e6532ade514b1cc, PID 1139846); smoke 215 219 227 211 on host A, 222 201 206 on node A2 (copied back to runs/bench/v6_9_smoke).
 - 2026-10-15T04:43:29Z V6-9: David's decision applied (V6-X17 manual, V6-X18 planner v3 and S1d rescale); B1 server restarted (code 0ca269b543eedec0, PID 1182111); smoke rerun 2 on the 7 compounds started (runs/bench/v6_9_smoke2).
 - 2026-10-18T11:32:34Z V6-13: second-FM program; B1 servers left running (node A2:8778 PID 1362624, host B 127.0.0.1:8779 PID 1966010).
+- 2026-10-18T11:32:47Z V6-14: host B node 2 reachability (the one check of this prompt): from host B, ssh -o ConnectTimeout=10 aid1@192.168.100.11: rc 255 0 (rc, then the count of 192.168.100.x routes on host B).
