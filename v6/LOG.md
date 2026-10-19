@@ -9,3 +9,4 @@
 - 2026-10-15T04:43:29Z V6-9: David's decision applied (V6-X17 manual, V6-X18 planner v3 and S1d rescale); B1 server restarted (code 0ca269b543eedec0, PID 1182111); smoke rerun 2 on the 7 compounds started (runs/bench/v6_9_smoke2).
 - 2026-10-18T11:32:34Z V6-13: second-FM program; B1 servers left running (node A2:8778 PID 1362624, host B 127.0.0.1:8779 PID 1966010).
 - 2026-10-18T11:32:47Z V6-14: host B node 2 reachability (the one check of this prompt): from host B, ssh -o ConnectTimeout=10 aid1@192.168.100.11: rc 255 0 (rc, then the count of 192.168.100.x routes on host B).
+- 2026-10-19T00:18:25Z V7-0: v6 closed; branch v7/2026-10-18 from a1751aaf; annotated tag v6-b1 at 6c5da0c2 (B1 runs and report) pushed.
