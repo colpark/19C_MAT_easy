@@ -142,7 +142,8 @@ Step 1 (free reanalysis) and step 2 (matched rigid-placement protocol) both repo
 7. **Stop, in one of two states (F, item 7):**
    - **Gate F1 passes on at least 3 of the 4 rod systems:** write `truth/F1_ROD.md` with the table, the scaling diagnostic and the UMA timing, and stop. Build nothing further; control rods are a separate decision with their own schedule.
    - **Gate F1 fails on the rod:** write `v8/NEGATIVE_RESULT.md` and stop. **v8 ends there.** Cover what was built and verified, Gate S and Gate F1 across two estimators, two protocols and two length scales, the quantitative mechanism, which of David's prescriptions were wrong and why, what would change the answer, and what a later attempt should do differently. Write it as a finding, not an apology, and state plainly that the instrument, the graph, the server and the validation suite all pass and are reusable.
-8. **David's recorded corrections (F, preamble), to be carried in the report:** the minimum estimator did not recover a signal, and the rigid screw transform of amendment C item 4 is the wrong way to build a force-field rod.
+8. **REACHED, 2026-10-19:** the **second** stop state. Gate F1 passed on **1 of 4** rod systems, so `v8/NEGATIVE_RESULT.md` is written and **v8 ends**. `truth/F1_ROD.md` is not written. Nothing further is built.
+9. **David's recorded corrections (F, preamble), to be carried in the report:** the minimum estimator did not recover a signal, and the rigid screw transform of amendment C item 4 is the wrong way to build a force-field rod.
 
 ## 20. Out of scope
 Phase and transformation families (HOOMD-blue Monte Carlo), van der Waals substrates, sequence design, priced reference energies, a second materials FM, Opus, Qwen3-8B, training, the label-free reward validation, real collaborator data; any change under `v6/` or `v7/`; any change outside `v8/`, `~/v8env`, `~/v8_state`, `~/v8_data`. (P, Out of scope; D, item 5)
