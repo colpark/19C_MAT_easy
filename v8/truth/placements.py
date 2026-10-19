@@ -19,9 +19,10 @@ ROT_DEG = 6.0            # +/- rotation about the surface normal
 DZ_RANGE = (-0.3, 0.6)   # Angstrom, height offset about the nominal gap
 
 
-def describe():
+def describe(n=N_PLACEMENTS):
+    """n must be the count actually drawn by the caller (V8-E18: it used to be hardwired)."""
     return dict(sequence="scipy.stats.qmc.Sobol(d=4, scramble=True)", seed=SEED,
-                n_placements=N_PLACEMENTS, rot_deg=ROT_DEG, dz_range_A=list(DZ_RANGE),
+                n_placements=n, rot_deg=ROT_DEG, dz_range_A=list(DZ_RANGE),
                 note="columns: fractional offset along a, fractional offset along b, "
                      "rotation about the surface normal, height offset")
 

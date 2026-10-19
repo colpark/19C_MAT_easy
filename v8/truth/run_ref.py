@@ -126,7 +126,7 @@ def main():
 
     meta = dict(unit=a.unit, cation=a.cation, theta0_deg=b["theta0"], protocol="rigid placements, no water",
                 n_atoms=b["n_cx"], n_frag=b["n_frag"], n_frozen=b["frozen"], n_excl=b["n_excl"],
-                placements=a.placements, placement_sequence=plc.describe(),
+                placements=a.placements, placement_sequence=plc.describe(a.placements),
                 platform=a.platform, max_iter=a.max_iter)
     print(json.dumps(meta), flush=True)
 

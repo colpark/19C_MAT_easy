@@ -90,3 +90,11 @@
 - 2026-10-19 F item 4.3 check on the earlier step 2 fragment runs: a fragment placement at the 2000 cap exits at **iteration 882**, below the cap, so the step 2 fragment results were converged and stand unchanged.
 - 2026-10-19 F item 7 projection before running: 4 systems x 2 registries x 64 placements = 512 placements at about 21 s each (converged minimisation plus three single points for E_int) = **about 3 GPU hours, within the 4 GPU hour budget**, about 1.5 wall hours across hosts A1 and A2. David's 0.35 GPU hour estimate came from v8's own scoping number, which was a lower bound precisely because it recorded no energies and did not verify convergence; F items 4.2 and 4.3 are what exposed that.
 - 2026-10-19 F runs launched: host A1 the 18-repeat rod on K+ then Na+ (PID file rod_A1.pid), host A2 the 14-repeat rod on K+ then Na+ (rod_A2.pid), one v8 GPU job per node. UMA timing (F item 6) chained on A1 after its rod queue ends (uma_timing.pid).
+
+## V8-E18 (2026-10-19) — the logged placement count was hardwired
+`placements.describe()` returned `n_placements=30` from the module constant regardless of how
+many placements the caller actually drew, so the four amendment F rod runs carry
+`placement_sequence.n_placements: 30` in their `ref.json` headers while they in fact used **64**.
+The runs themselves are unaffected: `placement_table(64)` drew 64 rows, the sibling field
+`placements` reads 64, and 64 energies per registry are recorded. `describe()` now takes the
+count from the caller and `run_ref.py` passes it. Reports quote 64, with this note.
