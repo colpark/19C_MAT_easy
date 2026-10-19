@@ -15,7 +15,7 @@ import graphexec as G
 import graphexec_d as GD
 import adapters_mcenv as AD
 
-URL = os.environ.get('V7_URL', 'http://192.168.100.11:8780/call')
+URL = os.environ.get('V7_URL', 'http://192.168.100.11:8780/call')            # V7_URL picks one of the server7 processes (8780-8783)
 CELLS = {1: ('SUPPORTED', True), 2: ('REFUTED', False), 3: ('REFUTED', False), 4: ('REFUTED', True)}
 HOLDS = [(10, 'hold_displacement_+0.10mm'), (20, 'hold_zero_+0.005deg'), (30, 'hold_size_x1.2')]
 WT = {w['scen']: w for w in json.load(open(os.path.join(HERE, 'WORLDS_T.json')))['worlds']}
@@ -23,7 +23,8 @@ FMT = json.load(open(os.path.join(HERE, 'TOOL_TABLES_T.json'))).get('fm', {})
 
 
 def env(batch):
-    return AD.Env(URL, 'aid1@192.168.100.11', '~/v7srv', '~/v7_state', 'V5_STAGE=7', batch=batch)
+    return AD.Env(URL, os.environ.get('V7_SSH', 'aid1@192.168.100.11'), os.environ.get('V7_CODE', '~/v7srv'), os.environ.get('V7_STATE', '~/v7_state'),
+                  'V5_STAGE=7', batch=batch)
 
 
 def inband(scen):
@@ -37,6 +38,24 @@ def task(e, scen, cell, arm, accept_ct):
     t = AD.make_task(e, scen * 100 + cell, arm, 1, 'T', key=key, extra=dict(planner='v2'))
     t['accept'] = [key] + (['CANNOT_TELL'] if accept_ct and fmd else []); t['fm_decides'] = fmd
     return t
+
+
+def run_base(budget, scen, out):
+    """V7-X1: the budget rule's quantity, gold resolution of the quad's four worlds (ceiling adapters), without the other rows."""
+    arm = f'v7-ceiling-b{budget}'
+    e = env(f'v7-2-T-base-b{budget}-{scen}'); g = GD.load(os.path.join(V7, 'spec', 'graph_T.json'))
+    ex = GD.executor(g, AD.ADAPTERS, constants={'budget_min': float(budget)}, source='gold')
+    summ = {}
+    for c in CELLS:
+        t = task(e, scen, c, arm, False); b = ex.run(t)
+        json.dump(b, open(os.path.join(out, 'gold', f'gold_{scen}_c{c}.json'), 'w'), indent=1)
+        summ[f'c{c}'] = dict(verdict=b['verdict'], key=t['key'], correct=b['verdict'] == t['key'], cost_min=b['cost_min'], phases=list(GD.final_phases(b, g)),
+                             D={sm: G.out_of(b, f'S1g_{sm}', 'D') for sm in ('pre', 'post')},
+                             plans={sm: [p.get('radiation') for p in (G.out_of(b, f'S1a_{sm}', 'plan') or [])] for sm in ('pre', 'post')})
+    r = dict(scen=scen, mode='base', budget=budget, formula=WT[scen]['formula'], set=WT[scen]['set'], base=summ,
+             resolved=sum(v['correct'] for v in summ.values()), tokens=e.tokens)
+    json.dump(r, open(os.path.join(out, 'rows', f'{scen}.json'), 'w'), indent=1, default=str)
+    return r
 
 
 def run(mode, budget, scen, out):
@@ -74,6 +93,9 @@ if __name__ == '__main__':
     for d in ('gold', 'logs', 'rows'): os.makedirs(os.path.join(out, d), exist_ok=True)
     for s in map(int, sys.argv[4:]):
         if os.path.exists(os.path.join(out, 'rows', f'{s}.json')): continue
+        if mode == 'base':
+            r = run_base(budget, s, out); print(s, 'base', budget, r['resolved'], 'of 4', {k: (v['verdict'], v['key'], v['cost_min']) for k, v in r['base'].items()}, flush=True)
+            continue
         r = run(mode, budget, s, out)
         print(s, r['set'], 'PASS' if r['pass_'] else 'FAIL', [x['test'] for x in r['rows'] if not x['pass']],
               {k: (v['verdict'], v['key'], v['cost_min']) for k, v in r['base'].items()}, flush=True)

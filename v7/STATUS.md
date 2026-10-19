@@ -1,0 +1,3 @@
+# v7 status
+- 2026-10-19T01:01:59Z V7-0: branch v7/2026-10-18 from a1751aaf; tag v6-b1 at 6c5da0c2 pushed; PREREG pushed before frame work; B1 datasheet and archive (~/archive/b1, host A and host B, manifest 6286994fc12fa78b); kit D installed (both tests pass); B1 no-DFT gold running (node A2:8778). V7-1 machinery written (server7 node A2:8780-8783, family7, grade7, client7, manuals); T test compound 301 passes the selection rows at 240. Running: T budget rule (host B), H selection (host A).
+- 2026-10-19T02:21:42Z V7-3: Gate H-supply FAILS (15 E, 8 M through the bars; needs 16 E and 5 M); 56 E pairs fail the 18-min 'too easy' bar. v7/H/SELECTION_H.md with options. Family H STOPPED for David; family T continues.

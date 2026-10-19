@@ -34,7 +34,8 @@ class Env:
     def new_token(self, world, arm, k):
         cmd = (f'cd {self.code_dir} && MCENV_STATE={self.state_dir} {self.stage_env} {self.py} -m mcenv.admin new --world {world} '
                f'--arm {arm} --k {k} --model {self.model} --batch {self.batch} 2>/dev/null')
-        out = subprocess.run(['ssh', '-n', self.ssh_host, cmd], capture_output=True, text=True, timeout=120).stdout.strip().splitlines()
+        argv = ['bash', '-c', cmd] if self.ssh_host == 'local' else ['ssh', '-n', self.ssh_host, cmd]      # v7: 'local' mints on this host
+        out = subprocess.run(argv, capture_output=True, text=True, timeout=120).stdout.strip().splitlines()
         tok = out[-1].strip()
         if not re.fullmatch(r'[0-9a-f]{32}', tok): raise RuntimeError(f'token minting failed: {out[-3:]}')
         self.tokens.append(dict(token=tok, world=world, arm=arm, k=k))
