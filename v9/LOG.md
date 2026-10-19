@@ -77,3 +77,31 @@ binder, never its weak member. Excluding every exposed twin still leaves **136 t
 K stratum at 0.1 Da**, so Gate T holds on a contamination-hardened set. **V9-E2**: my
 `probe_table.py` counted only the first match per line and under-counted single-line XML; replaced
 by `probe_tokens.py`. Dataset 1's numbers are unaffected and remain validated at 1720/1720.
+
+## V9-4 (2026-10-19) — reserved split, dev pairs, null baselines
+`v9/split/SPLIT.md` and `DEV_PAIRS.md`, pushed before the first FM call. Salted-hash split:
+dev 538 (0.3128), reserved 1,182 (0.6872); the 0.3128 is hash-partition noise on a threshold fixed
+at 0.30 beforehand and was **not** adjusted after the counts were seen. 17,955 dev pairs,
+16,291 E / 1,664 K. FM subset 120 peptides chosen FM-blind by a second salt; 3,600 pairs, 323 K
+over only **82 peptides**, which is the bootstrap denominator. **Two of three nulls are
+informative**: net charge 0.674 CI [0.539, 0.806], GRAVY 0.691 CI [0.547, 0.813]; mass 0.560 CI
+[0.422, 0.707]. Null direction pre-declared as the better of the two orientations, ties at 0.5.
+
+## V9-5 (2026-10-19) — cost measured, production NOT run
+`v9/fm/FM_DEV.md`. Head **oc20**, the only UMA head trained on molecular adsorbates on metal
+slabs. Slab `fcc111('Au',(14,10,4))`, 560 Au, 40.39 x 24.99 A, bottom 2 of 4 layers fixed; the
+longest ESMFold conformer is 29.3 A. ESMFold pLDDT mean 0.690 (0.665-0.727), disclosed as moderate.
+12 of 12 conformers written, **zero validity refusals**. **V9-E3**: the first timing run capped at
+200 steps and **6 of 6 evaluations hit the cap** (fmax 0.068-2.209), making its 78 s per
+evaluation a lower bound; the converged cost measured with a high cap is **LBFGS 434 steps,
+167.1 s**, while **FIRE failed to converge in 800 steps**. Projection: **167.1 GPU h at 120
+peptides, 83.6 at 60**, against the 8-hour limit, so the second branch of the stop rule applies
+and production was not run. Rigid single point costs 0.398 s, giving 0.40 GPU h for the full
+120 x 30 grid.
+
+## V9-6 (2026-10-19) — verdict 2: gates not reached
+`v9/VERDICT_2.md`. **Gates M and N NOT REACHED**, neither passed nor failed: no FM accuracy
+exists. Four costed options recommended to David, led by rigid single points (0.40 GPU h) then
+3 conformers x 3 placements on 60 peptides (25.07 GPU h). Reserved split still unseen by any
+model. **V9-X4**: existing interpreter reused read-only; UMA and ESMFold weights copied into
+`~/v9_data` so no cache write lands outside v9's roots.

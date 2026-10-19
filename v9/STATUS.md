@@ -1,5 +1,21 @@
 # v9 status (updated at every push)
 
+## Iteration 2 (V9-4 to V9-6): the budget stop fired; Gates M and N NOT REACHED
+- **V9-4 done** (`v9/split/SPLIT.md`, `DEV_PAIRS.md`): 538 dev / 1,182 reserved by salted hash;
+  17,955 dev pairs (16,291 E / 1,664 K); FM subset of 120 chosen FM-blind.
+- **Two of the three nulls are not null**: net charge 0.674 CI [0.539, 0.806] and GRAVY 0.691
+  CI [0.547, 0.813] on dev K pairs. Only mass is uninformative. **Gate N is the harder gate.**
+- **V9-5 stopped before production** (`v9/fm/FM_DEV.md`): the pre-registered protocol costs
+  **83.6 GPU h at 60 peptides**, **167.1 at 120**, against an 8-hour limit. Converged LBFGS
+  relaxation = **434 steps, 167 s**; the first 200-step run hit the cap on 6 of 6 evaluations
+  (fmax 0.068-2.209), so hard rule 4 caught a 2.1x optimistic estimate before it was used.
+- **V9-6**: `v9/VERDICT_2.md`. Gates M and N **not reached** — neither passed nor failed, because
+  no FM accuracy exists. Four costed options for David; recommended ladder is rigid single points
+  (0.40 GPU h) then 3x3 placements on 60 peptides (25.07 GPU h).
+- Reserved split untouched by any model. Zero validity refusals. **Spend $0.**
+
+## Iteration 1 (V9-0 to V9-3)
+
 **V9-0 to V9-3 complete. All three gates PASSED. v9 stops here, as pre-registered.**
 Read `v9/VERDICT.md`.
 
