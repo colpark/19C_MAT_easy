@@ -8,4 +8,4 @@
 - Leftover demo and adapter state deleted; server kept on 8881.
 - V8-2 instrument and V8-3 graph/server/manual stand. Adapters stand.
 
-Step 1 done: Gate F1 also FAILS under the minimum estimator (0 of 4; 2 fail, 2 undetermined because a minimum was still falling). Next: step 2, the rigid-placement reference protocol (30 placements per registry, no water) and Gate F1.
+Step 1 done (Gate F1 also fails under the minimum estimator). **Step 2 done: Gate F1 FAILED again on the matched rigid-placement protocol, 0 of 4 dev systems, best 1.26 sigma.** Next: step 3, scope one 18-repeat rod and stop (no production set).
