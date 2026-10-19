@@ -8,4 +8,4 @@
 - Leftover demo and adapter state deleted; server kept on 8881.
 - V8-2 instrument and V8-3 graph/server/manual stand. Adapters stand.
 
-Step 1 done (Gate F1 also fails under the minimum estimator). **Step 2 done: Gate F1 FAILED again on the matched rigid-placement protocol, 0 of 4 dev systems, best 1.26 sigma.** Next: step 3, scope one 18-repeat rod and stop (no production set).
+Step 1 and step 2 done: Gate F1 FAILED at fragment scale under both estimators and both protocols. **Step 3 done: rod scoping shows about 1 GPU hour for a full set (far below 48), so no NEGATIVE_RESULT; but only U0 has a usable 18-repeat rod, since the tiled control rods clash (V8-E14).** Stopped for David per E item 5.

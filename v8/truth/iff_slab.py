@@ -86,13 +86,17 @@ def build(car, prm, na, nb, cation="K"):
     nbd = read_prm_nonbonded(prm)
     V = cell_vectors(cell)
     out = []
+    tile = 0
     for ia in range(na):
         for ib in range(nb):
             shift = ia * V[0] + ib * V[1]
-            for at in atoms:
+            for j, at in enumerate(atoms):
                 a = dict(at)
                 a["xyz"] = list(np.array(at["xyz"]) + shift)
+                a["tile"] = tile
+                a["in_tile"] = j
                 out.append(a)
+            tile += 1
     # Surface cation exchange (amendment B item 2). The IFF single layer carries K+ on
     # both basal surfaces, so both are exchanged: a mixed-cation slab in 100 mM NaCl
     # would be neither K+ nor Na+ muscovite (logged in v8/OPEN_QUESTIONS.md).
@@ -113,7 +117,8 @@ def write_pdb(path, cell, atoms):
         for i, at in enumerate(atoms, 1):
             x, y, z = at["xyz"]
             nm = at["pdbname"]
-            fh.write(f"HETATM{i:5d} {nm:<4s} SLB A   1    {x:8.3f}{y:8.3f}{z:8.3f}  1.00  0.00          {at['element']:>2s}\n")
+            rid = at.get("resid", 1)
+            fh.write(f"HETATM{i:5d} {nm:<4s} SLB A{rid:4d}    {x:8.3f}{y:8.3f}{z:8.3f}  1.00  0.00          {at['element']:>2s}\n")
         fh.write("END\n")
 
 
@@ -127,7 +132,8 @@ def write_xml(path, atoms, nbd):
         lines.append(f'  <Type name="SLB-{k}" class="{k}" element="{a["element"]}" mass="{MASS[a["element"]]}"/>')
     lines.append(' </AtomTypes>')
     lines.append(' <Residues>\n  <Residue name="SLB">')
-    for a in atoms:
+    tmpl = [a for a in atoms if a.get("resid", 1) == 1]
+    for a in tmpl:
         lines.append(f'   <Atom name="{a["pdbname"]}" type="SLB-{a["key"]}" charge="{a["charge"]}"/>')
     lines.append('  </Residue>\n </Residues>')
     # charmm36.xml takes LJ from <LennardJonesForce> (it supports NBFIX), so every type
@@ -161,11 +167,23 @@ if __name__ == "__main__":
     p.add_argument("car"); p.add_argument("prm"); p.add_argument("prefix")
     p.add_argument("--na", type=int, default=2); p.add_argument("--nb", type=int, default=3)
     p.add_argument("--cation", default="K")
+    p.add_argument("--per-tile-residues", action="store_true",
+                   help="one SLB residue per tile, so atom names need only be unique within a "
+                        "tile; required above ~2600 atoms, where a 4-character PDB name collides")
     ar = p.parse_args()
     cell, V, atoms, nbd = build(ar.car, ar.prm, ar.na, ar.nb, ar.cation)
-    # unique 4-char PDB atom names
+    # PDB atom names are 4 characters, so they are made unique per residue
     for i, a in enumerate(atoms):
-        a["pdbname"] = f"{a['element'][0]}{i:03X}"[:4]
+        if ar.per_tile_residues:
+            a["resid"] = a["tile"] + 1
+            a["pdbname"] = f"{a['element'][0]}{a['in_tile']:03X}"
+        else:
+            a["resid"] = 1
+            a["pdbname"] = f"{a['element'][0]}{i:03X}"[:4]
+        if len(a["pdbname"]) > 4:
+            raise SystemExit("atom name too long; use --per-tile-residues")
+    if not ar.per_tile_residues and len({a["pdbname"] for a in atoms}) != len(atoms):
+        raise SystemExit("duplicate atom names; use --per-tile-residues")
     sup = (cell[0] * ar.na, cell[1] * ar.nb, cell[2], cell[3], cell[4], cell[5])
     write_pdb(ar.prefix + ".pdb", sup, atoms)
     keys = write_xml(ar.prefix + ".xml", atoms, nbd)
