@@ -44,6 +44,22 @@ class Env:
     def call(self, token, tool, args):
         body = json.dumps(dict(token=token, tool=tool, args=args, rid=uuid.uuid4().hex)).encode()
         req = urllib.request.Request(self.url, data=body, headers={'Content-Type': 'application/json'})
+        if tool == 'measure':                   # v7 (V7-E2, V7-X11): one attempt (600 s), never resubmitted; status tells what was recorded
+            ids = lambda st: [m['id'] for v in st['samples'].values() for m in v['measurements']] if 'samples' in st else [m['id'] for m in st['measurements']]
+            before = set(ids(self.call(token, 'status', {})))
+            try:
+                with urllib.request.urlopen(req, timeout=600) as r: out = json.loads(r.read())
+            except Exception:
+                for wait in (5, 20, 60):
+                    time.sleep(wait)
+                    try: st = self.call(token, 'status', {})
+                    except Exception: continue
+                    new = [i for i in ids(st) if i not in before]
+                    if new: raise RuntimeError(f'measure: timed out in transit; the server recorded {new[-1]} (not resubmitted)')
+                    raise RuntimeError('measure: timed out; nothing recorded (not resubmitted)')
+                raise
+            if not out.get('ok'): raise RuntimeError(f'{tool}: {out.get("error")}')
+            return out['result']
         for attempt in range(4):
             try:
                 with urllib.request.urlopen(req, timeout=300) as r: out = json.loads(r.read()); break

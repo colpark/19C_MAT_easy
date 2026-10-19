@@ -37,8 +37,14 @@ BACKOFF = (5, 20, 60)
 
 
 def env_call(env_url, token, tool, args):
-    """as the MCP client (V5_SPEC C.7): request id, three retries with back-off on an unreachable environment, each retry logged."""
+    """as the MCP client (V5_SPEC C.7): request id, three retries with back-off on an unreachable environment, each retry logged.
+    v7 (V7-E2, V7-X11): a measure is sent once (600 s) and never resubmitted; after a timeout, status tells whether it was recorded."""
     import uuid
+    if tool == 'measure':
+        from . import client as CL
+        CL.URL, CL.TOKEN = env_url, token
+        CL.RETRY_LOG = os.path.join(RETRY_LOG, token[:12] + '.jsonl') if RETRY_LOG else ''
+        return CL._call_measure(args)
     rid = uuid.uuid4().hex
     for attempt in range(len(BACKOFF) + 1):
         try:
