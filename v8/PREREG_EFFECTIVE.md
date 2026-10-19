@@ -1,8 +1,8 @@
 # v8 rules in force (consolidated)
 
-Regenerated after every addendum (working rules, item 1). Sources: `PREREG.md` (P), `PREREG_ADDENDUM_A.md` (A), `PREREG_ADDENDUM_B.md` (B), `PREREG_ADDENDUM_C.md` (C), David's working-rules note of 2026-10-19 (W, recorded verbatim in `LOG.md`), and `PREREG_ADDENDUM_D.md` (D). Citations give file and item; P cites its section. Where a later source changes an earlier rule, only the rule in force is listed, with both sources. The source files stay unchanged and govern if this list ever disagrees with them.
+Regenerated after every addendum (working rules, item 1). Sources: `PREREG.md` (P), `PREREG_ADDENDUM_A.md` (A), `PREREG_ADDENDUM_B.md` (B), `PREREG_ADDENDUM_C.md` (C), David's working-rules note of 2026-10-19 (W, recorded verbatim in `LOG.md`), `PREREG_ADDENDUM_D.md` (D), and `PREREG_ADDENDUM_E.md` (E). Citations give file and item; P cites its section. Where a later source changes an earlier rule, only the rule in force is listed, with both sources. The source files stay unchanged and govern if this list ever disagrees with them.
 
-State at this version: after addendum D. Every rule here stays in force unless D changes it (D, item 0.3).
+State at this version: after addendum E. v8 gets one further iteration under E; its stop rule is in section 17.
 
 ## 1. Scope
 1. Two FMs from different domains compose at a protein to crystal interface: a protein FM (ESMFold) and a materials FM (UMA). The lab is simulated AFM. Executor, keys, gates and report conventions are those of B1 and v7. (P, Why)
@@ -64,8 +64,8 @@ State at this version: after addendum D. Every rule here stays in force unless D
 9. Supply listing in `v8/truth/SUPPLY.md`, with the count verified by v8's own code; if the count differs, stop and report. (A, item 5; C, item 1)
 
 ## 7. Truth path (IFF)
-0. Order: build the K+ and Na+ slabs (push); dev truth (U0, C1 on both cations; push after each run) and report Gate F1; then test truth (C2 to C4 on both cations; push after each run) with C item 7. (D, item 3 Track 1)
-1. Local assembly first: IFF CHARMM parameters (IFF v1.5 repository, B item 4), CHARMM36m protein, TIP3P water, 100 mM salt of the surface cation, assembled with ParmEd and OpenMM, timeboxed to one working day; if local assembly fails, write `v8/truth/CHARMMGUI_SHEET.md` and stop for David. (P, V8-1 Truth path; B, items 2, 4)
+0. **The reference protocol is now rigid placements without water (E, item 4), replacing the solvated protocol below for v8.** Same IFF v1.5 slabs and same capped fragments; 30 rigid placements per registry over the surface lateral unit cell from a logged quasi-random sequence with a fixed seed; per placement minimise with the framework heavy atoms fixed and the surface cations plus the protein mobile; no water, no dynamics; keep the minimum per registry, then apply §9 item 2b. The FM path uses the identical placement set and differs only in using UMA in place of IFF. The report and the manual must state that the reference carries no explicit water and that interfacial water is known to matter here, so the reference is a self-consistent citable reference and not a claim about experiment. The 24 solvated runs and their analysis are kept as recorded; nothing is deleted. (E, item 4)
+1. Superseded for v8 by item 0, kept for the record. Local assembly first: IFF CHARMM parameters (IFF v1.5 repository, B item 4), CHARMM36m protein, TIP3P water, 100 mM salt of the surface cation, assembled with ParmEd and OpenMM, timeboxed to one working day; if local assembly fails, write `v8/truth/CHARMMGUI_SHEET.md` and stop for David. (P, V8-1 Truth path; B, items 2, 4)
 2. Protocol: minimize; 2 ns NVT with the fragment backbone restrained to its registry; interaction energy averaged over the last 1 ns. Margin = E(θ0 + 30°) − E(θ0), with a standard error from the 3 placements and block averages. (P, V8-1 Truth path)
 4. Throughput: measure ns per day on the first run; if the whole truth set would need more than 24 GPU hours across the three nodes, every run uses 1 ns production averaging the last 0.5 ns, logged. Never mix protocols between runs. (D, item 3 Track 1)
 5. Storage: energies every 10 ps plus the final frame only. (D, item 3 Track 1)
@@ -80,7 +80,8 @@ State at this version: after addendum D. Every rule here stays in force unless D
 
 ## 9. Gates before the runs
 1. **Gate S (supply):** dev and test share no unit, dev holds at least 2 units, test at least 3. (C, item 6; replaces A, item 5)
-2. **Gate F1 (truth exists):** |IFF margin| ≥ 3 SE for U0 and C1 on K+ and Na+ muscovite; otherwise stop for David. On fluorophlogopite: failed, not patched. (C, item 6; B, items 1, 2; P, Gate F1)
+2. **Gate F1 (truth exists):** |IFF margin| ≥ 3 SE for U0 and C1 on K+ and Na+ muscovite; otherwise stop for David. On fluorophlogopite: failed, not patched. The threshold does not move. (C, item 6; B, items 1, 2; P, Gate F1)
+2b. **The Gate F1 estimator (E, item 2), chosen post hoc after the paired estimator failed and disclosed as such in every report, with both estimators shown side by side and the order stated.** For each (unit, cation, registry) take the minimum interaction energy over placements; the margin is E_min(theta0 + 30) − E_min(theta0); its uncertainty comes from a bootstrap over placements with 10,000 replicates. Report per system the convergence of each minimum against the number of placements; a minimum still falling at the last placement is not converged and that system is reported as undetermined rather than passed. The superseded estimator paired placement i of one registry with placement i of the other, took the signed difference and used the spread of three as the error; that pairing has no physical meaning and treats lateral position as noise, while a rod diffuses laterally far faster than it desorbs, so each registry reaches its own best lateral position.
 3. **Gate F2 (FM informative):** outside m*, the FM sign agrees with IFF on at least 80 % of dev points; otherwise stop for David with the table. The count of test systems outside m* is reported after the freeze. (A, item 4)
 4. **Gate W:** bars per world: free m0 gives D < 9; the cheapest decisive plan costs 0.3 to 0.6 of the 180-min budget; the lattice scan is necessary. A world failing the bars has its hidden nuisances redrawn up to 3 times with logged seeds (truth-only, FM-blind). A rod system whose twins still fail leaves the pilot and is listed. Gate W passes when every remaining rod system has both twins through the bars and at least 8 rod systems (16 worlds) remain; otherwise that track stops. (D, item 4.4; replaces the reserve rule of P, V8-5)
 
@@ -90,6 +91,7 @@ State at this version: after addendum D. Every rule here stays in force unless D
 ## 11. Instrument, graph, server, manual (V8-2, V8-3)
 1. V8-2 as pre-registered: numpy world sampler (rods at 0.1 to 0.3 coverage, Poisson positions with minimum gap, von Mises mixture over the three lattice directions with concentration κ, 0 to 15 % isotropic; hidden nuisances: sample azimuth uniform 0 to 360°, tip radius, drift, noise, κ); afmize rod stamps with tip dilation, line noise, drift field, flattening; lattice scan; calibration to the two named 2026 papers, logged in `v8/world/CALIBRATION.md`, never used as tasks; cost model with free m0 a 500 nm, 256 px overview; fit statistic D (twice the log-likelihood ratio, true hypothesis against the best of other registry and isotropic, nuisances profiled); simulator tool returning predicted angle statistics and expected D. (P, V8-2)
 1b. Calibration data unreachable from every node: use the instrument values reported in those papers' Methods as nuisance ranges, label the instrument "uncalibrated", log a deviation and continue. Rendering: afmize renders the U0 rods from the §5 item 4 source; C1 to C4 rods tiled at 14 and 18 repeats. (D, items 3 Track 2, 4.3)
+1c. `phase` in graph I carries the **registry label** (matched or other) and the fitted angle stays in `angle_rel_deg` (E, item 1, approving Q7). No kit file and no `validate_d` row is edited; all rows are rerun on the demo worlds and reported.
 2. Tip dilation uses the V8-0 fallback (`v8/instrument/dilation.py`, grey_dilation), since pygwy has no Python 3 build. (P, V8-0 Fallbacks)
 3. V8-3 as pre-registered: `v8/spec/graph_I.json` (S1 identify with remeasure path, S2a structure, S2b registry, S3 decide); `test_graph_I.py` prints ALL GRAPH I TESTS PASSED; server `v8/mcenv/server8.py` (tools status, afm_scan, lattice_scan, simulate, fit, structure, registry_energy, run_python, answer; arms noprior and flip_I; truth on the server only) on a port in 8881 to 8889; answer schema; `v8/MANUAL_I.md` in plain words, never naming the construct, with placeholders for the band and reliability table until the truth and FM track delivers them. (P, V8-3; A, item 3; D, item 3 Track 3)
 
@@ -109,13 +111,26 @@ The exemplar is the dev system U0 at 18 repeats, the cation chosen on truth only
 3. **Gate I**, all of: kits B, D and graph I tests pass, and Gates F1, F2 and W passed; offline baselines resolve 0 pairs; fm minus noprior in pair resolution above zero with a 95 % interval above zero over the (unit, cation) clusters, reported whatever it shows with 6 clusters. (P, Gate I; C, item 8)
 4. Push V8-7 and stop for David. (P, V8-7)
 
-## 15. Open points closed by addendum D
+## 15. Open points closed by addenda D and E
 1. Count reading: closed by D item 1.1 (§5 item 4).
 2. Muscovite structure and hydrogens: closed by D item 1.2 (§5 item 2).
 3. Gate W reserve: closed by D item 4.4 (§9 item 4).
 4. Fallback system count: closed by D item 4.2 (§6 item 3).
+5. Q7, the identified phase and the hold row: closed by E item 1 (§11 item 1c).
 
-New open questions go to `v8/OPEN_QUESTIONS.md` (D, item 2.4).
+Still open, listed in the next report and not fixed now (E, item 8): V8-X9 partial instrument calibration, V8-X11 the two weak `validate_d` rows (non-bypass's asserted panel clause, templated faithfulness), and Q1 to Q6 in `OPEN_QUESTIONS.md`. New open questions go to that file (D, item 2.4).
 
-## 16. Out of scope
+## 16. Housekeeping (E, item 7)
+1. Host B1's GPU was held by another process overnight: check once, report what is seen, never signal it, and use B1 if it clears.
+2. Delete the leftover demo and adapter state under `~/v8_state`, and keep the server on port 8881.
+3. Isolation, credentials, anonymity, 2 concurrent episodes and the FM-blind rules stay as above.
+4. Push after each step with `STATUS.md` updated, and at least every 90 minutes while a job runs.
+
+## 17. This iteration and the stop rule (E, items 3, 5, 6)
+1. **Step 1, free reanalysis, evidence and not a gate:** recompute the margin from the 24 completed dev runs under the new estimator with the 3 placements already in hand, write `truth/F1_REESTIMATE.md` with both estimators per system, note that 3 placements sample a minimum poorly, and push. Proceed to step 2 either way.
+2. **Step 2:** run the new reference protocol (§7 item 0) on the dev systems and report Gate F1. If it passes, run the test systems, run the dev FM path, set the band, report Gate F2 and continue into V8-4 as pre-registered.
+3. **Step 3, only if Gate F1 fails at fragment scale:** build one 18-repeat U0 rod on K+ muscovite with the §7 item 0 protocol, time it and stop. Report atom count, wall time per placement, projected wall time for the full set across the two usable GPUs, and peak memory. Start no production set. Write `truth/ROD_SCOPE.md`, push, stop for David.
+4. **Stop rule:** v8 gets this one iteration. If Gate F1 fails at fragment scale and the rod scoping shows the full set needs more than 48 GPU hours, stop and write `v8/NEGATIVE_RESULT.md`: what was built, what the gates showed, why protein to crystal registry energies resist this benchmark at reachable cost, and what would change the answer. That document is a real v8 deliverable, not a failure report.
+
+## 18. Out of scope
 Phase and transformation families (HOOMD-blue Monte Carlo), van der Waals substrates, sequence design, priced reference energies, a second materials FM, Opus, Qwen3-8B, training, the label-free reward validation, real collaborator data; any change under `v6/` or `v7/`; any change outside `v8/`, `~/v8env`, `~/v8_state`, `~/v8_data`. (P, Out of scope; D, item 5)
