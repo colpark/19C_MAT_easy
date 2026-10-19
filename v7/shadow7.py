@@ -27,9 +27,9 @@ def worlds(fam):
             if d.get('kind') != 'H' or d.get('slot') != 'take': continue
             out += [(s * 10 + 1, f'gold_{s}_A.json', None), (s * 10 + 2, f'gold_{s}_B.json', None)]
     else:
-        seen = set()
+        seen = set(); bench = {w['scen'] for w in json.load(open(os.path.join(HERE, 'T', 'WORLDS_T.json')))['worlds'] if w.get('in_bench')}
         for tw, v in sorted(F7.T_SCEN.items()):
-            if v['hold'] or SC.SCEN[v['scen']].get('slot') != 'take': continue
+            if v['hold'] or v['scen'] not in bench: continue
             for sm in ('pre', 'post'):
                 key = (v['scen'], sm, v[f'phase_{sm}'])
                 if key in seen: continue
