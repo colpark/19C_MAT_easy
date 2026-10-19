@@ -64,6 +64,9 @@ def main():
     specs = json.load(open(a.specs))
     os.makedirs(a.runs_dir, exist_ok=True)
     log = open(os.path.join(a.runs_dir, f"driver_{a.tag}.log"), "a")
+    # the driver writes its own PID: a shell's $! can name a wrapper, not this process
+    pidfile = os.path.join(a.runs_dir, f"driver_{a.tag}.pid")
+    open(pidfile, "w").write(str(os.getpid()) + "\n")
     print(f"=== driver {a.tag} start {time.strftime('%FT%TZ', time.gmtime())} {len(specs)} specs ns={a.ns}", file=log, flush=True)
 
     for s in specs:
@@ -91,6 +94,7 @@ def main():
                 break
         else:
             print(f"  FAILED twice: {tag}", file=log, flush=True)
+    os.remove(pidfile) if os.path.exists(pidfile) else None
     print(f"=== driver {a.tag} done {time.strftime('%FT%TZ', time.gmtime())}", file=log, flush=True)
 
 

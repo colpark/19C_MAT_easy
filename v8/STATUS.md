@@ -5,6 +5,7 @@
 - Gate F1 on fluorophlogopite: FAILED (no IFF parameters), not patched.
 - Addendum D (V8-X6): overnight unattended run; open points closed; PREREG_EFFECTIVE.md regenerated.
 - V8-1: Gate S PASSED; slabs and fragments built. First truth runs all failed with NaN (V8-E10, V8-E11); fixed (water clash cleanup, frozen-pair exclusions, 1 fs timestep) and production halved to 1 ns under the pre-registered throughput rule (V8-X8). Pilot run under way.
+- V8-2: instrument built; ALL WORLD TESTS PASSED (partly calibrated, V8-X9).
 - V8-3: graph I, server8 and MANUAL_I built; all kit and graph I tests pass; band and reliability table still placeholders from Track 1.
 
 Next: dev truth MD runs (Gate F1), then test truth; tracks 2 and 3 in progress.
