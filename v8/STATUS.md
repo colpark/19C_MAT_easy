@@ -1,11 +1,13 @@
 # v8 status (updated at every push)
 
-- V8-0 complete. Kits pass under ~/v8env; UMA uma-s-1p2 works on hosts A1 and B1.
-- Addenda A (V8-X2), B (V8-X3), C (V8-X5) pre-registered; rules in force consolidated in PREREG_EFFECTIVE.md.
-- Gate F1 on fluorophlogopite: FAILED (no IFF parameters), not patched.
-- Addendum D (V8-X6): overnight unattended run; open points closed; PREREG_EFFECTIVE.md regenerated.
-- V8-1: Gate S PASSED; slabs and fragments built; dev truth MD running at the final protocol (1 ns, 1 fs) on hosts A1 (K+) and A2 (Na+), then FM dev on A1 and test truth on A2. Gates F1 and F2 pending.
-- V8-2: instrument built; ALL WORLD TESTS PASSED (partly calibrated, V8-X9).
-- V8-3: graph I, server8 and MANUAL_I built; all kit and graph I tests pass; band and reliability table still placeholders from Track 1.
+**Stopped for David.** Gate S passed; **Gate F1 FAILED** (0 of 4 dev systems above 0.61 sigma; the registry margin's sign is not stable across in-plane placements, risk R2), so Track 1 stopped as pre-registered. Nothing relaxed.
 
-Next: dev truth MD runs (Gate F1), then test truth; tracks 2 and 3 in progress.
+- V8-0 complete; UMA verified on hosts A1 and B1.
+- Addenda A (V8-X2), B (V8-X3), C (V8-X5), D (V8-X6) pre-registered; rules in force in PREREG_EFFECTIVE.md.
+- Gate S PASSED (truth/SUPPLY.md). Muscovite from the IFF v1.5 distribution model, cell within 0.3 % of literature.
+- V8-2 instrument done (ALL WORLD TESTS PASSED; partly calibrated, V8-X9). V8-3 graph I, server, manual done; all suites pass, kits byte-identical.
+- Adapters done; gold correct on both demo twins; validate_d fails the hold row only (Q7, blocks V8-4).
+- Gate F1 FAILED: truth/F_REPORT.md, truth/TRUTH_TABLE.json. Gate F2, V8-4 to V8-7 not reached.
+- FM blindness intact: no FM call has touched any dev or test system.
+
+Read `v8/MORNING.md` first. Two decisions are waiting: Q7 (phase semantics for the hold row) and the scope after Gate F1 (recommendation: define truth on 14- or 18-repeat rods instead of single repeats).
