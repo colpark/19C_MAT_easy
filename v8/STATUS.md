@@ -8,4 +8,4 @@
 - Leftover demo and adapter state deleted; server kept on 8881.
 - V8-2 instrument and V8-3 graph/server/manual stand. Adapters stand.
 
-Next: step 1 free reanalysis (truth/F1_REESTIMATE.md), then step 2 the rigid-placement reference protocol and Gate F1.
+Step 1 done: Gate F1 also FAILS under the minimum estimator (0 of 4; 2 fail, 2 undetermined because a minimum was still falling). Next: step 2, the rigid-placement reference protocol (30 placements per registry, no water) and Gate F1.
