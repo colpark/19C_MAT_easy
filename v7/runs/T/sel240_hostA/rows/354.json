@@ -1,0 +1,689 @@
+{
+ "scen": 354,
+ "mode": "selection",
+ "budget": 240,
+ "formula": "Y2B4Pt5",
+ "set": "fresh",
+ "stratum": "K",
+ "rows": [
+  {
+   "test": "correctness",
+   "pass": true,
+   "detail": {
+    "c1": [
+     "SUPPORTED",
+     [
+      "SUPPORTED"
+     ]
+    ],
+    "c2": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ],
+    "c3": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ],
+    "c4": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "necessity S1a_pre+S1d_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b_pre+S1e_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c_pre+S1d_pre+S1e_pre+S1f_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1a_post+S1d_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b_post+S1e_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c_post+S1d_post+S1e_post+S1f_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "measurement factorial",
+   "pass": true,
+   "detail": {
+    "c1": {
+     "identified": [
+      "Y2B4Pt5 (Fmmm)",
+      "Y2B4Pt5 (P-1)"
+     ],
+     "verdict": "SUPPORTED"
+    },
+    "c2": {
+     "identified": [
+      "Y2B4Pt5 (P-1)",
+      "Y2B4Pt5 (P-1)"
+     ],
+     "verdict": "REFUTED"
+    },
+    "c3": {
+     "identified": [
+      "Y2B4Pt5 (Fmmm)",
+      "Y2B4Pt5 (Fmmm)"
+     ],
+     "verdict": "REFUTED"
+    },
+    "c4": {
+     "identified": [
+      "Y2B4Pt5 (P-1)",
+      "Y2B4Pt5 (Fmmm)"
+     ],
+     "verdict": "REFUTED"
+    }
+   }
+  },
+  {
+   "test": "hold",
+   "pass": true,
+   "detail": {
+    "hold_displacement_+0.10mm_c1": "SUPPORTED",
+    "hold_displacement_+0.10mm_c2": "REFUTED",
+    "hold_displacement_+0.10mm_c3": "REFUTED",
+    "hold_displacement_+0.10mm_c4": "REFUTED",
+    "hold_zero_+0.005deg_c1": "SUPPORTED",
+    "hold_zero_+0.005deg_c2": "REFUTED",
+    "hold_zero_+0.005deg_c3": "REFUTED",
+    "hold_zero_+0.005deg_c4": "REFUTED",
+    "hold_size_x1.2_c1": "SUPPORTED",
+    "hold_size_x1.2_c2": "REFUTED",
+    "hold_size_x1.2_c3": "REFUTED",
+    "hold_size_x1.2_c4": "REFUTED"
+   }
+  }
+ ],
+ "pass_": true,
+ "base": {
+  "c1": {
+   "verdict": "SUPPORTED",
+   "key": "SUPPORTED",
+   "accept": [
+    "SUPPORTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "Y2B4Pt5 (Fmmm)",
+    "Y2B4Pt5 (P-1)"
+   ],
+   "D": {
+    "pre": 665089.996,
+    "post": 188469.394
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 57500.104,
+    "post": 57500.181
+   }
+  },
+  "c2": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "Y2B4Pt5 (P-1)",
+    "Y2B4Pt5 (P-1)"
+   ],
+   "D": {
+    "pre": 190553.585,
+    "post": 188469.394
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 57500.116,
+    "post": 57500.181
+   }
+  },
+  "c3": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "Y2B4Pt5 (Fmmm)",
+    "Y2B4Pt5 (Fmmm)"
+   ],
+   "D": {
+    "pre": 665089.996,
+    "post": 669581.956
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 57500.104,
+    "post": 57500.178
+   }
+  },
+  "c4": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "Y2B4Pt5 (P-1)",
+    "Y2B4Pt5 (Fmmm)"
+   ],
+   "D": {
+    "pre": 190553.585,
+    "post": 669581.956
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 57500.116,
+    "post": 57500.178
+   }
+  }
+ },
+ "tokens": [
+  {
+   "token": "4f7a355c0ab7bf2bbc40a20672ba04dc",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "27213ce1b937fe911d3bf42604d5acc3",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "374b1fbc0cdf11da70a9af22d1fc0fe5",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "5a3f3745cc4fc0b0fd33436e096bc588",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "14312042ef3ccd425af451166a572e26",
+   "world": 35411,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8637c203bf8142a59a0e517414a887ee",
+   "world": 35412,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "77f7df7274cffc7c0d5525f715bafc3a",
+   "world": 35413,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c83f0828c24533c63acb0eabb0793f4a",
+   "world": 35414,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c9843bda8e4b4043742294a7a7e720e0",
+   "world": 35421,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "fa962b45ad77ed59ece8ab36238192d2",
+   "world": 35422,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3bc6141c04482f87d277cd0733036c7e",
+   "world": 35423,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "00be9281e0e0bd1773b182069a1bb05e",
+   "world": 35424,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3c75d10c9733aa0ad11c992857c47897",
+   "world": 35431,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8bf99dfbfd1b5804b577db30ea67f3ff",
+   "world": 35432,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d1731b758444ac10d8fa8dd09423db45",
+   "world": 35433,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8fa7a8c44a9a6219f2bb0dd9fc8dd733",
+   "world": 35434,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b438b49081979e6adf7ad1fbfc7d29db",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "fd1c79f51aca363c7c2b244b1917ceaf",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "865841689bf0b6663daeea97e49ad031",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c35a1dbb91b5066dc51242bd5cea1e51",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "37ab0c72359fbacb38fdd0c96389fd53",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "1285d07b7e1cdb95202df3609cac28b2",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "7c22fdad94dbc7d65c64a20178b7b5e8",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d7f35e016e88657a6509cd47700d9ead",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b2d45b3e09b4b0ea9be0dd66b20928e3",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "2ef1b14be5b6acf73395193d8869588a",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "7613f2319c26b6ac64654808ad9d6473",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "76362972f84bd9c20b4a71043e127d28",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "dfa47894bc1e2b877e248650197a5d12",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "4cc25a9637e5c17f73c69df1cbb924ec",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "aaef4ffd2c4f764b2783618225784541",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "54f99fb5effcaecced122061e72cc0f2",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ede7e8ae8da10f89b7befb4a5f1c3271",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "20b7a440c4213244a87c1eafd58d98d0",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0783800c5bd7ede2c3fef3521c6a7555",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b22464ee1dbde4ba6d43379709b47924",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c09ce149559f335eee08e9478542ddde",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3b3228a71db9bb6f79e721a254ce356e",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "77fc58d25961a3f49a8b0c0a18eabf50",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "fe966fa5bb638b070b8be45254ed407b",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d44a6a2a6a99ac3c4f3be66cec3d77e1",
+   "world": 35401,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ae190bebc24382647f49e72cf8e3aeb7",
+   "world": 35402,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3874f9e5f902b1313b9e45a3cc3cb570",
+   "world": 35403,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "1449de01a1e9ad8af083373a4e74ab7b",
+   "world": 35404,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c54235818ffebd43d26ebd9b59f82299",
+   "world": 35411,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "2b8b7e4be956703666f09c943b0b062f",
+   "world": 35412,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "4cb22fef4a845112fc78df8fcf0b74a1",
+   "world": 35413,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "a1fc16e2c9a9297cbcf3db9f326b1477",
+   "world": 35414,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0429f4f9a7d4be21a10ff9e173e41840",
+   "world": 35421,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b04b2e8064692e080043b43df058bc08",
+   "world": 35422,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6750509cfb8913d06600023ff9d28c2b",
+   "world": 35423,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "344b696fc0a72a4fc94731d178c62a60",
+   "world": 35424,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "4b9d91a9f88fe95605ecbee20d46f226",
+   "world": 35431,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "42fc574c53e95c3ae921601da4d2486f",
+   "world": 35432,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c6d6db6433b86d99000dfcfb64109861",
+   "world": 35433,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "9a0ffbe932286b22ec60dd28a704af41",
+   "world": 35434,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  }
+ ]
+}
