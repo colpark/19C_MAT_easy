@@ -1,5 +1,9 @@
-# v8 status
+# v8 status (updated at every push, amendment B item 6)
 
-V8-0 complete (2026-10-19): kits pass, PREREG pushed, reachability logged, install check passes on hosts A1 and B1 (`install/INSTALL_CHECK.md`), pygwy replaced by the fallback dilation. UMA access was missing at first (stop logged) and granted at 01:17Z.
+- V8-0 complete. Kits pass under ~/v8env; UMA uma-s-1p2 works on hosts A1 and B1.
+- Amendment A (V8-X2) and amendment B (V8-X3) pre-registered.
+- Scope: muscovite (001) with surface K+ and with surface Na+ (100 mM NaCl); 6 test designs x 2 cations = 12 systems, 24 worlds. Fallback: 12 test designs on K+ only.
+- Gate F1 on fluorophlogopite: FAILED (no IFF parameters), not patched.
+- V8-1: inputs gathered; no truth run and no FM call on any system yet.
 
-Next: V8-1 (truth and FM feasibility, two pilot fragments first).
+Next: fragment cut from the PDB sequences, SUPPLY.md and Gate S, CIF choice, then the IFF muscovite slab (K+ and Na+) and the pilot truth runs.
