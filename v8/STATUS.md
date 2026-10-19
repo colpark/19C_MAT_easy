@@ -1,11 +1,13 @@
 # v8 status (updated at every push)
 
-**Amendment E iteration under way.** Gate S passed; the first Gate F1 (solvated, paired estimator) FAILED and is kept as recorded; E changes the estimator and the reference protocol and gives v8 one further iteration.
+**Stopped for David at the end of the amendment E iteration.** Read `v8/REPORT_E.md`.
 
-- Addenda A, B, C, D, E pre-registered (V8-X2, X3, X5, X6, X12); rules in force in PREREG_EFFECTIVE.md.
-- Q7 done (E item 1): `phase` is now the identified candidate registry; **validate_d with all rows PASSES on the demo worlds, hold row included** (V8-E15).
-- Host B1's GPU still held by a 7-day vLLM process (68 GB, 96 %); never signalled. Usable GPUs: A1, A2.
-- Leftover demo and adapter state deleted; server kept on 8881.
-- V8-2 instrument and V8-3 graph/server/manual stand. Adapters stand.
+- **Gate F1 FAILED at fragment scale** under both estimators and both protocols (0 of 4 dev systems, best 1.26 sigma). `truth/F1_REESTIMATE.md` (step 1), `truth/F1_STEP2.md` (step 2).
+- **Q7 done** (E item 1): `phase` is the identified candidate registry; `validate_d` with **all rows PASSES** on the demo worlds, hold row included. No kit file or validate_d row edited.
+- **Rod scoping done** (E item 5): a full rod set is about 1 GPU hour, far below 48, so the E item 6 stop rule does not trigger and no NEGATIVE_RESULT.md is written. The blocker is geometry: only U0 has a usable 18-repeat rod, since the tiled control rods clash (V8-E14). No production set started.
+- Gate S passed; V8-2 instrument and V8-3 graph/server/manual stand; adapters stand.
+- FM blindness intact and complete: no FM call has touched any dev or test system.
+- Still open (E item 8): V8-X9, V8-X11, Q1 to Q6.
+- Machine: nothing of v8's running except the server on 8881 (demo worlds only); host B1's GPU still held by a 7-day vLLM process, never signalled.
 
-Step 1 and step 2 done: Gate F1 FAILED at fragment scale under both estimators and both protocols. **Step 3 done: rod scoping shows about 1 GPU hour for a full set (far below 48), so no NEGATIVE_RESULT; but only U0 has a usable 18-repeat rod, since the tiled control rods clash (V8-E14).** Stopped for David per E item 5.
+David's decision: build four clash-free control rods so a rod reference can carry a pilot of the pre-registered size, or narrow v8's scope to what U0 alone supports.
