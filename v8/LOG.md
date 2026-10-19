@@ -12,3 +12,7 @@
 - V8-E4: the first V8-0 access check downloaded only facebook/UMA README.md and listed the files, which a gated repo allows without approval; it was wrongly read as access. The checkpoint download then failed with 403 GatedRepoError (account not on the authorized list). No checkpoint is cached on host A, node A2 or host B.
 - 2026-10-19T00:53:02Z V8-0 STOP: UMA weights (facebook/UMA, uma-s-1p2) are not accessible. Per the prompt, stop at V8-0 and ask David. Nothing after V8-0 has started.
 - 2026-10-19T01:07:07Z V8-0 recheck: facebook/UMA uma-s-1p2.pt for account HEYKEETAE now returns GatedRepoError "awaiting a review from the repo authors" (access requested, not yet granted). Still stopped at V8-0.
+- 2026-10-19T01:17:23Z V8-0: facebook/UMA access granted to HEYKEETAE (background check every 10 min, PID file install/uma_watch.pid, removed after exit).
+- 2026-10-19T01:23:03Z V8-0: uma-s-1p2 single point on a 32-water box on GPU, hosts A1 and B1: identical energies (OMol -66508.3105 eV, OMat -396.1529 eV), ckpt sha256 ba5c0d912efa22dc.
+- V8-E5: fairchem reads checkpoints from its own cache ~/.cache/fairchem, not the HF hub cache, so host B (offline) first failed with LocalEntryNotFoundError. Fix: ~/.cache/fairchem copied from host A (rsync, no delete).
+- 2026-10-19T01:23:03Z V8-0 complete. Stop for UMA lifted.

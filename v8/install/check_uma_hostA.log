@@ -1,8 +1,6 @@
-  File "/home/aid1/v8env/lib/python3.12/site-packages/huggingface_hub/file_download.py", line 307, in _request_wrapper
-    hf_raise_for_status(response)
-  File "/home/aid1/v8env/lib/python3.12/site-packages/huggingface_hub/utils/_http.py", line 420, in hf_raise_for_status
-    raise _format(GatedRepoError, message, response) from e
-huggingface_hub.errors.GatedRepoError: 403 Client Error. (Request ID: Root=1-6ad56618-14f93e08506e40bc5637fe05;7c3ef09c-5aab-4b68-bd25-dcb384749957)
-
-Cannot access gated repo for url https://huggingface.co/facebook/UMA/resolve/main/checkpoints/uma-s-1p2.pt.
-Access to model facebook/UMA is restricted and you are not in the authorized list. Visit https://huggingface.co/facebook/UMA to ask for access.
+WARNING:root:The UMA fast path (merge_mole + compile) is only available for fixed composition, task, charge, and spin. This is optimized for MD applications. Falling back to a less optimized version for subsequent evaluations. Reason: 'Spin differs: tensor([1]) vs tensor([0], device='cuda:0')'.
+Use inference_settings='batch' for heterogeneous batched evaluations.
+fairchem-core 2.23.0 ckpt sha256 ba5c0d912efa22dc
+task omol: E -66508.3105 eV, |F|max 4.273 eV/A, 50.84 s, natoms 96
+task omat: E -396.1529 eV, |F|max 3.182 eV/A, 2.30 s, natoms 96
+UMA OK
