@@ -186,7 +186,30 @@ def circ_mean(angles_deg, w=None):
     return (math.degrees(math.atan2(s, c)) / PHI) % PERIOD, R
 
 
-def fit(meas_list):
+def registry_label(angle_rel_deg, registry_angles):
+    """The identified registry, as a label rather than an angle.
+
+    Family I has exactly two candidate registries, 30 degrees apart, whose angles are a
+    geometric property of the design's carboxylate array (the same in both twins). This
+    returns the name of the candidate nearest the fitted angle, modulo the 60 degree
+    lattice period, so `phase` carries a discrete identification while the fitted angle
+    stays in `angle_rel_deg` (amendment E item 1, approving OPEN_QUESTIONS.md Q7).
+
+    It reads only the candidate *angles*, never the energies or which registry is lowest,
+    so an intervention on the FM's ranking flips the verdict and leaves this label alone.
+    The candidates are not assumed to sit at 0 and 30 degrees from a lattice row: a design
+    whose carboxylate spacing matches the lattice at some other offset is perfectly
+    possible, and the demo worlds draw that offset at random.
+    """
+    if angle_rel_deg is None or not registry_angles:
+        return None
+    def sep(x):
+        d = abs((angle_rel_deg - x) % PERIOD)
+        return min(d, PERIOD - d)
+    return min(registry_angles, key=lambda k: sep(registry_angles[k]))
+
+
+def fit(meas_list, registry_angles=None):
     """Fit the rod angle relative to the lattice on all given measurements. No lattice scan: angle undefined."""
     rods, lats = [], []
     for m in meas_list:
@@ -210,8 +233,9 @@ def fit(meas_list):
     D = D_from(N, kappa, R_eff)
     se_stat = 1.0 / (PHI * math.sqrt(max(N * kappa * max(R, 1e-3), 1e-6))) * (180 / math.pi)
     se = math.hypot(se_stat, se_lat)
-    return dict(base, phase=str(round(mu)), angle_rel_deg=round(mu, 2), angle_se_deg=round(se, 2),
-                runner_up=str(round((mu + 30) % PERIOD)), D=round(D, 2), lattice_azimuth_deg_mod60=round(az, 2),
+    return dict(base, phase=registry_label(mu, registry_angles), angle_rel_deg=round(mu, 2), angle_se_deg=round(se, 2),
+                runner_up=(None if not registry_angles else
+                           next((k for k in registry_angles if k != registry_label(mu, registry_angles)), None)), D=round(D, 2), lattice_azimuth_deg_mod60=round(az, 2),
                 lattice_se_deg=round(se_lat, 2), concentration=round(kappa, 3))
 
 

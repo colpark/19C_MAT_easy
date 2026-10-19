@@ -19,6 +19,23 @@ EXT = {'panel_fails': True, 'stratum': 'K', 'blindfm_pairs_resolved': 0, 'consta
 TH = 12.0          # toy theta_match relative to the lattice, degrees
 
 
+def _registry_label(angle_rel_deg, angles=None):
+    """Mirror of mcenv.world8.registry_label: name the candidate registry nearest the angle.
+
+    The candidates are at TH and TH + 30, an arbitrary offset from a lattice row, so the
+    label cannot be read off the angle alone. Energies are never consulted.
+    """
+    if angle_rel_deg is None:
+        return None
+    angles = angles or {'reg_a': TH, 'reg_b': TH + 30.0}
+
+    def sep(x):
+        d = abs((angle_rel_deg - x) % 60.0)
+        return min(d, 60.0 - d)
+
+    return min(angles, key=lambda k: sep(angles[k]))
+
+
 def world(label, key, rod_angle, fm_margin=0.40, lattice_in_plan=True, needs_two=False, disp=0.0, **extra):
     t = {'task_id': f'toy-{label}-{disp}', 'world': label, 'key': key, 'claim': 'toy claim', 'sample_text': 'toy sample',
          'm0': 'm0', '_truth': {'rod': rod_angle, 'fm_margin': fm_margin, 'lattice': lattice_in_plan, 'needs_two': needs_two,
@@ -50,7 +67,8 @@ def fit(node, inp, t, ctx):
         return dict(outputs={'phase': None, 'angle_rel_deg': None, 'angle_se_deg': None, 'runner_up': None, 'D': 3.1}, cost_min=0.0, calls=[])
     d = 40.2 if (not tr['needs_two'] or node['id'] == 'S1f') else 12.4
     a = tr['rod'] % 60
-    return dict(outputs={'phase': str(round(a)), 'angle_rel_deg': a + 0.4, 'angle_se_deg': 1.1, 'runner_up': str(round((a + 30) % 60)), 'D': d},
+    return dict(outputs={'phase': _registry_label(a), 'angle_rel_deg': a + 0.4, 'angle_se_deg': 1.1,
+                         'runner_up': _registry_label(a + 30), 'D': d},
                 cost_min=0.0, calls=[{'tool': 'fit'}])
 
 
