@@ -1,0 +1,689 @@
+{
+ "scen": 348,
+ "mode": "selection",
+ "budget": 240,
+ "formula": "SrFe5Pt2",
+ "set": "fresh",
+ "stratum": "K",
+ "rows": [
+  {
+   "test": "correctness",
+   "pass": true,
+   "detail": {
+    "c1": [
+     "SUPPORTED",
+     [
+      "SUPPORTED"
+     ]
+    ],
+    "c2": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ],
+    "c3": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ],
+    "c4": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "necessity S1a_pre+S1d_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b_pre+S1e_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c_pre+S1d_pre+S1e_pre+S1f_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1a_post+S1d_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b_post+S1e_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c_post+S1d_post+S1e_post+S1f_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "measurement factorial",
+   "pass": true,
+   "detail": {
+    "c1": {
+     "identified": [
+      "SrFe5Pt2 (Immm)",
+      "SrFe5Pt2 (C2/m)"
+     ],
+     "verdict": "SUPPORTED"
+    },
+    "c2": {
+     "identified": [
+      "SrFe5Pt2 (C2/m)",
+      "SrFe5Pt2 (C2/m)"
+     ],
+     "verdict": "REFUTED"
+    },
+    "c3": {
+     "identified": [
+      "SrFe5Pt2 (Immm)",
+      "SrFe5Pt2 (Immm)"
+     ],
+     "verdict": "REFUTED"
+    },
+    "c4": {
+     "identified": [
+      "SrFe5Pt2 (C2/m)",
+      "SrFe5Pt2 (Immm)"
+     ],
+     "verdict": "REFUTED"
+    }
+   }
+  },
+  {
+   "test": "hold",
+   "pass": true,
+   "detail": {
+    "hold_displacement_+0.10mm_c1": "SUPPORTED",
+    "hold_displacement_+0.10mm_c2": "REFUTED",
+    "hold_displacement_+0.10mm_c3": "REFUTED",
+    "hold_displacement_+0.10mm_c4": "REFUTED",
+    "hold_zero_+0.005deg_c1": "SUPPORTED",
+    "hold_zero_+0.005deg_c2": "REFUTED",
+    "hold_zero_+0.005deg_c3": "REFUTED",
+    "hold_zero_+0.005deg_c4": "REFUTED",
+    "hold_size_x1.2_c1": "SUPPORTED",
+    "hold_size_x1.2_c2": "REFUTED",
+    "hold_size_x1.2_c3": "REFUTED",
+    "hold_size_x1.2_c4": "REFUTED"
+   }
+  }
+ ],
+ "pass_": true,
+ "base": {
+  "c1": {
+   "verdict": "SUPPORTED",
+   "key": "SUPPORTED",
+   "accept": [
+    "SUPPORTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "SrFe5Pt2 (Immm)",
+    "SrFe5Pt2 (C2/m)"
+   ],
+   "D": {
+    "pre": 495698.785,
+    "post": 270172.558
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 79772.312,
+    "post": 79772.07
+   }
+  },
+  "c2": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "SrFe5Pt2 (C2/m)",
+    "SrFe5Pt2 (C2/m)"
+   ],
+   "D": {
+    "pre": 270311.186,
+    "post": 270172.558
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 79772.323,
+    "post": 79772.07
+   }
+  },
+  "c3": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "SrFe5Pt2 (Immm)",
+    "SrFe5Pt2 (Immm)"
+   ],
+   "D": {
+    "pre": 495698.785,
+    "post": 500322.835
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 79772.312,
+    "post": 79772.05
+   }
+  },
+  "c4": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "SrFe5Pt2 (C2/m)",
+    "SrFe5Pt2 (Immm)"
+   ],
+   "D": {
+    "pre": 270311.186,
+    "post": 500322.835
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 79772.323,
+    "post": 79772.05
+   }
+  }
+ },
+ "tokens": [
+  {
+   "token": "f5a62d665c9834a0a88d17f2a053c169",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "2b563cc1cfd06027d4cb261de6fa9c9b",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b0e182e972597eb004b03ebb0e1064a3",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b963f008bac0e37f6dc0c66c5f33613e",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "14e2c649e66412eaada1b1c6c7a7b0d0",
+   "world": 34811,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "bff5ab7f4c8a5063d478ba2acb85efc1",
+   "world": 34812,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "bcb9eb67549f43c3306f0137de21775e",
+   "world": 34813,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "e1d245acba9f3152ee1d518297b7908f",
+   "world": 34814,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "9022c4f4ab305cc329208265780f601c",
+   "world": 34821,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "749fe9690a9126bcf9c1925aaf331e9e",
+   "world": 34822,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3593ac4e2c8957fe6a43da3a123b6436",
+   "world": 34823,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "4d9e43e83a95eed7bbe90a622deea5a2",
+   "world": 34824,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0ec4d28adf2ff9119830e92b6ba43dd0",
+   "world": 34831,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "5370fadfa06dbaf15946d3dc172646ff",
+   "world": 34832,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "66896a12fc1210718a3a353c7e0fb566",
+   "world": 34833,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "42afdb396ebeb2f7fc15bedbb12cd968",
+   "world": 34834,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d22618c9753166bea530844c30443167",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "422c48140df03aea1507e1ed27d48bb0",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "872a51d2ad57b7dc690083460d1a7312",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "9dd06de166183ad8b9aa5a38231cd94d",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8f45df0ddacec26c36475db783393f40",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8a0f7651f29a47402c24a4eb68e7266b",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "02e4a68c6c5c8807169217c4c4ba6619",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c0a960006c6daa916b4bf7ce8e34910b",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d0cb778abd180d3937df7c1a0f80d7fd",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c94b785dcb2da0c77d4669c9bbc000b9",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "f10a0ada1fdb5db8f8f978d14da65250",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "f64d868bd1dbe97598f284c1b3182a6b",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8fb328d68b7bd12070241a6b8c6ba68d",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "19d96c18cec16de4465dfd907655d5fa",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "fa8b2e42bcba798bd92e5196f6f5e213",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "9efa5506e02ab9d8c2812ce38a420b38",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c745b56ed1f3c6b465a0ceee892e2c2b",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "f16e61454a3b2917a84dd65dd361eabe",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "f22f73744ae5348add0cefe4b2359fde",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b859a05c78f943e3c37a22d35cd66a59",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0fa8f36b651af776967a69671aecf0ba",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "dc6deff5f2a88227bdbdfb669e05437e",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d78f3635c123e3586b875c670dc37c62",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6bf3a485d4b5de8b783cbc01a5ca4568",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "8caf6bb27e86a2fc5dc0a3ff1966aeee",
+   "world": 34801,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3f40be336bbd7434e9112f5a1f746b2a",
+   "world": 34802,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ea1ca476d7ba802c60762bc474d3b80b",
+   "world": 34803,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "a1a69d662095f25ade70edd05c332fa1",
+   "world": 34804,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "302876aa0f0a8ad83524e5b0bc2e07b3",
+   "world": 34811,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "e665a817413a05165335fbad3bcc97d3",
+   "world": 34812,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "e336bdab97e72cf0addc435885fc6af7",
+   "world": 34813,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d997b5105a9d05a935a881614f361ee2",
+   "world": 34814,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "20539d100ae7fb689e0472b32045fed1",
+   "world": 34821,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b91efbfcf79b2d49f23861f3ebc0eb27",
+   "world": 34822,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "2ff6906ee4dfaf29821f878037a19432",
+   "world": 34823,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d44f2992540ae974882aa09bfab9ea53",
+   "world": 34824,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "59d6df2989521d6cd25113fc73370d17",
+   "world": 34831,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ac13606721da53f24f9a1fd0f44e9110",
+   "world": 34832,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c330d4fd5d0ff066c0d0033d292a370f",
+   "world": 34833,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0f0441cc0d9e166e22114fb0f785b01b",
+   "world": 34834,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  }
+ ]
+}

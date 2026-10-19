@@ -23,13 +23,14 @@ ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 F7.install()
 LAB = {'status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'answer'}
 FMT = {'energy', 'hull'}
-ARMS7 = {'v7t-noprior': LAB, 'v7t-fm': LAB | FMT, 'v7h-noprior': LAB, 'v7h-fm': LAB | FMT, 'v7-gold': LAB | FMT, 'v7-ceiling': LAB | FMT}
+ARMS7 = {'v7t-noprior': LAB, 'v7t-fm': LAB | FMT, 'v7h-noprior': LAB, 'v7h-fm': LAB | FMT, 'v7-gold': LAB | FMT, 'v7-ceiling': LAB | FMT,
+         'v7t-fm-planner': LAB | FMT | {'predict_separation'}, 'v7h-fm-planner': LAB | FMT | {'predict_separation'}}      # V7-X8
 BUDGET_ARMS = {f'v7-{kind}-b{b}': b for kind in ('ceiling', 'gold') for b in (180, 240, 300)}     # V7-2 budget rule: the budget in the arm name
 ARMS7.update({a: LAB | FMT for a in BUDGET_ARMS})
 S.ARM_TOOLS.update({a: set(t) for a, t in ARMS7.items()})
 S6.ARMS6.update(ARMS7)                                  # call log with call ids; v6 energy and hull handlers
 S6.CEILING.update({'v7-ceiling'} | {a for a in BUDGET_ARMS if 'ceiling' in a})
-S4.MODEL_OF.update({'v7t-fm': 'fm', 'v7h-fm': 'fm', 'v7-gold': 'fm', 'v7-ceiling': 'dft'})
+S4.MODEL_OF.update({'v7t-fm': 'fm', 'v7h-fm': 'fm', 'v7-gold': 'fm', 'v7-ceiling': 'dft', 'v7t-fm-planner': 'fm', 'v7h-fm-planner': 'fm'})
 S4.MODEL_OF.update({a: 'dft' if 'ceiling' in a else 'fm' for a in BUDGET_ARMS})
 ANSWER_T = json.load(open(os.path.join(ROOT, 'spec', 'answer_schema_T.json')))
 STATED = json.load(open(os.path.join(ROOT, 'STATED7.json'))) if os.path.exists(os.path.join(ROOT, 'STATED7.json')) else {}
@@ -118,7 +119,8 @@ def energy_text(arm, kind='T'):
         f"- **energy(structure_name):** formation energy per atom (eV/atom) of a library structure from the lab's energy model, on the scale above. Free. Stated error: mean absolute error {st.get('fm_mae', 0):.3f} eV/atom; polymorph energy differences {st.get('polymorph_gap_mae', 0):.3f} eV/atom.",
         f"- **hull(structure_name):** energy above the convex hull (eV/atom) and the decomposition products, from the energy model's formation energy of that structure against the fixed reference hull (DFT, the same in every session). Free. Stated error: mean absolute error {st.get('hull_mae', 0):.3f} eV/atom.",
         "- Each call returns the value and the stated error. Reliability of the model on held-out structures (sign error rate against the absolute predicted margin to the claim's threshold):",
-        st.get('reliability_text_' + kind, '')])
+        st.get('reliability_text_' + kind, '')] + ([
+        "- **predict_separation(plan" + (", sample" if kind == 'T' else "") + "):** for a proposed plan (a list of measure arguments" + (" for one sample" if kind == 'T' else "") + "), the expected Δχ² between each library polymorph taken as the truth and the best other polymorph, for your measurements so far" + (" of that sample" if kind == 'T' else "") + " plus the plan, at the least favourable crystallite size, displacement and zero offset, with the count scale from simulate and the background from your own data, and the plan's cost. Free. It uses only the library and your measurements."] if arm.endswith('-planner') else []))
 
 
 def manual_text7(scen, arm):
@@ -181,8 +183,22 @@ def t_answer(ep, a):
     return out
 
 
+def t_predict_separation(ep, a):
+    """V7-X8: the B1 planner tool (planner v3, V6-X18); for T it names the sample and uses only that sample's measurements."""
+    if not isinstance(ep, TEpisode): return S6.t_predict_separation(ep, a)
+    sm = _sample(a)
+    class _View:                      # a one-sample view of the T episode for the B1 computation
+        pass
+    v = _View(); v.tr = ep.tr; v.rec = ep.rec
+    ids = [r['id'] for r in ep.state['measurements'] if r['sample'] == sm]
+    v.state = dict(measurements=[r for r in ep.state['measurements'] if r['sample'] == sm])
+    v.meas, v.counts = ep.meas, ep.counts
+    out = S6.t_predict_separation(v, {k: x for k, x in a.items() if k != 'sample'})
+    return dict(out, sample=sm)
+
+
 S.TOOLS_BASE = dict(S6._base)
-S.TOOLS.update(status=t_status, measure=t_measure, fit=t_fit, answer=t_answer)
+S.TOOLS.update(status=t_status, measure=t_measure, fit=t_fit, answer=t_answer, predict_separation=t_predict_separation)
 
 if __name__ == '__main__':
     S.main()

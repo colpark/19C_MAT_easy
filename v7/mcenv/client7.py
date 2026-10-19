@@ -11,7 +11,8 @@ os.environ['MCENV_ARM'] = 'v6-active-fm'        # mcenv.client builds its own (u
 from mcenv import client as C                   # noqa: E402  _call (request id, retries) and the B1 tool texts
 os.environ['MCENV_ARM'] = ARM
 LAB = {'status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'answer'}
-ARM_TOOLS = {'v7t-noprior': LAB, 'v7t-fm': LAB | {'energy', 'hull'}, 'v7h-noprior': LAB, 'v7h-fm': LAB | {'energy', 'hull'}}[ARM]
+ARM_TOOLS = {'v7t-noprior': LAB, 'v7t-fm': LAB | {'energy', 'hull'}, 'v7h-noprior': LAB, 'v7h-fm': LAB | {'energy', 'hull'},
+             'v7t-fm-planner': LAB | {'energy', 'hull', 'predict_separation'}, 'v7h-fm-planner': LAB | {'energy', 'hull', 'predict_separation'}}[ARM]
 T = ARM.startswith('v7t-')
 mcp = MCPServer('mcenv')
 
@@ -71,6 +72,12 @@ reg('simulate', simulate, C.simulate.__doc__)
 reg('peaks', peaks, C.peaks.__doc__)
 reg('run_python', run_python, C.run_python.__doc__ if not T else "Run Python (numpy as np, scipy) on your measurements of both samples, preloaded as meas[id] (ids carry the sample, e.g. pre_m0, post_m1) with keys two_theta, counts, start, step, n, time_per_step, optics, si_standard, radiation. 30 s limit, no network, no files beyond its own scratch folder. Print what you need (free).")
 reg('energy', energy, C.energy.__doc__)
+if T:
+    def predict_separation(sample: str, plan: list[dict]) -> str: return C._call('predict_separation', dict(sample=sample, plan=plan))
+    reg('predict_separation', predict_separation, "Expected separation of a proposed plan for one sample (free). sample: 'pre' or 'post'. " + C.predict_separation.__doc__.split('(free). ', 1)[1].replace('your measurements so far', 'your measurements of that sample so far'))
+else:
+    def predict_separation(plan: list[dict]) -> str: return C._call('predict_separation', dict(plan=plan))
+    reg('predict_separation', predict_separation, C.predict_separation.__doc__)
 reg('hull', hull, C.hull.__doc__)
 
 if __name__ == '__main__':

@@ -1,0 +1,689 @@
+{
+ "scen": 309,
+ "mode": "selection",
+ "budget": 240,
+ "formula": "TiPPd2",
+ "set": "paired",
+ "stratum": "K",
+ "rows": [
+  {
+   "test": "correctness",
+   "pass": true,
+   "detail": {
+    "c1": [
+     "SUPPORTED",
+     [
+      "SUPPORTED"
+     ]
+    ],
+    "c2": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ],
+    "c3": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ],
+    "c4": [
+     "REFUTED",
+     [
+      "REFUTED"
+     ]
+    ]
+   }
+  },
+  {
+   "test": "necessity S1a_pre+S1d_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b_pre+S1e_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c_pre+S1d_pre+S1e_pre+S1f_pre",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1a_post+S1d_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1b_post+S1e_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "necessity S1c_post+S1d_post+S1e_post+S1f_post",
+   "pass": true,
+   "detail": {
+    "c1": "CANNOT_TELL",
+    "c2": "CANNOT_TELL",
+    "c3": "CANNOT_TELL",
+    "c4": "CANNOT_TELL"
+   }
+  },
+  {
+   "test": "measurement factorial",
+   "pass": true,
+   "detail": {
+    "c1": {
+     "identified": [
+      "TiPPd2 (Fm-3m)",
+      "TiPPd2 (Immm)"
+     ],
+     "verdict": "SUPPORTED"
+    },
+    "c2": {
+     "identified": [
+      "TiPPd2 (Immm)",
+      "TiPPd2 (Immm)"
+     ],
+     "verdict": "REFUTED"
+    },
+    "c3": {
+     "identified": [
+      "TiPPd2 (Fm-3m)",
+      "TiPPd2 (Fm-3m)"
+     ],
+     "verdict": "REFUTED"
+    },
+    "c4": {
+     "identified": [
+      "TiPPd2 (Immm)",
+      "TiPPd2 (Fm-3m)"
+     ],
+     "verdict": "REFUTED"
+    }
+   }
+  },
+  {
+   "test": "hold",
+   "pass": true,
+   "detail": {
+    "hold_displacement_+0.10mm_c1": "SUPPORTED",
+    "hold_displacement_+0.10mm_c2": "REFUTED",
+    "hold_displacement_+0.10mm_c3": "REFUTED",
+    "hold_displacement_+0.10mm_c4": "REFUTED",
+    "hold_zero_+0.005deg_c1": "SUPPORTED",
+    "hold_zero_+0.005deg_c2": "REFUTED",
+    "hold_zero_+0.005deg_c3": "REFUTED",
+    "hold_zero_+0.005deg_c4": "REFUTED",
+    "hold_size_x1.2_c1": "SUPPORTED",
+    "hold_size_x1.2_c2": "REFUTED",
+    "hold_size_x1.2_c3": "REFUTED",
+    "hold_size_x1.2_c4": "REFUTED"
+   }
+  }
+ ],
+ "pass_": true,
+ "base": {
+  "c1": {
+   "verdict": "SUPPORTED",
+   "key": "SUPPORTED",
+   "accept": [
+    "SUPPORTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "TiPPd2 (Fm-3m)",
+    "TiPPd2 (Immm)"
+   ],
+   "D": {
+    "pre": 694103.931,
+    "post": 335558.734
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 45507.0,
+    "post": 45506.902
+   }
+  },
+  "c2": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "TiPPd2 (Immm)",
+    "TiPPd2 (Immm)"
+   ],
+   "D": {
+    "pre": 333919.095,
+    "post": 335558.734
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 45506.987,
+    "post": 45506.902
+   }
+  },
+  "c3": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "TiPPd2 (Fm-3m)",
+    "TiPPd2 (Fm-3m)"
+   ],
+   "D": {
+    "pre": 694103.931,
+    "post": 695459.163
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 45507.0,
+    "post": 45506.904
+   }
+  },
+  "c4": {
+   "verdict": "REFUTED",
+   "key": "REFUTED",
+   "accept": [
+    "REFUTED"
+   ],
+   "correct": true,
+   "cost_min": 240.0,
+   "phases": [
+    "TiPPd2 (Immm)",
+    "TiPPd2 (Fm-3m)"
+   ],
+   "D": {
+    "pre": 333919.095,
+    "post": 695459.163
+   },
+   "remeasure": {
+    "pre": false,
+    "post": false
+   },
+   "plans": {
+    "pre": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ],
+    "post": [
+     {
+      "radiation": "neutron",
+      "start": 5.0,
+      "stop": 150.0,
+      "step": 0.05,
+      "time_per_step": 2.378490175801448,
+      "optics": "neutron",
+      "si_standard": false
+     }
+    ]
+   },
+   "predicted_D": {
+    "pre": 45506.987,
+    "post": 45506.904
+   }
+  }
+ },
+ "tokens": [
+  {
+   "token": "e60ca75e94f6aba917e0f44b510467d3",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6f2f2404b352d438bb60655c9191e7ab",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b82583d2283b5a4810b3028a3a33da6b",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "28b9c34a073a145ca72a67be8511881e",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "96733481e7e567444ac1eb469729c4f4",
+   "world": 30911,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "040429b39456a12f4ac851707f55fc1c",
+   "world": 30912,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "96c761cdbc61ff324cfd17ca82fd11ad",
+   "world": 30913,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d63a148d1838d8b76c516ff22a6babf4",
+   "world": 30914,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6b99f53669aaf57cc65cc84435b8af94",
+   "world": 30921,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "69bdce2c86e29ec2ebd6f8ef3e203d5e",
+   "world": 30922,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "9e537f124aee0dc59841ceb4925d5ec4",
+   "world": 30923,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "05e299c604fbbddf0536720723b53346",
+   "world": 30924,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "17afe262fedbf83f8c76613e8b0f4791",
+   "world": 30931,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "793b09e728cd6116f04f0656775c2278",
+   "world": 30932,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d85e9e9fb4412680924ca4b7884e949b",
+   "world": 30933,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "29a38eafcb6da1bed8b313d6a9f7319f",
+   "world": 30934,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ce2cd67ea1c1e45ef9a5e27fcce6fdd2",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d2d068273042d46878c6e9911faf4f02",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "b0f87bed9dea4bd75c302d42a1c74210",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "5405e289f0fdd4b5a7aa42e501b1130e",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "2840f6e3495cdee0038055df382b05fe",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "294ddbfc54fbe1a71358744ec7dbd7f8",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d2cd013a2b886fe1623121c658e349ce",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "12472ac8af88196e7e627a4d8f7778f6",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "7a05b7ab05bf963b1588148c5055a750",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6dadfa2a0adf06e34df3186654c6579b",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "2f71b977759a37a86828dd7ccfeda98a",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c3c593ccf223e66faebf53ea9ad6ba77",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "c26da4aa60d4b94c89f1b9b0e5c6fd3b",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ec7991937e7ef79f20a395099094f278",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "99e0b141f54452d331a8621c58010ece",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "e44dbb651a520271d5b0c20a624b5fc0",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "cbdbf3c4d15e4397e471cb0bbe8eedfe",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0b221dc5a5dafdd911fcfb57c9f5691e",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "95ed5337a636d9c8054a83fd43399b0e",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ff7e69a937c9cd49d130fe278a7e8831",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "46fc84a661ddbe83d94f955db75c7e9e",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "94216b4863f79c5ebc19479df1f0b1fd",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "eb9c00765a97baea6ef59a5b8d7c2fff",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0facc7bf1957e19ff32dfe7219d2035d",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "048fbe926aadf38d17e0b7117b484e20",
+   "world": 30901,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "47e02758a2a5690560ffd72072a84171",
+   "world": 30902,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "0eb4a16e48366d3b0446b52970adfc4c",
+   "world": 30903,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6f05dc1c8e0299383785630c7052e7f7",
+   "world": 30904,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "cf381ac5a201ecd95fd045092e043eb9",
+   "world": 30911,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "3fb5583c5cd35296af61c2bc8e39132b",
+   "world": 30912,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d580d9987ae461554218143115ea09da",
+   "world": 30913,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "e4f3073a3ecf202c5625ad4a3124c4ec",
+   "world": 30914,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "dce5d2f48f6dee36b49163bbf5c07fc9",
+   "world": 30921,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "4c4fe43d039a62ef1e048a71f15b2401",
+   "world": 30922,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "6e8dbdc2666fce3e25ff76f6bb7fc2db",
+   "world": 30923,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "e690c9b462b3c6e58091df98b06e3872",
+   "world": 30924,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "962f4d1e5dca7ff1eff189569e6157fe",
+   "world": 30931,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "ed42bd3d8f7e2e59dd5b2e68167fe852",
+   "world": 30932,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "d4cc41f346ad95e387100bb7f203e453",
+   "world": 30933,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  },
+  {
+   "token": "1b025788fec75aa9e12ce3a06d91d829",
+   "world": 30934,
+   "arm": "v7-ceiling-b240",
+   "k": 1
+  }
+ ]
+}
