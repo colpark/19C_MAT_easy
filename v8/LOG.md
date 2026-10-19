@@ -98,3 +98,24 @@ many placements the caller actually drew, so the four amendment F rod runs carry
 The runs themselves are unaffected: `placement_table(64)` drew 64 rows, the sibling field
 `placements` reads 64, and 64 energies per registry are recorded. `describe()` now takes the
 count from the caller and `run_ref.py` passes it. Reports quote 64, with this note.
+
+## V8-X14 amendment F result (2026-10-19) — Gate F1 FAILED on the rod, v8 ends
+Four U0 rod systems, 64 placements per registry, 20,000 iteration cap, zero cap hits, every
+placement converged on tolerance (exit iterations 1,126 to 7,640). Total 3.24 GPU hours against
+my 3-hour projection and David's 4-hour limit.
+
+| System | atoms | min margin (kJ/mol) | nsig | paired margin | nsig | result |
+|---|---|---|---|---|---|---|
+| rod14 / K+ | 44,064 | +223.9 +/- 415.7 | 0.54 | +338.8 +/- 183.8 | 1.84 | fail |
+| rod14 / Na+ | 44,064 | -1194.2 +/- 681.2 | 1.75 | -1075.5 +/- 208.5 | 5.16 | undetermined |
+| rod18 / K+ | 46,946 | +2036.1 +/- 482.0 | 4.22 | -107.0 +/- 272.7 | 0.39 | pass |
+| rod18 / Na+ | 46,946 | -961.8 +/- 402.2 | 2.39 | -501.4 +/- 294.2 | 1.70 | undetermined |
+
+**Gate F1: 1 of 4, needing 3 of 4. FAILED.** Both Na+ rods prefer the registry 30 deg away from
+the carboxylate match, the 14-repeat one at 5.16 sigma on the pre-registered paired estimator;
+the two estimators disagree in sign on rod18/K+. Item 5 scaling diagnostic: holds for K+ (ratio
+9.09), **does not hold for Na+** (ratio 0.81). theta0 is geometrically well determined (overlap
+score 102.4 vs 81.4 at theta0+30 for rod14; 124.5 vs 95.3 for rod18), so the geometric premise
+holds while the energy does not follow it. Item 6: UMA `uma-s-1p2` OMol head was **killed by the
+OOM killer** on the 40,486-atom rod system (total-vm 138 GB against 125 GB unified), no single
+point completed, no energy recorded. Stop state: `v8/NEGATIVE_RESULT.md`. **v8 ends.**
