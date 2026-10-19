@@ -1,8 +1,8 @@
 # v8 rules in force (consolidated)
 
-Regenerated after every addendum (working rules, item 1). Sources: `PREREG.md` (P), `PREREG_ADDENDUM_A.md` (A), `PREREG_ADDENDUM_B.md` (B), `PREREG_ADDENDUM_C.md` (C), David's working-rules note of 2026-10-19 (W, recorded verbatim in `LOG.md`), `PREREG_ADDENDUM_D.md` (D), and `PREREG_ADDENDUM_E.md` (E). Citations give file and item; P cites its section. Where a later source changes an earlier rule, only the rule in force is listed, with both sources. The source files stay unchanged and govern if this list ever disagrees with them.
+Regenerated after every addendum (working rules, item 1). Sources: `PREREG.md` (P), `PREREG_ADDENDUM_A.md` (A), `PREREG_ADDENDUM_B.md` (B), `PREREG_ADDENDUM_C.md` (C), David's working-rules note of 2026-10-19 (W, recorded verbatim in `LOG.md`), `PREREG_ADDENDUM_D.md` (D), `PREREG_ADDENDUM_E.md` (E), and `PREREG_ADDENDUM_F.md` (F). Citations give file and item; P cites its section. Where a later source changes an earlier rule, only the rule in force is listed, with both sources. The source files stay unchanged and govern if this list ever disagrees with them.
 
-State at this version: after addendum E. v8 gets one further iteration under E; its stop rule is in section 17.
+State at this version: after addendum F. **F is v8's last iteration before David decides its future**: it answers one question and stops, in one of the two states in section 19.
 
 ## 1. Scope
 1. Two FMs from different domains compose at a protein to crystal interface: a protein FM (ESMFold) and a materials FM (UMA). The lab is simulated AFM. Executor, keys, gates and report conventions are those of B1 and v7. (P, Why)
@@ -120,17 +120,29 @@ The exemplar is the dev system U0 at 18 repeats, the cation chosen on truth only
 
 Still open, listed in the next report and not fixed now (E, item 8): V8-X9 partial instrument calibration, V8-X11 the two weak `validate_d` rows (non-bypass's asserted panel clause, templated faithfulness), and Q1 to Q6 in `OPEN_QUESTIONS.md`. New open questions go to that file (D, item 2.4).
 
+## 15b. The validity check before any force-field run (F, item 3)
+For every structure about to be handed to a force field, report the minimum heavy-atom pair distance and the count of pairs below 1.0 A. **Refuse to run any structure with a pair below 1.0 A** and report it instead. General from now on.
+
 ## 16. Housekeeping (E, item 7)
 1. Host B1's GPU was held by another process overnight: check once, report what is seen, never signal it, and use B1 if it clears.
 2. Delete the leftover demo and adapter state under `~/v8_state`, and keep the server on port 8881.
 3. Isolation, credentials, anonymity, 2 concurrent episodes and the FM-blind rules stay as above.
 4. Push after each step with `STATUS.md` updated, and at least every 90 minutes while a job runs.
 
-## 17. This iteration and the stop rule (E, items 3, 5, 6)
-1. **Step 1, free reanalysis, evidence and not a gate:** recompute the margin from the 24 completed dev runs under the new estimator with the 3 placements already in hand, write `truth/F1_REESTIMATE.md` with both estimators per system, note that 3 placements sample a minimum poorly, and push. Proceed to step 2 either way.
-2. **Step 2:** run the new reference protocol (§7 item 0) on the dev systems and report Gate F1. If it passes, run the test systems, run the dev FM path, set the band, report Gate F2 and continue into V8-4 as pre-registered.
-3. **Step 3, only if Gate F1 fails at fragment scale:** build one 18-repeat U0 rod on K+ muscovite with the §7 item 0 protocol, time it and stop. Report atom count, wall time per placement, projected wall time for the full set across the two usable GPUs, and peak memory. Start no production set. Write `truth/ROD_SCOPE.md`, push, stop for David.
-4. **Stop rule:** v8 gets this one iteration. If Gate F1 fails at fragment scale and the rod scoping shows the full set needs more than 48 GPU hours, stop and write `v8/NEGATIVE_RESULT.md`: what was built, what the gates showed, why protein to crystal registry energies resist this benchmark at reachable cost, and what would change the answer. That document is a real v8 deliverable, not a failure report.
+## 17. The amendment E iteration (closed)
+Step 1 (free reanalysis) and step 2 (matched rigid-placement protocol) both reported **Gate F1 FAILED** at fragment scale, 0 of 4 dev systems. Step 3 scoped one rod: about 1 GPU hour for a full set, far below the 48 GPU hour stop threshold, so E item 6 did not trigger and no `NEGATIVE_RESULT.md` was written then. Q7 was closed by E item 1 and `validate_d` now passes every row. Records: `truth/F1_REESTIMATE.md`, `truth/F1_STEP2.md`, `truth/ROD_SCOPE.md`, `REPORT_E.md`.
 
-## 18. Out of scope
+## 19. This iteration and the stop rule (F)
+1. **The question (F, item 1):** does the registry margin clear Gate F1 on a published rod, where 171 acidic residues engage the surface instead of 9?
+2. **Systems (F, item 2):** U0 only, from the published chain, at 14 and 18 repeats, on K+ and Na+ muscovite — 4 systems. The 14-repeat rod is cut from the published 18-repeat chain. U0 is in the dev split, so no test system is touched and FM blindness is unaffected. **No control rod is built and nothing is repacked.**
+3. **Protocol (F, item 4):** the section 7 item 0 protocol with three fixes — **64 placements per registry** from the same scrambled Sobol construction with a logged seed (64 restores the power-of-two balance), both registries sharing the identical set; **every energy recorded**; and **minimisation convergence verified**, reporting the exit iteration count and final gradient norm per placement, raising the iteration cap uniformly and logging it if placements hit it. Gate F1 unchanged at |margin| >= 3 SE, minimum over placements, bootstrap over placements with 10,000 replicates. Report the running minimum against placement count and mark a system **undetermined** if its minimum is still falling over the last quarter of placements. Keep both estimators side by side, the estimator-order disclosure and the no-water disclosure.
+4. **Reported diagnostic, not a gate (F, item 5):** the margin at 14 repeats beside the margin at 18 repeats for each cation. If the physical story holds, the 18-repeat margin should exceed the 14-repeat margin in magnitude; if it does not, say so plainly, because that would undercut the rod argument whatever the gate says.
+5. **Scope the next gate (F, item 6):** time one UMA single point and one UMA relaxation step on the 18-repeat K+ rod system; report wall time, host and GPU memory, and whether it fits. **Record no energy as a margin and compute no matched angle from it.** If UMA cannot hold a system of this size, that is the finding and it matters for Gate F2.
+6. **Budget (F, item 7):** projected about 0.35 GPU hours; if v8's own projection exceeds 4 GPU hours, stop and report before running.
+7. **Stop, in one of two states (F, item 7):**
+   - **Gate F1 passes on at least 3 of the 4 rod systems:** write `truth/F1_ROD.md` with the table, the scaling diagnostic and the UMA timing, and stop. Build nothing further; control rods are a separate decision with their own schedule.
+   - **Gate F1 fails on the rod:** write `v8/NEGATIVE_RESULT.md` and stop. **v8 ends there.** Cover what was built and verified, Gate S and Gate F1 across two estimators, two protocols and two length scales, the quantitative mechanism, which of David's prescriptions were wrong and why, what would change the answer, and what a later attempt should do differently. Write it as a finding, not an apology, and state plainly that the instrument, the graph, the server and the validation suite all pass and are reusable.
+8. **David's recorded corrections (F, preamble), to be carried in the report:** the minimum estimator did not recover a signal, and the rigid screw transform of amendment C item 4 is the wrong way to build a force-field rod.
+
+## 20. Out of scope
 Phase and transformation families (HOOMD-blue Monte Carlo), van der Waals substrates, sequence design, priced reference energies, a second materials FM, Opus, Qwen3-8B, training, the label-free reward validation, real collaborator data; any change under `v6/` or `v7/`; any change outside `v8/`, `~/v8env`, `~/v8_state`, `~/v8_data`. (P, Out of scope; D, item 5)

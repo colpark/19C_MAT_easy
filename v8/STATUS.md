@@ -1,6 +1,6 @@
 # v8 status (updated at every push)
 
-**Stopped for David at the end of the amendment E iteration.** Read `v8/REPORT_E.md`.
+**Amendment F iteration under way** (v8's last before David decides its future): U0 rods at 14 and 18 repeats on K+ and Na+, 64 placements per registry, then stop in one of two states.
 
 - **Gate F1 FAILED at fragment scale** under both estimators and both protocols (0 of 4 dev systems, best 1.26 sigma). `truth/F1_REESTIMATE.md` (step 1), `truth/F1_STEP2.md` (step 2).
 - **Q7 done** (E item 1): `phase` is the identified candidate registry; `validate_d` with **all rows PASSES** on the demo worlds, hold row included. No kit file or validate_d row edited.
