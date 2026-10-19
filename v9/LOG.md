@@ -35,3 +35,29 @@ The prompt names four nodes. The node list lived in v8's records, which v9 may n
 nodes above were identified by probing the private subnet (`192.168.100.10` to `.14`) and by
 reading ssh targets out of the shell history on A1 and B1. Three nodes answered. If the fourth
 node is something other than `192.168.101.11`, its address needs to come from David.
+
+## V9-1 (2026-10-19) — five candidate datasets
+`v9/data/SOURCES.md` and `v9/data/FETCH_SHEET.md`. Primary dataset acquired via Europe PMC's
+supplementary-files endpoint after both pubs.acs.org (403) and pmc.ncbi.nlm.nih.gov (reCAPTCHA)
+refused. Parse independently validated: 1,720 rows, all unique, all 10-mers, zero unparsed
+10-mer lines, median intensity 207,584 against the paper's stated 207,500 cutoff, SI class equals
+`intensity > 207500` on 1720/1720 rows. **V9-E1**: the RSC Adv. 2023 data availability statement
+is not satisfied — the repository holds only the R script, and the `Q14.csv` it reads is absent.
+B1 has no external DNS resolution, so all fetching runs from A1 or A2.
+
+## V9-2 (2026-10-19) — the twin count
+`v9/data/TWIN_COUNT.md`, pairs in `v9/data/twins.json`. 1,720 peptides, monoisotopic masses
+820.356 to 1741.784 Da, unimodal and peaked at 1200–1250 Da. Twins at 1.0/0.5/0.1/0.05/0.01 Da:
+799/420/271/134/24, with K strata 122/70/54/37/6. Nominal-mass clustering gives the tolerance
+ladder a plateau: 0.5 to 0.1 Da removes only 25% of near-isobaric pairs. **Zero** permutation or
+exact-mass twins, so no pair is unresolvable in principle. Panel `count(W) - count(R)` is 0.885
+accurate over all 860 quartile peptides and weakens as tolerance tightens. The source publishes
+**no replicate error**. Dataset 2's thesis holds 12 dodecapeptide sequences, not a dataset;
+datasets 3 to 5 carry no graded peptide affinity.
+
+## V9-3 (2026-10-19) — verdict, all three gates passed
+`v9/VERDICT.md`. Gate T passed 9x over at its own tolerance and passes under both class
+definitions. Gate D passed on its second clause only, with the first clause untested because no
+replicate error is published anywhere in the acquired source. Gate A passed. Six named blockers,
+led by the CC BY-NC-ND NoDerivatives licence on the benchmark-carrying dataset and by
+contamination risk. Nothing built, no compute, no LLM contact with any record, $0.
