@@ -1,0 +1,16 @@
+<!-- Hydrogen definitions for the neutral caps, matching caps_charmm36.xml. OpenMM's
+     built-in hydrogens.xml puts ACE's extra H on the carbonyl C (giving acetaldehyde)
+     and names NME's methyl "C", so ACE and NME are redefined here. -->
+<Residues>
+ <Residue name="ACE">
+  <H name="HH31" parent="CH3"/>
+  <H name="HH32" parent="CH3"/>
+  <H name="HH33" parent="CH3"/>
+ </Residue>
+ <Residue name="NME">
+  <H name="H" parent="N"/>
+  <H name="HH31" parent="CH3"/>
+  <H name="HH32" parent="CH3"/>
+  <H name="HH33" parent="CH3"/>
+ </Residue>
+</Residues>

@@ -1,0 +1,40 @@
+<!-- Neutral ACE and NME caps for CHARMM36, which OpenMM's charmm36.xml does not ship
+     (V8-E8). Atom types and charges are taken verbatim from the NMA residue of
+     openmm/app/data/charmm36.xml, split at the amide bond: the acetyl half
+     (CG331 -0.27, 3x HGA3 +0.09, CG2O1 +0.51, OG2D1 -0.51) and the methylamide half
+     (NG2S1 -0.47, HGP1 +0.31, CG331 -0.11, 3x HGA3 +0.09) are each exactly neutral,
+     and match the standard CHARMM36 ACE and CT3 patch charges. Heavy-atom names follow
+     the Amber convention so OpenMM's own hydrogen definitions apply. No kit file is
+     touched and no protein parameter is changed. -->
+<ForceField>
+ <Residues>
+  <Residue name="ACE">
+   <Atom name="CH3" type="CG331" charge="-0.27"/>
+   <Atom name="HH31" type="HGA3" charge="0.09"/>
+   <Atom name="HH32" type="HGA3" charge="0.09"/>
+   <Atom name="HH33" type="HGA3" charge="0.09"/>
+   <Atom name="C" type="CG2O1" charge="0.51"/>
+   <Atom name="O" type="OG2D1" charge="-0.51"/>
+   <Bond atomName1="CH3" atomName2="HH31"/>
+   <Bond atomName1="CH3" atomName2="HH32"/>
+   <Bond atomName1="CH3" atomName2="HH33"/>
+   <Bond atomName1="CH3" atomName2="C"/>
+   <Bond atomName1="C" atomName2="O"/>
+   <ExternalBond atomName="C"/>
+  </Residue>
+  <Residue name="NME">
+   <Atom name="N" type="NG2S1" charge="-0.47"/>
+   <Atom name="H" type="HGP1" charge="0.31"/>
+   <Atom name="CH3" type="CG331" charge="-0.11"/>
+   <Atom name="HH31" type="HGA3" charge="0.09"/>
+   <Atom name="HH32" type="HGA3" charge="0.09"/>
+   <Atom name="HH33" type="HGA3" charge="0.09"/>
+   <Bond atomName1="N" atomName2="H"/>
+   <Bond atomName1="N" atomName2="CH3"/>
+   <Bond atomName1="CH3" atomName2="HH31"/>
+   <Bond atomName1="CH3" atomName2="HH32"/>
+   <Bond atomName1="CH3" atomName2="HH33"/>
+   <ExternalBond atomName="N"/>
+  </Residue>
+ </Residues>
+</ForceField>
