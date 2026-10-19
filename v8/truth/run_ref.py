@@ -28,13 +28,30 @@ import place as placemod
 import placements as plc
 from run_truth import exclude_frozen_pairs
 
+
+class ConvergenceReporter(mm.MinimizationReporter):
+    """Counts minimiser iterations and keeps the last gradient norm (amendment F item 4.3)."""
+
+    def __init__(self):
+        super().__init__()
+        self.iterations = 0
+        self.grad_norm = float("nan")
+        self.grad_rms = float("nan")
+
+    def report(self, iteration, x, grad, args):
+        self.iterations = int(iteration)
+        g = np.asarray(grad, dtype=float)
+        self.grad_norm = float(np.sqrt((g * g).sum()))
+        self.grad_rms = float(np.sqrt((g * g).mean()))   # what OpenMM's tolerance is on
+        return False
+
 BOX_Z = 7.0
 
 
-def build(unit, cation, platform_name):
-    frag_pdb = os.path.expanduser(f"~/v8_data/frags/{unit}.pdb")
-    slab_pdb = os.path.expanduser(f"~/v8_data/slabs/slab_{cation}.pdb")
-    slab_xml = os.path.expanduser(f"~/v8_data/slabs/slab_{cation}.xml")
+def build(unit, cation, platform_name, frag_pdb=None, slab_tag=""):
+    frag_pdb = frag_pdb or os.path.expanduser(f"~/v8_data/frags/{unit}.pdb")
+    slab_pdb = os.path.expanduser(f"~/v8_data/slabs/slab_{cation}{slab_tag}.pdb")
+    slab_xml = os.path.expanduser(f"~/v8_data/slabs/slab_{cation}{slab_tag}.xml")
     here = os.path.dirname(os.path.abspath(__file__))
     app.Modeller.loadHydrogenDefinitions(os.path.join(here, "caps_hydrogens.xml"))
     ff = app.ForceField("charmm36.xml", "charmm36/water.xml",
@@ -96,12 +113,14 @@ def main():
     p = argparse.ArgumentParser()
     p.add_argument("--unit", required=True); p.add_argument("--cation", required=True, choices=["K", "NA"])
     p.add_argument("--out", required=True); p.add_argument("--placements", type=int, default=plc.N_PLACEMENTS)
-    p.add_argument("--platform", default="CUDA"); p.add_argument("--max-iter", type=int, default=2000)
+    p.add_argument("--platform", default="CUDA"); p.add_argument("--max-iter", type=int, default=20000)
+    p.add_argument("--frag-pdb", default=None, help="override the structure (e.g. a rod)")
+    p.add_argument("--slab-tag", default="", help='slab suffix, e.g. "_rod"')
     a = p.parse_args()
     os.makedirs(a.out, exist_ok=True)
     t0 = time.time()
 
-    b = build(a.unit, a.cation, a.platform)
+    b = build(a.unit, a.cation, a.platform, a.frag_pdb, a.slab_tag)
     table = plc.placement_table(a.placements)
     slab_pos = np.array(b["mod"].positions.value_in_unit(u.angstrom))[b["n_frag"]:b["n_cx"]]
 
@@ -126,10 +145,14 @@ def main():
             pos = np.vstack([full, slab_pos]) * 0.1  # nm
             sim_ctx.setPositions(pos)
             e_before, _ = e_int(b["contexts"], np.asarray(pos), b["n_frag"])
-            mm.LocalEnergyMinimizer.minimize(sim_ctx, 1.0, a.max_iter)
+            rep = ConvergenceReporter()
+            mm.LocalEnergyMinimizer.minimize(sim_ctx, 1.0, a.max_iter, rep)
             pm = sim_ctx.getState(getPositions=True).getPositions(asNumpy=True).value_in_unit(u.nanometer)
             ei, _ = e_int(b["contexts"], pm, b["n_frag"])
             rows.append(dict(k=k, e_int=ei, e_int_before_min=e_before,
+                             iterations=rep.iterations, grad_norm=rep.grad_norm,
+                             grad_rms=rep.grad_rms,
+                             hit_cap=bool(rep.iterations >= a.max_iter - 1),
                              frac_a=float(table[k][0]), frac_b=float(table[k][1]),
                              rot_deg=float(table[k][2]), dz=float(table[k][3])))
             if (k + 1) % 10 == 0:
@@ -139,6 +162,18 @@ def main():
 
     meta["series"] = {str(k): v for k, v in results.items()}
     meta["e_min"] = {str(k): min(r["e_int"] for r in v) for k, v in results.items()}
+    allrows = [r for v in results.values() for r in v]
+    meta["max_iter_cap"] = a.max_iter
+    meta["n_hit_cap"] = sum(r["hit_cap"] for r in allrows)
+    meta["iterations"] = dict(min=min(r["iterations"] for r in allrows),
+                              median=float(np.median([r["iterations"] for r in allrows])),
+                              max=max(r["iterations"] for r in allrows))
+    meta["grad_norm"] = dict(min=float(np.nanmin([r["grad_norm"] for r in allrows])),
+                             median=float(np.nanmedian([r["grad_norm"] for r in allrows])),
+                             max=float(np.nanmax([r["grad_norm"] for r in allrows])))
+    meta["grad_rms"] = dict(min=float(np.nanmin([r["grad_rms"] for r in allrows])),
+                            median=float(np.nanmedian([r["grad_rms"] for r in allrows])),
+                            max=float(np.nanmax([r["grad_rms"] for r in allrows])))
     meta["wall_s"] = time.time() - t0
     json.dump(meta, open(os.path.join(a.out, "ref.json"), "w"), indent=1)
     m = meta["e_min"]["1"] - meta["e_min"]["0"]
