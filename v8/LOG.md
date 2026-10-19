@@ -1,0 +1,8 @@
+# v8 log
+
+- 2026-10-19T00:32:38Z V8-0: branch v8/2026-10-19 from 10aee1e18cda52726de29275ab22a2f436f25527 (v7 head, V7-0). Folder v8/.
+- 2026-10-19T00:32:38Z V8-0: kits copied from the v7 worktree (v7/spec, v7/graphexec, README_kitD.md). These are untracked at v7 head 10aee1e1, so the source is the v7 working tree on host A at 2026-10-19T00:32:38Z, not a commit (V8-X1). Per-file sha256 in v8/KIT_HASHES.txt. Kit D prefixes match v7/PREREG.md (graphexec_d.py 0c463f0335ec25cd, test_graphexec_d.py 1a99b8a590c55356, graph_schema_d.json b9ecc5c5d0e79e0e, graph_R_v2_nodft.json d84949565367361a). graphexec.py, test_graphexec.py, adapters_mcenv.py are byte-identical to v6/graphexec (kit B).
+- 2026-10-19T00:32:38Z V8-0: kit tests under ~/v5env/bin/python3 (Python 3.12.3, jsonschema 4.26.0): test_graphexec.py ALL TESTS PASSED; test_graphexec_d.py ALL KIT D TESTS PASSED.
+- V8-E1: /usr/bin/python3 (jsonschema 4.10.3) fails both kit tests with RefResolutionError on the relative $id "v6/spec/graph_schema.json". Fix: run the kits under ~/v5env (jsonschema 4.26.0). No kit file changed.
+- 2026-10-19T00:29Z V8-0 reachability, one check each: host A node 1 (130.199.95.35, spark-112b): local, this session. Host A node 2 (192.168.100.11 from host A): spark-0b70, GB10, up 18 d. Host B node 1 (130.199.95.15): wcs-180522, up 21 d. Host B node 2 (192.168.100.11 from host B): ssh BatchMode ConnectTimeout 8, connection timed out, rc 255 (as in V6 LOG: no 192.168.100.x route on host B). No v8 work is placed there.
+- 2026-10-19T00:32:38Z V8-0: v8/PREREG.md written with David's prompt verbatim, before any truth or world work.
