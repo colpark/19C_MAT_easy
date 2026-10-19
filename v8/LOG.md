@@ -11,3 +11,4 @@
 - V8-E3: host B node 1 has no egress to pypi.org or download.pytorch.org (uv connect errors). Fix: ~/v8env and the public ESMFold weights copied from host A (rsync, no delete); checks run with HF_HUB_OFFLINE=1.
 - V8-E4: the first V8-0 access check downloaded only facebook/UMA README.md and listed the files, which a gated repo allows without approval; it was wrongly read as access. The checkpoint download then failed with 403 GatedRepoError (account not on the authorized list). No checkpoint is cached on host A, node A2 or host B.
 - 2026-10-19T00:53:02Z V8-0 STOP: UMA weights (facebook/UMA, uma-s-1p2) are not accessible. Per the prompt, stop at V8-0 and ask David. Nothing after V8-0 has started.
+- 2026-10-19T01:07:07Z V8-0 recheck: facebook/UMA uma-s-1p2.pt for account HEYKEETAE now returns GatedRepoError "awaiting a review from the repo authors" (access requested, not yet granted). Still stopped at V8-0.
