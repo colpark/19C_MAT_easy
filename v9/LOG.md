@@ -61,3 +61,19 @@ definitions. Gate D passed on its second clause only, with the first clause unte
 replicate error is published anywhere in the acquired source. Gate A passed. Six named blockers,
 led by the CC BY-NC-ND NoDerivatives licence on the benchmark-carrying dataset and by
 contamination risk. Nothing built, no compute, no LLM contact with any record, $0.
+
+## V9-X3 (2026-10-19) — audit of datasets 6 and 7, after the pre-registered stop
+Run at David's instruction, same rules. `v9/data/AUDIT_6_7.md`. **Neither is a second truth
+table.** Dataset 6 (silver array, IJMS 2020, CC BY 4.0) has 22 distinct 10-mers in its whole full
+text, all at ranks 11–180 of dataset 1, none in the bottom quartile. Dataset 7 (Nanoscale Adv.
+2019, CC BY-NC 3.0) Table S1 is **exactly ranks 1–200 of dataset 1** with computed MW/pI/GRAVY
+rather than measurements; its Table S2 carries a genuinely independent colour measurement on 40
+peptides in 4 classes of 10, but **0 of 780 pairs fall within even 1.0 Da**, so Gate T fails at
+every tolerance. Gate T fails structurally on both: a set with no bottom-quartile member cannot
+produce a twin. Five publications in this cluster rest on one array, so no second truth table is
+available from this group at all. The audit did quantify **contamination exposure** of dataset 1:
+about half of every twin set has its strong member re-published elsewhere as a known top-200 high
+binder, never its weak member. Excluding every exposed twin still leaves **136 twins and 32 in the
+K stratum at 0.1 Da**, so Gate T holds on a contamination-hardened set. **V9-E2**: my
+`probe_table.py` counted only the first match per line and under-counted single-line XML; replaced
+by `probe_tokens.py`. Dataset 1's numbers are unaffected and remain validated at 1720/1720.

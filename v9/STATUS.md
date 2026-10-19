@@ -19,4 +19,13 @@ Read `v9/VERDICT.md`.
 - Top blocker before a build: **the CC BY-NC-ND NoDerivatives licence** on the only dataset that
   carries the benchmark. Second: **contamination** — the data is published, so a model may recall
   it; this must be designed into the next iteration as a named check.
+- **V9-X3** (after the stop, at David's instruction): datasets 6 and 7 audited the same way.
+  **Neither is a second truth table** — dataset 7's 200 peptides are exactly ranks 1-200 of
+  dataset 1 and dataset 6's 22 are ranks 11-180, with no bottom-quartile member in either, so
+  Gate T fails structurally on both. Five papers in this cluster rest on one array, so no second
+  truth table exists in it. See `v9/data/AUDIT_6_7.md`.
+- **Contamination is now quantified**: about half of every twin set has its strong member
+  re-published elsewhere as a known top-200 high binder, never its weak member. Excluding every
+  exposed twin still leaves **136 twins and 32 in the K stratum at 0.1 Da**, so Gate T holds on a
+  contamination-hardened set. Recommend building on the unexposed twins only.
 - Nothing was built. No compute, no FM call, no LLM contact with any record. **Spend $0.**
