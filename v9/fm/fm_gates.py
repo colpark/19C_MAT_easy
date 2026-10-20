@@ -156,9 +156,19 @@ def main(split_p, ds1_p, fm_p, out_p):
               f"  ({'lower' if scorers[nm][1] else 'higher'} wins)")
 
     mlo, mhi = ci(draws["FM_uma_oc20"])
-    gm = bool(mlo > 0.5 or mhi < 0.5)
-    out["gate_M"] = dict(passed=gm, accuracy=point["FM_uma_oc20"], ci=[mlo, mhi], excludes_half=gm)
-    print(f"\n## Gate M: FM CI [{fmt(mlo)}, {fmt(mhi)}] vs 0.5 -> {'PASSED' if gm else 'FAILED'}")
+    above = bool(mlo > 0.5)
+    below = bool(mhi < 0.5)
+    # An interval excluding 0.5 from BELOW means the model reliably picks the WEAKER binder. That
+    # is not "the FM picks the stronger binder", so it is never reported as a pass. The direction
+    # was pre-registered in V9-5 before any energy existed and is not flipped post hoc.
+    out["gate_M"] = dict(passed=above, accuracy=point["FM_uma_oc20"], ci=[mlo, mhi],
+                         excludes_half=bool(above or below),
+                         excludes_half_from_below=below,
+                         note=("interval excludes 0.5 from BELOW: the model reliably picks the "
+                               "WEAKER binder. Reported as FAILED, not passed; the pre-registered "
+                               "direction is not flipped after seeing the sign.") if below else None)
+    print(f"\n## Gate M: FM CI [{fmt(mlo)}, {fmt(mhi)}] vs 0.5 -> {'PASSED' if above else 'FAILED'}"
+          + ("   (interval excludes 0.5 FROM BELOW: picks the WEAKER binder)" if below else ""))
 
     # ---- Gate N, restated: orthogonal information on the descriptor-wrong subset ----
     print("\n## Gate N (restated): FM on the subset where the best descriptor is WRONG")
@@ -175,13 +185,18 @@ def main(split_p, ds1_p, fm_p, out_p):
         lo, hi = ci(d)
         role = ("PRIMARY GATE" if nm == PRIMARY_DESCRIPTOR else
                 "secondary" if nm == SECONDARY_DESCRIPTOR else "diagnostic")
-        ok = bool(lo is not None and (lo > 0.5 or hi < 0.5))
+        a_ = bool(lo is not None and lo > 0.5)
+        b_ = bool(hi is not None and hi < 0.5)
+        ok = a_          # only an exclusion ABOVE 0.5 is the FM picking the stronger binder
         out["gate_N"][nm] = dict(role=role, n_pairs=len(wrong), n_peptides=len(wp),
                                  ties_excluded=ties, fm_accuracy=p, ci=[lo, hi],
-                                 excludes_half=ok, passed=ok)
+                                 excludes_half=bool(a_ or b_), excludes_half_from_below=b_,
+                                 passed=ok)
+        side = ("excludes 0.5 ABOVE" if a_ else
+                "excludes 0.5 BELOW -- picks the WEAKER binder" if b_ else "includes 0.5")
         print(f"  {nm+'-wrong':22s} n={len(wrong):3d} pairs / {len(wp):2d} peptides "
               f"(ties excluded {ties:3d})  FM {fmt(p)}  95% CI [{fmt(lo)}, {fmt(hi)}]"
-              f"  -> {'excludes 0.5' if ok else 'includes 0.5'}   [{role}]")
+              f"  -> {side}   [{role}]")
     allw = subsets["net_charge_pH7"] & subsets["GRAVY"] & subsets["mass"]
     out["gate_N"]["all_three_wrong_n_pairs"] = len(allw)
     out["gate_N"]["all_three_wrong_n_peptides"] = len({s for p in allw for s in p})
@@ -200,11 +215,16 @@ def main(split_p, ds1_p, fm_p, out_p):
         lo, hi = ci(diffs[nm])
         med = sorted(diffs[nm])[len(diffs[nm]) // 2]
         ok = bool(lo > 0)
+        worse = bool(hi < 0)
         alln &= ok
+        where = ("above zero: FM beats this null" if ok else
+                 "BELOW ZERO: FM is significantly WORSE than this null" if worse else
+                 "spans zero")
         out["gate_N_headtohead_diagnostic"][nm] = dict(
-            beats_null=ok, diff_point=point["FM_uma_oc20"] - point[nm], diff_median=med, ci=[lo, hi])
+            beats_null=ok, significantly_worse_than_null=worse,
+            diff_point=point["FM_uma_oc20"] - point[nm], diff_median=med, ci=[lo, hi])
         print(f"  FM - {nm:16s} {point['FM_uma_oc20']-point[nm]:+.4f}  95% CI "
-              f"[{lo:+.4f}, {hi:+.4f}] -> {'above zero' if ok else 'spans zero'}")
+              f"[{lo:+.4f}, {hi:+.4f}] -> {where}")
     out["gate_N_headtohead_diagnostic"]["beats_all"] = alln
     print(f"  beats all three -> {alln}  (DIAGNOSTIC ONLY; the gate is the subset form above)")
 

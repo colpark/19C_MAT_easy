@@ -45,13 +45,15 @@ def build():
     p[:, 0] += row[0] * cell[0, 0] - p[:, 0].mean()
     p[:, 1] += row[1] * cell[1, 1] - p[:, 1].mean()
     p[:, 2] += (ztop + F.GAP_A + row[3]) - p[:, 2].min()
-    return S, fixed, sym, p
+    return S, fixed, sym, p, base, ztop
 
 
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--cap", type=int, default=1000)
     ap.add_argument("--dtype", default="float64")
+    ap.add_argument("--n-sp", type=int, default=10)
+    ap.add_argument("--sp-only", action="store_true")
     ap.add_argument("--out", default=os.path.expanduser("~/v9_data/fm/probe/mace_probe.json"))
     a = ap.parse_args()
     os.makedirs(os.path.dirname(a.out), exist_ok=True)
@@ -61,7 +63,7 @@ def main():
     from ase.optimize import LBFGS
     from mace.calculators import MACECalculator
 
-    S, fixed, sym, p = build()
+    S, fixed, sym, p, base, ztop = build()
     out = dict(model="mace-mh-1", head=HEAD, dtype=a.dtype, cap=a.cap,
                model_bytes=os.path.getsize(MODEL),
                n_atoms=len(S) + len(sym), n_slab=len(S), n_peptide=len(sym),
@@ -93,17 +95,47 @@ def main():
         cx.calc = calc
         return cx
 
-    # (1) one single point
+    # (1) single points. V9-E4: the first version of this probe timed the second single point on
+    # an Atoms object holding the SAME positions and the SAME calculator, so ASE's check_state
+    # found no change and returned a cached result: 0.0005 s, which is a cache hit and not a
+    # computation. A rate must be measured on structures that genuinely differ, which is what a
+    # production run evaluates, so the warm rate is now the mean over `--n-sp` distinct placements.
     cx = complex_atoms()
     t = time.time()
     e0 = float(cx.get_potential_energy())
-    out["t_single_point_s"] = round(time.time() - t, 4)
-    t = time.time()
-    e0b = float(complex_atoms().get_potential_energy())
-    out["t_single_point_warm_s"] = round(time.time() - t, 4)
-    out["single_point_finite"] = bool(np.isfinite(e0) and np.isfinite(e0b))
-    print(f"single point: {out['t_single_point_s']}s cold, {out['t_single_point_warm_s']}s warm",
-          flush=True)
+    out["t_single_point_cold_s"] = round(time.time() - t, 4)
+    # V9-E4, second half: placement 0 of this table IS the structure the cold call used, because
+    # a scrambled Sobol sequence starts at the same point for any n. Timing it gives another cache
+    # hit (0.0002 s). The loop therefore starts at placement 1.
+    tab = F.placements(a.n_sp + 1)
+    ts, es = [], []
+    for jj in range(1, a.n_sp + 1):
+        row = tab[jj]
+        q = base @ F.rotz(row[2]).T
+        q[:, 0] += row[0] * cell[0, 0] - q[:, 0].mean()
+        q[:, 1] += row[1] * cell[1, 1] - q[:, 1].mean()
+        q[:, 2] += (ztop + F.GAP_A + row[3]) - q[:, 2].min()
+        at = Atoms(symbols=allsym, positions=np.vstack([slab_pos, q]), cell=cell, pbc=True)
+        at.set_constraint(FixAtoms(mask=m))
+        at.set_tags(np.concatenate([np.where(fixed, 0, 1), np.full(len(sym), 2)]))
+        at.calc = calc
+        t = time.time()
+        es.append(float(at.get_potential_energy()))
+        ts.append(time.time() - t)
+    out["n_single_points_timed"] = len(ts)
+    out["t_single_point_mean_s"] = round(float(np.mean(ts)), 4)
+    out["t_single_point_min_s"] = round(float(np.min(ts)), 4)
+    out["t_single_point_max_s"] = round(float(np.max(ts)), 4)
+    out["distinct_energies"] = len(set(round(e, 6) for e in es))
+    out["single_point_finite"] = bool(np.isfinite(e0) and all(np.isfinite(es)))
+    print(f"single point: {out['t_single_point_cold_s']}s cold; mean over "
+          f"{len(ts)} DISTINCT placements {out['t_single_point_mean_s']}s "
+          f"(min {out['t_single_point_min_s']}, max {out['t_single_point_max_s']}); "
+          f"{out['distinct_energies']} distinct energies", flush=True)
+
+    if a.sp_only:
+        json.dump(out, open(a.out.replace(".json", "_sp.json"), "w"), indent=1)
+        print(json.dumps(out, indent=1)); return
 
     # (2) one converged relaxation, trajectory recorded (the fmax path wanders; V9-E3)
     cx = complex_atoms()
@@ -128,7 +160,7 @@ def main():
     # rung 2's shape, for the budget question this probe exists to answer
     out["projection_60_peptides_3x3_gpu_hours"] = round(60 * 9 * out["t_relax_s"] / 3600.0, 2)
     out["projection_120_peptides_3x10_single_points_gpu_hours"] = round(
-        120 * 3 * 10 * out["t_single_point_warm_s"] / 3600.0, 3)
+        120 * 3 * 10 * out["t_single_point_mean_s"] / 3600.0, 3)
     json.dump(out, open(a.out, "w"), indent=1)
     print(json.dumps({k: v for k, v in out.items() if k != "traj"}, indent=1))
 

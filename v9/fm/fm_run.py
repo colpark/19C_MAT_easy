@@ -104,14 +104,28 @@ def main():
     ap.add_argument("--conformers", type=int, default=3)
     ap.add_argument("--out-name", default="fm_dev.json")
     ap.add_argument("--resume", action="store_true")
+    ap.add_argument("--pid-list", default="", help="JSON from select_rung2.py; run only these pids")
+    ap.add_argument("--budget-gpu-hours", type=float, default=0.0,
+                    help="stop at the next peptide boundary once this much GPU time is spent")
     a = ap.parse_args()
     rigid = a.mode == "rigid"
     cd = os.path.expanduser(a.confdir); od = os.path.expanduser(a.outdir)
     os.makedirs(od, exist_ok=True)
     outp = os.path.join(od, a.out_name)
     man = json.load(open(os.path.join(cd, "conformers.json")))
-    pids = a.pids.split(",") if a.pids else [e["pid"] for e in man["peptides"]]
     cls = {e["pid"]: e["cls"] for e in man["peptides"]}
+    if a.pid_list:
+        # Rung 2's 60, in rule B's order, INTERLEAVED top/bottom so that **any prefix of the run
+        # is itself a balanced, pre-registered subset**. A budget ceiling then truncates the run
+        # instead of overrunning it, and what completed is still 30/30-shaped at every point.
+        sel = json.load(open(os.path.expanduser(a.pid_list)))
+        t_, b_ = sel["pids_top"], sel["pids_bottom"]
+        pids = [x for pr in zip(t_, b_) for x in pr]
+        pids += [x for x in t_[len(b_):]] + [x for x in b_[len(t_):]]
+    elif a.pids:
+        pids = a.pids.split(",")
+    else:
+        pids = [e["pid"] for e in man["peptides"]]
 
     results = {}
     if a.resume and os.path.exists(outp):
@@ -149,7 +163,19 @@ def main():
     tab = placements(a.placements)
     n_sp = n_relax = 0
     t_sp = t_relax = 0.0
+    t_run0 = time.time()
+    budget_s = a.budget_gpu_hours * 3600.0
+    stopped_on_budget = None
     for pid in pids:
+        if budget_s and (time.time() - t_run0) > budget_s:
+            stopped_on_budget = dict(
+                after_peptides=len(results), spent_gpu_hours=round((time.time() - t_run0) / 3600, 3),
+                budget_gpu_hours=a.budget_gpu_hours, next_pid_not_run=pid)
+            print(f"\nBUDGET CEILING REACHED after {len(results)} peptides "
+                  f"({(time.time()-t_run0)/3600:.2f} of {a.budget_gpu_hours} GPU h). "
+                  f"Stopping at a peptide boundary; the completed set is a balanced prefix.",
+                  flush=True)
+            break
         sym = list(np.load(os.path.join(cd, f"{pid}_sym.npy")))
         rows, t_pep = [], time.time()
         e_conf, conf_meta = {}, {}
@@ -243,7 +269,11 @@ def main():
                       n_relaxations=n_relax, t_relaxations_s=round(t_relax, 1),
                       t_per_single_point_s=(round(t_sp / n_sp, 4) if n_sp else None),
                       t_per_relaxation_s=(round(t_relax / n_relax, 2) if n_relax else None))
+        header["elapsed_gpu_hours"] = round((time.time() - t_run0) / 3600, 3)
         json.dump(dict(**header, results=results), open(outp, "w"), indent=1)
+    header["stopped_on_budget"] = stopped_on_budget
+    header["elapsed_gpu_hours"] = round((time.time() - t_run0) / 3600, 3)
+    json.dump(dict(**header, results=results), open(outp, "w"), indent=1)
     print(f"\ndone: {len(results)} peptides; {n_sp} single points "
           f"({t_sp/n_sp:.4f}s each)" if n_sp else "", flush=True)
     if n_relax:
