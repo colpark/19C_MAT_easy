@@ -24,3 +24,4 @@
   - V7-F3 authoring done: 15 programs (R, H, T x 5). R1 and H1 were redone after V7-E3 (MCP connectors were offered; fixed with --strict-mcp-config); the first H1 rerun was refused because the folder of the stopped session still existed, and H1 was authored fresh on 2026-10-21. Isolation audit, hashing and the 1,010 S-llm runs not started.
   - V7-F4 done: fm-hint H 46, T 96, B1 60.
   - V7-F5, V7-F6 not started.
+- 2026-10-21T15:42:59Z checkpoint: S-llm 570/1,010 episodes started (both runners alive). S-replay done (node A2, 1,112 episodes, 0 errors). Graded: all script runs, Qwen H/T, Sonnet/Haiku/planner H and T, fm-hint H/T, T S-plan. Gate T item 3 (analyze7, Sonnet k 1): FAILED, gap +0.083, CI -0.208 to +0.333; Gate H item 2 passed, +0.348, CI +0.130 to +0.565. Code: analyzeF.py, gatesF.py, figF.py, P/replay7.py. Next: grade B1 fm-hint and the S-llm batches, then V7-F5 and V7-F6.

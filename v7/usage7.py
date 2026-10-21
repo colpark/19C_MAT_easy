@@ -5,7 +5,9 @@ import glob, json, os
 HERE = os.path.dirname(os.path.abspath(__file__))
 BATCHES = [('H', 'Sonnet noprior, fm (k 1-4; gates use k 1)', 'runs/H/v7_4/episodes'), ('H', 'Haiku noprior, fm', 'runs/H/haiku/episodes'),
            ('H', 'Sonnet fm-planner', 'runs/H/planner/episodes'), ('T', 'Sonnet noprior, fm', 'runs/T/v7_4/episodes'),
-           ('T', 'Haiku noprior, fm', 'runs/T/haiku/episodes'), ('T', 'Sonnet fm-planner', 'runs/T/planner/episodes')]
+           ('T', 'Haiku noprior, fm', 'runs/T/haiku/episodes'), ('T', 'Sonnet fm-planner', 'runs/T/planner/episodes'),
+           ('H', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_H'), ('T', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_T'),
+           ('B1', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_B1')]
 rows = []; tot = 0.0
 for fam, name, d in BATCHES:
     p = os.path.join(HERE, d)
@@ -22,9 +24,20 @@ for fam, name, d in BATCHES:
         if c is not None: cost += c; n += 1
         e = eps.get(os.path.basename(f)[:12]); k1 += bool(e and e.get('k') == 1)
     rows.append((fam, name, n, k1, round(cost, 2))); tot += cost
+for name, pat in (('S-llm authoring sessions, kept (V7-F3; sessions, not episodes)', 'F/sllm/logs/*/session_*.jsonl'),
+                  ('S-llm authoring sessions discarded under V7-E3', 'F/sllm/discarded_V7-E3/**/session_*.jsonl')):
+    cost, n = 0.0, 0
+    for f in glob.glob(os.path.join(HERE, pat), recursive=True):
+        c = None
+        for l in open(f, errors='replace'):
+            try: m = json.loads(l)
+            except ValueError: continue
+            if m.get('type') == 'result': c = m.get('total_cost_usd')
+        if c is not None: cost += c; n += 1
+    rows.append(('R, H, T', name, n, '-', round(cost, 2))); tot += cost
 L = ['# v7 subscription use (API-equivalent, V7-X8)', '',
      'Claude Code reports `total_cost_usd` per episode. These runs use the subscription, so the figure is an API-equivalent size, not money spent; spend is $0.',
-     'Qwen3-8B runs on local vLLM and has no cost.', '',
+     'Qwen3-8B runs on local vLLM and has no cost. Scripts (S-broad, S-neutron, S-plan, S-llm programs) and S-replay use no LLM.', '',
      '| family | batch | episodes with a result | of them at k = 1 | API-equivalent USD |', '|---|---|---|---|---|']
 L += [f'| {f} | {n} | {e} | {k} | {c:.2f} |' for f, n, e, k, c in rows]
 L += ['', f'**Total so far:** {tot:.2f} USD API-equivalent.']

@@ -1,7 +1,7 @@
 # v7 subscription use (API-equivalent, V7-X8)
 
 Claude Code reports `total_cost_usd` per episode. These runs use the subscription, so the figure is an API-equivalent size, not money spent; spend is $0.
-Qwen3-8B runs on local vLLM and has no cost.
+Qwen3-8B runs on local vLLM and has no cost. Scripts (S-broad, S-neutron, S-plan, S-llm programs) and S-replay use no LLM.
 
 | family | batch | episodes with a result | of them at k = 1 | API-equivalent USD |
 |---|---|---|---|---|
@@ -11,5 +11,10 @@ Qwen3-8B runs on local vLLM and has no cost.
 | T | Sonnet noprior, fm | 195 | 195 | 28.07 |
 | T | Haiku noprior, fm | 96 | 96 | 2.17 |
 | T | Sonnet fm-planner | 50 | 50 | 6.51 |
+| H | Sonnet fm-hint (V7-F4) | 46 | 46 | 3.94 |
+| T | Sonnet fm-hint (V7-F4) | 96 | 96 | 10.80 |
+| B1 | Sonnet fm-hint (V7-F4) | 60 | 60 | 4.70 |
+| R, H, T | S-llm authoring sessions, kept (V7-F3; sessions, not episodes) | 28 | - | 4.37 |
+| R, H, T | S-llm authoring sessions discarded under V7-E3 | 5 | - | 1.30 |
 
-**Total so far:** 68.89 USD API-equivalent.
+**Total so far:** 94.01 USD API-equivalent.
