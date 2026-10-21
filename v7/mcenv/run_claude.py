@@ -40,6 +40,9 @@ ARM_TOOLS = {
     'v7t-fm-planner': ['status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'energy', 'hull', 'predict_separation', 'answer'],
     'v7h-fm-planner': ['status', 'measure', 'simulate', 'peaks', 'fit', 'run_python', 'energy', 'hull', 'predict_separation', 'answer'],
 }
+HINT = ('Advice from an expert: a protocol that often works in this lab is to take the neutron pattern of each sample, fit every candidate '
+        'polymorph of the formula to all of your data, query the lab\'s energy model for the candidates, and apply the claim\'s rule. You may '
+        'follow it or depart from it.')                                         # V7-F4, verbatim
 RETRY_DIR = os.environ.get('MCENV_RETRY_DIR', '')        # stage 1b: client retry logs, one file per episode
 RATE = re.compile(r'rate.?limit|usage limit|429|overloaded|too many requests|limit reached|resets? at', re.I)
 _pause = threading.Event(); _pause.set()
@@ -98,7 +101,9 @@ def run_one(ep, outdir, timeout=2400):
     cfg = mcp_cfg(ep)
     agent = f"v5-{ep['model']}-{ep['arm']}"
     allowed = [f'mcp__mcenv__{t}' for t in ARM_TOOLS[ep['arm']]]
-    cmd = ['claude', '-p', tasks.task_text(ep['arm'], ep['scen']), '--agent', agent, '--mcp-config', cfg, '--strict-mcp-config',
+    text = tasks.task_text(ep['arm'], ep['scen'])
+    if ep.get('hint'): text = text + ' ' + HINT                                   # V7-F4: fm-hint (task text only; arm, tools, manual unchanged)
+    cmd = ['claude', '-p', text, '--agent', agent, '--mcp-config', cfg, '--strict-mcp-config',
            '--tools', '', '--allowedTools', ','.join(allowed), '--permission-mode', 'dontAsk', '--output-format', 'stream-json',
            '--verbose', '--no-session-persistence', '--setting-sources', 'project']
     for attempt in range(6):

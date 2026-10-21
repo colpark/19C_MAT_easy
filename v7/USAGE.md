@@ -8,6 +8,8 @@ Qwen3-8B runs on local vLLM and has no cost.
 | H | Sonnet noprior, fm (k 1-4; gates use k 1) | 369 | 92 | 30.00 |
 | H | Haiku noprior, fm | 36 | 36 | 0.62 |
 | H | Sonnet fm-planner | 16 | 16 | 1.53 |
-| T | Sonnet noprior, fm | 192 | 192 | 27.62 |
+| T | Sonnet noprior, fm | 195 | 195 | 28.07 |
+| T | Haiku noprior, fm | 96 | 96 | 2.17 |
+| T | Sonnet fm-planner | 50 | 50 | 6.51 |
 
-**Total so far:** 59.77 USD API-equivalent.
+**Total so far:** 68.89 USD API-equivalent.
