@@ -1,6 +1,6 @@
 """v10 Claude episode runner (V10-5), host A: v7's mcenv/run_claude.py with three changes.
   1. Pacing: an episode starts only while fewer than MAX_CLAUDE (4) Claude episode processes run on this host, v7's included (counted
-     from the process list: 'claude -p ... --agent v5-' or '--agent v10-'; read only, never signalled).
+     from the process list: every 'claude -p' process, whatever its agent, so V7-G counts (V10-X9); read only, never signalled).
   2. Usage limits: an episode whose transcript shows a usage-limit message before any answer is not counted (no record is written);
      the runner starts nothing new, finishes the episodes in flight and exits with code 3, writing the stop to OUTDIR/LIMIT_STOP.
      It is resumed by hand after the reset (the plan skips recorded tokens). Never a retry loop, never a paid fallback.
@@ -41,7 +41,7 @@ def setup_root():
 
 def n_claude():
     out = subprocess.run(['ps', '-eo', 'args'], capture_output=True, text=True).stdout.splitlines()
-    return sum(1 for l in out if l.startswith('claude ') and ' -p ' in l and ('--agent v5-' in l or '--agent v10-' in l))
+    return sum(1 for l in out if l.startswith('claude ') and ' -p ' in l)          # every headless Claude process (v7, V7-G, v10; V10-X9)
 
 
 def mcp_cfg(ep):

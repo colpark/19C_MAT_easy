@@ -29,7 +29,7 @@ for s, m in meta.items():
 d = tempfile.mkdtemp(); json.dump(G, open(os.path.join(d, 'g.json'), 'w'))
 PR = [dict(world=g['world'], scen=g['scen'], family=g['family'], model='sonnet', truth='SUPPORTED', verdict=rng.choice(['SUPPORTED', 'REFUTED', 'CANNOT_TELL']))
       for g in G if g['model'] == 'sonnet' and g['arm'] == 'v10-fm']
-for r in PR: r['truth_agree'] = r['verdict'] == r['truth']; r['cannot_tell'] = r['verdict'] == 'CANNOT_TELL'
+for r in PR: r['truth_agree'] = r['verdict'] == r['truth']; r['cannot_tell'] = r['verdict'] == 'CANNOT_TELL'; r['cell'] = r['world'] % 100 if r['family'] == 'T' else None
 pp = os.path.join(tempfile.mkdtemp(), 'probe.json'); json.dump(PR, open(pp, 'w'))
 out = os.path.join(d, 'out.json'); sys.argv = ['analyze10.py', out, d, '--probe', pp]; A.main()
 R = json.load(open(out))
