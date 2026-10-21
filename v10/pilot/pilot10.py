@@ -41,13 +41,31 @@ def write_jobs(stage, jobs):
     return d
 
 
+def _alive(pid):
+    try: os.kill(pid, 0); return True
+    except OSError: return False
+
+
+class _Adopted:
+    def __init__(self, pid): self.pid = pid
+    def poll(self): return None if _alive(self.pid) else 0
+
+
 def run_stage(stage):
     d = os.path.join(RUN, stage)
     sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', os.path.join(HERE, '') , f'{HOSTB}:{REMOTE}/', '--exclude', 'run'])
+    sh(SSH + [f'mkdir -p {REMOTE}/run/{stage}'])
     sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', d + '/', f'{HOSTB}:{REMOTE}/run/{stage}/'])
-    sh(SSH + [f'cd {REMOTE} && setsid nohup ~/v5env/bin/python runjobs.py run/{stage} hostB {CONC["hostB"]} > run/{stage}/runjobs_hostB.out 2>&1 < /dev/null &'])
-    pa = subprocess.Popen([sys.executable, os.path.join(HERE, 'runjobs.py'), d, 'hostA', str(CONC['hostA'])],
-                          stdout=open(os.path.join(d, 'runjobs_hostA.out'), 'a'), stderr=subprocess.STDOUT, start_new_session=True)
+    if 'RUNNING' not in sh(SSH + [f'test -f {REMOTE}/run/{stage}/runjobs_hostB.pid && kill -0 $(cat {REMOTE}/run/{stage}/runjobs_hostB.pid) && echo RUNNING']).stdout:
+        # not waited on: the ssh session stays open while the remote runner lives, so waiting would hold host A back
+        subprocess.Popen(SSH + [f'cd {REMOTE} && setsid nohup ~/v5env/bin/python runjobs.py run/{stage} hostB {CONC["hostB"]} > run/{stage}/runjobs_hostB.out 2>&1 < /dev/null &'],
+                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    pid_a = os.path.join(d, 'runjobs_hostA.pid')
+    if os.path.exists(pid_a) and _alive(int(open(pid_a).read())):
+        pa = _Adopted(int(open(pid_a).read()))                  # a runner of this stage is still alive (orchestrator restart): adopt it
+    else:
+        pa = subprocess.Popen([sys.executable, os.path.join(HERE, 'runjobs.py'), d, 'hostA', str(CONC['hostA'])],
+                              stdout=open(os.path.join(d, 'runjobs_hostA.out'), 'a'), stderr=subprocess.STDOUT, start_new_session=True)
     log(stage, 'started; host A runner pid', pa.pid)
     n_jobs = len(os.listdir(os.path.join(d, 'jobs')))
     while True:
@@ -55,7 +73,8 @@ def run_stage(stage):
         sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', f'{HOSTB}:{REMOTE}/run/{stage}/out/', os.path.join(d, 'out', '')])
         sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', f'{HOSTB}:{REMOTE}/run/{stage}/runjobs_hostB.log', d + '/'])
         done = [f for f in os.listdir(os.path.join(d, 'out')) if f.endswith('.json')]
-        b_done = os.path.exists(os.path.join(d, 'runjobs_hostB.log')) and 'done ' in open(os.path.join(d, 'runjobs_hostB.log')).read()
+        b_log = os.path.join(d, 'runjobs_hostB.log')
+        b_done = os.path.exists(b_log) and open(b_log).read().rstrip().split('\n')[-1].startswith('done ')   # the last line, not a stale one
         if pa.poll() is not None and b_done: break
     log(stage, 'finished', len(done), 'of', n_jobs, 'jobs have output')
     return {f: json.load(open(os.path.join(d, 'out', f))) for f in done}
