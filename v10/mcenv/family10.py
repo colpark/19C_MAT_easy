@@ -34,7 +34,7 @@ def setup():
     for s, (fam, d) in out.items():
         W = recs[s]
         d.update(seed_scen=W['seed_scen'], family=fam, v10=True, slot=W['slot'], role=W['role'], flag=W['flag'],
-                 budget=240.0 if fam == 'T' else 180.0)
+                 budget=240.0 if fam == 'T' else 180.0, manual_file=os.path.join(ROOT, 'manuals', f'MANUAL_{fam}.md'))
         S[s] = d; FAMILY[s] = fam; RECORDS[s] = W
     return S
 
