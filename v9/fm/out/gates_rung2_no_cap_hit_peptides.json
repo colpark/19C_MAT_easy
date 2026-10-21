@@ -1,0 +1,154 @@
+{
+ "mode": "relax",
+ "head": "oc20",
+ "model": "uma-s-1p2",
+ "n_peptides_evaluated": 57,
+ "n_k_pairs": 254,
+ "n_k_peptides": 51,
+ "n_e_pairs": 558,
+ "n_still_falling": 4,
+ "bootstrap": {
+  "replicates": 10000,
+  "seed": 29,
+  "unit": "peptide"
+ },
+ "accuracy": {
+  "FM_uma_oc20": {
+   "point": 0.562992125984252,
+   "ci": [
+    0.345,
+    0.7708333333333334
+   ],
+   "orientation": "lower wins"
+  },
+  "mass": {
+   "point": 0.5511811023622047,
+   "ci": [
+    0.35714285714285715,
+    0.7534883720930232
+   ],
+   "orientation": "higher wins"
+  },
+  "net_charge_pH7": {
+   "point": 0.7559055118110236,
+   "ci": [
+    0.5373831775700935,
+    0.9272300469483568
+   ],
+   "orientation": "lower wins"
+  },
+  "GRAVY": {
+   "point": 0.5826771653543307,
+   "ci": [
+    0.3670212765957447,
+    0.782051282051282
+   ],
+   "orientation": "lower wins"
+  }
+ },
+ "gate_M": {
+  "passed": false,
+  "accuracy": 0.562992125984252,
+  "ci": [
+   0.345,
+   0.7708333333333334
+  ],
+  "excludes_half": false,
+  "excludes_half_from_below": false,
+  "note": null
+ },
+ "gate_N": {
+  "net_charge_pH7": {
+   "role": "PRIMARY GATE",
+   "n_pairs": 46,
+   "n_peptides": 31,
+   "ties_excluded": 32,
+   "fm_accuracy": 0.5,
+   "ci": [
+    0.125,
+    1.0
+   ],
+   "excludes_half": false,
+   "excludes_half_from_below": false,
+   "passed": false
+  },
+  "GRAVY": {
+   "role": "secondary",
+   "n_pairs": 106,
+   "n_peptides": 42,
+   "ties_excluded": 0,
+   "fm_accuracy": 0.660377358490566,
+   "ci": [
+    0.417910447761194,
+    0.8589743589743589
+   ],
+   "excludes_half": false,
+   "excludes_half_from_below": false,
+   "passed": false
+  },
+  "mass": {
+   "role": "diagnostic",
+   "n_pairs": 114,
+   "n_peptides": 40,
+   "ties_excluded": 0,
+   "fm_accuracy": 0.5701754385964912,
+   "ci": [
+    0.3181818181818182,
+    0.8064516129032258
+   ],
+   "excludes_half": false,
+   "excludes_half_from_below": false,
+   "passed": false
+  },
+  "all_three_wrong_n_pairs": 4,
+  "all_three_wrong_n_peptides": 7,
+  "passed": false,
+  "primary_descriptor": "net_charge_pH7"
+ },
+ "gate_N_headtohead_diagnostic": {
+  "mass": {
+   "beats_null": false,
+   "significantly_worse_than_null": false,
+   "diff_point": 0.011811023622047223,
+   "diff_median": 0.014563106796116498,
+   "ci": [
+    -0.26428571428571423,
+    0.2874015748031496
+   ]
+  },
+  "net_charge_pH7": {
+   "beats_null": false,
+   "significantly_worse_than_null": false,
+   "diff_point": -0.19291338582677164,
+   "diff_median": -0.1908396946564886,
+   "ci": [
+    -0.44285714285714284,
+    0.06818181818181823
+   ]
+  },
+  "GRAVY": {
+   "beats_null": false,
+   "significantly_worse_than_null": false,
+   "diff_point": -0.019685039370078705,
+   "diff_median": -0.01666666666666672,
+   "ci": [
+    -0.34977578475336324,
+    0.33189655172413796
+   ]
+  },
+  "beats_all": false
+ },
+ "diagnostics": {
+  "spearman_eads_vs_intensity": 0.07829919626652838,
+  "n_spearman": 57,
+  "auc_top_vs_bottom": 0.4667487684729064,
+  "n_auc_pairs": 812,
+  "accuracy_dev_E_pairs": 0.4229390681003584,
+  "n_e_pairs": 558,
+  "within_peptide_sd_median_eV": 2.2890321169655965,
+  "between_peptide_sd_of_minima_eV": 3.264822957940904,
+  "within_over_between": 0.7011198299123912,
+  "n_still_falling": 4,
+  "n_peptides_with_sd": 57
+ }
+}

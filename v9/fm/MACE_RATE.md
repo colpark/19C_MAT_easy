@@ -6,7 +6,7 @@ than an assumed one.
 
 ## Install
 
-`mace-torch 0.3.16`, checkpoint `mace-mh-1.model` (59,208,139 bytes, sha256 `a522eb7f59c7879963d4…`)
+`mace-torch 0.3.16`, checkpoint `mace-mh-1.model` (59,208,139 bytes, sha256 `a522eb7f59c7879963d41586528f4980baf33e086c94aa92e3eafdeccad3be47`)
 from the ACEsuit `mace-foundations` release. Installed into a **separate** interpreter at
 `~/v9_data/macenv` with `--no-deps`, with v8's `site-packages` added read-only by a `.pth` file so
 torch 2.13.0+cu130 is reused rather than a second 5 GB copy downloaded. **Nothing was installed
