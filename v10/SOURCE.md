@@ -51,3 +51,6 @@ Copied with `cp -rL` from the v7 checkout's link `~/Documents/harbor/v7/v7/data`
 ## Tests (V10-0)
 - `graphexec/test_graphexec.py`: ALL TESTS PASSED. `graphexec/test_graphexec_d.py`: ALL KIT D TESTS PASSED. `graphexec_d.py check spec/graph_T.json`: schema ok.
 - `tests/test_neutron_scale.py` (step 5): on worlds 4011, 4022 and 4091 (v7 H twins installed from `frames/` at a test κ = 0.2), the planner's neutron D (agent_grid from simulate's stated X-ray and neutron scales) equals the grader's D within 3e-5 relative (45.6050 / 45.6041, 26.8461 / 26.8463, 51.9678 / 51.9693). D(2κ) / D(κ) = 2.000000. NEUTRON SCALE TEST PASSED.
+
+## Sandbox prefix (V10-3)
+- `~/v10sbx` on host A and host B (not in git): `python3.12 -m venv --without-pip`, with numpy 2.5.3 and scipy 1.18.1 copied from `~/v5env` site-packages (library files 41d0725519dc4b48 on both hosts). `mcenv/sandbox10.py` derives from `mcenv/sandbox.py` (see `SANDBOX.md`).
