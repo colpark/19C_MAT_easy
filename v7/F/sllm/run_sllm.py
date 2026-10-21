@@ -3,15 +3,18 @@
 checked against FREEZE.md row V7-F3a) and the family's canonical client.py. The process gets only LAB_URL, LAB_TOKEN, PATH, LANG and the
 BLAS caps. A crash, a time-out (3600 s) or an audit breach counts as an unanswered episode in every analysis. Skips tokens whose episode
 has already answered or already has a record. One JSON line per episode in OUT.
-  python run_sllm.py PLAN.jsonl OUT.jsonl CONC        (plan lines carry token, prog, url)"""
+  python run_sllm.py PLAN.jsonl OUT.jsonl CONC        (plan lines carry token, prog, url)
+V7-G2 (SLLM_ROUND=G): programs from programs_G checked against FREEZE row V7-G2a, client.py from inputs_G (byte-identical to V7-F3's),
+episode folders under ~/v7sllm_runG."""
 import hashlib, json, os, shutil, subprocess, sys, time, urllib.request, uuid
 from concurrent.futures import ThreadPoolExecutor
 HERE = os.path.dirname(os.path.abspath(__file__))
 plan, out, conc = sys.argv[1], sys.argv[2], int(sys.argv[3])
-ROOT = os.path.expanduser('~/v7sllm_run'); AUD = os.path.join(ROOT, '_audit'); os.makedirs(os.path.join(AUD, 'out'), exist_ok=True)
+G = os.environ.get('SLLM_ROUND') == 'G'; SUF = '_G' if G else ''
+ROOT = os.path.expanduser('~/v7sllm_runG' if G else '~/v7sllm_run'); AUD = os.path.join(ROOT, '_audit'); os.makedirs(os.path.join(AUD, 'out'), exist_ok=True)
 shutil.copy(os.path.join(HERE, 'audit_run.py'), os.path.join(AUD, 'audit_run.py'))
 PYX = os.path.expanduser('~/v5env/bin/python')
-FREEZE = open(os.path.join(HERE, '..', '..', 'FREEZE.md')).read().split('| V7-F3a |')[1].split('\n')[0]
+FREEZE = open(os.path.join(HERE, '..', '..', 'FREEZE.md')).read().split('| V7-G2a |' if G else '| V7-F3a |')[1].split('\n')[0]
 FAM = {'R': 'R', 'H': 'H', 'T': 'T'}
 
 
@@ -24,14 +27,14 @@ def status(url, tok):
 def one(ep):
     tok, prog, url = ep['token'], ep['prog'], ep['url']
     if status(url, tok).get('answered'): return None
-    src = os.path.join(HERE, 'programs', prog + '.py'); s = open(src, 'rb').read()
+    src = os.path.join(HERE, 'programs' + SUF, prog + '.py'); s = open(src, 'rb').read()
     h = hashlib.sha256(s).hexdigest()[:16]
-    if f'{prog}.py {h}' not in FREEZE: raise SystemExit(f'{prog}: hash {h} not in FREEZE V7-F3a')
+    if f'{prog}.py {h}' not in FREEZE: raise SystemExit(f'{prog}: hash {h} not in FREEZE ' + ('V7-G2a' if G else 'V7-F3a'))
     d = os.path.join(ROOT, prog, tok[:12])
     if os.path.exists(d): shutil.move(d, d + f'.stale{int(time.time())}')
     os.makedirs(d)
     open(os.path.join(d, 'program.py'), 'wb').write(s)
-    shutil.copy(os.path.join(HERE, 'inputs', FAM[prog[0]], 'client.py'), d)
+    shutil.copy(os.path.join(HERE, 'inputs' + SUF, FAM[prog[0]], 'client.py'), d)
     env = dict(PATH='/usr/bin:/bin', LANG='C.UTF-8', LAB_URL=url, LAB_TOKEN=tok, OPENBLAS_NUM_THREADS='1', OMP_NUM_THREADS='1', MKL_NUM_THREADS='1')
     ao = os.path.join(AUD, 'out', f'{prog}_{tok[:12]}.json')
     t0 = time.time(); rc, tail = None, ''
