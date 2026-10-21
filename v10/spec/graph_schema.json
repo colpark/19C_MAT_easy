@@ -1,0 +1,279 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "v6/spec/graph_schema.json",
+  "title": "v6 subgoal graph",
+  "description": "A claim decomposed into typed subgoals. Each node names the module that serves it, its typed inputs (with their source) and outputs, a null output used when the node is ablated or blocked, and an acceptance test. Edges follow from the inputs' 'from' fields and from triggers.",
+  "type": "object",
+  "required": [
+    "graph_id",
+    "claim_type",
+    "claim_template",
+    "constants",
+    "roles",
+    "final",
+    "necessity_nodes",
+    "nodes"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "graph_id": {
+      "type": "string"
+    },
+    "claim_type": {
+      "enum": [
+        "R",
+        "H",
+        "G"
+      ]
+    },
+    "claim_template": {
+      "type": "string"
+    },
+    "description": {
+      "type": "string"
+    },
+    "constants": {
+      "type": "object",
+      "description": "Every number the acceptance tests and rules use. The manual states each one.",
+      "additionalProperties": {
+        "type": [
+          "number",
+          "string"
+        ]
+      }
+    },
+    "roles": {
+      "type": "object",
+      "description": "Which node plays which role in the validation suite.",
+      "required": [
+        "identify",
+        "prior",
+        "escalation"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "plan": {
+          "type": "string"
+        },
+        "window": {
+          "type": "string"
+        },
+        "measure": {
+          "type": "string"
+        },
+        "identify": {
+          "type": "string"
+        },
+        "prior": {
+          "type": "string"
+        },
+        "escalation": {
+          "type": "string"
+        },
+        "decide": {
+          "type": "string"
+        },
+        "remeasure_plan": {
+          "type": "string"
+        },
+        "remeasure": {
+          "type": "string"
+        },
+        "reidentify": {
+          "type": "string"
+        }
+      }
+    },
+    "final": {
+      "type": "string",
+      "description": "Node whose output 'verdict' ends the graph."
+    },
+    "necessity_nodes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Nodes the ablation test must show to be necessary."
+    },
+    "nodes": {
+      "type": "array",
+      "minItems": 2,
+      "items": {
+        "$ref": "#/$defs/node"
+      }
+    }
+  },
+  "$defs": {
+    "port": {
+      "type": "object",
+      "required": [
+        "name",
+        "type"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "pattern": "^[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "type": {
+          "type": "string",
+          "description": "text, list[text], structures, measurement, list[measurement_request], list[measurement_id], interval_deg, float, enum[library], map[name,float], list[phase]"
+        },
+        "from": {
+          "type": "string",
+          "pattern": "^(task|const|S[0-9A-Za-z_]+)\\.[A-Za-z_][A-Za-z0-9_]*$"
+        },
+        "unit": {
+          "type": "string"
+        },
+        "required": {
+          "type": "boolean"
+        },
+        "description": {
+          "type": "string"
+        }
+      }
+    },
+    "accept": {
+      "oneOf": [
+        {
+          "type": "object",
+          "required": [
+            "kind"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "always"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "required": [
+            "kind",
+            "field",
+            "op"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "kind": {
+              "const": "threshold"
+            },
+            "field": {
+              "type": "string"
+            },
+            "op": {
+              "enum": [
+                ">=",
+                ">",
+                "<=",
+                "<"
+              ]
+            },
+            "value": {
+              "type": "number"
+            },
+            "value_from": {
+              "type": "string",
+              "pattern": "^const\\.[A-Za-z_][A-Za-z0-9_]*$"
+            }
+          }
+        }
+      ]
+    },
+    "node": {
+      "type": "object",
+      "required": [
+        "id",
+        "goal",
+        "module",
+        "inputs",
+        "outputs",
+        "null_output",
+        "accept"
+      ],
+      "additionalProperties": false,
+      "properties": {
+        "id": {
+          "type": "string",
+          "pattern": "^S[0-9A-Za-z_]+$"
+        },
+        "label": {
+          "type": "string",
+          "description": "Short label for diagrams."
+        },
+        "goal": {
+          "type": "string"
+        },
+        "module": {
+          "enum": [
+            "plan",
+            "simulator",
+            "instrument",
+            "fit",
+            "fm",
+            "dft",
+            "rule"
+          ]
+        },
+        "fn": {
+          "type": "string",
+          "description": "Rule function name, for module 'rule'."
+        },
+        "params": {
+          "type": "object",
+          "description": "Static parameters passed to the module or rule."
+        },
+        "inputs": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/port"
+          }
+        },
+        "outputs": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/port"
+          }
+        },
+        "null_output": {
+          "type": "object",
+          "description": "Outputs the node returns when ablated or when a required input is missing."
+        },
+        "accept": {
+          "$ref": "#/$defs/accept"
+        },
+        "optional": {
+          "type": "boolean"
+        },
+        "trigger": {
+          "type": "object",
+          "required": [
+            "node",
+            "accepted"
+          ],
+          "additionalProperties": false,
+          "properties": {
+            "node": {
+              "type": "string"
+            },
+            "accepted": {
+              "type": "boolean"
+            }
+          }
+        },
+        "cost": {
+          "type": "string",
+          "description": "How the node's cost in instrument minutes arises."
+        },
+        "fallback_for": {
+          "type": "string",
+          "description": "The node whose subgoal this optional node serves again (a remeasure or escalation path). Ablating that node also ablates this one."
+        }
+      }
+    }
+  }
+}
