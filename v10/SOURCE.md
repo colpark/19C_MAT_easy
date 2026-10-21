@@ -54,3 +54,4 @@ Copied with `cp -rL` from the v7 checkout's link `~/Documents/harbor/v7/v7/data`
 
 ## Sandbox prefix (V10-3)
 - `~/v10sbx` on host A and host B (not in git): `python3.12 -m venv --without-pip`, with numpy 2.5.3 and scipy 1.18.1 copied from `~/v5env` site-packages (library files 41d0725519dc4b48 on both hosts). `mcenv/sandbox10.py` derives from `mcenv/sandbox.py` (see `SANDBOX.md`).
+- `STATED_B1.json` = `v6/exemplar/STATED.json` (4db9a947b58676ab): the R family's stated FM errors, reliability and band text, as B1 used them (server6).
