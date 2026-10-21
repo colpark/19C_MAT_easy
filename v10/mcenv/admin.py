@@ -18,6 +18,8 @@ if os.environ.get('V5_STAGE') == '6':
     from . import server6 as _S6S            # v6 server: stage 4 scenarios, v6 candidates, v6 arms (V6_SPEC 2)
 if os.environ.get('V5_STAGE') == '7':
     from . import server7 as _S7S            # v7 families T and H (V7-1)
+if os.environ.get('V5_STAGE') == '10':
+    from . import server10 as _S10S          # v10 families R, H and T, v10 arms (V10-3)
 if os.environ.get('V5_STAGE') == '4':
     from . import server4 as _S4S            # stage 4 scenarios 61-68 and the seven stage 4 arms (V5_SPEC I)
 
