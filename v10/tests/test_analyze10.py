@@ -8,7 +8,7 @@ for fam, base, n in (('R', 501, 20), ('H', 601, 16), ('T', 701, 14)):
     for i in range(n):
         meta[base + i] = dict(family=fam, role='bench' if i < n - 6 else 'control', slot='take' if i < n - 6 else 'control', rank=f'{i:04x}',
                               htype=('M' if i % 3 == 0 else 'E') if fam == 'H' else None, kind='window_25_35', formula=f'X{i}', flag='fresh')
-A.worlds_meta = lambda: (meta, {s: rng.choice(['right', 'right', 'in band', 'wrong']) for s in meta})
+A.worlds_meta = lambda: (meta, {s: rng.choice(['right', 'right', 'in band', 'wrong']) for s in meta}); A.world_plans = lambda: {s: None for s in meta}
 P = {'sonnet:fm': 0.5, 'sonnet:noSim': 0.1, 'sonnet:fm-instruct': 0.55, 'sonnet:fm-forecast': 0.7, 'sonnet:fm-placebo': 0.5, 'S-window': 0.85,
      'S-match': 0.2, 'S-window2': 0.8, 'S-plan': 0.9, 'S-plan2': 0.85, 'S-llm-R1': 0.3, 'S-llm-H1': 0.3, 'S-llm-T1': 0.3}
 G = []
@@ -23,14 +23,22 @@ for s, m in meta.items():
                      null_rule=int(rng.random() < 0.7), verdict='SUPPORTED', truth='SUPPORTED', D=30.0, cost=150.0, calls=[], wrong_determinate=False,
                      free_scans_only=False, measurements=({'pre': [dict(spec=dict(radiation='xray', start=10, step=0.04, n=1501))], 'post': [dict(spec=dict(radiation='xray', start=10, step=0.04, n=1501))]}
                                                           if m['family'] == 'T' else [dict(spec=dict(radiation='xray', start=10, step=0.04, n=1501))]))
-            if m['family'] == 'T': g['cell'] = c
-            else: g['twin'] = c
+            if m['family'] == 'T': g['cell'] = c; g['world'] = s * 100 + c
+            else: g['twin'] = c; g['world'] = s * 10 + c
             G.append(g)
 d = tempfile.mkdtemp(); json.dump(G, open(os.path.join(d, 'g.json'), 'w'))
-out = os.path.join(d, 'out.json'); sys.argv = ['analyze10.py', out, d]; A.main()
+PR = [dict(world=g['world'], scen=g['scen'], family=g['family'], model='sonnet', truth='SUPPORTED', verdict=rng.choice(['SUPPORTED', 'REFUTED', 'CANNOT_TELL']))
+      for g in G if g['model'] == 'sonnet' and g['arm'] == 'v10-fm']
+for r in PR: r['truth_agree'] = r['verdict'] == r['truth']; r['cannot_tell'] = r['verdict'] == 'CANNOT_TELL'
+pp = os.path.join(tempfile.mkdtemp(), 'probe.json'); json.dump(PR, open(pp, 'w'))
+out = os.path.join(d, 'out.json'); sys.argv = ['analyze10.py', out, d, '--probe', pp]; A.main()
 R = json.load(open(out))
 gate = R['evidence']['gate_V10_S']; print('gate', gate['estimate'], gate['lb95_one_sided'], gate['passes'])
 assert gate['passes'] and 0.25 < gate['estimate'] < 0.55
 print('verifier qualifies:', R['verifier']['qualification']['qualifies'], R['verifier']['qualification']['stats'])
 print('2x2', R['evidence']['contrasts']['4_two_by_two']['interaction'], 'S-llm best', R['evidence']['contrasts']['5_fm_minus_S-llm_best'])
+pr = R['probe']['sonnet']['right']; print('probe right', pr['probe_family_weighted'], 'fm', pr['fm_family_weighted'], 'n', pr['n_paired'])
+assert pr['n_paired'] > 0 and 0.2 < pr['probe_family_weighted'] < 0.5
+mc = R['measurement_choice']['family_weighted']['sonnet:fm']; print('measurement choice', mc); assert mc['decisive_kind_included'] == 0.0
+print('expectations_x8', R['expectations_x8']); print('interpretation_x8', R['interpretation_x8']); print('sanity', R['sanity'])
 print('ANALYZE10 TEST PASSED')
