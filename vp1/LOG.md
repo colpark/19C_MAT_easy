@@ -46,3 +46,6 @@ Every table check (vp1/tablecheck_vp1.py) appends one line here: the in-memory t
 - 2026-10-22T21:38Z table check before batch `vp1-2gq-main`: PASS; 8824 pid 2984415 equal (21 tables); 8826 pid 2994735 equal (21 tables)
 - 2026-10-22T21:38Z Qwen program smoke (15, kept): 4 answered (R1, R2, R3, R5); R4 unanswered without an error; 10 stop at import and H5 at a syntax error (VP1-X11). Main started (4 concurrent, 8824 and 8826).
 - 2026-10-22T22:25Z Qwen programs done (1,010; 240 answered: R1, R2, R3, R5 every episode; VP1-X11). Qwen fill restarted at 12 concurrent (VP1-E2 addendum; 104 to run).
+- 2026-10-22T23:36Z table check before batch `vp1-E3-replacements`: PASS; 8820 pid 2971299 equal (21 tables); 8821 pid 2975164 equal (21 tables); 8822 pid 2975179 equal (21 tables); 8823 pid 2975195 equal (21 tables); 8824 pid 2984415 equal (21 tables)
+- 2026-10-22T23:36Z table check before batch `plan_agent.jsonl`: PASS; 8824 pid 2984415 equal (21 tables)
+- 2026-10-22T23:37Z VP1-1 done: 3,030 records, 3,029 answered, no breach. Haiku programs done: 1,540 records, 1,379 answered (H5 import 92, R2 and T answer-schema errors 45, SystemExit 8; 16 broken pipes), no breach. VP1-E3: 20 harness losses voided and replaced (19 program, 1 agent), rerun on 8820-8824.
