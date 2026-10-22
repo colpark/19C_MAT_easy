@@ -7,7 +7,7 @@
   s4  T pilot controls: T candidates that fail T qualification and pass the R unit's v7 bars, recipe D at N = 0.7 N_q
 Kappa (step 3): the median over worlds of the R and H tuning units at N0 of D(neutron alone, kappa 1) / D(R1); kappa = 1 / median, rounded
 to the nearest of {0.02, 0.05, 0.1, 0.2, 0.5, 1} on a log scale. Jobs run on host A (local) and host B (~/v10work), each job its own
-process (runjobs.py); results come back by rsync without delete.
+process (runjobs.py); from s3 on also node A2 (amendment 2); results come back by rsync without delete.
   python pilot10.py all          (or: python pilot10.py s0 | s1 | ...)"""
 import json, math, os, subprocess, sys, time
 HERE = os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, HERE)
@@ -15,10 +15,19 @@ import frames10 as FR
 
 RUN = os.path.join(HERE, 'run')
 HOSTB = 'aid1@130.199.95.15'; REMOTE = 'v10work/pilot'
-CONC = {'hostA': int(os.environ.get('V10_CONC_A', '10')), 'hostB': int(os.environ.get('V10_CONC_B', '18'))}
+CONC = {'hostA': int(os.environ.get('V10_CONC_A', '10')), 'hostB': int(os.environ.get('V10_CONC_B', '18')),
+        'nodeA2': int(os.environ.get('V10_CONC_A2', '9'))}
 SHARE_B = 0.62
+# V10-1a amendment 2 (orchestration only): node A2 (host A's node 2, the same machine type and Python stack; an s0 job reproduces
+# host A's output exactly but for wall time) runs jobs of stages written after the amendment (s3, s4). Jobs already written keep
+# their host. Each remote: name -> ssh target; the same REMOTE folder layout.
+REMOTES = {'hostB': HOSTB, 'nodeA2': '192.168.100.11'}
+WEIGHTS = {'hostA': CONC['hostA'], 'hostB': CONC['hostB'], 'nodeA2': CONC['nodeA2']}
 KAPPA_SET = (0.02, 0.05, 0.1, 0.2, 0.5, 1.0)
 SSH = ['ssh', '-o', 'LogLevel=ERROR', '-o', 'ConnectTimeout=20', '-n', HOSTB]
+
+
+def ssh_to(target): return ['ssh', '-o', 'LogLevel=ERROR', '-o', 'ConnectTimeout=20', '-n', target]
 
 
 def log(*a):
@@ -32,9 +41,9 @@ def write_jobs(stage, jobs):
     d = os.path.join(RUN, stage, 'jobs'); os.makedirs(d, exist_ok=True)
     # heaviest first, alternating hosts by share (3-polymorph units cost about twice 2-polymorph ones)
     jobs = sorted(jobs, key=lambda J: -len(J['unit']['poly_ids']))
-    nb = 0
-    for i, J in enumerate(jobs):
-        J['host'] = 'hostB' if nb < SHARE_B * (i + 1) else 'hostA'; nb += J['host'] == 'hostB'
+    n = {h: 0 for h in WEIGHTS}
+    for J in jobs:                                              # heaviest first to the host least loaded for its slot count
+        J['host'] = min(WEIGHTS, key=lambda h: ((n[h] + 1) / WEIGHTS[h], h)); n[J['host']] += 1
         name = J['unit']['id'].replace('|', '_').replace('(', '').replace(')', '') + f"__{J['mode']}.json"
         p = os.path.join(d, name)
         if not os.path.exists(p): json.dump(J, open(p, 'w'), indent=1)
@@ -53,13 +62,16 @@ class _Adopted:
 
 def run_stage(stage):
     d = os.path.join(RUN, stage)
-    sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', os.path.join(HERE, '') , f'{HOSTB}:{REMOTE}/', '--exclude', 'run'])
-    sh(SSH + [f'mkdir -p {REMOTE}/run/{stage}'])
-    sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', d + '/', f'{HOSTB}:{REMOTE}/run/{stage}/'])
-    if 'RUNNING' not in sh(SSH + [f'test -f {REMOTE}/run/{stage}/runjobs_hostB.pid && kill -0 $(cat {REMOTE}/run/{stage}/runjobs_hostB.pid) && echo RUNNING']).stdout:
-        # not waited on: the ssh session stays open while the remote runner lives, so waiting would hold host A back
-        subprocess.Popen(SSH + [f'cd {REMOTE} && setsid nohup ~/v5env/bin/python runjobs.py run/{stage} hostB {CONC["hostB"]} > run/{stage}/runjobs_hostB.out 2>&1 < /dev/null &'],
-                         stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
+    for h, tgt in REMOTES.items():
+        S = ssh_to(tgt)
+        sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', os.path.join(HERE, '') , f'{tgt}:{REMOTE}/', '--exclude', 'run'])
+        sh(S + [f'mkdir -p {REMOTE}/run/{stage}'])
+        # the remote's own runner files stay its own (host A's copies lag by up to a minute and must not overwrite them)
+        sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', '--exclude', 'runjobs_*', d + '/', f'{tgt}:{REMOTE}/run/{stage}/'])
+        if 'RUNNING' not in sh(S + [f'test -f {REMOTE}/run/{stage}/runjobs_{h}.pid && kill -0 $(cat {REMOTE}/run/{stage}/runjobs_{h}.pid) && echo RUNNING']).stdout:
+            # not waited on: the ssh session stays open while the remote runner lives, so waiting would hold host A back
+            subprocess.Popen(S + [f'cd {REMOTE} && setsid nohup ~/v5env/bin/python runjobs.py run/{stage} {h} {CONC[h]} > run/{stage}/runjobs_{h}.out 2>&1 < /dev/null &'],
+                             stdin=subprocess.DEVNULL, stdout=subprocess.DEVNULL, stderr=subprocess.DEVNULL, start_new_session=True)
     pid_a = os.path.join(d, 'runjobs_hostA.pid')
     if os.path.exists(pid_a) and _alive(int(open(pid_a).read())):
         pa = _Adopted(int(open(pid_a).read()))                  # a runner of this stage is still alive (orchestrator restart): adopt it
@@ -70,12 +82,14 @@ def run_stage(stage):
     n_jobs = len(os.listdir(os.path.join(d, 'jobs')))
     while True:
         time.sleep(60)
-        sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', f'{HOSTB}:{REMOTE}/run/{stage}/out/', os.path.join(d, 'out', '')])
-        sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', f'{HOSTB}:{REMOTE}/run/{stage}/runjobs_hostB.log', d + '/'])
+        r_done = []
+        for h, tgt in REMOTES.items():
+            sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', f'{tgt}:{REMOTE}/run/{stage}/out/', os.path.join(d, 'out', '')])
+            sh(['rsync', '-a', '-e', 'ssh -o LogLevel=ERROR', f'{tgt}:{REMOTE}/run/{stage}/runjobs_{h}.log', d + '/'])
+            lg = os.path.join(d, f'runjobs_{h}.log')
+            r_done.append(os.path.exists(lg) and open(lg).read().rstrip().split('\n')[-1].startswith('done '))   # the last line, not a stale one
         done = [f for f in os.listdir(os.path.join(d, 'out')) if f.endswith('.json')]
-        b_log = os.path.join(d, 'runjobs_hostB.log')
-        b_done = os.path.exists(b_log) and open(b_log).read().rstrip().split('\n')[-1].startswith('done ')   # the last line, not a stale one
-        if pa.poll() is not None and b_done: break
+        if pa.poll() is not None and all(r_done): break
     log(stage, 'finished', len(done), 'of', n_jobs, 'jobs have output')
     return {f: json.load(open(os.path.join(d, 'out', f))) for f in done}
 
