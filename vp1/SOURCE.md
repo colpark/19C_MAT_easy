@@ -222,6 +222,7 @@ Everything below was copied unchanged by `vp1/tools/build_source.py`. v5, v6 and
 | runner/analysis | `.claude/agents/v5-haiku-v7h-fm.md` | `v7/.claude/agents/v5-haiku-v7h-fm.md` | 1edadd4062034b34 | unchanged |
 | runner/analysis | `.claude/agents/v5-haiku-v7t-fm.md` | `v7/.claude/agents/v5-haiku-v7t-fm.md` | d3d7b8154c7ae163 | unchanged |
 | runner/analysis | `.claude/agents/v5-haiku-v6-active-fm.md` | `v6/.claude/agents/v5-haiku-v6-active-fm.md` | ba3d12cfe63880fa | unchanged |
+| runner/analysis | `.claude/agents/v5-sonnet-active.md` | `v7/.claude/agents/v5-sonnet-active.md` | 4a9f35056e36d2fd | unchanged |
 
 ## The four files that differ from the deployed copies
 

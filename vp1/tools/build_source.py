@@ -51,7 +51,7 @@ def main():
         rows.append(('runner/analysis', os.path.relpath(dst, OUT), os.path.relpath(src, REPO), sha(dst)[:16], 'unchanged'))
     for v, p in (('v6', 'bench/fm/fm_check.json'), ('v7', '.claude/agents/v5-sonnet-v6-active-fm.md'), ('v7', '.claude/agents/v5-sonnet-v7h-fm.md'),
                  ('v7', '.claude/agents/v5-sonnet-v7t-fm.md'), ('v7', '.claude/agents/v5-haiku-v7h-fm.md'), ('v7', '.claude/agents/v5-haiku-v7t-fm.md'),
-                 ('v6', '.claude/agents/v5-haiku-v6-active-fm.md')):
+                 ('v6', '.claude/agents/v5-haiku-v6-active-fm.md'), ('v7', '.claude/agents/v5-sonnet-active.md')):
         src = os.path.join(REPO, v, p); dst = os.path.join(OUT, p)
         os.makedirs(os.path.dirname(dst), exist_ok=True); shutil.copy2(src, dst)
         rows.append(('runner/analysis', p, os.path.relpath(src, REPO), sha(dst)[:16], 'unchanged'))
