@@ -12,7 +12,8 @@ def new_token(self, world, arm, k):
     self.tokens.append(dict(token=tok, world=world, arm=arm, k=k)); return tok
 
 
-AD.Env.new_token = new_token
-v, fam, url, w, k, b = sys.argv[1:7]
-sys.argv = ['splan10.py', v, fam, url, 'local', '.', os.environ['MCENV_STATE'], w, k, b]
-SP10.main()
+if __name__ == '__main__':          # spawned planner workers re-import this module: without the guard each re-ran main and died, and
+    v, fam, url, w, k, b = sys.argv[1:7]                       # the pool respawned them forever (the dev run that never finished)
+    sys.argv = ['splan10.py', v, fam, url, 'local', '.', os.environ['MCENV_STATE'], w, k, b]
+    AD.Env.new_token = new_token
+    SP10.main()
