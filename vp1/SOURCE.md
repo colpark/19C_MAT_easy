@@ -200,6 +200,7 @@ Everything below was copied unchanged by `vp1/tools/build_source.py`. v5, v6 and
 | runner/analysis | `F/sllm/programs_G/T3.py` | `v7/F/sllm/programs_G/T3.py` | f67e76a086f17406 | unchanged |
 | runner/analysis | `F/sllm/programs_G/T4.py` | `v7/F/sllm/programs_G/T4.py` | 6903ae5346818174 | unchanged |
 | runner/analysis | `F/sllm/programs_G/T5.py` | `v7/F/sllm/programs_G/T5.py` | d43d106c1d29adcb | unchanged |
+| runner/analysis | `F/sllm/run/worlds_B1_H.txt` | `v7/F/sllm/run/worlds_B1_H.txt` | 471249685d146ca6 | unchanged |
 | runner/analysis | `F/sllm/run_sllm.py` | `v7/F/sllm/run_sllm.py` | 60f82fec31e7cafc | unchanged |
 | runner/analysis | `v7ref/FREEZE.md` | `v7/FREEZE.md` | ec52fdef4eb899f6 | unchanged |
 | runner/analysis | `H/FM_CHECK.md` | `v7/H/FM_CHECK.md` | 127c981b4ebc3dc6 | unchanged |
@@ -207,6 +208,7 @@ Everything below was copied unchanged by `vp1/tools/build_source.py`. v5, v6 and
 | runner/analysis | `P/core.py` | `v7/P/core.py` | 0c5822dd46cc449e | unchanged |
 | runner/analysis | `P/replay7.py` | `v7/P/replay7.py` | 1b8f1fa313a30047 | unchanged |
 | runner/analysis | `T/fm/fm_check.json` | `v7/T/fm/fm_check.json` | b973fcc902f3cc7e | unchanged |
+| runner/analysis | `T/run_subsets.json` | `v7/T/run_subsets.json` | 72d25b55b27d5860 | unchanged |
 | runner/analysis | `analyzeF.py` | `v7/analyzeF.py` | 0edceee787f01e47 | unchanged |
 | runner/analysis | `analyzeG.py` | `v7/analyzeG.py` | cd827aebdface15d | unchanged |
 | runner/analysis | `b1/ROWS_NODFT.md` | `v7/b1/ROWS_NODFT.md` | d8982b37305e258b | unchanged |

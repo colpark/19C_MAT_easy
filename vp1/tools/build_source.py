@@ -40,7 +40,7 @@ def main():
     # runner, authoring, replay and analysis code, frozen inputs and FM status files (unchanged)
     extra = ['F/sllm/author.py', 'F/sllm/run_sllm.py', 'F/sllm/audit_run.py', 'F/sllm/audit_authors.py', 'F/sllm/dev_tokens_G_R.txt',
              'F/sllm/dev_tokens_G_HT.txt', 'F/sllm/PROGRAMS_G.md', 'P/core.py', 'P/replay7.py', 'P/audit.py', 'analyzeF.py', 'analyzeG.py',
-             'gatesF.py', 'figG.py', 'run_qwen7.py', 'b1/ROWS_NODFT.md', 'H/FM_CHECK.md', 'T/fm/fm_check.json', 'FREEZE.md']
+             'gatesF.py', 'figG.py', 'run_qwen7.py', 'F/sllm/run/worlds_B1_H.txt', 'T/run_subsets.json', 'b1/ROWS_NODFT.md', 'H/FM_CHECK.md', 'T/fm/fm_check.json', 'FREEZE.md']
     for d in ('F/sllm/inputs_G', 'F/sllm/programs_G'):
         for r, _, fs in os.walk(os.path.join(REPO, 'v7', d)):
             extra += [os.path.relpath(os.path.join(r, f), os.path.join(REPO, 'v7')) for f in fs if '__pycache__' not in r]
