@@ -55,3 +55,5 @@ Copied with `cp -rL` from the v7 checkout's link `~/Documents/harbor/v7/v7/data`
 ## Sandbox prefix (V10-3)
 - `~/v10sbx` on host A and host B (not in git): `python3.12 -m venv --without-pip`, with numpy 2.5.3 and scipy 1.18.1 copied from `~/v5env` site-packages (library files 41d0725519dc4b48 on both hosts). `mcenv/sandbox10.py` derives from `mcenv/sandbox.py` (see `SANDBOX.md`).
 - `STATED_B1.json` = `v6/exemplar/STATED.json` (4db9a947b58676ab): the R family's stated FM errors, reliability and band text, as B1 used them (server6).
+- `F/sllm/run_sllm10.py` (07113153dca90a55) is derived from v7's `F/sllm/run_sllm.py` (9b032ad62edeffa7, kept unchanged beside it): the run folder ~/v10sllm_run, FREEZE row V10-4 S-llm, programs from F/sllm/programs10, and the V10-X10 table check before the batch. `P/run_scripts10.py` and `P/run_splan10.py` are new v10 runners modelled on v7's `P/run_scripts.py` and `P/run_splan.py` (kept unchanged; not used for v10 batches).
+- `~/v10sbx` was also copied to node A2 (2026-10-22) for the dev stack there; its files equal host A's byte for byte.
