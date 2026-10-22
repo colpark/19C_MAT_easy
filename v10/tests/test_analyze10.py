@@ -10,17 +10,20 @@ for fam, base, n in (('R', 501, 20), ('H', 601, 16), ('T', 701, 14)):
                               htype=('M' if i % 3 == 0 else 'E') if fam == 'H' else None, kind='window_25_35', formula=f'X{i}', flag='fresh')
 A.worlds_meta = lambda: (meta, {s: rng.choice(['right', 'right', 'in band', 'wrong']) for s in meta}); A.world_plans = lambda: {s: None for s in meta}
 P = {'sonnet:fm': 0.5, 'sonnet:noSim': 0.1, 'sonnet:fm-instruct': 0.55, 'sonnet:fm-forecast': 0.7, 'sonnet:fm-placebo': 0.5, 'S-window': 0.85,
-     'S-match': 0.2, 'S-window2': 0.8, 'S-plan': 0.9, 'S-plan2': 0.85, 'S-llm-R1': 0.3, 'S-llm-H1': 0.3, 'S-llm-T1': 0.3}
+     'S-match': 0.2, 'S-window2': 0.8, 'S-plan': 0.9, 'S-plan2': 0.85, 'S-llm-R1': 0.3, 'S-llm-H1': 0.3, 'S-llm-T1': 0.3,
+     'S-llm-R2': 0.8, 'S-llm-H2': 0.8, 'S-llm-T2': 0.8}
+NEW = {'S-llm-R2', 'S-llm-H2', 'S-llm-T2'}; rng2 = random.Random(2)        # the X10 programs draw apart, so the other labels' draws are unchanged
 G = []
 for s, m in meta.items():
     for lab, p in P.items():
-        res = rng.random() < p
+        rr = rng2 if lab in NEW else rng
+        res = rr.random() < p
         if lab.startswith('S-llm') and not lab.startswith(f"S-llm-{m['family']}"): continue
         model, arm = (lab.split(':')[0], 'v10-' + lab.split(':')[1]) if ':' in lab else (lab, 'v10-script')
         cells = [1, 2, 3, 4] if m['family'] == 'T' else [1, 2]
         for c in cells:
-            g = dict(scen=s, k=1, model=model, arm=arm, family=m['family'], credit=res, resolved_v7x4=res or rng.random() < 0.1, V=int(res and rng.random() < 0.95),
-                     null_rule=int(rng.random() < 0.7), verdict='SUPPORTED', truth='SUPPORTED', D=30.0, cost=150.0, calls=[], wrong_determinate=False,
+            g = dict(scen=s, k=1, model=model, arm=arm, family=m['family'], credit=res, resolved_v7x4=res or rr.random() < 0.1, V=int(res and rr.random() < 0.95),
+                     null_rule=int(rr.random() < 0.7), verdict='SUPPORTED', truth='SUPPORTED', D=30.0, cost=150.0, calls=[], wrong_determinate=False,
                      free_scans_only=False, measurements=({'pre': [dict(spec=dict(radiation='xray', start=10, step=0.04, n=1501))], 'post': [dict(spec=dict(radiation='xray', start=10, step=0.04, n=1501))]}
                                                           if m['family'] == 'T' else [dict(spec=dict(radiation='xray', start=10, step=0.04, n=1501))]))
             if m['family'] == 'T': g['cell'] = c; g['world'] = s * 100 + c
@@ -31,7 +34,8 @@ PR = [dict(world=g['world'], scen=g['scen'], family=g['family'], model='sonnet',
       for g in G if g['model'] == 'sonnet' and g['arm'] == 'v10-fm']
 for r in PR: r['truth_agree'] = r['verdict'] == r['truth']; r['cannot_tell'] = r['verdict'] == 'CANNOT_TELL'; r['cell'] = r['world'] % 100 if r['family'] == 'T' else None
 pp = os.path.join(tempfile.mkdtemp(), 'probe.json'); json.dump(PR, open(pp, 'w'))
-out = os.path.join(d, 'out.json'); sys.argv = ['analyze10.py', out, d, '--probe', pp]; A.main()
+sd = os.path.join(tempfile.mkdtemp(), 'sllm_dev.json'); json.dump(dict(chosen={'R': 'S-llm-R2', 'H': 'S-llm-H2', 'T': 'S-llm-T2'}), open(sd, 'w'))
+out = os.path.join(d, 'out.json'); sys.argv = ['analyze10.py', out, d, '--probe', pp, '--sllm-dev', sd]; A.main()
 R = json.load(open(out))
 gate = R['evidence']['gate_V10_S']; print('gate', gate['estimate'], gate['lb95_one_sided'], gate['passes'])
 assert gate['passes'] and 0.25 < gate['estimate'] < 0.55
@@ -41,4 +45,11 @@ pr = R['probe']['sonnet']['right']; print('probe right', pr['probe_family_weight
 assert pr['n_paired'] > 0 and 0.2 < pr['probe_family_weighted'] < 0.5
 mc = R['measurement_choice']['family_weighted']['sonnet:fm']; print('measurement choice', mc); assert mc['decisive_kind_included'] == 0.0
 print('expectations_x8', R['expectations_x8']); print('interpretation_x8', R['interpretation_x8']); print('sanity', R['sanity'])
+x = R['offline_dev_chosen']; dv = x['S-llm-dev - sonnet:fm']
+print('X10 dev - fm', dv['pooled']['estimate'], dv['pooled']['ci95'], {f: c['ci95'] for f, c in dv['per_family'].items()})
+print('X10 forecast - dev', x['sonnet:fm-forecast - S-llm-dev']['pooled']['estimate'], 'instruct - mean', x['sonnet:fm-instruct - S-llm-mean']['pooled']['estimate'])
+print('expectations_x10', R['expectations_x10'])
+n_above = sum(c['ci95'][0] > 0 for c in dv['per_family'].values() if c.get('ci95'))
+assert 0.15 < dv['pooled']['estimate'] < 0.45 and R['expectations_x10']['1 dev-chosen beats sonnet fm with interval above 0 on >= 2 families'] is (n_above >= 2)
+assert isinstance(R['expectations_x10']['2 fm-forecast closes >= half of the fm to dev-chosen gap'], dict)
 print('ANALYZE10 TEST PASSED')

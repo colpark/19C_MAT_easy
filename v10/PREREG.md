@@ -482,3 +482,28 @@ Changes to κ, recipes, selection rules or anything frozen. Reasoning-critical q
 
 ## V10-X9 (reading, David 2026-10-21, before the probe template is frozen; verbatim)
 In the probe report, in V10-X8’s expectation 1 and in its first interpretation rule, compare probe and fm only on worlds that need an energy: every R and H world, and T cells 1 and 4. Report T cells 2 and 3 apart as a sanity check, since the identity alone decides them. Take each probe world’s truth from grade10’s truth function and assert that it equals the twin-label convention. Report the number of unparseable replies per model. Order the Claude queue as follows: the probe first, then Sonnet fm and noSim on bench units, then the other arms, while V7-G keeps its share of the host-wide cap.
+
+## V10-X10 (David 2026-10-22, appended verbatim before V10-2 selection and before any bench episode)
+
+# v10: amendment V10-X10, lessons from V7-G (David 2026-10-22)
+
+To the running v10 session. Never write a credential or an API key into any file, log, transcript or commit. Log this as V10-X10 and append it, verbatim, to `v10/PREREG.md` before V10-2 selection runs and before any bench episode. Nothing frozen changes. These are operations and analysis additions only.
+
+## Why
+v7-G finished (21fce6e55).
+- **V7-E6.** Two v7 servers held a model table loaded before its final values. A batch ran without FM values and had to be voided.
+- **V7-E5.** An expired login voided 27 episodes.
+- **Offline beat online.** Sonnet's corrected programs (S-llm round G) beat Sonnet acting in the loop on every family: best of five +0.27 to +0.54, mean of five +0.09 to +0.22.
+
+## Changes
+1. **Table check.** Before every batch of episodes, scripts or probes, each server reports a hash of every table it holds in memory (worlds, FM table, DFT table, manuals). The batch starts only if every hash equals the frozen value in FREEZE.md. Log each check.
+2. **Authentication stop.** The runner treats "Failed to authenticate" or any login error like a usage limit. It records nothing for that episode, starts nothing new, exits with code 3, and resumes by hand after a login.
+3. **Fair offline baseline.** Besides the best program chosen inside each bootstrap replicate, report the S-llm program chosen per family by its score on the development worlds (k = 99), fixed before any bench run.
+4. **Instructed online against offline.** Report Sonnet fm-instruct and fm-forecast against the S-llm mean and the development-chosen program, per family and pooled.
+
+## Expectations, written before any bench episode
+1. The development-chosen program beats Sonnet fm on at least two families with an interval above zero.
+2. fm-forecast closes at least half of the gap between Sonnet fm and the development-chosen program.
+
+## Out of scope
+New arms, changes to κ, recipes, selection rules or anything frozen.

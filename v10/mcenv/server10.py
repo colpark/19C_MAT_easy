@@ -127,5 +127,19 @@ def t_run_python(ep, a): return SBX.run(ep.sbx, str(a.get('code', '')), timeout=
 S.TOOLS.update(status=t_status, forecast=t_forecast, run_python=t_run_python)
 S.TOOLS.pop('predict_separation', None)
 
+_do_post = S.H.do_POST
+
+
+def _do_post10(self):
+    """POST /tables: the hashes of the tables this process holds (V10-X10 table check, tables10); every other path as v7's handler."""
+    if self.path != '/tables': return _do_post(self)
+    from . import tables10
+    b = json.dumps(dict(ok=True, result=tables10.hashes())).encode()
+    self.send_response(200); self.send_header('Content-Type', 'application/json'); self.send_header('Content-Length', str(len(b)))
+    self.end_headers(); self.wfile.write(b)
+
+
+S.H.do_POST = _do_post10
+
 if __name__ == '__main__':
     S.main()

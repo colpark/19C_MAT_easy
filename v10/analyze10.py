@@ -47,7 +47,16 @@ V10-X8 additions (David 2026-10-21, PREREG part 2)
   sanity       S-match identification rate (identification_match) on the bench and on the tuning split (its tuning run), noSim's
                own-simulator detector counts; the count-rate statement when S-match identifies < 10 % of the qualified bench units
   V10-X8 expectations 1-4 and interpretation rules 1-3 are evaluated by the code below (expectations_x8, interpretation_x8).
-  python analyze10.py OUT.json GRADED_DIR [--v7 V7_V.json] [--detect DETECT.json] [--probe PROBE_GRADED.json] [--smatch-tuning GRADED.json]"""
+V10-X10 additions (David 2026-10-22, PREREG part 2)
+  dev-chosen   the S-llm program chosen per family by its development-world score (F/sllm/choose_dev10.py, k = 99, fixed before any
+               bench run; --sllm-dev) against sonnet:fm, per family and pooled (family-weighted), beside the in-replicate best
+  instructed   sonnet:fm-instruct and sonnet:fm-forecast against the S-llm mean and against the development-chosen program, per family
+               and pooled
+  expectations_x10  1 the development-chosen program beats sonnet:fm on >= 2 families with the 95 % interval above 0; 2 fm-forecast
+               closes at least half of the pooled gap between sonnet:fm and the development-chosen program: (forecast - fm) >= 0.5 x
+               (dev - fm); not applicable (reported as such) when that gap is not positive
+  python analyze10.py OUT.json GRADED_DIR [--v7 V7_V.json] [--detect DETECT.json] [--probe PROBE_GRADED.json] [--smatch-tuning GRADED.json]
+                      [--sllm-dev SLLM_DEV.json]"""
 import ast, glob, json, math, os, random, re, sys
 from collections import defaultdict, Counter
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -471,14 +480,43 @@ def sllm_per_family(tab, bench, meta, sllm):
     return out
 
 
+def x10_report(tab, bench, meta, sllm, dev):
+    """V10-X10 changes 3 and 4: the development-chosen program (dev: {family: label}) and the S-llm mean against sonnet:fm, fm-instruct
+    and fm-forecast, per family and pooled. Labels S-llm-dev and S-llm-mean are added to the unit table per unit from its family."""
+    t = dict(tab)
+    for s in bench:
+        f = meta[s]['family']; xs = [tab[(s, p)] for p in sllm.get(f, []) if (s, p) in tab]
+        if xs: t[(s, 'S-llm-mean')] = sum(xs) / len(xs)
+        if dev.get(f) and (s, dev[f]) in tab: t[(s, 'S-llm-dev')] = tab[(s, dev[f])]
+    out = dict(chosen=dev, rates={l: rate(t, bench, meta, l) for l in ('S-llm-dev', 'S-llm-mean')})
+    pairs = [('S-llm-dev', 'sonnet:fm'), ('sonnet:fm-instruct', 'S-llm-mean'), ('sonnet:fm-instruct', 'S-llm-dev'),
+             ('sonnet:fm-forecast', 'S-llm-mean'), ('sonnet:fm-forecast', 'S-llm-dev')]
+    for i, (a, b) in enumerate(pairs):
+        per = {f: contrast(t, [s for s in bench if meta[s]['family'] == f], meta, a, b, 40 + 4 * i + j) for j, f in enumerate(FAMS)}
+        out[f'{a} - {b}'] = dict(pooled=contrast(t, bench, meta, a, b, 40 + 4 * i + 3), per_family=per)
+    return out
+
+
+def expectations_x10(x, fg):
+    """x: x10_report; fg: pooled fm-forecast - fm (evidence key)."""
+    d = x['S-llm-dev - sonnet:fm']
+    fams = [f for f, c in d['per_family'].items() if c.get('n')]
+    e1 = None if not fams else sum(bool(d['per_family'][f].get('ci95') and d['per_family'][f]['ci95'][0] > 0) for f in fams) >= 2
+    gap = (d['pooled'] or {}).get('estimate')
+    if gap is None or fg is None: e2 = None
+    elif gap <= 0: e2 = 'not applicable: the development-chosen program does not beat sonnet:fm pooled'
+    else: e2 = dict(met=fg >= 0.5 * gap, closed_share=round(fg / gap, 4), gap=gap, forecast_minus_fm=fg)
+    return {'1 dev-chosen beats sonnet fm with interval above 0 on >= 2 families': e1, '2 fm-forecast closes >= half of the fm to dev-chosen gap': e2}
+
+
 # ---------------------------------------------------------------- main
 def main():
     import argparse
     ap = argparse.ArgumentParser(); ap.add_argument('out'); ap.add_argument('graded_dir')
-    for o in ('--v7', '--detect', '--probe', '--smatch-tuning'): ap.add_argument(o)
+    for o in ('--v7', '--detect', '--probe', '--smatch-tuning', '--sllm-dev'): ap.add_argument(o)
     a = ap.parse_args(); out_p, gdir = a.out, a.graded_dir
     ld = lambda p: json.load(open(p)) if p and os.path.exists(p) else None
-    v7, det, probe, smt = ld(a.v7), ld(a.detect), ld(a.probe), ld(a.smatch_tuning)
+    v7, det, probe, smt, sdev = ld(a.v7), ld(a.detect), ld(a.probe), ld(a.smatch_tuning), ld(a.sllm_dev)
     meta, fmc = worlds_meta(); G = load_graded(gdir); plans = world_plans()
     ev, x4 = unit_table(G, meta)
     bench = sorted(s for s, m in meta.items() if m['role'] == 'bench' and m['slot'] == 'take')
@@ -557,6 +595,9 @@ def main():
         'fm includes the decisive kind in > 2/3 (v7 failure an artifact of the neutron)': None if 'sonnet:fm' not in mc else (mc['sonnet:fm']['decisive_kind_included'] or 0) > 2 / 3,
         'best S-llm beats fm with interval above 0 on >= 2 families (offline beats in-loop)': None if not of else
             sum(bool(v['best'].get('ci95_best_minus_fm') and v['best']['ci95_best_minus_fm'][0] > 0) for v in of.values()) >= 2}
+    # V10-X10
+    R['offline_dev_chosen'] = x10_report(ev, bench, meta, sllm, (sdev or {}).get('chosen') or {}) if sdev else None
+    R['expectations_x10'] = expectations_x10(R['offline_dev_chosen'], fg) if sdev else None
     json.dump(R, open(out_p, 'w'), indent=1, default=str)
     print(json.dumps(dict(gate=E['gate_V10_S'], rates={l: rb[l]['pooled'] for l in labels}), indent=1, default=str))
 
