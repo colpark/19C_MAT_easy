@@ -1,0 +1,137 @@
+{
+  "graph_id": "H_hull_stability_v1",
+  "claim_type": "H",
+  "claim_template": "The crystalline phase in this sample lies within 50 meV/atom of the convex hull.",
+  "description": "A sequential decomposition: the prior needs the measurement's output, because the FM must evaluate the polymorph the sample actually holds. S2 depends on S1c.",
+  "constants": {
+    "D_accept": 25,
+    "D_undecisive": 9,
+    "threshold": 0.05,
+    "band": 0.02,
+    "exemplar_margin_factor": 2,
+    "budget_min": 180,
+    "dft_price_min": 60
+  },
+  "roles": {"plan": "S0", "window": "S1a", "measure": "S1b", "identify": "S1c", "prior": "S2", "escalation": "S2x", "decide": "S3"},
+  "final": "S3",
+  "necessity_nodes": ["S1a", "S1b", "S1c", "S2"],
+  "nodes": [
+    {
+      "id": "S0",
+      "label": "decompose",
+      "goal": "Split the claim into the subgoals it needs: which polymorph the sample holds, then how far that polymorph lies above the hull.",
+      "module": "plan",
+      "inputs": [
+        {"name": "claim", "type": "text", "from": "task.claim"},
+        {"name": "library", "type": "structures", "from": "task.library"}
+      ],
+      "outputs": [{"name": "subgoals", "type": "list[text]"}],
+      "null_output": {"subgoals": null},
+      "accept": {"kind": "always"}
+    },
+    {
+      "id": "S1a",
+      "label": "predict window",
+      "goal": "Simulate every library polymorph and find the cheapest measurement plan whose expected separation reaches D_accept against every other polymorph.",
+      "module": "simulator",
+      "inputs": [
+        {"name": "library", "type": "structures", "from": "task.library"},
+        {"name": "m0", "type": "measurement", "from": "task.m0"},
+        {"name": "budget", "type": "float", "unit": "min", "from": "const.budget_min"}
+      ],
+      "outputs": [
+        {"name": "window", "type": "interval_deg", "unit": "deg"},
+        {"name": "plan", "type": "list[measurement_request]"},
+        {"name": "predicted_D", "type": "float"},
+        {"name": "predicted_cost_min", "type": "float", "unit": "min"}
+      ],
+      "null_output": {"window": null, "plan": [], "predicted_D": null, "predicted_cost_min": 0},
+      "accept": {"kind": "threshold", "field": "predicted_D", "op": ">=", "value_from": "const.D_accept"},
+      "cost": "free (simulation)"
+    },
+    {
+      "id": "S1b",
+      "label": "measure",
+      "goal": "Acquire the measurements of the plan.",
+      "module": "instrument",
+      "inputs": [{"name": "plan", "type": "list[measurement_request]", "from": "S1a.plan"}],
+      "outputs": [
+        {"name": "measurements", "type": "list[measurement_id]"},
+        {"name": "cost_min", "type": "float", "unit": "min"}
+      ],
+      "null_output": {"measurements": [], "cost_min": 0},
+      "accept": {"kind": "always"},
+      "cost": "points times seconds per step over 60, plus 5 minutes overhead, per measurement"
+    },
+    {
+      "id": "S1c",
+      "label": "identify",
+      "goal": "Fit every library polymorph to all measurements, the free scan included, with nuisances free, and report the favoured polymorph and its separation D from the best other polymorph.",
+      "module": "fit",
+      "inputs": [
+        {"name": "m0", "type": "measurement", "from": "task.m0"},
+        {"name": "measurements", "type": "list[measurement_id]", "from": "S1b.measurements"},
+        {"name": "library", "type": "structures", "from": "task.library"}
+      ],
+      "outputs": [
+        {"name": "phase", "type": "enum[library]"},
+        {"name": "runner_up", "type": "enum[library]"},
+        {"name": "D", "type": "float"}
+      ],
+      "null_output": {"phase": null, "runner_up": null, "D": null},
+      "accept": {"kind": "threshold", "field": "D", "op": ">=", "value_from": "const.D_accept"},
+      "cost": "free (fit)"
+    },
+    {
+      "id": "S2",
+      "label": "infer hull distance (FM)",
+      "goal": "Predict the energy above the MP DFT hull of the identified polymorph with the FM, and report its margin from the threshold.",
+      "module": "fm",
+      "inputs": [{"name": "phase", "type": "enum[library]", "from": "S1c.phase"}],
+      "outputs": [
+        {"name": "hull_distance", "type": "float", "unit": "eV/atom"},
+        {"name": "decomposition", "type": "list[phase]"},
+        {"name": "stated_error", "type": "float", "unit": "eV/atom"},
+        {"name": "margin", "type": "float", "unit": "eV/atom"}
+      ],
+      "null_output": {"hull_distance": null, "decomposition": null, "stated_error": null, "margin": null},
+      "accept": {"kind": "threshold", "field": "margin", "op": ">=", "value_from": "const.band"},
+      "cost": "free (amortized inference)"
+    },
+    {
+      "id": "S2x",
+      "label": "escalate to DFT",
+      "goal": "When the FM margin falls inside the reliability band, buy the exact DFT hull distance of the identified polymorph.",
+      "module": "dft",
+      "optional": true,
+      "trigger": {"node": "S2", "accepted": false},
+      "inputs": [{"name": "phase", "type": "enum[library]", "from": "S1c.phase"}],
+      "outputs": [
+        {"name": "hull_distance_dft", "type": "float", "unit": "eV/atom"},
+        {"name": "cost_min", "type": "float", "unit": "min"}
+      ],
+      "null_output": {"hull_distance_dft": null, "cost_min": 0},
+      "accept": {"kind": "always"},
+      "cost": "dft_price_min"
+    },
+    {
+      "id": "S3",
+      "label": "decide",
+      "goal": "SUPPORTED if the identified polymorph lies at most threshold above the hull, REFUTED if above, CANNOT_TELL if identification is not decisive or no reliable hull distance exists.",
+      "module": "rule",
+      "fn": "H_within_threshold",
+      "params": {"identify": "S1c", "prior": "S2", "escalation": "S2x"},
+      "inputs": [
+        {"name": "phase", "type": "enum[library]", "from": "S1c.phase"},
+        {"name": "hull_distance", "type": "float", "from": "S2.hull_distance", "required": false},
+        {"name": "hull_distance_dft", "type": "float", "from": "S2x.hull_distance_dft", "required": false}
+      ],
+      "outputs": [
+        {"name": "verdict", "type": "enum[SUPPORTED,REFUTED,CANNOT_TELL]"},
+        {"name": "reason", "type": "text"}
+      ],
+      "null_output": {"verdict": "CANNOT_TELL", "reason": "blocked"},
+      "accept": {"kind": "always"}
+    }
+  ]
+}
