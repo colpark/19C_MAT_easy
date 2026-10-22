@@ -37,8 +37,14 @@ with open(out, 'a') as fo, open(untouched, 'w') as fu:
         if t[:12] in done: continue
         if not os.path.exists(os.path.join(S.LOGS, t + '.jsonl')):
             fu.write(json.dumps(e) + '\n'); left += 1; continue
-        b = json.dumps(dict(token=t, tool='status', args={}, rid=uuid.uuid4().hex)).encode()
-        st = json.loads(urllib.request.urlopen(urllib.request.Request(e['url'], data=b, headers={'Content-Type': 'application/json'}), timeout=120).read())['result']
+        for attempt in range(5):                     # status is read-only: a time-out on a busy server is retried (VP1-X9)
+            try:
+                b = json.dumps(dict(token=t, tool='status', args={}, rid=uuid.uuid4().hex)).encode()
+                st = json.loads(urllib.request.urlopen(urllib.request.Request(e['url'], data=b, headers={'Content-Type': 'application/json'}), timeout=600).read())['result']
+                break
+            except (TimeoutError, OSError):
+                if attempt == 4: raise
+                time.sleep(30)
         ao = os.path.join(AUD, f"{e['prog']}_{t[:12]}.json"); a = json.load(open(ao)) if os.path.exists(ao) else None
         err = a.get('error') if a else 'no audit output (runner stopped)'
         h = hashlib.sha256(open(os.path.join(VP1, 'F', 'sllm', 'programs_' + SET, e['prog'] + '.py'), 'rb').read()).hexdigest()[:16]
