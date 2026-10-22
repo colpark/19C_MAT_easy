@@ -7,7 +7,9 @@ BATCHES = [('H', 'Sonnet noprior, fm (k 1-4; gates use k 1)', 'runs/H/v7_4/episo
            ('H', 'Sonnet fm-planner', 'runs/H/planner/episodes'), ('T', 'Sonnet noprior, fm', 'runs/T/v7_4/episodes'),
            ('T', 'Haiku noprior, fm', 'runs/T/haiku/episodes'), ('T', 'Sonnet fm-planner', 'runs/T/planner/episodes'),
            ('H', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_H'), ('T', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_T'),
-           ('B1', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_B1')]
+           ('B1', 'Sonnet fm-hint (V7-F4)', 'runs/F/hint/episodes_B1'),
+           ('T', 'fresh T Sonnet fm + fm-hint, first run on node A2:8784 (voided, V7-E5 and V7-E6; used, not analysed)', 'runs/G/fresh/episodes'),
+           ('T', 'fresh T Sonnet fm + fm-hint, rerun on node A2:8781 (V7-G1)', 'runs/G/fresh/episodes_rerun')]
 rows = []; tot = 0.0
 for fam, name, d in BATCHES:
     p = os.path.join(HERE, d)
@@ -25,7 +27,8 @@ for fam, name, d in BATCHES:
         e = eps.get(os.path.basename(f)[:12]); k1 += bool(e and e.get('k') == 1)
     rows.append((fam, name, n, k1, round(cost, 2))); tot += cost
 for name, pat in (('S-llm authoring sessions, kept (V7-F3; sessions, not episodes)', 'F/sllm/logs/*/session_*.jsonl'),
-                  ('S-llm authoring sessions discarded under V7-E3', 'F/sllm/discarded_V7-E3/**/session_*.jsonl')):
+                  ('S-llm authoring sessions discarded under V7-E3', 'F/sllm/discarded_V7-E3/**/session_*.jsonl'),
+                  ('S-llm round G authoring sessions (V7-G2; sessions, not episodes)', 'F/sllm/logs_G/*/session_*.jsonl')):
     cost, n = 0.0, 0
     for f in glob.glob(os.path.join(HERE, pat), recursive=True):
         c = None
