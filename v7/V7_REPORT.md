@@ -5,6 +5,8 @@ Branch `v7/2026-10-18`. Pre-registration: `v7/PREREG.md` (v7, V7-X6, V7-X8, V7-X
 Code: `analyzeF.py` (V7-F5 analysis), `gatesF.py` (gates and expectations), `figF.py` (figures), `P/replay7.py` (S-replay), and `analyze7.py` (the pre-registered V7-5 analysis, run on Sonnet at k = 1 for the gates).
 Outputs: `F/analysis/` (`analysisF.json`, `analyze7_sonnet_k1.json`, `GATES_F.md`, `gatesF.json`, `TABLES_F.md`, `fig_F_{B1,H,T}.png`).
 
+> **Erratum (2026-10-22, V7-E6).** The statement below that S-neutron and S-broad resolve 0 of the 30 fresh T quads is withdrawn. Those script episodes ran on host B's frozen copy, whose T FM table had no values for the fresh compounds, so the energy tool failed: S-neutron crashed on every fresh quad and S-broad wherever it identified a phase. Everything on the 24 paired T compounds, on H and on B1 is unaffected, and so is T S-plan. The fresh-set scripts are rerun under V7-G and reported in `V7_G_REPORT.md`.
+
 ## What the LLM adds
 
 **FM tools.** With the FM tools, Sonnet resolves far more than without them on every family under the evidence key, with intervals above zero:
