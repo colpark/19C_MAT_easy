@@ -26,8 +26,14 @@ def post(url, body, timeout=120):
 
 
 def status(url, tok):
-    r = post(url, dict(token=tok, tool='status', args={}, rid=uuid.uuid4().hex))
-    return r['result'] if r.get('ok') else {}
+    """VP1-1b: status is read-only, so a time-out on a busy server is retried (5 attempts, 600 s each) instead of ending the runner."""
+    for attempt in range(5):
+        try:
+            r = post(url, dict(token=tok, tool='status', args={}, rid=uuid.uuid4().hex), timeout=600)
+            return r['result'] if r.get('ok') else {}
+        except (TimeoutError, OSError):
+            if attempt == 4: raise
+            time.sleep(30)
 
 
 def tables_ok(urls):
