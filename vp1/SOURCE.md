@@ -216,6 +216,12 @@ Everything below was copied unchanged by `vp1/tools/build_source.py`. v5, v6 and
 | runner/analysis | `gatesF.py` | `v7/gatesF.py` | 0c2860750858f68f | unchanged |
 | runner/analysis | `run_qwen7.py` | `v7/run_qwen7.py` | afb2f93ea2df2988 | unchanged |
 | runner/analysis | `bench/fm/fm_check.json` | `v6/bench/fm/fm_check.json` | 4c3d5fcfef003a31 | unchanged |
+| runner/analysis | `.claude/agents/v5-sonnet-v6-active-fm.md` | `v7/.claude/agents/v5-sonnet-v6-active-fm.md` | 6ad54d3e7230c865 | unchanged |
+| runner/analysis | `.claude/agents/v5-sonnet-v7h-fm.md` | `v7/.claude/agents/v5-sonnet-v7h-fm.md` | b04808658512419b | unchanged |
+| runner/analysis | `.claude/agents/v5-sonnet-v7t-fm.md` | `v7/.claude/agents/v5-sonnet-v7t-fm.md` | 5c1b26191cd4c3cb | unchanged |
+| runner/analysis | `.claude/agents/v5-haiku-v7h-fm.md` | `v7/.claude/agents/v5-haiku-v7h-fm.md` | 1edadd4062034b34 | unchanged |
+| runner/analysis | `.claude/agents/v5-haiku-v7t-fm.md` | `v7/.claude/agents/v5-haiku-v7t-fm.md` | d3d7b8154c7ae163 | unchanged |
+| runner/analysis | `.claude/agents/v5-haiku-v6-active-fm.md` | `v6/.claude/agents/v5-haiku-v6-active-fm.md` | ba3d12cfe63880fa | unchanged |
 
 ## The four files that differ from the deployed copies
 
