@@ -212,6 +212,7 @@ Everything below was copied unchanged by `vp1/tools/build_source.py`. v5, v6 and
 | runner/analysis | `analyzeF.py` | `v7/analyzeF.py` | 0edceee787f01e47 | unchanged |
 | runner/analysis | `analyzeG.py` | `v7/analyzeG.py` | cd827aebdface15d | unchanged |
 | runner/analysis | `b1/ROWS_NODFT.md` | `v7/b1/ROWS_NODFT.md` | d8982b37305e258b | unchanged |
+| runner/analysis | `evidence7.py` | `v7/evidence7.py` | 5fbda604953b7d60 | unchanged |
 | runner/analysis | `figG.py` | `v7/figG.py` | ddb37ce5d174aea8 | unchanged |
 | runner/analysis | `gatesF.py` | `v7/gatesF.py` | 0c2860750858f68f | unchanged |
 | runner/analysis | `run_qwen7.py` | `v7/run_qwen7.py` | afb2f93ea2df2988 | unchanged |

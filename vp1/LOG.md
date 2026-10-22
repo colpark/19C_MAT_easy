@@ -18,3 +18,7 @@ Every table check (vp1/tablecheck_vp1.py) appends one line here: the in-memory t
 - 2026-10-22T14:14Z VP1-2 Haiku authoring started (run_authors_GH.sh pid 2113935, one session at a time; session R1 init: claude-haiku-5-5, tools Edit, Read, Write, no MCP server).
 - 2026-10-22T14:17Z VP1-3 main started on host A (runner pid 2115078, 2 concurrent, 8824-8825; 270 to run).
 - 2026-10-22T14:18Z table check before batch `vp1-2-qwen-preflight`: PASS; 8826 pid 2994735 equal (21 tables); 8827 pid 2994780 equal (21 tables)
+- 2026-10-22T14:23Z table check before batch `vp1-3p-smoke`: PASS; 8828 pid 3000029 equal (21 tables); 8829 pid 3000410 equal (21 tables)
+- 2026-10-22T14:30Z table check before batch `vp1-3p-main`: PASS; 8828 pid 3000029 equal (21 tables); 8829 pid 3000410 equal (21 tables)
+- 2026-10-22T14:19Z node A2:8826, 8827 started for Qwen; host A reverse tunnel (ssh pid 2116164, ~/vp1_runs/tunnel.pid) maps host B 127.0.0.1:18826, 18827 to them; host B reads equal tables through it. Qwen authoring started on host B (run_authors_GQ.sh pid 3958824; table check through the tunnel PASS). Qwen online fill: 136 tokens registered (B1 60, H 28, T 48; the worlds without a v7 Qwen fm episode); smoke of 4 started on host B (run_qwen_fill.sh, table check PASS).
+- 2026-10-22T14:23Z node A2:8828, 8829 started; VP1-3 programs under fit-once: 530 tokens (round-G R and H programs, k 1); smoke of 10 (one per program): all answered, rc 0, no breach; check_manip ALL OK (each fired once, on the first qualifying fit). 14:30Z main started (runner pid 3010157, 4 concurrent).
