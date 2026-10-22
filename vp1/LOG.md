@@ -45,3 +45,4 @@ Every table check (vp1/tablecheck_vp1.py) appends one line here: the in-memory t
 - 2026-10-22T21:37Z Qwen fill resumed on host B (pid 175794; 120 to run incl. the 6 replacements, after the authoring ended). Qwen programs: 1,010 tokens registered (seed 1); every token untouched, so their urls were set to 8824 and 8826 (free) instead of the busy 8820-8823 (VP1-X8 rule); smoke of 15 started.
 - 2026-10-22T21:38Z table check before batch `vp1-2gq-main`: PASS; 8824 pid 2984415 equal (21 tables); 8826 pid 2994735 equal (21 tables)
 - 2026-10-22T21:38Z Qwen program smoke (15, kept): 4 answered (R1, R2, R3, R5); R4 unanswered without an error; 10 stop at import and H5 at a syntax error (VP1-X11). Main started (4 concurrent, 8824 and 8826).
+- 2026-10-22T22:25Z Qwen programs done (1,010; 240 answered: R1, R2, R3, R5 every episode; VP1-X11). Qwen fill restarted at 12 concurrent (VP1-E2 addendum; 104 to run).
