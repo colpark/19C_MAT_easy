@@ -1,0 +1,28 @@
+{
+  "version": "vP.1 (paper 1)",
+  "base": "v7 branch v7/2026-10-18 at 21fce6e55 (frozen worlds, manuals, keys, graders, round-G programs and inputs)",
+  "units": {"B1": "30 compounds, pairs (twins A and B), 60 worlds", "H": "23 compounds, pairs, 46 worlds", "T": "24 paired compounds, quads, 96 worlds"},
+  "VP1-1_sonnet_programs": {
+    "what": "the 15 round-G programs (sllmG-R1..R5, H1..H5, T1..T5) at new seeds, CPU only",
+    "seeds": [2, 3, 4],
+    "episodes": {"B1": 900, "H": 690, "T": 1440, "total": 3030},
+    "online_comparator": {"B1": "Sonnet fm, k 1-4 (exists, 240 episodes)", "H": "Sonnet fm, k 1-4 (exists, 184)", "T": "Sonnet fm, k 1 (exists, 96). k 2-4 not run (needs David's approval, about $40)"}
+  },
+  "VP1-2_haiku": {
+    "authoring": "15 sessions (R, H, T x 5), as round G with --model haiku",
+    "program_episodes": {"B1": "5 x 60 x seeds 1,2 = 600", "H": "5 x 46 x seeds 1,2 = 460", "T": "5 x 96 x seed 1 = 480", "total": 1540},
+    "online_fill": {"B1": "Haiku fm k 1,2 (exists, verify 120)", "H": "to k 1,2 on 23 compounds (+74, from 18)", "T": "to k 1 on 24 quads (+48, from 48)", "total_new": 122}
+  },
+  "VP1-2_qwen": {
+    "authoring": "15 sessions with ref/qwen_author.py on the local vLLM server (host B)",
+    "program_episodes": {"B1": 300, "H": 230, "T": 480, "seeds": [1], "total": 1010},
+    "online_fill": {"B1": "+60 (k 1)", "H": "+28 (to 23 compounds, k 1)", "T": "+48 (to 24 quads, k 1)", "total_new": 136}
+  },
+  "VP1-3_manipulations": {
+    "agent": "Sonnet, k 1, task texts of v7 (B1 v6-active-fm, H v7h-fm) plus the fm-late sentence where stated",
+    "episodes": {"fm-late": {"B1": 60, "H": 46}, "fit-once": {"B1": 60, "H": 46}, "fm-flip": {"B1": "40 (20 FM-right compounds)", "H": "30 (15 FM-right compounds)"}, "total": 282},
+    "programs_under_fit_once": {"what": "round-G R and H programs under the fit-once server", "episodes": {"B1": 300, "H": 230, "total": 530}}
+  },
+  "totals": {"sonnet_episodes": 282, "haiku_episodes": 122, "haiku_author_sessions": 15, "qwen_episodes": 136, "qwen_author_sessions": 15, "cpu_program_episodes": 6110},
+  "spend": "about $27 API-equivalent on the subscription (Sonnet about $0.08 and Haiku about $0.02 per episode). $0 actual"
+}
