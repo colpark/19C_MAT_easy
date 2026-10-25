@@ -11,8 +11,9 @@ has no job.
 PREREG V10-1: continue only if every family's projected supply reaches 1.25 × the Gate V10-supply minima; otherwise widen the frame to
 every WBM and MP formula that passes the v7 novelty rule and rerun the projection; if it still falls short, stop for David. With a
 qualification rate of 0, the projected supply is 0 on any frame, so the widened projection falls short too. **This is that stop.**
-Nothing after V10-1 has run: no selection, no world built, no FM call, no episode. Stage s3 (v7 bars for the pilot controls) is still
-running at $0 so that PILOT.md can report the control shares; s4 has no job.
+Nothing after V10-1 has run: no selection, no world built, no FM call, no episode. The pilot then finished (s3, v7 bars: 126 of 126,
+15:57Z; s4 had no job). PILOT.md is written and the pilot numbers are appended to PREREG part 2. Pilot controls: R 42 (rate 0.42), H 3
+(0.11); projected controls R 134, H 5.7 (H short of 7.5 as well).
 
 ## Why (s2 outputs, `pilot/run/s2/out`)
 | | R (99) | H (27) |

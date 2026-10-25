@@ -507,3 +507,11 @@ v7-G finished (21fce6e55).
 
 ## Out of scope
 New arms, changes to κ, recipes, selection rules or anything frozen.
+
+## V10-1 pilot numbers (appended 2026-10-25, as V10-1 requires; from PILOT.md and pilot/pilot_summary.json)
+- κ: κ1 = 0.2, κ2 = 0.2, **final κ = 0.2** (KAPPA.json). Final median D(neutron)/D(R1) at κ and the final N: **1.244** (tolerance 0.5 to 2), deciles × κ 0.29, 1.24, 2.30, 252 worlds.
+- R: 99 tuning units, **0 qualify**. N_plan / N_rec deciles 1.12, 1.79, 2.94 (min 1.02). Not qualifying: N_plan > N_rec on all 99 (with plan check < 50: 21; free scan D ≥ 9: 6). Pilot controls 42 (rate 0.424); share each recipe falls to: R0 0.095, R1 0, R2 0, R3 0.357, R3a 0.143, R3b 0.524, R3c 0.500, R4 0, R5 0.286, R6 0.
+- H: 27 tuning units (E 25, M 2), **0 qualify**. N_plan / N_rec deciles 1.10, 1.43, 2.13 (min 1.08). Pilot controls 3 (rate 0.111); falls to: R3 0.667, R3b 0.333, R3c 1.0, every other recipe 0.
+- T: no tuning unit (T candidates are R qualifiers); no pilot control.
+- Decisive-plan kinds: no qualifier. Recipe D at the final N: no qualifier.
+- Projected supply (candidates R 317, H 51 with M 20, T 0): bench R 0, H 0 (M 0), T 0; controls R 134.4, H 5.7, T 0. Needed (1.25 × Gate V10-supply minima): R 20, H 15 (M 6.25), T 15, controls 7.5 per family. **Fails for R, H, H_M, T and controls H and T.** A widened frame keeps a qualification rate of 0 and so a projected supply of 0: **stop for David** (STOP_V10-1.md).
